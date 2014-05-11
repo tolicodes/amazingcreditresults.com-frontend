@@ -18,6 +18,9 @@ require.config({
 		'backbone' : ['app/libs/backbone'],
 		'underscore' : ['app/libs/underscore'],
 		'jquery' : 'app/libs/jquery.1.10.2.min',
+		'backgrid': 'app/libs/backgrid',
+		'pageableCollection': 'app/libs/backbone-pageable',
+		'backgridPaginator': 'app/libs/backgrid-paginator',
 
 		// Plugins
 		'bootstrap' : ['app/libs/bootstrap.min'],
@@ -45,6 +48,18 @@ require.config({
 		'backbone' : {
 			deps : ['underscore', 'jquery'],
 			exports : 'Backbone'
+		},
+		'backgrid' : {
+			exports : 'Backgrid',
+			deps : ['backbone']
+		},
+		'pageableCollection' : {
+			exports : 'PageableCollection',
+			deps : ['backbone']
+		},
+		'backgridPaginator': {
+			exports : 'BackgridPaginator',
+			deps : ['backbone']
 		}
 	},
 	priority : ['text', 'models', 'views', 'collections', 'controller'],

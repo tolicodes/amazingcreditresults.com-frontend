@@ -3,12 +3,13 @@
 // Requires define
 // Return {Object} App
 
-define(["require", "backbone", "views/home/home","views/buyer/info"], function(require, Backbone, home, buyerInfo) {
+define(["require", "backbone", "views/home/home", "views/buyer/info","views/grid/grid"], function(require, Backbone, home, buyerInfo, dataGrid) {
 
 	return Backbone.Router.extend({
 
 		routes : {
 			'' : 'home',
+			'grid': 'dataGrid',
 			"*splat" : "routeNotFound"
 		},
 
@@ -19,7 +20,11 @@ define(["require", "backbone", "views/home/home","views/buyer/info"], function(r
 
 		// home page route
 		home : function() {
-			var a = new buyerInfo().render();
+			new buyerInfo().render();
+		},
+		
+		dataGrid : function() {
+			new dataGrid().render();
 		},
 
 		// main initialize function
