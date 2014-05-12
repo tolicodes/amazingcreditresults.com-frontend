@@ -84,7 +84,7 @@ define(["require", "backbone", "text!templates/questionair/questionair.html", "m
 			e.preventDefault();
 			var _self = this, count = 0;
 			qModel = new questionairModel, updateAnswers = new updateAnswersModel;
-			qModel.id = "5370a4fa25777db9531ffa92";
+			qModel.id = this.userId;
 
 			// set update aswers
 			updateAnswers.save(this.updateAnswer, {
@@ -124,6 +124,7 @@ define(["require", "backbone", "text!templates/questionair/questionair.html", "m
 
 		// main initialize function
 		initialize : function(options) {
+			this.userId = options.userDetail.id;
 		},
 
 		render : function() {

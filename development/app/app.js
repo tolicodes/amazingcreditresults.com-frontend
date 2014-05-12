@@ -3,8 +3,8 @@
 // Requires define
 // Return {Object} App
 
-define(["require", "backbone", "views/home/home", "views/buyer/info","views/grid/grid", "views/auth/set-password","views/auth/login", "views/questionair/questionair"], 
-function(require, Backbone, home, buyerInfo, dataGrid, setPassword, login, questionair) {
+define(["require", "backbone", "views/home/home", "views/buyer/info","views/grid/grid", "views/auth/set-password","views/auth/login", "views/questionair/questionair", "models/auth/myself"], 
+function(require, Backbone, home, buyerInfo, dataGrid, setPassword, login, questionair, authModel) {
 
 	return Backbone.Router.extend({
 
@@ -25,26 +25,46 @@ function(require, Backbone, home, buyerInfo, dataGrid, setPassword, login, quest
 		
 		// set password
 		setPassword: function() {
-			new setPassword().render();
+			this.loadPage(setPassword);			
 		},
 		
 		// questions page
 		questions: function() {
-			new questionair().render();			
+			this.loadPage(questionair);			
 		},
 		
 		// set password
 		login: function() {
-			new login().render();
+			this.loadPage(login);			
 		},
 
 		// home page route
 		buyer : function() {
-			new buyerInfo().render();
+			this.loadPage(buyerInfo);			
 		},
 		
 		dataGrid : function() {
-			new dataGrid().render();
+			this.loadPage(dataGrid);
+		},
+		
+		// this function gives the current user detail
+		authorizeduser: function(callback) {
+			var model = new authModel();
+			model.fetch({
+				success: function() {
+					if(callback) callback(model.toJSON());
+				},
+				error: function() {
+					
+				}
+			});
+		},
+		
+		loadPage: function(pageName) {
+			var _self = this;
+			this.authorizeduser(function(userDetail) {
+				_self.currentView =  new pageName({userDetail: userDetail}).render();			
+			});
 		},
 
 		// main initialize function

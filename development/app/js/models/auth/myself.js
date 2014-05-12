@@ -6,10 +6,10 @@
 define(["require", "backbone"], function(require, Backbone, viewTemplate) {
 
 	return Backbone.Model.extend({
-		apiUrl: "/api/v1/",
+		apiUrl: "/",
 		id: undefined,
 		url : function() {
-			return this.apiUrl + "admin/clients/"+ this.id;
+			return this.apiUrl + "auth/myself";
 		}
 	});
 });

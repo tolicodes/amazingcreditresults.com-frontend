@@ -26,7 +26,7 @@ define(["require", "backbone", "text!templates/auth/login.html", "models/auth/se
 			// save the password and redirect
 
 			var model = new buyerInfoModel();
-			model.id = "536abf6eeceb3f5404aef098";
+			model.id = this.userId;
 			model.fetch({
 				success : function(response) {
 					var route = (response.get("needQuestionare") == "true") ? "questions" : "buyer";
@@ -43,7 +43,7 @@ define(["require", "backbone", "text!templates/auth/login.html", "models/auth/se
 
 		// main initialize function
 		initialize : function(options) {
-
+			this.userId = options.userDetail.id;
 		},
 
 		render : function() {

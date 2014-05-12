@@ -15,7 +15,7 @@ define(["require", "backbone","text!templates/buyer/info.html", "models/buyer/in
 		initialize : function(options) {
 			var _self = this;
 			_self.model = new model;
-			_self.model.id = "5370a4fa25777db9531ffa92";
+			_self.model.id = options.userDetail.id;
 			_self.model.fetch({
 				success: function() {
 					_self.render();

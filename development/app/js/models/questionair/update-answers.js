@@ -6,9 +6,9 @@
 define(["require", "backbone"], function(require, Backbone, viewTemplate) {
 
 	return Backbone.Model.extend({
-		apiUrl: "/",
+		apiUrl: "/api/v1/",
 		url : function() {
-			return this.apiUrl + "buyer/saveQuestionareAnswers/";
+			return this.apiUrl + "buyer/saveQuestionnaireAnswers";
 		}
 	});
 });
