@@ -15,3 +15,11 @@
 	width: 20%;
 }
 
+.questainair li {
+	list-style-type: lower-alpha;
+}
+
+.questainair-questions {
+	list-style-type: decimal;
+}
+

@@ -3,23 +3,43 @@
 // Requires define
 // Return {Object} App
 
-define(["require", "backbone", "views/home/home", "views/buyer/info","views/grid/grid"], function(require, Backbone, home, buyerInfo, dataGrid) {
+define(["require", "backbone", "views/home/home", "views/buyer/info","views/grid/grid", "views/auth/set-password","views/auth/login", "views/questionair/questionair"], 
+function(require, Backbone, home, buyerInfo, dataGrid, setPassword, login, questionair) {
 
 	return Backbone.Router.extend({
 
 		routes : {
-			'' : 'home',
+			'' : 'buyer',
+			'buyer': 'buyer',
 			'grid': 'dataGrid',
-			"*splat" : "routeNotFound"
+			'questions' : 'questions',
+			'setPassword' : 'setPassword',
+			'login' : 'login',
+			"*splat" : "routeNotFound"			
 		},
 
 		// route not found
 		routeNotFound : function() {
 			alert("Not Found");
 		},
+		
+		// set password
+		setPassword: function() {
+			new setPassword().render();
+		},
+		
+		// questions page
+		questions: function() {
+			new questionair().render();			
+		},
+		
+		// set password
+		login: function() {
+			new login().render();
+		},
 
 		// home page route
-		home : function() {
+		buyer : function() {
 			new buyerInfo().render();
 		},
 		
