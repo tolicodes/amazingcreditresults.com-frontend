@@ -14,7 +14,11 @@
 					a++;	
 					 %>
 				<li>
+					<% if(_.isUndefined(question.linkRequired) || question.linkRequired) {%>
 					<a href="javascript: void(0);" class="questainair-options" data-question="<%=q%>" data-answer="<%=a%>"><%=res%></a>
+					<% } else { %>
+						<div class="calculation-question" data-question="<%=q%>" data-answer="<%=a%>"><%=res%></div>
+					<% } %>	
 				</li>
 				<% }); %>
 			</ul>
