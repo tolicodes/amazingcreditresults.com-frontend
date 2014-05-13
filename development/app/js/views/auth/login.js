@@ -3,7 +3,7 @@
 // Requires define
 // Return Backbone View {Object}
 
-define(["require", "backbone", "text!templates/auth/login.html", "models/auth/setPassword", "models/buyer/info"], function(require, Backbone, viewTemplate, setPasswordModel, buyerInfoModel) {
+define(["require", "backbone", "hbs!templates/auth/login", "models/auth/setPassword", "models/buyer/info"], function(require, Backbone, viewTemplate, setPasswordModel, buyerInfoModel) {
 
 	return Backbone.View.extend({
 
@@ -47,7 +47,7 @@ define(["require", "backbone", "text!templates/auth/login.html", "models/auth/se
 		},
 
 		render : function() {
-			this.$el.html(_.template(viewTemplate));
+			this.$el.html(viewTemplate());
 		}
 	});
 });

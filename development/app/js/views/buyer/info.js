@@ -3,7 +3,10 @@
 // Requires define
 // Return Backbone View {Object}
 
-define(["require", "backbone","text!templates/buyer/info.html", "models/buyer/info"], function(require, Backbone, viewTemplate, model) {
+
+// , "text!templates/buyer/info.html"
+
+define(["require", "backbone", 'hbs!templates/buyer/info', "models/buyer/info"], function(require, Backbone, viewTemplate, model) {
 
 	return Backbone.View.extend({
 
@@ -27,7 +30,7 @@ define(["require", "backbone","text!templates/buyer/info.html", "models/buyer/in
 		},
 		
 		render: function() {
-			$("body").html(_.template(viewTemplate, {data: this.model.toJSON()}));
+			$("body").html(viewTemplate({data: this.model.toJSON()}));
 		}
 		
 	});

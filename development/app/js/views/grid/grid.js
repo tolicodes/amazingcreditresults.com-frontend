@@ -3,7 +3,7 @@
 // Requires define
 // Return Backbone View {Object}
 
-define(["require", "backbone", "models/buyer/info", "backgrid", "pageableCollection", "backgridPaginator","text!templates/grid/grid.html"], 
+define(["require", "backbone", "models/buyer/info", "backgrid", "pageableCollection", "backgridPaginator","hbs!templates/grid/grid"], 
 	function(require, Backbone, model, Backgrid, PageableCollection, BackgridPaginator, viewTemplate) {
 
 	return Backbone.View.extend({
@@ -15,6 +15,8 @@ define(["require", "backbone", "models/buyer/info", "backgrid", "pageableCollect
 		initialize: function() {
 			
 		},
+		
+		el: 'body',
 
 		renderGrid : function(options) {
 			var _self = this;
@@ -66,7 +68,7 @@ define(["require", "backbone", "models/buyer/info", "backgrid", "pageableCollect
 		},
 
 		render : function() {
-			$("body").html(_.template(viewTemplate, {}));
+			this.$el.html(viewTemplate());
 			this.renderGrid();				
 		}
 	});

@@ -3,7 +3,7 @@
 // Requires define
 // Return Backbone View {Object}
 
-define(["require", "backbone", "text!templates/questionair/questionair.html", "models/questionair/questionair", "models/questionair/update-answers"], function(require, Backbone, viewTemplate, questionairModel, updateAnswersModel) {
+define(["require", "backbone", "hbs!templates/questionair/questionair", "models/questionair/questionair", "models/questionair/update-answers"], function(require, Backbone, viewTemplate, questionairModel, updateAnswersModel) {
 
 	return Backbone.View.extend({
 
@@ -17,66 +17,76 @@ define(["require", "backbone", "text!templates/questionair/questionair.html", "m
 		el : 'body',
 
 		questions : [{
-			question : "What is the length of your credit history (the date you opened your first account)?",
-			options : ["< 1 year", "1-3 years", "3-10 years", "> 10 year"]
+			question : {
+				q : "What is the length of your credit history (the date you opened your first account)?",
+				options : ["< 1 year", "1-3 years", "3-10 years", "> 10 year"],
+				linkRequired : true
+			},
+			idx: 1
+
 		}, {
-			question : "What is your credit score?",
-			options : ["280 - 559", "560 - 659", "660 - 724", "725 - 759", "760 - 850"]
+			question : {
+				q : "What is your credit score?",
+				options : ["280 - 559", "560 - 659", "660 - 724", "725 - 759", "760 - 850"],
+				linkRequired : true
+			},
+			idx: 2
 		}, {
-			question : "What if your debt to income ratio (field for total credit card debt, field for annual income)",
-			options : ["<span>Total Debt:</span>  $<input type='text' class='total-dept' /> ", "<span>Annual Income:</span>  $<input type='text' class='anual-income' /> ", "<span>Your DTI: x%</span> <span class='result'></span>"],
-			linkRequired: false
+			question : {
+				q : "What if your debt to income ratio (field for total credit card debt, field for annual income)",
+				options : ["<span>Total Debt:</span>  $<input type='text' class='total-dept' /> ", "<span>Annual Income:</span>  $<input type='text' class='anual-income' /> ", "<span>Your DTI: x%</span> <span class='result'></span>"],
+				linkRequired : false
+			},
+			idx: 3
 		}],
 
 		// answer range for calculated questions
-		answersRange : {'3': [{
-			min : 0,
-			max : 2
-		}, {
-			min : 2,
-			max : 5
-		}, {
-			min : 5,
-			max : 10
-		}, {
-			min : 10,
-			max : '>'
-		}]},
+		answersRange : {
+			'3' : [{
+				min : 0,
+				max : 2
+			}, {
+				min : 2,
+				max : 5
+			}, {
+				min : 5,
+				max : 10
+			}, {
+				min : 10,
+				max : '>'
+			}]
+		},
 
 		updateAnswer : {
 			answer1 : '',
 			answer2 : '',
 			answer3 : ''
 		},
-		
+
 		// update amount
-		updateAmount: function(e) {
-			var index = $(e.currentTarget).parents('.calculation-question').data("question"), dept = this.$el.find(".total-dept").val(), 
-			annual = this.$el.find(".anual-income").val(), cal;
+		updateAmount : function(e) {
+			var index = parseInt($(e.target).parents('.question-index').data("question")) + 1, dept = this.$el.find(".total-dept").val(), annual = this.$el.find(".anual-income").val(), cal;
 			cal = parseInt(dept) + parseInt(annual);
 			this.$el.find(".result").html(cal);
 			// value is hardcoded right now
-			this.updateAnswer['answer'+index] = this.getTheRange(2, index);
+			this.updateAnswer['answer' + index] = this.getTheRange(2, index);
 		},
-		
-		// get the value range in answers
-		getTheRange: function(val, idx) {
-			var index = -1;
-							console.log(index, this.answersRange[idx]);
-			for(var i in this.answersRange[idx]) {
 
-				if(this.answersRange[idx][i].min <= val && (this.answersRange[idx][i].max == '>' || this.answersRange[idx][i].max >= val)) {
+		// get the value range in answers
+		getTheRange : function(val, idx) {
+			var index = -1;
+			for (var i in this.answersRange[idx]) {
+				if (this.answersRange[idx][i].min <= val && (this.answersRange[idx][i].max == '>' || this.answersRange[idx][i].max >= val)) {
 					index = ++i;
 					break;
 				}
 			}
-			
-			return (index != -1)?index:false;
-			
+			return (index != -1) ? index : false;
 		},
 
 		updateAnswerFn : function(e) {
-			this.updateAnswer['answer' + $(e.currentTarget).data("question")] = $(e.currentTarget).data("answer");
+			this.updateAnswer['answer' + (parseInt($(e.currentTarget).parents(".question-index").data("question")) + 1)] = parseInt($(e.currentTarget).parents(".q-option-index").data("answer")) + 1;
+			console.log(this.updateAnswer);
 		},
 
 		// uodate questionair
@@ -107,6 +117,7 @@ define(["require", "backbone", "text!templates/questionair/questionair.html", "m
 					count++;
 					_self.goToBuyerPage(count);
 				},
+
 				error : function() {
 					alert("Some error occured");
 				}
@@ -128,7 +139,7 @@ define(["require", "backbone", "text!templates/questionair/questionair.html", "m
 		},
 
 		render : function() {
-			this.$el.html(_.template(viewTemplate, {
+			this.$el.html(viewTemplate({
 				questions : this.questions
 			}));
 		}

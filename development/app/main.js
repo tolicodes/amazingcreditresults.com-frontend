@@ -21,7 +21,7 @@ require.config({
 		'backgrid': 'app/libs/backgrid',
 		'pageableCollection': 'app/libs/backbone-pageable',
 		'backgridPaginator': 'app/libs/backgrid-paginator',
-
+		'hbs': 'app/libs/hbs',
 		// Plugins
 		'bootstrap' : ['app/libs/bootstrap.min'],
 		'text'      : ['app/libs/text'],
@@ -34,6 +34,15 @@ require.config({
 		'application' : ['app/app']
 
 	},
+	
+	hbs: { // optional
+        helpers: true,            // default: true
+        i18n: false,              // default: false
+        templateExtension: 'hbs', // default: 'hbs'
+        partialsUrl: ''           // default: ''
+   },
+	
+	
 	shim : {
 		'jquery' : {
 			exports : '$'
