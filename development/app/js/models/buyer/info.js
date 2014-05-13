@@ -6,7 +6,7 @@
 define(["require", "backbone"], function(require, Backbone, viewTemplate) {
 
 	return Backbone.Model.extend({
-		apiUrl: "/",
+		apiUrl: "/api/v1/",
 		id: undefined,
 		url : function() {
 			return this.apiUrl + "admin/clients/"+ this.id;
