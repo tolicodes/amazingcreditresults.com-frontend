@@ -66,10 +66,10 @@ define(["require", "backbone", "hbs!templates/questionair/questionair", "models/
 		// update amount
 		updateAmount : function(e) {
 			var index = parseInt($(e.target).parents('.question-index').data("question")) + 1, dept = this.$el.find(".total-dept").val(), annual = this.$el.find(".anual-income").val(), cal;
-			cal = parseInt(dept) + parseInt(annual);
+			cal = dept / annual;
 			this.$el.find(".result").html(cal);
 			// value is hardcoded right now
-			this.updateAnswer['answer' + index] = this.getTheRange(2, index);
+			this.updateAnswer['answer' + index] = this.getTheRange(cal, index);
 		},
 
 		// get the value range in answers
