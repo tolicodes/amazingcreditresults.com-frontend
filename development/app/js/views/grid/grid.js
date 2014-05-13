@@ -3,7 +3,7 @@
 // Requires define
 // Return Backbone View {Object}
 
-define(["require", "backbone", "models/buyer/info", "backgrid", "pageableCollection", "backgridPaginator","hbs!templates/grid/grid"], 
+define(["require", "backbone", "models/buyer/info", "backgrid", "pageableCollection", "backgridPaginator","hbs!templates/grid/grid", 'less!cssPath/backgrid', 'less!cssPath/backgrid-paginator'], 
 	function(require, Backbone, model, Backgrid, PageableCollection, BackgridPaginator, viewTemplate) {
 
 	return Backbone.View.extend({
