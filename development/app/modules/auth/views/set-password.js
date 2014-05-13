@@ -3,7 +3,7 @@
 // Requires define
 // Return Backbone View {Object}
 
-define(["require", "backbone", "hbs!templates/auth/set-password", "models/auth/setPassword"], function(require, Backbone, viewTemplate, setPassword) {
+define(["backbone", "hbs!auth/templates/set-password", "auth/models/setPassword"], function(Backbone, viewTemplate, setPassword) {
 
 	return Backbone.View.extend({
 
@@ -13,16 +13,16 @@ define(["require", "backbone", "hbs!templates/auth/set-password", "models/auth/s
 
 		handleFormSubmit : function(e) {
 			e.preventDefault();
-			$(e.target).attr("disabled", "true");
+			$(e.target).attr("disabled", true);
 			var password = $(e.target).find("#password").val(), confirmPassword = $(e.target).find("#confirmPassword").val();
 
 			if (!password) {
 				alert("Please enter password");
-				$(e.target).attr("disabled", "true");
+				$(e.target).attr("disabled", false);
 				return false;
 			} else if (password != confirmPassword) {
 				alert("Please confirm password");
-				$(e.target).attr("disabled", "true");
+				$(e.target).attr("disabled", false);
 				return false;
 			}
 

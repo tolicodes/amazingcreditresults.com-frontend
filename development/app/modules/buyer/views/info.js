@@ -6,7 +6,7 @@
 
 // , "text!templates/buyer/info.html"
 
-define(["require", "backbone", 'hbs!templates/buyer/info', "models/buyer/info"], function(require, Backbone, viewTemplate, model) {
+define(["backbone", 'hbs!buyer/templates/info', "buyer/models/info"], function(Backbone, viewTemplate, model) {
 
 	return Backbone.View.extend({
 

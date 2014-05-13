@@ -3,14 +3,14 @@
 // Requires define
 // Return {Object} App
 
-define(["require", "backbone", "views/home/home", "views/buyer/info","views/grid/grid", "views/auth/set-password",
-"views/auth/login", "views/questionair/questionair", "models/auth/myself", 'less!cssPath/style', 'css!cssPath/bootstrap.min'], 
-function(require, Backbone, home, buyerInfo, dataGrid, setPassword, login, questionair, authModel) {
+define(["backbone", "home/views/home", "buyer/views/info","grid/views/grid", "auth/views/set-password",
+"auth/views/login", "questionair/views/questionair", "auth/models/myself", 'less!cssPath/style'], 
+function(Backbone, home, buyerInfo, dataGrid, setPassword, login, questionair, authModel) {
 
 	return Backbone.Router.extend({
 
 		routes : {
-			'' : 'buyer',
+			'' : 'login',
 			'buyer': 'buyer',
 			'grid': 'dataGrid',
 			'questions' : 'questions',

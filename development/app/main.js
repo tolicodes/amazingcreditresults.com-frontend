@@ -15,21 +15,23 @@ require.config({
 	},
 	paths : {
 		// Libraries
-		'backbone' : ['app/libs/backbone'],
-		'underscore' : ['app/libs/underscore'],
-		'jquery' : 'app/libs/jquery.1.10.2.min',
-		'backgrid' : 'app/libs/backgrid',
-		'pageableCollection' : 'app/libs/backbone-pageable',
-		'backgridPaginator' : 'app/libs/backgrid-paginator',
-		'hbs' : 'app/libs/hbs',
-		// Plugins
-		'bootstrap' : ['app/libs/bootstrap.min'],
-		'text' : ['app/libs/text'],
+		'backbone' : ['libs/backbone/backbone'],
+		'underscore' : ['libs/underscore/underscore'],
+		'jquery' : 'libs/jquery/jquery',
+		'backgrid' : 'libs/backgrid/lib/backgrid',
+		'pageableCollection' : 'libs/backbone-pageable/lib/backbone-pageable',
+		'backgridPaginator' : 'libs/libs/backgrid-paginator',
+		'hbs' : 'libs/require-handlebars/hbars',
+		'bootstrap' : ['libs/bootstrap/dist/js/bootstrap'],
+
 		// Should be used as required dependencies with use of `define`,
-		'models' : ['app/js/models'],
-		'views' : ['app/js/views'],
-		'collections' : ['app/js/collections'],
-		'cssPath' : ['css'],
+		'auth' : ['app/modules/auth'],
+		'buyer' : ['app/modules/buyer'],
+		'grid' : ['app/modules/grid'],
+		'home' : ['app/modules/home'],
+		'questionair' : ['app/modules/questionair'],
+		
+		'cssPath' : ['app/common/css'],
 		// Application - bootstrap for frontend app
 		'application' : ['app/app']
 
@@ -44,8 +46,8 @@ require.config({
 
 	map : {
 		'*' : {
-			'less' : 'app/libs/require-less/less', // path to less
-			'css': 'app/libs/css' // or whatever the path to require-css is
+			'less' : 'libs/require-less/less', // path to less
+			'css': 'libs/require-css/css' // or whatever the path to require-css is
 		}
 	},
 
@@ -77,13 +79,13 @@ require.config({
 			deps : ['backbone']
 		}
 	},
-	priority : ['text', 'models', 'views', 'collections', 'controller'],
+	priority : [],
 	jquery : '1.10.2',
 	waitSeconds : 60
 });
 
 // initializing the router "application" on startup
-define(['require', 'backbone', 'underscore', 'jquery', 'application'], function(require, Backbone, _, $, app) {
+define(['backbone', 'underscore', 'jquery', 'application'], function(Backbone, _, $, app) {
 	$(document).ready(function() {
 		App = {};
 		App.routing = new app();
