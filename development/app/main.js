@@ -18,22 +18,37 @@ require.config({
 		'backbone' : ['app/libs/backbone'],
 		'underscore' : ['app/libs/underscore'],
 		'jquery' : 'app/libs/jquery.1.10.2.min',
-		'backgrid': 'app/libs/backgrid',
-		'pageableCollection': 'app/libs/backbone-pageable',
-		'backgridPaginator': 'app/libs/backgrid-paginator',
-
+		'backgrid' : 'app/libs/backgrid',
+		'pageableCollection' : 'app/libs/backbone-pageable',
+		'backgridPaginator' : 'app/libs/backgrid-paginator',
+		'hbs' : 'app/libs/hbs',
 		// Plugins
 		'bootstrap' : ['app/libs/bootstrap.min'],
-		'text'      : ['app/libs/text'],
+		'text' : ['app/libs/text'],
 		// Should be used as required dependencies with use of `define`,
 		'models' : ['app/js/models'],
 		'views' : ['app/js/views'],
 		'collections' : ['app/js/collections'],
-		
+		'cssPath' : ['css'],
 		// Application - bootstrap for frontend app
 		'application' : ['app/app']
 
 	},
+
+	hbs : {// optional
+		helpers : true, // default: true
+		i18n : false, // default: false
+		templateExtension : 'hbs', // default: 'hbs'
+		partialsUrl : '' // default: ''
+	},
+
+	map : {
+		'*' : {
+			'less' : 'app/libs/require-less/less', // path to less
+			'css': 'app/libs/css' // or whatever the path to require-css is
+		}
+	},
+
 	shim : {
 		'jquery' : {
 			exports : '$'
@@ -57,7 +72,7 @@ require.config({
 			exports : 'PageableCollection',
 			deps : ['backbone']
 		},
-		'backgridPaginator': {
+		'backgridPaginator' : {
 			exports : 'BackgridPaginator',
 			deps : ['backbone']
 		}
@@ -74,4 +89,4 @@ define(['require', 'backbone', 'underscore', 'jquery', 'application'], function(
 		App.routing = new app();
 		Backbone.history.start({});
 	});
-}); 
+});

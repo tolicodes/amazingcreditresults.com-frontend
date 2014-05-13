@@ -1,8 +1,9 @@
 <div class="container">
-	<p class="">
+	<p>
 		Take our 3 Question Test to determine the right trade lines for you
 	</p>
 	<ul class="questainair-questions">
+		
 		<%
 		_.each(questions, function(question, q) {
 			q++;
@@ -18,7 +19,7 @@
 					<a href="javascript: void(0);" class="questainair-options" data-question="<%=q%>" data-answer="<%=a%>"><%=res%></a>
 					<% } else { %>
 						<div class="calculation-question" data-question="<%=q%>" data-answer="<%=a%>"><%=res%></div>
-					<% } %>	
+					<% } %>
 				</li>
 				<% }); %>
 			</ul>
