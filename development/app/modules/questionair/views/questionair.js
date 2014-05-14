@@ -3,7 +3,17 @@
 // Requires define
 // Return Backbone View {Object}
 
-define(["backbone", "hbs!questionair/templates/questionair", "questionair/models/questionair", "questionair/models/update-answers"], function(Backbone, viewTemplate, questionairModel, updateAnswersModel) {
+define([
+	"backbone", 
+	"hbs!questionair/templates/questionair", 
+	"questionair/models/questionair", 
+	"questionair/models/update-answers"
+], function(
+	Backbone, 
+	viewTemplate, 
+	questionairModel, 
+	updateAnswersModel
+) {
 
 	return Backbone.View.extend({
 

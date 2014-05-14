@@ -3,7 +3,11 @@
 // Requires define
 // Return Backbone Model {Object}
 
-define(["backbone"], function( Backbone, viewTemplate) {
+define([
+	"backbone"
+], function( 
+	Backbone
+) {
 
 	return Backbone.Model.extend({
 		apiUrl: "/api/v1/",

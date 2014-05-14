@@ -3,7 +3,15 @@
 // Requires define
 // Return Backbone View {Object}
 
-define(["backbone", "hbs!auth/templates/set-password", "auth/models/setPassword"], function(Backbone, viewTemplate, setPassword) {
+define([
+	"backbone", 
+	"hbs!auth/templates/set-password", 
+	"auth/models/setPassword"
+], function(
+	Backbone, 
+	viewTemplate, 
+	setPassword
+) {
 
 	return Backbone.View.extend({
 

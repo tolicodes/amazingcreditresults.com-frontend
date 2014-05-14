@@ -85,7 +85,17 @@ require.config({
 });
 
 // initializing the router "application" on startup
-define(['backbone', 'underscore', 'jquery', 'application'], function(Backbone, _, $, app) {
+define([
+	'backbone', 
+	'underscore', 
+	'jquery', 
+	'application'
+	], function(
+		Backbone, 
+		_, 
+		$, 
+		app
+	) {
 	$(document).ready(function() {
 		App = {};
 		App.routing = new app();
