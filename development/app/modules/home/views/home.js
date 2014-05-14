@@ -13,19 +13,5 @@ define([
 
 	return Backbone.View.extend({
 
-		events : {
-
-		},
-		
-		el: 'body',
-		
-		// main initialize function
-		initialize : function(options) {
-		},
-		
-		render: function() {
-			this.$el.html(viewTemplate());
-		}
-		
 	});
 });

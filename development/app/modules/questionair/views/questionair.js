@@ -4,18 +4,22 @@
 // Return Backbone View {Object}
 
 define([
-	"backbone", 
+	"base", 
 	"hbs!questionair/templates/questionair", 
 	"questionair/models/questionair", 
-	"questionair/models/update-answers"
+	"questionair/models/update-answers",
+	"questionair/models/questions"
 ], function(
-	Backbone, 
+	Base, 
 	viewTemplate, 
 	questionairModel, 
-	updateAnswersModel
+	updateAnswersModel,
+	questionModel
 ) {
 
-	return Backbone.View.extend({
+	return Base.extend({
+
+		tpl: viewTemplate,
 
 		events : {
 			'submit .find-trade-form' : 'updateQuestionair',
@@ -23,32 +27,6 @@ define([
 			'keyup .total-dept' : 'updateAmount',
 			'keyup .anual-income' : 'updateAmount',
 		},
-
-		el : 'body',
-
-		questions : [{
-			question : {
-				q : "What is the length of your credit history (the date you opened your first account)?",
-				options : ["< 1 year", "1-3 years", "3-10 years", "> 10 year"],
-				linkRequired : true
-			},
-			idx: 1
-
-		}, {
-			question : {
-				q : "What is your credit score?",
-				options : ["280 - 559", "560 - 659", "660 - 724", "725 - 759", "760 - 850"],
-				linkRequired : true
-			},
-			idx: 2
-		}, {
-			question : {
-				q : "What if your debt to income ratio (field for total credit card debt, field for annual income)",
-				options : ["<span>Total Debt:</span>  $<input type='text' class='total-dept' /> ", "<span>Annual Income:</span>  $<input type='text' class='anual-income' /> ", "<span>Your DTI: x%</span> <span class='result'></span>"],
-				linkRequired : false
-			},
-			idx: 3
-		}],
 
 		// answer range for calculated questions
 		answersRange : {
@@ -96,7 +74,6 @@ define([
 
 		updateAnswerFn : function(e) {
 			this.updateAnswer['answer' + (parseInt($(e.currentTarget).parents(".question-index").data("question")) + 1)] = parseInt($(e.currentTarget).parents(".q-option-index").data("answer")) + 1;
-			console.log(this.updateAnswer);
 		},
 
 		// uodate questionair
@@ -143,15 +120,43 @@ define([
 			}
 		},
 
-		// main initialize function
-		initialize : function(options) {
+		// init function
+		init : function(options) {
 			this.userId = options.userDetail.id;
-		},
+			this.model = new questionModel();
+			
+			this.data.questions = [{
+			question : {
+				q : "What is the length of your credit history (the date you opened your first account)?",
+				options : ["< 1 year", "1-3 years", "3-10 years", "> 10 year"],
+				linkRequired : true
+			},
+			idx: 1
 
-		render : function() {
-			this.$el.html(viewTemplate({
-				questions : this.questions
-			}));
+		}, {
+			question : {
+				q : "What is your credit score?",
+				options : ["280 - 559", "560 - 659", "660 - 724", "725 - 759", "760 - 850"],
+				linkRequired : true
+			},
+			idx: 2
+		}, {
+			question : {
+				q : "What if your debt to income ratio (field for total credit card debt, field for annual income)",
+				options : ["<span>Total Debt:</span>  $<input type='text' class='total-dept' /> ", "<span>Annual Income:</span>  $<input type='text' class='anual-income' /> ", "<span>Your DTI: x%</span> <span class='result'></span>"],
+				linkRequired : false
+			},
+			idx: 3
+		}];
+		
+			
+			console.log(this.model.toJSON());
 		}
+
+		//render : function() {
+		//	this.$el.html(viewTemplate({
+		//		questions : this.questions
+		//	}));
+		//}
 	});
 });

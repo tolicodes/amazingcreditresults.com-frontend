@@ -4,14 +4,14 @@
 // Return Backbone View {Object}
 
 define([
-	"backbone", 
+	"base", 
 	"buyer/models/info", 
 	"backgrid", 
 	"pageableCollection", 
 	"backgridPaginator",
 	"hbs!grid/templates/grid"
 ], function(
-		Backbone, 
+		Base, 
 		model, 
 		Backgrid, 
 		PageableCollection, 
@@ -19,17 +19,7 @@ define([
 		viewTemplate
 ) {
 	// , 'less!cssPath/backgrid', 'less!cssPath/backgrid-paginator'
-	return Backbone.View.extend({
-
-		events : {
-		},
-		
-		// main initialize function
-		initialize: function() {
-			
-		},
-		
-		el: 'body',
+	return Base.extend({
 
 		renderGrid : function(options) {
 			var _self = this;
@@ -79,10 +69,10 @@ define([
 			territories.fetch();
 
 		},
-
-		render : function() {
-			this.$el.html(viewTemplate());
-			this.renderGrid();				
+		
+		afterRender: function() {
+			this.renderGrid();
 		}
+
 	});
 });

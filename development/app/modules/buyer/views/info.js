@@ -4,26 +4,21 @@
 // Return Backbone View {Object}
 
 
-// , "text!templates/buyer/info.html"
-
 define([
-	"backbone", 
+	"base", 
 	'hbs!buyer/templates/info', 
 	"buyer/models/info"
 ], function(
-	Backbone, 
+	Base, 
 	viewTemplate, 
 	smodel
 ) {
 
-	return Backbone.View.extend({
+	return Base.extend({
 
-		events : {
-
-		},
 		
 		// main initialize function
-		initialize : function(options) {
+		init : function(options) {
 			var _self = this;
 			_self.model = new model;
 			_self.model.id = options.userDetail.id;
@@ -35,11 +30,8 @@ define([
 					alert("Some error occured");
 				}
 			});
-		},
-		
-		render: function() {
-			$("body").html(viewTemplate({data: this.model.toJSON()}));
 		}
+		
 		
 	});
 });

@@ -84,13 +84,14 @@ define([
 			this.authorizeduser(function(userDetail) {
 				_self.currentView = new pageName({
 					userDetail : userDetail
-				}).render();
+				});
+				_self.currentView.el = "body";
 			});
 		},
 
 		// main initialize function
 		initialize : function(options) {
-			_.bindAll(this);
+			//_.bindAll(this);
 		}
 	});
 });

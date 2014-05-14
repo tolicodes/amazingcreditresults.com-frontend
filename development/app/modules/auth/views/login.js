@@ -4,24 +4,23 @@
 // Return Backbone View {Object}
 
 define([
-	"backbone", 
+	"base", 
 	"hbs!auth/templates/login", 
 	"auth/models/setPassword", 
 	"buyer/models/info"
 	], function(
-		Backbone, 
+		Base, 
 		viewTemplate, 
 		setPasswordModel, 
 		buyerInfoModel
 	) {
 
-	return Backbone.View.extend({
-
+	return Base.extend({
 		events : {
 			'submit .password-form' : 'handleFormSubmit'
 		},
-
-		el : 'body',
+		
+		tpl : viewTemplate,
 
 		handleFormSubmit : function(e) {
 			e.preventDefault();
@@ -50,14 +49,11 @@ define([
 			});
 
 		},
-
+		
 		// main initialize function
-		initialize : function(options) {
+		init : function(options) {
 			this.userId = options.userDetail.id;
-		},
-
-		render : function() {
-			this.$el.html(viewTemplate());
 		}
+
 	});
 });

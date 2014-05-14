@@ -4,17 +4,17 @@
 // Return Backbone View {Object}
 
 define([
-	"backbone", 
+	"base", 
 	"hbs!auth/templates/set-password", 
 	"auth/models/setPassword"
 ], function(
-	Backbone, 
+	Base, 
 	viewTemplate, 
 	setPassword
 ) {
 
-	return Backbone.View.extend({
-
+	return Base.extend({
+		tpl: viewTemplate,
 		events : {
 			'submit .reset-password-form' : 'handleFormSubmit'
 		},
@@ -51,15 +51,7 @@ define([
 					alert("Some error occured");
 				}
 			});
-		},
-		
-		// main initialize function
-		initialize : function(options) {
-
-		},
-
-		render : function() {
-			this.$el.html(viewTemplate());
 		}
+		
 	});
 });

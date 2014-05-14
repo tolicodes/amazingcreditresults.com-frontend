@@ -7,11 +7,11 @@ require.config({
 	baseUrl : './',
 	locale : 'en-us',
 	config : {
-		text : {
-			useXhr : function(url, protocol, hostname, port) {
-				return true;
-			}
-		}
+		 text : {
+			 useXhr : function(url, protocol, hostname, port) {
+				 return true;
+			 }
+		 }
 	},
 	paths : {
 		// Libraries
@@ -20,9 +20,11 @@ require.config({
 		'jquery' : 'libs/jquery/jquery',
 		'backgrid' : 'libs/backgrid/lib/backgrid',
 		'pageableCollection' : 'libs/backbone-pageable/lib/backbone-pageable',
-		'backgridPaginator' : 'libs/libs/backgrid-paginator',
-		'hbs' : 'libs/require-handlebars/hbars',
+		'backgridPaginator' : 'libs/backgrid-paginator/backgrid-paginator',
+		'hbs' : 'libs/require-handlebars-plugin/hbs',
+		'Handlebars': 'libs/handlebars/handlebars',
 		'bootstrap' : ['libs/bootstrap/dist/js/bootstrap'],
+		'text' : ['libs/requirejs-text/text'],
 
 		// Should be used as required dependencies with use of `define`,
 		'auth' : ['app/modules/auth'],
@@ -33,16 +35,17 @@ require.config({
 		
 		'cssPath' : ['app/common/css'],
 		// Application - bootstrap for frontend app
-		'application' : ['app/app']
+		'application' : ['app/app'],
+		'base' : ['app/base-view']
 
 	},
 
-	hbs : {// optional
-		helpers : true, // default: true
-		i18n : false, // default: false
-		templateExtension : 'hbs', // default: 'hbs'
-		partialsUrl : '' // default: ''
-	},
+	// hbs: { // optional
+        // helpers: true,            // default: true
+        // i18n: false,              // default: false
+        // templateExtension: 'hbs', // default: 'hbs'
+        // partialsUrl: ''           // default: ''
+   // },
 
 	map : {
 		'*' : {
