@@ -95,8 +95,7 @@ define([
 			});
 
 			// get questainair
-			var questionair = $(e.target).find(".questionair").is(':checked');
-
+			var questionair = $(e.target).find(".questionair").prop('checked');
 			qModel.save({
 				needQuestionnaire : questionair
 			}, {
