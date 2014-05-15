@@ -2,17 +2,17 @@
 	<form role="form" action="#" class="form-inline buyer-info" method="POST">
 		<div class="form-group">
 			<label for="firstName">First Name</label>
-			<input type="text" class="form-control" value="{{data.name.givenName}}" id="firstName" placeholder="First Name">
+			<input type="text" class="form-control" value="{{name.givenName}}" id="firstName" placeholder="First Name">
 		</div>
 
 		<div class="form-group">
 			<label for="firstName">Last Name</label>
-			<input type="text" class="form-control" id="lastName" value="{{data.name.familyName}}" placeholder="Last Name">
+			<input type="text" class="form-control" id="lastName" value="{{name.familyName}}" placeholder="Last Name">
 		</div>
 
 		<div class="form-group">
 			<label for="emailAddress">Email Address</label>
-			<input type="email" class="form-control" value="{{data.email}}" id="emailAddress" placeholder="Enter email">
+			<input type="email" class="form-control" value="{{email}}" id="emailAddress" placeholder="Enter email">
 		</div>
 
 		<div class="form-group">
@@ -26,12 +26,12 @@
 
 		<div class="form-group">
 			<label for="address">Address</label>
-			<textarea rows="3" class="form-control" id="address" placeholder="Address">{{data.address}}</textarea>
+			<textarea rows="3" class="form-control" id="address" placeholder="Address">{{address}}</textarea>
 		</div>
 
 		<div class="form-group">
 			<label for="city">City</label>
-			<input type="text" class="form-control" id="city" value="{{data.city}}" placeholder="City">
+			<input type="text" class="form-control" id="city" value="{{city}}" placeholder="City">
 		</div>
 
 		<div class="form-group">
@@ -93,17 +93,17 @@
 
 		<div class="form-group">
 			<label for="zip">Zip</label>
-			<input type="text" class="form-control" value="{{data.zip}}" id="zip" placeholder="Zip">
+			<input type="text" class="form-control" value="{{zip}}" id="zip" placeholder="Zip">
 		</div>
 
 		<div class="form-group">
 			<label for="phone">Phone</label>
-			<input type="tel" class="form-control" id="phone" value="{{data.phone}}" placeholder="Phone">
+			<input type="tel" class="form-control" id="phone" value="{{phone}}" placeholder="Phone">
 		</div>
 
 		<div class="form-group">
 			<label for="altPhone">Alt. Phone</label>
-			<input type="tel" class="form-control" id="altPhone" value="{{data.altPhone}}" placeholder="Alternative Phone">
+			<input type="tel" class="form-control" id="altPhone" value="{{altPhone}}" placeholder="Alternative Phone">
 		</div>
 
 	</form>

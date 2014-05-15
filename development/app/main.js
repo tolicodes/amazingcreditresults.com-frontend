@@ -16,6 +16,7 @@ require.config({
 	paths : {
 		// Libraries
 		'backbone' : ['libs/backbone/backbone'],
+		"backboneForms": 'libs/backbone-forms/distribution.amd/backbone-forms',
 		'underscore' : ['libs/underscore/underscore'],
 		'jquery' : 'libs/jquery/jquery',
 		'backgrid' : 'libs/backgrid/lib/backgrid',
@@ -36,7 +37,8 @@ require.config({
 		'cssPath' : ['app/common/css'],
 		// Application - bootstrap for frontend app
 		'application' : ['app/app'],
-		'base' : ['app/base-view']
+		'base' : ['app/base-view'],
+		'formView': ['app/form-view']
 
 	},
 
