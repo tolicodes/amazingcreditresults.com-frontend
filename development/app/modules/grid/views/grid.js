@@ -4,27 +4,14 @@
 // Return Backbone View {Object}
 
 define([
-	"base", 
-	"buyer/models/info", 
-	"backgrid", 
-	"pageableCollection", 
-	"backgridPaginator",
-	"hbs!grid/templates/grid"
+	"dataTable"
 ], function(
-		Base, 
-		model, 
-		Backgrid, 
-		PageableCollection, 
-		BackgridPaginator, 
-		viewTemplate
+		DataTable
 ) {
-	// , 'less!cssPath/backgrid', 'less!cssPath/backgrid-paginator'
-	return Base.extend({
 
-		renderGrid : function(options) {
-			var _self = this;
+	return DataTable.extend({
 
-			var columns = [{
+		columns:  [{
 				name : "id",
 				editable : false,
 				cell : Backgrid.IntegerCell.extend({
@@ -45,34 +32,9 @@ define([
 			}, {
 				name : "url",
 				cell : "uri"
-			}];
-
-			var Territories = Backbone.PageableCollection.extend({
-				url : "http://backbone-paginator.github.io/backbone-pageable/examples/json/pageable-territories.json",
-				mode : "client"
-			});
-
-			var territories = new Territories();
-
-			var grid = new Backgrid.Grid({
-				columns : columns,
-				collection : territories
-			});
-
-			var paginator = new Backgrid.Extension.Paginator({
-				collection : territories
-			});
-
-			$("#grid").append(grid.render().$el);
-			$("#paginator").append(paginator.render().$el);
-
-			territories.fetch();
-
-		},
-		
-		afterRender: function() {
-			this.renderGrid();
-		}
+			}],
+			
+		url: "http://backbone-paginator.github.io/backbone-pageable/examples/json/pageable-territories.json",
 
 	});
 });

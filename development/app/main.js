@@ -38,7 +38,9 @@ require.config({
 		// Application - bootstrap for frontend app
 		'application' : ['app/app'],
 		'base' : ['app/base-view'],
-		'formView': ['app/form-view']
+		'formView': ['core/components/form/form-view'],
+		'dataTable': ['core/components/data-table/grid'],
+		'Mediatior': ['core/components/messaging/message']
 
 	},
 
@@ -94,15 +96,19 @@ define([
 	'backbone', 
 	'underscore', 
 	'jquery', 
-	'application'
+	'application',
+	'Mediatior'
 	], function(
 		Backbone, 
 		_, 
 		$, 
-		app
+		app,
+		mediatior
 	) {
 	$(document).ready(function() {
 		App = {};
+		console.log(new mediatior);
+		App.Mediatior = new mediatior;
 		App.routing = new app();
 		Backbone.history.start({});
 	});

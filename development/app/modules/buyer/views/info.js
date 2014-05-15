@@ -18,6 +18,7 @@ define([
 
 		renderOnInitialize: false,
 		
+		// schema to generate form
 		schema: {
 	        'First Name':      {type: 'Text', title: "First Name"},
 	        'Last Name':       {type: 'Text', title: "Last Name"},
@@ -40,16 +41,14 @@ define([
 	        'Alt-phone': {type: 'Text', title: "Alt Phone"},
 		},
 		
-		data: '',
-		
 		// main initialize function
 		init : function(options) {
+			App.Mediatior.trigger("messaging:showAlert", "test 123");
 			var _self = this;
 			_self.model = new model;
 			_self.model.id = options.userDetail.id;
 			_self.model.fetch({
 				success: function() {
-					_self.data = _self.model.toJSON();
 					_self.render();
 				},
 				error: function() {

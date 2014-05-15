@@ -21,7 +21,7 @@ define([
 		data: {},
 
 		// default target element
-		el : 'body',
+		el : '.container',
 
 		// hooks
 		hooks : {
@@ -37,10 +37,11 @@ define([
 			if (this.hooks) {
 				_.each(this.hooks, function(hookCallbacks, hookName) {
 					_self.listenTo(_self, hookName, function() {
+						var arg = arguments;
 						if (_.isArray(hookCallbacks)) {
 							_.each(hookCallbacks, function(hookTriggerFn) {
 								if (_.isFunction(_self[hookTriggerFn]))
-									_self[hookTriggerFn]();
+									_self[hookTriggerFn](arg);
 							});
 						}
 					});

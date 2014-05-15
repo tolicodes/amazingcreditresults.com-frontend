@@ -11,7 +11,6 @@ define([
 	Base, 
 	Backbone,
 	BackboneForms
-
 ) {
 	return Base.extend({
 
@@ -21,7 +20,7 @@ define([
 			});
 			
 			this.form = new Backbone.Form({
-			    model: new user(this.data)
+			    model: new user(this.model.toJSON())
 			 });
 			 
 			this.form.render();
