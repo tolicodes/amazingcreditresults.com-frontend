@@ -43,17 +43,18 @@ define([
 		
 		// main initialize function
 		init : function(options) {
-			App.Mediatior.trigger("messaging:showAlert", "test 123");
+			
 			var _self = this;
 			_self.model = new model;
 			_self.model.id = options.userDetail.id;
-			_self.model.fetch({
-				success: function() {
-					_self.render();
-				},
-				error: function() {
-					alert("Some error occured");
-				}
+			
+			_self.model.fetch();
+			
+			this.listenTo(_self.model, 'sync', function(){
+				_self.render();
+			});
+			this.listenTo(_self.model, 'error', function(){
+				App.Mediatior.trigger("messaging:showAlert", "Some error occured", "error");
 			});
 		}
 	});

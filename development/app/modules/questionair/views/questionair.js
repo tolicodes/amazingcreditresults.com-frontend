@@ -83,30 +83,30 @@ define([
 			qModel = new questionairModel, updateAnswers = new updateAnswersModel;
 			qModel.id = this.userId;
 
-			// set update aswers
-			updateAnswers.save(this.updateAnswer, {
-				success : function() {
-					count++;
-					_self.goToBuyerPage(count);
-				},
-				error : function() {
-					alert("Some error occured");
-				}
+			this.listenTo(updateAnswers, 'sync', function(){
+				count++;
+				_self.goToBuyerPage(count);
 			});
+			
+			this.listenTo(updateAnswers, 'error', function(){
+				App.Mediatior.trigger("messaging:showAlert", "Some error occured", "error");
+			});
+
+			updateAnswers.save();
+
+
 
 			// get questainair
 			var questionair = $(e.target).find(".questionair").prop('checked');
-			qModel.save({
-				needQuestionnaire : questionair
-			}, {
-				success : function() {
-					count++;
-					_self.goToBuyerPage(count);
-				},
-
-				error : function() {
-					alert("Some error occured");
-				}
+			
+			qModel.save();
+			this.listenTo(qModel, 'sync', function(){
+				count++;
+				_self.goToBuyerPage(count);
+			});
+			
+			this.listenTo(qModel, 'error', function(){
+				App.Mediatior.trigger("messaging:showAlert", "Some error occured", "error");
 			});
 		},
 
@@ -147,15 +147,7 @@ define([
 			},
 			idx: 3
 		}];
-		
-			
-			console.log(this.model.toJSON());
 		}
 
-		//render : function() {
-		//	this.$el.html(viewTemplate({
-		//		questions : this.questions
-		//	}));
-		//}
 	});
 });

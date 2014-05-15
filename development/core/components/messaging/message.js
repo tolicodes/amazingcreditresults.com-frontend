@@ -9,13 +9,6 @@ define([
 	Backbone
 ) {
 	return Backbone.View.extend({
-		/*
-		 *  type options :
-		 *  success (default) - to show success message 
-		 *  info  - to show information
-		 *  warning - to show warning
-		 *  danger - to show error message
-		 * */
 		
 		// hooks
 		hooks : {
@@ -44,6 +37,15 @@ define([
 		initialize: function() {
 			this.implementHooks();
 		},
+		
+		 /*
+		 *  type options :
+		 *  success (default) - to show success message 
+		 *  info  - to show information
+		 *  warning - to show warning
+		 *  danger - to show error message
+		 * */
+
 		
 		showMessage : function(options) {
 			console.log(options);

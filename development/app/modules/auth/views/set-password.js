@@ -40,16 +40,18 @@ define([
 				apiKey : "",
 				password : password
 			});
-			this.model.save({
-				success : function() {
-					alert("saved successfully");
+			
+			this.model.save();
+			
+			this.listenTo(this.model, 'sync', function(){
+					App.Mediatior.trigger("messaging:showAlert", "saved successfully", "error");
 					App.routing.navigate("login", {
 						trigger : true
 					});
-				},
-				error : function() {
-					alert("Some error occured");
-				}
+			});
+			
+			this.listenTo(this.model, 'error', function(){
+				App.Mediatior.trigger("messaging:showAlert", "Some error occured", "error");
 			});
 		}
 		

@@ -36,16 +36,18 @@ define([
 
 			var model = new buyerInfoModel();
 			model.id = this.userId;
-			model.fetch({
-				success : function(response) {
-					var route = (response.get("needQuestionare") == "true") ? "questions" : "buyer";
-					App.routing.navigate(route, {
-						trigger : true
-					});
-				},
-				error : function() {
-					alert("Some error occured");
-				}
+			
+			model.fetch();
+			
+			this.listenTo(model, 'sync', function(response){
+				var route = (response.get("needQuestionare") == "true") ? "questions" : "buyer";
+				App.routing.navigate(route, {
+					trigger : true
+				});
+			});
+			
+			this.listenTo(model, 'error', function(){
+				App.Mediatior.trigger("messaging:showAlert", "Some error occured", "error");
 			});
 
 		},
