@@ -20,12 +20,12 @@ define([
 		
 		// schema to generate form
 		schema: {
-	        'First Name':      {type: 'Text', title: "First Name"},
-	        'Last Name':       {type: 'Text', title: "Last Name"},
-	        'email':      { validators: ['required', 'email'] },
+	        'FirstName': {type: 'Text', title: "First Name"},
+	        'LastName':  {type: 'Text', title: "Last Name"},
+	        'Email':     { validators: ['required', 'email'] },
 	        'Address':   {type: 'TextArea', title: "Address"},
-	        'City':       {type: 'Text', title: "City"},
-	        'State':      { type: 'Select', 
+	        'City':      {type: 'Text', title: "City"},
+	        'State':     { type: 'Select', 
 	        				options: ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado',
 									  'Connecticut', 'Delaware', 'District Of Columbia','Florida', 'Georgia', 'Hawaii',
 									  'Idaho', 'Illinois', 'Indiana','Iowa', 'Kansas', 'Kentucky',
@@ -38,23 +38,22 @@ define([
 	        ]},
 			'Zip':       {type: 'Text', title: "Zip"},
 	        'phone':     {type: 'Text', title: "Phone"},
-	        'Alt-phone': {type: 'Text', title: "Alt Phone"},
+	        'AltPhone':  {type: 'Text', title: "Alt Phone"},
 		},
 		
-		// main initialize function
-		init : function(options) {
+		initializeBefore : function(options) {
+			this.model = new model;
+			if(options && options[0])
+				this.model.id = options[0].userDetail.id;
+
+			this.model.fetch();
 			
-			var _self = this;
-			_self.model = new model;
-			_self.model.id = options.userDetail.id;
+			this.listenTo(this.model, 'sync', function(){
+				this.render();
+			}.bind(this));
 			
-			_self.model.fetch();
-			
-			this.listenTo(_self.model, 'sync', function(){
-				_self.render();
-			});
-			this.listenTo(_self.model, 'error', function(){
-				App.Mediatior.trigger("messaging:showAlert", "Some error occured", "error");
+			this.listenTo(this.model, 'error', function(){
+				App.Mediator.trigger("messaging:showAlert", "Some error occured", "error");
 			});
 		}
 	});

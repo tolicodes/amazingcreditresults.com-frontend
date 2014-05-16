@@ -6,7 +6,7 @@
 define([
 	"backbone"
 	], function(
-		Backbone
+	Backbone
 	) {
 
 	return Backbone.View.extend({
@@ -38,12 +38,10 @@ define([
 				_.each(this.hooks, function(hookCallbacks, hookName) {
 					_self.listenTo(_self, hookName, function() {
 						var arg = arguments;
-						if (_.isArray(hookCallbacks)) {
-							_.each(hookCallbacks, function(hookTriggerFn) {
-								if (_.isFunction(_self[hookTriggerFn]))
-									_self[hookTriggerFn](arg);
-							});
-						}
+						_.each(hookCallbacks, function(hookTriggerFn) {
+							if (_.isFunction(_self[hookTriggerFn]))
+								_self[hookTriggerFn](arg);
+						});
 					});
 				});
 			}
@@ -74,31 +72,28 @@ define([
 			this.implementHooks();
 
 			// trigger before intialize
-			this.trigger('intialize:before', this);
-
-			if (this.init && _.isFunction(this.init))
-				this.init(options);
+			this.trigger('intialize:before', options);
 
 			// render template if renderOnInitialize property is set to true
 			if (this.renderOnInitialize)
 				this.render();
 				
 			// trigger after intialize
-			this.trigger('intialize:after', this);	
+			this.trigger('intialize:after');	
 				
 		},
 
 		render : function() {
 			
 			// trigger before render
-			this.trigger('render:before', this);
+			this.trigger('render:before');
 
 			// if tpl is defined
 			if (this.tpl)
 				this.$el.html(this.tpl(_.extend(this.data, this.model && this.model.toJSON())));
 				
 			// trigger after render
-			this.trigger('render:after', this);
+			this.trigger('render:after');
 	
 		}
 	});

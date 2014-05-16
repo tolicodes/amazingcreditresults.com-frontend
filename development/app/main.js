@@ -35,26 +35,23 @@ require.config({
 		'questionair' : ['app/modules/questionair'],
 		
 		'cssPath' : ['app/common/css'],
-		// Application - bootstrap for frontend app
+		
 		'application' : ['app/app'],
 		'base' : ['app/base-view'],
+		'baseModel' : ['app/base-model'],
+		'baseCollection' : ['app/base-collection'],
+		
+		// core components path
 		'formView': ['core/components/form/form-view'],
 		'dataTable': ['core/components/data-table/grid'],
-		'Mediatior': ['core/components/messaging/message']
+		'Mediator': ['core/components/messaging/message']
 
 	},
 
-	// hbs: { // optional
-        // helpers: true,            // default: true
-        // i18n: false,              // default: false
-        // templateExtension: 'hbs', // default: 'hbs'
-        // partialsUrl: ''           // default: ''
-   // },
-
 	map : {
 		'*' : {
-			'less' : 'libs/require-less/less', // path to less
-			'css': 'libs/require-css/css' // or whatever the path to require-css is
+			'less' : 'libs/require-less/less', 
+			'css': 'libs/require-css/css'
 		}
 	},
 
@@ -97,19 +94,21 @@ define([
 	'underscore', 
 	'jquery', 
 	'application',
-	'Mediatior'
+	'Mediator',
+	// bootstrap css file
+	"css!libs/bootstrap/dist/css/bootstrap"
 	], function(
-		Backbone, 
-		_, 
-		$, 
-		app,
-		mediatior
+	Backbone, 
+	_, 
+	$, 
+	application,
+	mediator
 	) {
 	$(document).ready(function() {
 		App = {};
-		console.log(new mediatior);
-		App.Mediatior = new mediatior;
-		App.routing = new app();
+		App.routing = new application();
 		Backbone.history.start({});
+		// create Mediatior object for messaging
+		App.Mediator = new mediator;		
 	});
 });

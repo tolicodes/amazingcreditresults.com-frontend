@@ -9,10 +9,10 @@ define([
 	"auth/models/setPassword", 
 	"buyer/models/info"
 	], function(
-		Base, 
-		viewTemplate, 
-		setPasswordModel, 
-		buyerInfoModel
+	Base, 
+	viewTemplate, 
+	setPasswordModel, 
+	buyerInfoModel
 	) {
 
 	return Base.extend({
@@ -24,11 +24,11 @@ define([
 
 		handleFormSubmit : function(e) {
 			e.preventDefault();
-			$(e.target).attr("disabled", true);
+			$(e.target).prop("disabled", true);
 			var password = $(e.target).find("#password").val();
 			if (!password) {
 				alert("Please enter password");
-				$(e.target).attr("disabled", false);
+				$(e.target).prop("disabled", false);
 				return false;
 			}
 
@@ -47,14 +47,14 @@ define([
 			});
 			
 			this.listenTo(model, 'error', function(){
-				App.Mediatior.trigger("messaging:showAlert", "Some error occured", "error");
+				App.Mediator.trigger("messaging:showAlert", "Some error occured", "error");
 			});
 
 		},
 		
-		// main initialize function
-		init : function(options) {
-			this.userId = options.userDetail.id;
+		initializeBefore : function(options) {
+			if(options && options[0])
+				this.userId = options[0].userDetail.id;
 		}
 
 	});

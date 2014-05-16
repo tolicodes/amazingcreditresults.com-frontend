@@ -4,13 +4,12 @@
 // Return Backbone Model {Object}
 
 define([
-	"backbone"
-], function(
-	Backbone
-) {
+	"baseModel"
+	], function(
+	BaseModel
+	) {
 
-	return Backbone.Model.extend({
-		apiUrl: "/api/v1/",
+	return BaseModel.extend({
 		url : function() {
 			return this.apiUrl + "buyer/saveQuestionnaireAnswers";
 		}

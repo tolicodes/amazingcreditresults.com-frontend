@@ -1,7 +1,8 @@
-// home.js
+// info.js
 // --------------
 // Requires define
 // Return Backbone View {Object}
+
 
 define([
 	"dataTable"
@@ -12,27 +13,51 @@ define([
 	return DataTable.extend({
 
 		columns:  [{
-				name : "id",
+				name : "Bar",
 				editable : false,
 				cell : Backgrid.IntegerCell.extend({
 					orderSeparator : ''
 				})
 			}, {
-				name : "name",
+				name : "Product Name",
 				cell : "string"
 			}, {
-				name : "pop",
+				name : "Statement",
 				cell : "integer"
 			}, {
-				name : "percentage",
+				name : "Date",
 				cell : "number"
 			}, {
-				name : "date",
+				name : "Payment",
 				cell : "date"
 			}, {
-				name : "url",
+				name : "Current",
 				cell : "uri"
 			}],
+			
+			
+			/*, {
+				name : "Max",
+				cell : "uri"
+			}, {
+				name : "Credit",
+				cell : "uri"
+			}, {
+				name : "Cash",
+				cell : "uri"
+			}, {
+				name : "Balance",
+				cell : "uri"
+			}, {
+				name : "Ratings",
+				cell : "uri"
+			}, {
+				name : "Report",
+				cell : "uri"
+			}, {
+				name : "Cc",
+				cell : "uri"
+			}*/
 			
 		url: "http://backbone-paginator.github.io/backbone-pageable/examples/json/pageable-territories.json",
 

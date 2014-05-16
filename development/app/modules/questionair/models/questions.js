@@ -4,12 +4,12 @@
 // Return Backbone Model {Object}
 
 define([
-	"backbone"
-], function( 
-	Backbone
-) {
+	"baseModel"
+	], function(
+	BaseModel
+	) {
 
-	return Backbone.Model.extend({
+	return BaseModel.extend({
 
 	});
 });

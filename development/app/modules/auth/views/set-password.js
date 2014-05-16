@@ -21,16 +21,16 @@ define([
 
 		handleFormSubmit : function(e) {
 			e.preventDefault();
-			$(e.target).attr("disabled", true);
+			$(e.target).prop("disabled", true);
 			var password = $(e.target).find("#password").val(), confirmPassword = $(e.target).find("#confirmPassword").val();
 
 			if (!password) {
 				alert("Please enter password");
-				$(e.target).attr("disabled", false);
+				$(e.target).prop("disabled", false);
 				return false;
 			} else if (password != confirmPassword) {
 				alert("Please confirm password");
-				$(e.target).attr("disabled", false);
+				$(e.target).prop("disabled", false);
 				return false;
 			}
 
@@ -44,14 +44,14 @@ define([
 			this.model.save();
 			
 			this.listenTo(this.model, 'sync', function(){
-					App.Mediatior.trigger("messaging:showAlert", "saved successfully", "error");
+					App.Mediator.trigger("messaging:showAlert", "saved successfully");
 					App.routing.navigate("login", {
 						trigger : true
 					});
 			});
 			
 			this.listenTo(this.model, 'error', function(){
-				App.Mediatior.trigger("messaging:showAlert", "Some error occured", "error");
+				App.Mediator.trigger("messaging:showAlert", "Some error occured", "error");
 			});
 		}
 		

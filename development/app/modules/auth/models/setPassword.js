@@ -4,13 +4,12 @@
 // Return Backbone Model {Object}
 
 define([
-	"backbone"
+	"baseModel"
 	], function(
-		Backbone
+	BaseModel
 	) {
 
-	return Backbone.Model.extend({
-		apiUrl: "/",
+	return BaseModel.extend({
 		id: undefined,
 		url : function() {
 			return this.apiUrl + "buyer/setPassword";

@@ -89,7 +89,7 @@ define([
 			});
 			
 			this.listenTo(updateAnswers, 'error', function(){
-				App.Mediatior.trigger("messaging:showAlert", "Some error occured", "error");
+				App.Mediator.trigger("messaging:showAlert", "Some error occured", "error");
 			});
 
 			updateAnswers.save();
@@ -106,7 +106,7 @@ define([
 			});
 			
 			this.listenTo(qModel, 'error', function(){
-				App.Mediatior.trigger("messaging:showAlert", "Some error occured", "error");
+				App.Mediator.trigger("messaging:showAlert", "Some error occured", "error");
 			});
 		},
 
@@ -119,9 +119,9 @@ define([
 			}
 		},
 
-		// init function
-		init : function(options) {
-			this.userId = options.userDetail.id;
+		initializeBefore : function(options) {
+			if(options && options[0])
+				this.userId = options[0].userDetail.id;
 			this.model = new questionModel();
 			
 			this.data.questions = [{

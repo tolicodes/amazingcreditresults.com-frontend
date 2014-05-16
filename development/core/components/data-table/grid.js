@@ -8,15 +8,16 @@ define([
 	"backgrid", 
 	"pageableCollection", 
 	"backgridPaginator",
-	"hbs!core/components/data-table/templates/grid"
+	"hbs!core/components/data-table/templates/grid",
+	"css!libs/backbone-pageable/examples/css/backgrid",
+	"css!libs/backgrid-paginator/backgrid-paginator"
 ], function(
-		Base, 
-		Backgrid, 
-		PageableCollection, 
-		BackgridPaginator, 
-		viewTemplate
+	Base, 
+	Backgrid, 
+	PageableCollection, 
+	BackgridPaginator, 
+	viewTemplate
 ) {
-	// , 'less!cssPath/backgrid', 'less!cssPath/backgrid-paginator'
 	return Base.extend({
 
 		tpl: viewTemplate,
