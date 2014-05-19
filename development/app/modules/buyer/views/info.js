@@ -11,7 +11,11 @@ define([
 ], function(
 	FormView, 
 	viewTemplate, 
-	model
+	model,
+	productModel,
+	tradelineModel,
+	transactionModel,
+	usersModel
 ) {
 
 	return FormView.extend({
@@ -43,7 +47,7 @@ define([
 		
 		initializeBefore : function(options) {
 			this.model = new model;
-			if(options && options[0])
+			if(options && options[0] && options[0].userDetail)
 				this.model.id = options[0].userDetail.id;
 
 			this.model.fetch();
@@ -53,8 +57,9 @@ define([
 			}.bind(this));
 			
 			this.listenTo(this.model, 'error', function(){
+				//this.render();
 				App.Mediator.trigger("messaging:showAlert", "Some error occured", "error");
-			});
+			}.bind(this));
 		}
 	});
 });

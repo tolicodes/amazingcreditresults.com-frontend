@@ -6,7 +6,8 @@
 define([
 	"backbone",
 	"home/views/home",
-	"buyer/views/info",
+	//"buyer/views/info",
+	"buyer/layout/buyer-layout",	
 	"grid/views/grid",
 	"auth/views/set-password",
 	"auth/views/login",
@@ -92,8 +93,7 @@ define([
 				this.currentView = new pageName({
 					userDetail : userDetail
 				});
-				this.currentView.el = "body";
-			}.bind(this.currentView));
+			}.bind(this));
 		},
 
 		// main initialize function

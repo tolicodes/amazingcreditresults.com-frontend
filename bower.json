@@ -33,6 +33,8 @@
     "underscore": "*",
     "handlebars": "*",
     "requirejs-text": "*",
-    "backbone-forms": "*"
+    "backbone-forms": "*",
+    "backbone-relational": "*",
+    "layoutmanager": "*"
   }
 }

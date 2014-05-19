@@ -4,9 +4,11 @@
 // Return Backbone Base Model {Object}
 
 define([
-	"backbone"
+	"backbone",
+	"backboneRelational"
 	], function(
-	Backbone
+	Backbone,
+	BackboneRelational
 	) {
 
 	return Backbone.Model.extend({

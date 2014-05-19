@@ -15,36 +15,40 @@ require.config({
 	},
 	paths : {
 		// Libraries
-		'backbone' : ['libs/backbone/backbone'],
+		'backbone' : 'libs/backbone/backbone',
+		'backboneRelational' : 'libs/backbone-relational/backbone-relational',
+		'layoutManagers' : 'libs/layoutmanager/backbone.layoutmanager',
 		"backboneForms": 'libs/backbone-forms/distribution.amd/backbone-forms',
-		'underscore' : ['libs/underscore/underscore'],
+		'underscore' : 'libs/underscore/underscore',
 		'jquery' : 'libs/jquery/jquery',
 		'backgrid' : 'libs/backgrid/lib/backgrid',
 		'pageableCollection' : 'libs/backbone-pageable/lib/backbone-pageable',
 		'backgridPaginator' : 'libs/backgrid-paginator/backgrid-paginator',
 		'hbs' : 'libs/require-handlebars-plugin/hbs',
 		'Handlebars': 'libs/handlebars/handlebars',
-		'bootstrap' : ['libs/bootstrap/dist/js/bootstrap'],
-		'text' : ['libs/requirejs-text/text'],
+		'bootstrap' : 'libs/bootstrap/dist/js/bootstrap',
+		'text' : 'libs/requirejs-text/text',
 
 		// Should be used as required dependencies with use of `define`,
-		'auth' : ['app/modules/auth'],
-		'buyer' : ['app/modules/buyer'],
-		'grid' : ['app/modules/grid'],
-		'home' : ['app/modules/home'],
-		'questionair' : ['app/modules/questionair'],
+		'auth' : 'app/modules/auth',
+		'buyer': 'app/modules/buyer',
+		'grid' : 'app/modules/grid',
+		'home' : 'app/modules/home',
+		'questionair' : 'app/modules/questionair',
 		
-		'cssPath' : ['app/common/css'],
+		'cssPath' : 'app/common/css',
 		
-		'application' : ['app/app'],
-		'base' : ['app/base-view'],
-		'baseModel' : ['app/base-model'],
-		'baseCollection' : ['app/base-collection'],
+		'application' : 'app/app',
+		'base' : 'app/base-view',
+		'baseLayout' : 'app/base-layout',
+		'baseModel' : 'app/base-model',
+		'relationalModel' : 'app/relational-model',
+		'baseCollection' : 'app/base-collection',
 		
 		// core components path
-		'formView': ['core/components/form/form-view'],
-		'dataTable': ['core/components/data-table/grid'],
-		'Mediator': ['core/components/messaging/message']
+		'formView': 'core/components/form/form-view',
+		'dataTable':'core/components/data-table/grid',
+		'Mediator': 'core/components/messaging/message'
 
 	},
 
@@ -70,6 +74,9 @@ require.config({
 			deps : ['underscore', 'jquery'],
 			exports : 'Backbone'
 		},
+		
+		'layoutManagers': ["backbone"],
+		
 		'backgrid' : {
 			exports : 'Backgrid',
 			deps : ['backbone']
