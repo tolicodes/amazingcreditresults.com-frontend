@@ -7,45 +7,56 @@ require.config({
 	baseUrl : './',
 	locale : 'en-us',
 	config : {
-		text : {
-			useXhr : function(url, protocol, hostname, port) {
-				return true;
-			}
-		}
+		 text : {
+			 useXhr : function(url, protocol, hostname, port) {
+				 return true;
+			 }
+		 }
 	},
 	paths : {
 		// Libraries
-		'backbone' : ['app/libs/backbone'],
-		'underscore' : ['app/libs/underscore'],
-		'jquery' : 'app/libs/jquery.1.10.2.min',
-		'backgrid' : 'app/libs/backgrid',
-		'pageableCollection' : 'app/libs/backbone-pageable',
-		'backgridPaginator' : 'app/libs/backgrid-paginator',
-		'hbs' : 'app/libs/hbs',
-		// Plugins
-		'bootstrap' : ['app/libs/bootstrap.min'],
-		'text' : ['app/libs/text'],
+		'backbone' : 'libs/backbone/backbone',
+		'backboneRelational' : 'libs/backbone-relational/backbone-relational',
+		'backboneValidator' : 'libs/backbone-validator/backbone-validator',
+		'layoutManagers' : 'libs/layoutmanager/backbone.layoutmanager',
+		"backboneForms": 'libs/backbone-forms/distribution.amd/backbone-forms',
+		'underscore' : 'libs/underscore/underscore',
+		'jquery' : 'libs/jquery/jquery',
+		'backgrid' : 'libs/backgrid/lib/backgrid',
+		'pageableCollection' : 'libs/backbone-pageable/lib/backbone-pageable',
+		'backgridPaginator' : 'libs/backgrid-paginator/backgrid-paginator',
+		'hbs' : 'libs/require-handlebars-plugin/hbs',
+		'Handlebars': 'libs/handlebars/handlebars',
+		'bootstrap' : 'libs/bootstrap/dist/js/bootstrap',
+		'text' : 'libs/requirejs-text/text',
+
 		// Should be used as required dependencies with use of `define`,
-		'models' : ['app/js/models'],
-		'views' : ['app/js/views'],
-		'collections' : ['app/js/collections'],
-		'cssPath' : ['css'],
-		// Application - bootstrap for frontend app
-		'application' : ['app/app']
+		'auth' : 'app/modules/auth',
+		'buyer': 'app/modules/buyer',
+		'grid' : 'app/modules/grid',
+		'home' : 'app/modules/home',
+		'questionair' : 'app/modules/questionair',
+		
+		'cssPath' : 'app/common/css',
+		
+		'application' : 'app/app',
+		'base' : 'app/base-view',
+		'baseLayout' : 'app/base-layout',
+		'baseModel' : 'app/base-model',
+		'relationalModel' : 'app/relational-model',
+		'baseCollection' : 'app/base-collection',
+		
+		// core components path
+		'formView': 'core/components/form/form-view',
+		'dataTable':'core/components/data-table/grid',
+		'Mediator': 'core/components/messaging/message'
 
-	},
-
-	hbs : {// optional
-		helpers : true, // default: true
-		i18n : false, // default: false
-		templateExtension : 'hbs', // default: 'hbs'
-		partialsUrl : '' // default: ''
 	},
 
 	map : {
 		'*' : {
-			'less' : 'app/libs/require-less/less', // path to less
-			'css': 'app/libs/css' // or whatever the path to require-css is
+			'less' : 'libs/require-less/less', 
+			'css': 'libs/require-css/css'
 		}
 	},
 
@@ -64,6 +75,11 @@ require.config({
 			deps : ['underscore', 'jquery'],
 			exports : 'Backbone'
 		},
+		
+		'backboneValidator': ["backbone"],
+		
+		'layoutManagers': ["backbone"],
+		
 		'backgrid' : {
 			exports : 'Backgrid',
 			deps : ['backbone']
@@ -77,16 +93,32 @@ require.config({
 			deps : ['backbone']
 		}
 	},
-	priority : ['text', 'models', 'views', 'collections', 'controller'],
+	priority : [],
 	jquery : '1.10.2',
 	waitSeconds : 60
 });
 
 // initializing the router "application" on startup
-define(['require', 'backbone', 'underscore', 'jquery', 'application'], function(require, Backbone, _, $, app) {
+define([
+	'backbone', 
+	'underscore', 
+	'jquery', 
+	'application',
+	'Mediator',
+	// bootstrap css file
+	"css!libs/bootstrap/dist/css/bootstrap"
+	], function(
+	Backbone, 
+	_, 
+	$, 
+	application,
+	mediator
+	) {
 	$(document).ready(function() {
 		App = {};
-		App.routing = new app();
+		App.routing = new application();
 		Backbone.history.start({});
+		// create Mediatior object for messaging
+		App.Mediator = new mediator;		
 	});
 });
