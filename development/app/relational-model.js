@@ -5,7 +5,8 @@
 
 define([
 	"backbone",
-	"backboneRelational"
+	"backboneRelational",
+	"backboneValidator"
 	], function(
 	Backbone
 	) {

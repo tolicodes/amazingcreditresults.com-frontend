@@ -5,10 +5,9 @@
 
 define([
 	"backbone",
-	"backboneRelational"
+	"backboneValidator"
 	], function(
-	Backbone,
-	BackboneRelational
+	Backbone
 	) {
 
 	return Backbone.Model.extend({

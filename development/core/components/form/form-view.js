@@ -31,8 +31,7 @@ define([
 		// validate forms return false if it has errors
 		validateForms: function() {
 			var errors = this.form.commit();
-			console.log(errors);
-			return (errors)?false:true;
+			return !!errors;
 		},
 		
 		// return form all values

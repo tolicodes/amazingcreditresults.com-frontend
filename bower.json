@@ -35,6 +35,7 @@
     "requirejs-text": "*",
     "backbone-forms": "*",
     "backbone-relational": "*",
-    "layoutmanager": "*"
+    "layoutmanager": "*",
+    "backbone-validator": "*"
   }
 }

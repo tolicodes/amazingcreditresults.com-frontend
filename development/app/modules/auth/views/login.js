@@ -33,10 +33,8 @@ define([
 			}
 
 			// save the password and redirect
-
 			var model = new buyerInfoModel();
 			model.id = this.userId;
-			
 			model.fetch();
 			
 			this.listenTo(model, 'sync', function(response){

@@ -17,6 +17,7 @@ require.config({
 		// Libraries
 		'backbone' : 'libs/backbone/backbone',
 		'backboneRelational' : 'libs/backbone-relational/backbone-relational',
+		'backboneValidator' : 'libs/backbone-validator/backbone-validator',
 		'layoutManagers' : 'libs/layoutmanager/backbone.layoutmanager',
 		"backboneForms": 'libs/backbone-forms/distribution.amd/backbone-forms',
 		'underscore' : 'libs/underscore/underscore',
@@ -74,6 +75,8 @@ require.config({
 			deps : ['underscore', 'jquery'],
 			exports : 'Backbone'
 		},
+		
+		'backboneValidator': ["backbone"],
 		
 		'layoutManagers': ["backbone"],
 		

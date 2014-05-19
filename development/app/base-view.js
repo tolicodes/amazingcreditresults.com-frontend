@@ -24,7 +24,7 @@ define([
 		data: {},
 
 		// default target element
-		//el : '.container',
+		el : '.container',
 
 		// hooks
 		hooks : {
@@ -50,28 +50,19 @@ define([
 			}
 		},
 		
-		// before initialize function
-		initializeBefore:function() {
-			console.log("before initialize");
-		},
-		
-		// after initialize function
-		initializeAfter: function() {
-			console.log("After initialize");
-		},
+		addViewHooks: function() {
+			if(this.extraHooks) {
+				_.each(this.extraHooks, function(methods, name) {
+					this.hooks[name] = methods;
+				}.bind(this));
+			}
 
-		// before render function
-		beforeRender:function() {
-			console.log("before render");
-		},
-		
-		// after render function
-		afterRender: function() {
-			console.log("After render");
 		},
 
 		// main initialize function
 		initialize : function(options) {
+			
+			this.addViewHooks();
 			this.implementHooks();
 
 			// trigger before intialize
@@ -87,17 +78,17 @@ define([
 		},
 
 		render : function() {
-			
 			// trigger before render
 			this.trigger('render:before');
-
+			this.appendTemplate();
+			// trigger after render
+			this.trigger('render:after');
+		},
+		
+		appendTemplate: function() {
 			// if tpl is defined
 			if (this.tpl)
 				this.$el.html(this.tpl(_.extend(this.data, this.model && this.model.toJSON())));
-				
-			// trigger after render
-			this.trigger('render:after');
-	
 		}
 	});
 });

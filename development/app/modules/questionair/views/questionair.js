@@ -21,11 +21,15 @@ define([
 
 		tpl: viewTemplate,
 
+		extraHooks: {
+			'intialize:before' : ['setQuestions']
+		},
+
 		events : {
 			'submit .find-trade-form' : 'updateQuestionair',
 			'click .questainair-options' : 'updateAnswerFn',
 			'keyup .total-dept' : 'updateAmount',
-			'keyup .anual-income' : 'updateAmount',
+			'keyup .anual-income' : 'updateAmount'
 		},
 
 		// answer range for calculated questions
@@ -56,7 +60,6 @@ define([
 			var index = parseInt($(e.target).parents('.question-index').data("question")) + 1, dept = this.$el.find(".total-dept").val(), annual = this.$el.find(".anual-income").val(), cal;
 			cal = dept / annual;
 			this.$el.find(".result").html(cal);
-			// value is hardcoded right now
 			this.updateAnswer['answer' + index] = this.getTheRange(cal, index);
 		},
 
@@ -79,31 +82,29 @@ define([
 		// uodate questionair
 		updateQuestionair : function(e) {
 			e.preventDefault();
-			var _self = this, count = 0;
-			qModel = new questionairModel, updateAnswers = new updateAnswersModel;
-			qModel.id = this.userId;
+			var count = 0, qModel = new questionairModel({id:this.userId}), 
+			updateAnswers = new updateAnswersModel,
+			questionair = $(e.target).find(".questionair").prop('checked');
 
 			this.listenTo(updateAnswers, 'sync', function(){
 				count++;
-				_self.goToBuyerPage(count);
-			});
+				this.goToBuyerPage(count);
+			}.bind(this));
 			
 			this.listenTo(updateAnswers, 'error', function(){
 				App.Mediator.trigger("messaging:showAlert", "Some error occured", "error");
 			});
-
+			
+			updateAnswers.set(this.updateAnswer);	
 			updateAnswers.save();
 
-
-
-			// get questainair
-			var questionair = $(e.target).find(".questionair").prop('checked');
-			
+			qModel.set({needQuestionnaire : questionair});
 			qModel.save();
+			
 			this.listenTo(qModel, 'sync', function(){
 				count++;
-				_self.goToBuyerPage(count);
-			});
+				this.goToBuyerPage(count);
+			}.bind(this));
 			
 			this.listenTo(qModel, 'error', function(){
 				App.Mediator.trigger("messaging:showAlert", "Some error occured", "error");
@@ -118,8 +119,10 @@ define([
 				});
 			}
 		},
+		
 
-		initializeBefore : function(options) {
+		setQuestions : function(options) {
+			
 			if(options && options[0])
 				this.userId = options[0].userDetail.id;
 			this.model = new questionModel();

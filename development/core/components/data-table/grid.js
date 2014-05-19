@@ -41,11 +41,7 @@ define([
 		},
 
 		afterRender: function() {
-			var _self = this;
-			setTimeout(function() {
-				_self.generateTable();				
-			}, 100);
-
+			setTimeout(this.generateTable(), 100);
 		}
 	});
 });

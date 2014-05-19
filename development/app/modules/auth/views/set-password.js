@@ -22,7 +22,8 @@ define([
 		handleFormSubmit : function(e) {
 			e.preventDefault();
 			$(e.target).prop("disabled", true);
-			var password = $(e.target).find("#password").val(), confirmPassword = $(e.target).find("#confirmPassword").val();
+			var password = $(e.target).find("#password").val(), 
+			confirmPassword = $(e.target).find("#confirmPassword").val();
 
 			if (!password) {
 				alert("Please enter password");
@@ -44,10 +45,10 @@ define([
 			this.model.save();
 			
 			this.listenTo(this.model, 'sync', function(){
-					App.Mediator.trigger("messaging:showAlert", "saved successfully");
-					App.routing.navigate("login", {
-						trigger : true
-					});
+				App.Mediator.trigger("messaging:showAlert", "saved successfully");
+				App.routing.navigate("login", {
+					trigger : true
+				});
 			});
 			
 			this.listenTo(this.model, 'error', function(){

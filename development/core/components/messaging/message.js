@@ -4,38 +4,25 @@
 // Return Message object {Object}
 
 define([
-	"backbone"
+	"base",
+	"hbs!core/components/messaging/message"
 ], function(
-	Backbone
+	Base,
+	viewTemplate
 ) {
-	return Backbone.View.extend({
+	return Base.extend({
+		
+		tpl: viewTemplate,
 		
 		// hooks
-		hooks : {
+		extraHooks : {
 			'messaging:showAlert' : ['showMessage'],
 			'messaging:hideAlert' : ['hideMessage']
 		},
 		
-		implementHooks : function() {
-			var _self = this;
-			if (this.hooks) {
-				_.each(_self.hooks, function(hookCallbacks, hookName) {
-					console.log(hookName);
-					_self.listenTo(_self, hookName, function(a) {
-						var arg = arguments;
-						if (_.isArray(hookCallbacks)) {
-							_.each(hookCallbacks, function(hookTriggerFn) {
-								if (_.isFunction(_self[hookTriggerFn]))
-									_self[hookTriggerFn](arg);
-							});
-						}
-					});
-				});
-			}
-		}, 
-		
-		initialize: function() {
-			this.implementHooks();
+		initializeBefore: function() {
+			if(!$(".message-area").length)
+				$("body").append('<div class="message-area"></div>');
 		},
 		
 		 /*
@@ -44,11 +31,9 @@ define([
 		 *  info  - to show information
 		 *  warning - to show warning
 		 *  danger - to show error message
-		 * */
-
+		 * */		
 		
 		showMessage : function(options) {
-			console.log(options);
 			this.message = (options && options[0])?options[0]:"";
 			this.type = (options && options[1])?options[1]:"success";
 			$(".alert-message-h").addClass("alert-"+this.type).removeClass('hide').html(this.message);			
@@ -56,6 +41,13 @@ define([
 		
 		hideMessage : function() {
 			$(".alert-message-h").html("").removeClass('hide').removeClass("alert-"+this.type);
+		},
+		
+		appendTemplate : function() {
+			if(this.tpl)
+				$('div.message-area').html(this.tpl(_.extend(this.data, this.model && this.model.toJSON())));
 		}
+
+		
 	});
 });	
