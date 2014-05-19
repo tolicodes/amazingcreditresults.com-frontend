@@ -3,26 +3,35 @@
 // Requires define
 // Return Backbone View {Object}
 
-define(["require", "backbone", "hbs!templates/auth/set-password", "models/auth/setPassword"], function(require, Backbone, viewTemplate, setPassword) {
+define([
+	"base", 
+	"hbs!auth/templates/set-password", 
+	"auth/models/setPassword"
+], function(
+	Base, 
+	viewTemplate, 
+	setPassword
+) {
 
-	return Backbone.View.extend({
-
+	return Base.extend({
+		tpl: viewTemplate,
 		events : {
 			'submit .reset-password-form' : 'handleFormSubmit'
 		},
 
 		handleFormSubmit : function(e) {
 			e.preventDefault();
-			$(e.target).attr("disabled", "true");
-			var password = $(e.target).find("#password").val(), confirmPassword = $(e.target).find("#confirmPassword").val();
+			$(e.target).prop("disabled", true);
+			var password = $(e.target).find("#password").val(), 
+			confirmPassword = $(e.target).find("#confirmPassword").val();
 
 			if (!password) {
 				alert("Please enter password");
-				$(e.target).attr("disabled", "true");
+				$(e.target).prop("disabled", false);
 				return false;
 			} else if (password != confirmPassword) {
 				alert("Please confirm password");
-				$(e.target).attr("disabled", "true");
+				$(e.target).prop("disabled", false);
 				return false;
 			}
 
@@ -32,26 +41,20 @@ define(["require", "backbone", "hbs!templates/auth/set-password", "models/auth/s
 				apiKey : "",
 				password : password
 			});
-			this.model.save({
-				success : function() {
-					alert("saved successfully");
-					App.routing.navigate("login", {
-						trigger : true
-					});
-				},
-				error : function() {
-					alert("Some error occured");
-				}
+			
+			this.model.save();
+			
+			this.listenTo(this.model, 'sync', function(){
+				App.Mediator.trigger("messaging:showAlert", "saved successfully");
+				App.routing.navigate("login", {
+					trigger : true
+				});
 			});
-		},
-		
-		// main initialize function
-		initialize : function(options) {
-
-		},
-
-		render : function() {
-			this.$el.html(viewTemplate());
+			
+			this.listenTo(this.model, 'error', function(){
+				App.Mediator.trigger("messaging:showAlert", "Some error occured", "error");
+			});
 		}
+		
 	});
 });

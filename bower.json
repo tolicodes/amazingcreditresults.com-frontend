@@ -20,14 +20,22 @@
     "tests"
   ],
   "dependencies": {
+    "requirejs" : "*",
     "bootstrap": "~3.1.1",
     "backbone": "*",
     "backbone-pageable": "*",
+    "backgrid-paginator": "*",
     "backgrid": "*",
     "require-css": "*",
     "require-less": "*",
-    "require-handlebars": "*",
+    "require-handlebars-plugin": "*",
     "jquery": "*",
-    "underscore": "*"
+    "underscore": "*",
+    "handlebars": "*",
+    "requirejs-text": "*",
+    "backbone-forms": "*",
+    "backbone-relational": "*",
+    "layoutmanager": "*",
+    "backbone-validator": "*"
   }
 }

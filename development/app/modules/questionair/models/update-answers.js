@@ -3,10 +3,13 @@
 // Requires define
 // Return Backbone Model {Object}
 
-define(["require", "backbone"], function(require, Backbone, viewTemplate) {
+define([
+	"baseModel"
+	], function(
+	BaseModel
+	) {
 
-	return Backbone.Model.extend({
-		apiUrl: "/api/v1/",
+	return BaseModel.extend({
 		url : function() {
 			return this.apiUrl + "buyer/saveQuestionnaireAnswers";
 		}

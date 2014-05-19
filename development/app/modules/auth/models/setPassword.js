@@ -3,10 +3,13 @@
 // Requires define
 // Return Backbone Model {Object}
 
-define(["require", "backbone"], function(require, Backbone, viewTemplate) {
+define([
+	"baseModel"
+	], function(
+	BaseModel
+	) {
 
-	return Backbone.Model.extend({
-		apiUrl: "/",
+	return BaseModel.extend({
 		id: undefined,
 		url : function() {
 			return this.apiUrl + "buyer/setPassword";

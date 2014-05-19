@@ -34,6 +34,6 @@
     "commit": "b5cb23850afd626b26829f2001979dc31f71a819"
   },
   "_source": "git://github.com/wyuenho/backgrid.git",
-  "_target": "*",
+  "_target": "~0.3.5",
   "_originalSource": "backgrid"
 }

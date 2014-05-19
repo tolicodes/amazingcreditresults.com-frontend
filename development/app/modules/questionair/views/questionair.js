@@ -3,42 +3,34 @@
 // Requires define
 // Return Backbone View {Object}
 
-define(["require", "backbone", "hbs!templates/questionair/questionair", "models/questionair/questionair", "models/questionair/update-answers"], function(require, Backbone, viewTemplate, questionairModel, updateAnswersModel) {
+define([
+	"base", 
+	"hbs!questionair/templates/questionair", 
+	"questionair/models/questionair", 
+	"questionair/models/update-answers",
+	"questionair/models/questions"
+], function(
+	Base, 
+	viewTemplate, 
+	questionairModel, 
+	updateAnswersModel,
+	questionModel
+) {
 
-	return Backbone.View.extend({
+	return Base.extend({
+
+		tpl: viewTemplate,
+
+		extraHooks: {
+			'intialize:before' : ['setQuestions']
+		},
 
 		events : {
 			'submit .find-trade-form' : 'updateQuestionair',
 			'click .questainair-options' : 'updateAnswerFn',
 			'keyup .total-dept' : 'updateAmount',
-			'keyup .anual-income' : 'updateAmount',
+			'keyup .anual-income' : 'updateAmount'
 		},
-
-		el : 'body',
-
-		questions : [{
-			question : {
-				q : "What is the length of your credit history (the date you opened your first account)?",
-				options : ["< 1 year", "1-3 years", "3-10 years", "> 10 year"],
-				linkRequired : true
-			},
-			idx: 1
-
-		}, {
-			question : {
-				q : "What is your credit score?",
-				options : ["280 - 559", "560 - 659", "660 - 724", "725 - 759", "760 - 850"],
-				linkRequired : true
-			},
-			idx: 2
-		}, {
-			question : {
-				q : "What if your debt to income ratio (field for total credit card debt, field for annual income)",
-				options : ["<span>Total Debt:</span>  $<input type='text' class='total-dept' /> ", "<span>Annual Income:</span>  $<input type='text' class='anual-income' /> ", "<span>Your DTI: x%</span> <span class='result'></span>"],
-				linkRequired : false
-			},
-			idx: 3
-		}],
 
 		// answer range for calculated questions
 		answersRange : {
@@ -68,7 +60,6 @@ define(["require", "backbone", "hbs!templates/questionair/questionair", "models/
 			var index = parseInt($(e.target).parents('.question-index').data("question")) + 1, dept = this.$el.find(".total-dept").val(), annual = this.$el.find(".anual-income").val(), cal;
 			cal = dept / annual;
 			this.$el.find(".result").html(cal);
-			// value is hardcoded right now
 			this.updateAnswer['answer' + index] = this.getTheRange(cal, index);
 		},
 
@@ -86,41 +77,37 @@ define(["require", "backbone", "hbs!templates/questionair/questionair", "models/
 
 		updateAnswerFn : function(e) {
 			this.updateAnswer['answer' + (parseInt($(e.currentTarget).parents(".question-index").data("question")) + 1)] = parseInt($(e.currentTarget).parents(".q-option-index").data("answer")) + 1;
-			console.log(this.updateAnswer);
 		},
 
 		// uodate questionair
 		updateQuestionair : function(e) {
 			e.preventDefault();
-			var _self = this, count = 0;
-			qModel = new questionairModel, updateAnswers = new updateAnswersModel;
-			qModel.id = this.userId;
+			var count = 0, qModel = new questionairModel({id:this.userId}), 
+			updateAnswers = new updateAnswersModel,
+			questionair = $(e.target).find(".questionair").prop('checked');
 
-			// set update aswers
-			updateAnswers.save(this.updateAnswer, {
-				success : function() {
-					count++;
-					_self.goToBuyerPage(count);
-				},
-				error : function() {
-					alert("Some error occured");
-				}
+			this.listenTo(updateAnswers, 'sync', function(){
+				count++;
+				this.goToBuyerPage(count);
+			}.bind(this));
+			
+			this.listenTo(updateAnswers, 'error', function(){
+				App.Mediator.trigger("messaging:showAlert", "Some error occured", "error");
 			});
+			
+			updateAnswers.set(this.updateAnswer);	
+			updateAnswers.save();
 
-			// get questainair
-			var questionair = $(e.target).find(".questionair").is(':checked');
-
-			qModel.save({
-				needQuestionnaire : questionair
-			}, {
-				success : function() {
-					count++;
-					_self.goToBuyerPage(count);
-				},
-
-				error : function() {
-					alert("Some error occured");
-				}
+			qModel.set({needQuestionnaire : questionair});
+			qModel.save();
+			
+			this.listenTo(qModel, 'sync', function(){
+				count++;
+				this.goToBuyerPage(count);
+			}.bind(this));
+			
+			this.listenTo(qModel, 'error', function(){
+				App.Mediator.trigger("messaging:showAlert", "Some error occured", "error");
 			});
 		},
 
@@ -132,16 +119,38 @@ define(["require", "backbone", "hbs!templates/questionair/questionair", "models/
 				});
 			}
 		},
+		
 
-		// main initialize function
-		initialize : function(options) {
-			this.userId = options.userDetail.id;
-		},
+		setQuestions : function(options) {
+			
+			if(options && options[0])
+				this.userId = options[0].userDetail.id;
+			this.model = new questionModel();
+			
+			this.data.questions = [{
+			question : {
+				q : "What is the length of your credit history (the date you opened your first account)?",
+				options : ["< 1 year", "1-3 years", "3-10 years", "> 10 year"],
+				linkRequired : true
+			},
+			idx: 1
 
-		render : function() {
-			this.$el.html(viewTemplate({
-				questions : this.questions
-			}));
+		}, {
+			question : {
+				q : "What is your credit score?",
+				options : ["280 - 559", "560 - 659", "660 - 724", "725 - 759", "760 - 850"],
+				linkRequired : true
+			},
+			idx: 2
+		}, {
+			question : {
+				q : "What if your debt to income ratio (field for total credit card debt, field for annual income)",
+				options : ["<span>Total Debt:</span>  $<input type='text' class='total-dept' /> ", "<span>Annual Income:</span>  $<input type='text' class='anual-income' /> ", "<span>Your DTI: x%</span> <span class='result'></span>"],
+				linkRequired : false
+			},
+			idx: 3
+		}];
 		}
+
 	});
 });

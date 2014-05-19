@@ -3,51 +3,57 @@
 // Requires define
 // Return Backbone View {Object}
 
-define(["require", "backbone", "hbs!templates/auth/login", "models/auth/setPassword", "models/buyer/info"], function(require, Backbone, viewTemplate, setPasswordModel, buyerInfoModel) {
+define([
+	"base", 
+	"hbs!auth/templates/login", 
+	"auth/models/setPassword", 
+	"buyer/models/info"
+	], function(
+	Base, 
+	viewTemplate, 
+	setPasswordModel, 
+	buyerInfoModel
+	) {
 
-	return Backbone.View.extend({
-
+	return Base.extend({
 		events : {
 			'submit .password-form' : 'handleFormSubmit'
 		},
-
-		el : 'body',
+		
+		tpl : viewTemplate,
 
 		handleFormSubmit : function(e) {
 			e.preventDefault();
-			$(e.target).attr("disabled", "true");
+			$(e.target).prop("disabled", true);
 			var password = $(e.target).find("#password").val();
 			if (!password) {
 				alert("Please enter password");
-				$(e.target).attr("disabled", "false");
+				$(e.target).prop("disabled", false);
 				return false;
 			}
 
 			// save the password and redirect
-
 			var model = new buyerInfoModel();
 			model.id = this.userId;
-			model.fetch({
-				success : function(response) {
-					var route = (response.get("needQuestionare") == "true") ? "questions" : "buyer";
-					App.routing.navigate(route, {
-						trigger : true
-					});
-				},
-				error : function() {
-					alert("Some error occured");
-				}
+			model.fetch();
+			
+			this.listenTo(model, 'sync', function(response){
+				var route = (response.get("needQuestionare") == "true") ? "questions" : "buyer";
+				App.routing.navigate(route, {
+					trigger : true
+				});
+			});
+			
+			this.listenTo(model, 'error', function(){
+				App.Mediator.trigger("messaging:showAlert", "Some error occured", "error");
 			});
 
 		},
-
-		// main initialize function
-		initialize : function(options) {
-			this.userId = options.userDetail.id;
-		},
-
-		render : function() {
-			this.$el.html(viewTemplate());
+		
+		initializeBefore : function(options) {
+			if(options && options[0])
+				this.userId = options[0].userDetail.id;
 		}
+
 	});
 });
