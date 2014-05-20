@@ -16,7 +16,7 @@ define([
 		
 		template: defaultLayout,
 		 
-		el: '.container',
+		el: '.main-container',
 		
 		// hooks
 		hooks : {
@@ -65,7 +65,7 @@ define([
 			this.render();
 				
 			// trigger after intialize
-			this.trigger('intialize:after');	
+			this.trigger('intialize:after', options);	
 
 		},
 		

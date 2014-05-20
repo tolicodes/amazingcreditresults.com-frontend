@@ -56,14 +56,15 @@ define([
 					this.hooks[name] = methods;
 				}.bind(this));
 			}
-
 		},
 
 		// main initialize function
 		initialize : function(options) {
-			
 			this.addViewHooks();
 			this.implementHooks();
+
+			if(options && options[0])
+				options = options[0];
 
 			// trigger before intialize
 			this.trigger('intialize:before', options);
@@ -73,7 +74,7 @@ define([
 				this.render();
 				
 			// trigger after intialize
-			this.trigger('intialize:after');	
+			this.trigger('intialize:after', options);	
 				
 		},
 

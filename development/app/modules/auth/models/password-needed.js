@@ -1,4 +1,4 @@
-// info.js
+// password needed.js
 // --------------
 // Requires define
 // Return Backbone Model {Object}
@@ -8,12 +8,9 @@ define([
 	], function(
 	BaseModel
 	) {
-
 	return BaseModel.extend({
-		apiUrl: "/",
-		autoFetch: true,
 		url : function() {
-			return this.apiUrl + "auth/myself";
+			return this.apiUrl + "buyer/needToSetPassword/"+ this.id;
 		}
 	});
 });
