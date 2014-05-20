@@ -5,13 +5,14 @@
 
 define([
 	"backbone",
+	"core/components/endpoints/endpoints",
 	"backboneValidator"
 	], function(
-	Backbone
+	Backbone,
+	EndPoint
 	) {
 
 	return Backbone.Model.extend({
-		apiUrl: "/api/v1/",
 		// fetch the modelautomatically if set to true
 		autoFetch: false,
 		
@@ -25,8 +26,12 @@ define([
 				this.fetch();
 		},
 		
+		// get the url
+		getUrl: function(name, params) {
+			return EndPoint.getUrl(name, params);
+		},
+		
 		fetch: function() {
-			
 			this.fetchedDfd = new $.Deferred();
 			
 			this.listenTo(this, 'sync', function() {
@@ -39,7 +44,6 @@ define([
 				this.fetchedDfd.reject.apply(this, arguments);
 			}.bind(this));
 			
-
 			return Backbone.Model.prototype.fetch.apply(this, arguments);
 		}
 		

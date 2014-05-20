@@ -10,10 +10,9 @@ define([
 	) {
 
 	return BaseModel.extend({
-		apiUrl: "/",
 		autoFetch: true,
 		url : function() {
-			return this.apiUrl + "auth/myself";
+			return this.getUrl("authSelf");			
 		}
 	});
 });

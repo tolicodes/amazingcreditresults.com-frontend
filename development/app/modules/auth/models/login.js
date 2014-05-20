@@ -10,7 +10,7 @@ define([
 	) {
 	return BaseModel.extend({
 		url : function() {
-			return this.apiUrl + "buyer/login";
+			return this.getUrl("buyerLogin");
 		}
 	});
 });
