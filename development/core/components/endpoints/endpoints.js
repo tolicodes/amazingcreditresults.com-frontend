@@ -30,7 +30,7 @@ define([
 	return {
 		getUrl : function(name, params) {
 			var endpoint = endpoints[name],
-			url = base + apiPath;
+			url = base + apiPath + endpoint;
 			if(params) url = addParams(url, params);
 			return  url;
 		}
