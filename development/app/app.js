@@ -37,6 +37,18 @@ define([
 
 		// permission to access pages without login
 		noAuth : ["login", "setPassword"],
+		
+		initialize: function() {
+			// setup hunkKey if exists
+			if(sessionStorage.getItem("huntKey")) {
+				$.ajaxSetup({
+					beforeSend: function (request) {
+	                	request.setRequestHeader("huntKey", sessionStorage.getItem("huntKey"));
+	            	}
+				});			
+			}
+		},
+
 
 		// this function gives the current user detail
 		authorizeUser : function(callback) {
@@ -115,6 +127,7 @@ define([
 		inventory : function() {
 			this.loadPage(inventoryView, 'inventory');
 		}
+		
 
 	});
 });
