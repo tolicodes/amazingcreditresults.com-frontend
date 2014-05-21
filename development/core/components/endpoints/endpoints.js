@@ -6,7 +6,7 @@ define([
 	], function(
 	) {
 
-	var base = 'http://localhost:8081', 
+	var base = window.location.origin, 
 	apiPath = '/api/v1/', endpoints = {
 		"buyerLogin" : "buyer/login/",
 		"buyerSetPassword" : "buyer/setPassword/",
@@ -16,11 +16,9 @@ define([
 		"saveQuestionnaireAnswers": "buyer/saveQuestionnaireAnswers"
 	},
 	addParams = function(url, params) {
-		console.log(url);
 		_.each(params, function(p) {
 			url += p + "/";
 		});
-		console.log(url);
 		return url;
 	};
 
