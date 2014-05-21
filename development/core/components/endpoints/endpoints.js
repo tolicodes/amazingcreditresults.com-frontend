@@ -10,7 +10,7 @@ define([
 	apiPath = '/api/v1/', endpoints = {
 		"buyerLogin" : "buyer/login/",
 		"buyerSetPassword" : "buyer/setPassword/",
-		"authSelf" : "auth/myself/",
+		"authSelf" : "myself/",
 		"needToSetPassword": "buyer/needToSetPassword/",
 		"adminClients" : "admin/clients/",
 		"saveQuestionnaireAnswers": "buyer/saveQuestionnaireAnswers"
