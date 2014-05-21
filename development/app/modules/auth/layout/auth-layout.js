@@ -24,19 +24,19 @@ define([
 		
 		initializeAfter: function(options) {
 			if(options && options[0]) {
-				this.model = new passwordneededModel({id: options[0].apiKey});
+				this.passwordCheck = new passwordneededModel({id: options[0].apiKey});
 				this.options = options;
-				this.listenTo(this.model, 'sync', this._createPage());
-				this.listenTo(this.model, 'error', function() {});
-				this.model.fetch();
+				this.listenTo(this.passwordCheck, 'sync', this._createPage());
+				this.listenTo(this.passwordCheck, 'error', function() {});
+				this.passwordCheck.fetch();
 			}
 		},
 		
 		_createPage: function() {
 			
 			var viewObject;			
-			
-			if(this.model.get("needToSetPassword")) {
+			console.log(this.passwordCheck);
+			if(this.passwordCheck.get("needToSetPassword")) {
 				viewObject = setPasswordView;
 			} else {
 				viewObject = (this.options[0].page == "login")?loginView:setPasswordView;				
