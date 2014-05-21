@@ -34,14 +34,7 @@ define([
 		
 		_createPage: function() {
 			
-			var viewObject;			
-			console.log(this.passwordCheck);
-			if(this.passwordCheck.get("needToSetPassword")) {
-				viewObject = setPasswordView;
-			} else {
-				viewObject = (this.options[0].page == "login")?loginView:setPasswordView;				
-			}
-
+			var viewObject = (this.passwordCheck.get("needToSetPassword"))?setPasswordView:loginView;
 			var myView = new viewObject(this.options);
 			this.setViewInLayout( '.form-view', myView);			
 		}			
