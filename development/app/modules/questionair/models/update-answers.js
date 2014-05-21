@@ -11,7 +11,7 @@ define([
 
 	return BaseModel.extend({
 		url : function() {
-			return this.apiUrl + "buyer/saveQuestionnaireAnswers";
+			return this.getUrl("saveQuestionnaireAnswers");
 		}
 	});
 });

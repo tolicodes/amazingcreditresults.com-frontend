@@ -10,7 +10,7 @@ define([
 	) {
 	return BaseModel.extend({
 		url : function() {
-			return this.apiUrl + "buyer/needToSetPassword/"+ this.id;
+			return this.getUrl("needToSetPassword", {id: this.id});
 		}
 	});
 });
