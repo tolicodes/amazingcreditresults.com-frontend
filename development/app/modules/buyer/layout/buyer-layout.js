@@ -15,14 +15,9 @@ define([
 	return BaseLayout.extend({
 		
 		initializeAfter: function(options) {
-			
 			this.render();
-			
-			var myView = new infoView(), myView1 = new infoView();
-
+			var myView = new infoView(options);
 			this.setViewInLayout( '.one', myView);
-			this.setViewInLayout( '.two', myView1);
-
 		}			
 
 	});
