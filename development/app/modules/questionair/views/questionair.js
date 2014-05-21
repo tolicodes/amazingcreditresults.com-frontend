@@ -82,13 +82,11 @@ define([
 		// uodate questionair
 		updateQuestionair : function(e) {
 			e.preventDefault();
-			var count = 0, qModel = new questionairModel({id:this.userId}), 
-			updateAnswers = new updateAnswersModel,
+			var updateAnswers = new updateAnswersModel,
 			questionair = $(e.target).find(".questionair").prop('checked');
 
 			this.listenTo(updateAnswers, 'sync', function(){
-				count++;
-				this.goToBuyerPage(count);
+				this.goToBuyerPage();
 			}.bind(this));
 			
 			this.listenTo(updateAnswers, 'error', function(){
@@ -96,28 +94,15 @@ define([
 			});
 			
 			updateAnswers.set(this.updateAnswer);	
+			updateAnswers.set({needQuestionnaire : questionair});
 			updateAnswers.save();
-
-			qModel.set({needQuestionnaire : questionair});
-			qModel.save();
-			
-			this.listenTo(qModel, 'sync', function(){
-				count++;
-				this.goToBuyerPage(count);
-			}.bind(this));
-			
-			this.listenTo(qModel, 'error', function(){
-				App.Mediator.trigger("messaging:showAlert", "Some error occured", "error");
-			});
 		},
 
 		// redirect to buyer page
 		goToBuyerPage : function(count) {
-			if (count == 2) {
-				App.routing.navigate("buyer", {
-					trigger : true
-				});
-			}
+			App.routing.navigate("buyer", {
+				trigger : true
+			});
 		},
 		
 
