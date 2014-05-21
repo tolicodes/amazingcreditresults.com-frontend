@@ -26,7 +26,7 @@ define([
 			if(options && options[0]) {
 				this.passwordCheck = new passwordneededModel({id: options[0].apiKey});
 				this.options = options;
-				this.listenTo(this.passwordCheck, 'sync', this._createPage());
+				this.listenTo(this.passwordCheck, 'sync', this._createPage().bind(this));
 				this.listenTo(this.passwordCheck, 'error', function() {});
 				this.passwordCheck.fetch();
 			}
