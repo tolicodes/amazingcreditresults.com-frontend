@@ -11,11 +11,11 @@ define([
 ], function(
 	FormView, 
 	viewTemplate, 
-	model,
-	productModel,
-	tradelineModel,
-	transactionModel,
-	usersModel
+	model
+//	productModel,
+//	tradelineModel,
+//	transactionModel,
+//	usersModel
 ) {
 
 	return FormView.extend({
@@ -46,20 +46,11 @@ define([
 		},
 		
 		initializeBefore : function(options) {
-			this.model = new model;
-			if(options && options[0] && options[0].userDetail)
-				this.model.id = options[0].userDetail.id;
-
-			this.model.fetch();
-			
-			this.listenTo(this.model, 'sync', function(){
+			if(options && options[0] && options[0].userDetail) {
+				this.model = new model();
+				this.model.set(options[0].userDetail);
 				this.render();
-			}.bind(this));
-			
-			this.listenTo(this.model, 'error', function(){
-				//this.render();
-				App.Mediator.trigger("messaging:showAlert", "Some error occured", "error");
-			}.bind(this));
+			}
 		}
 	});
 });
