@@ -18,6 +18,8 @@ define([
 		events : {
 			'submit .reset-password-form' : 'handleFormSubmit'
 		},
+		
+		el: undefined,
 
 		handleFormSubmit : function(e) {
 			e.preventDefault();
@@ -37,16 +39,17 @@ define([
 
 			// save the password and login
 			this.model = new setPassword();
+			
 			this.model.set({
-				apiKey : "",
+				apiKey : this.apiKey,
 				password : password
 			});
 			
 			this.model.save();
 			
-			this.listenTo(this.model, 'sync', function(){
+			this.listenTo(this.model, 'sync', function() {
 				App.Mediator.trigger("messaging:showAlert", "saved successfully");
-				App.routing.navigate("login", {
+				App.routing.navigate("login/"+this.apiKey, {
 					trigger : true
 				});
 			});
@@ -54,7 +57,15 @@ define([
 			this.listenTo(this.model, 'error', function(){
 				App.Mediator.trigger("messaging:showAlert", "Some error occured", "error");
 			});
+		},
+		
+		initializeBefore : function(options) {
+			
+			console.log(options);
+			if(options && options[0])
+				this.apiKey = options[0].apiKey;
 		}
+
 		
 	});
 });

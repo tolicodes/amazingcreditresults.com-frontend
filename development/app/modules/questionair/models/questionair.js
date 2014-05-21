@@ -12,7 +12,7 @@ define([
 	return BaseModel.extend({
 		id: undefined,
 		url : function() {
-			return this.apiUrl + "admin/clients/"+ this.id;
+			return this.getUrl("adminClients", {id: this.id});		
 		}
 	});
 });

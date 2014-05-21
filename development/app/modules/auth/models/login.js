@@ -1,4 +1,4 @@
-// update-answers.js
+// login.js
 // --------------
 // Requires define
 // Return Backbone Model {Object}
@@ -8,10 +8,9 @@ define([
 	], function(
 	BaseModel
 	) {
-
 	return BaseModel.extend({
 		url : function() {
-			return this.getUrl("saveQuestionnaireAnswers");
+			return this.getUrl("buyerLogin");
 		}
 	});
 });

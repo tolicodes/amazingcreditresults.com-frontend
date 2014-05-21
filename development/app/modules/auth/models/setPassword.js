@@ -8,11 +8,9 @@ define([
 	], function(
 	BaseModel
 	) {
-
 	return BaseModel.extend({
-		id: undefined,
 		url : function() {
-			return this.apiUrl + "buyer/setPassword";
+			return this.getUrl("buyerSetPassword");
 		}
 	});
 });
