@@ -33,7 +33,15 @@ define([
 		},
 		
 		_createPage: function() {
-			var viewObject = (this.model.get("needToSetPassword") || this.options[0].page == "login")?loginView:setPasswordView;
+			
+			var viewObject;			
+			
+			if(this.model.get("needToSetPassword")) {
+				viewObject = setPasswordView;
+			} else {
+				viewObject = (this.options[0].page == "login")?loginView:setPasswordView;				
+			}
+
 			var myView = new viewObject(this.options);
 			this.setViewInLayout( '.form-view', myView);			
 		}			
