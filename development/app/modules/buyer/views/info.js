@@ -20,7 +20,7 @@ define([
 
 	return FormView.extend({
 
-		renderOnInitialize: false,
+		el: undefined,
 		
 		// schema to generate form
 		schema: {
@@ -49,7 +49,6 @@ define([
 			if(options && options[0] && options[0].userDetail) {
 				this.model = new model();
 				this.model.set(options[0].userDetail);
-				this.render();
 			}
 		}
 	});
