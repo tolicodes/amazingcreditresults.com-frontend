@@ -24,7 +24,7 @@ define([
 		data: {},
 
 		// default target element
-		el : '.container',
+		el : '.main-container',
 
 		// hooks
 		hooks : {
