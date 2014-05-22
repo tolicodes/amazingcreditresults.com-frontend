@@ -39,6 +39,11 @@ define([
 		noAuth : ["login", "setPassword"],
 		
 		initialize: function() {
+			
+			// append the main container into DOM
+			if(!$(".main-container").length)
+				$("body").append('<div class="main-container"></div>');
+			
 			// setup hunkKey if exists
 			if(sessionStorage.getItem("huntKey")) {
 				$.ajaxSetup({

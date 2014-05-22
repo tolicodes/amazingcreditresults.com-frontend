@@ -36,6 +36,6 @@
     "backbone-forms": "*",
     "backbone-relational": "*",
     "layoutmanager": "*",
-    "backbone-validator": "*"
+    "backbone-validation": "*"
   }
 }

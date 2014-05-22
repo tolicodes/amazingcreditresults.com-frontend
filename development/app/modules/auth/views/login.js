@@ -47,26 +47,18 @@ define([
 			e.preventDefault();
 			$(e.target).prop("disabled", true);
 			var password = $(e.target).find("#password").val();
-			if (!password) {
-				alert("Please enter password");
-				$(e.target).prop("disabled", false);
-				return false;
-			}
-			
+		
 			// save the password and redirect
 			var login = new loginModel();
-			login.set({apiKey: this.apiKey, password: password});
 			
-			// validate login form
-			if(login.isValid()) {
-				login.save();
+			this.bindModelValidation(login);
+			
+			login.bind('validated:valid', function(m, errors) {
 				this.listenTo(login, 'sync', function(response) {
 					// set the huntKey in session storage
 					sessionStorage.setItem("huntKey", response.get("huntKey"));
-					
 					// setup hunt key
 					this.setUpHuntkey();
-					
 					// get the user detail
 					this.authorizeUser().done(this._createForQuestionair.bind(this));
 				}.bind(this));
@@ -74,7 +66,17 @@ define([
 				this.listenTo(login, 'error', function() {
 					App.Mediator.trigger("messaging:showAlert", "Some error occured", "error");
 				});
-			}
+				
+			}.bind(this));
+			
+			login.bind('validated:invalid', function(model) {
+				$(e.target).prop("disabled", false);
+				login.showErrors(model);
+			});
+			
+			login.set({apiKey: this.apiKey, password: password});
+			login.save();
+
 		},
 		
 		_createForQuestionair: function() {

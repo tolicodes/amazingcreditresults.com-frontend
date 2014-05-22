@@ -11,6 +11,19 @@ define([
 	return BaseModel.extend({
 		url : function() {
 			return this.getUrl("buyerLogin");
+		},
+		
+		validation: {
+		    password: {
+		      required: true,
+		      msg: 'Please enter a password.'
+		    },
+		    apiKey: {
+		      required: true,
+		      msg: 'Apikey is required.'
+		    }
 		}
+		
+		
 	});
 });

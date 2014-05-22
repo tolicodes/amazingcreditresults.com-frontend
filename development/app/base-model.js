@@ -19,11 +19,11 @@ define([
 		// has the model been fetched
 		fetched: false,
 		
+		// jquery Deferred Object
 		fetchedDfd: false,
 		
 		initialize: function() {
-			if(this.autoFetch) 
-				this.fetch();
+			if(this.autoFetch) this.fetch();
 		},
 		
 		// get the url
@@ -31,6 +31,7 @@ define([
 			return EndPoint.getUrl(name, params);
 		},
 		
+		// fetch data
 		fetch: function() {
 			this.fetchedDfd = new $.Deferred();
 			
@@ -43,8 +44,17 @@ define([
 				this.fetched = false;
 				this.fetchedDfd.reject.apply(this, arguments);
 			}.bind(this));
-			
 			return Backbone.Model.prototype.fetch.apply(this, arguments);
+		},
+		
+		// show errors
+		showErrors: function(model) {
+			var msg = "";
+			_.each(model.validationError, function(err, field) {
+				console.log(err, field);
+				msg += field +": "+ err+" <br/> ";
+			});
+			if(msg) App.Mediator.trigger("messaging:showAlert", msg, "error");
 		}
 		
 		

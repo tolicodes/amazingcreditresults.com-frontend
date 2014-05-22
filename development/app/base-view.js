@@ -4,7 +4,8 @@
 // Return Backbone Base View {Object}
 
 define([
-	"backbone"
+	"backbone",
+	"backboneValidator"
 	], function(
 	Backbone
 	) {
@@ -57,6 +58,22 @@ define([
 				}.bind(this));
 			}
 		},
+		
+		// bind validation model
+		bindModelValidation: function(model) {
+			Backbone.Validation.bind(this, {
+		      model: model
+		    });
+		},
+
+		// bind validation collection
+		bindCollectionValidation: function(collection) {
+			 Backbone.Validation.bind(this, {
+		      collection: collection
+		    });
+		},
+
+
 
 		// main initialize function
 		initialize : function(options) {
