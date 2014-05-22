@@ -27,36 +27,35 @@ define([
 			var password = $(e.target).find("#password").val(), 
 			confirmPassword = $(e.target).find("#confirmPassword").val();
 
-			if (!password) {
-				alert("Please enter password");
-				$(e.target).prop("disabled", false);
-				return false;
-			} else if (password != confirmPassword) {
-				alert("Please confirm password");
-				$(e.target).prop("disabled", false);
-				return false;
-			}
-
 			// save the password and login
 			this.model = new setPassword();
+			this.bindModelValidation(this.model);
+			this.model.bind('validated:valid', function(m, errors) {
+				this.listenTo(this.model, 'sync', function(response) {
+					App.Mediator.trigger("messaging:showAlert", "saved successfully");
+					App.routing.navigate("login/"+this.apiKey, {
+						trigger : true
+					});
+				}.bind(this));
+				
+				this.listenTo(this.model, 'error', function() {
+					App.Mediator.trigger("messaging:showAlert", "Some error occured", "error");
+				});
+				
+			}.bind(this));
 			
+			this.model.bind('validated:invalid', function(model) {
+				$(e.target).prop("disabled", false);
+				this.model.showErrors(model);
+			}.bind(this));
+
 			this.model.set({
 				apiKey : this.apiKey,
-				password : password
+				password : password,
+				confirmPassword: confirmPassword
 			});
 			
 			this.model.save();
-			
-			this.listenTo(this.model, 'sync', function() {
-				App.Mediator.trigger("messaging:showAlert", "saved successfully");
-				App.routing.navigate("login/"+this.apiKey, {
-					trigger : true
-				});
-			});
-			
-			this.listenTo(this.model, 'error', function(){
-				App.Mediator.trigger("messaging:showAlert", "Some error occured", "error");
-			});
 		},
 		
 		initializeBefore : function(options) {

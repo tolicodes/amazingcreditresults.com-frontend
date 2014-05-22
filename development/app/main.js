@@ -16,11 +16,11 @@ require.config({
 	paths : {
 		// Libraries
 		'backbone' : 'libs/backbone/backbone',
+		'underscore' : 'libs/underscore/underscore',
 		'backboneRelational' : 'libs/backbone-relational/backbone-relational',
-		'backboneValidator' : 'libs/backbone-validator/backbone-validator',
+		'backboneValidator' : 'libs/backbone-validation/dist/backbone-validation-amd',
 		'layoutManagers' : 'libs/layoutmanager/backbone.layoutmanager',
 		"backboneForms": 'libs/backbone-forms/distribution.amd/backbone-forms',
-		'underscore' : 'libs/underscore/underscore',
 		'jquery' : 'libs/jquery/jquery',
 		'backgrid' : 'libs/backgrid/lib/backgrid',
 		'pageableCollection' : 'libs/backbone-pageable/lib/backbone-pageable',

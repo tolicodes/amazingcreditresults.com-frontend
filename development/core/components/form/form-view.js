@@ -19,6 +19,9 @@ define([
 				schema: this.schema
 			});
 			
+			console.log(this.model.toJSON());
+			
+			
 			this.form = new Backbone.Form({
 			    model: new user(this.model.toJSON())
 			 });
