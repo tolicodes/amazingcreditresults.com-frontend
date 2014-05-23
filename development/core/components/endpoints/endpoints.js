@@ -13,7 +13,8 @@ define([
 		"authSelf" : "myself/",
 		"needToSetPassword": "buyer/needToSetPassword/",
 		"adminClients" : "admin/clients/",
-		"saveQuestionnaireAnswers": "buyer/saveQuestionnaireAnswers"
+		"saveQuestionnaireAnswers": "buyer/saveQuestionnaireAnswers",
+		"adminLogin": "owner/login"
 	},
 	addParams = function(url, params) {
 		_.each(params, function(p) {

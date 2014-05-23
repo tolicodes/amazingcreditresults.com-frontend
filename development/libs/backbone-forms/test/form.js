@@ -132,9 +132,9 @@ test('uses template stored on form class', function() {
 });
 
 test('uses fieldset and field classes stored on prototype over those stored on form class', function() {
-  DifferentField = function () {};
-  DifferentFieldset = function () {};
-  DifferentNestedField = function () {};
+  var DifferentField = function () {};
+  var DifferentFieldset = function () {};
+  var DifferentNestedField = function () {};
 
   Form.prototype.Field = DifferentField;
   Form.prototype.Fieldset = DifferentFieldset;
@@ -203,15 +203,22 @@ test('creates fields', function() {
   same(schemaArg, { type: 'Number' });
 });
 
-test('creates fieldsets - with "fieldsets" option', function() {
+test('creates fieldsets - first with "fieldsets" option', function() {
   this.sinon.spy(Form.prototype, 'createFieldset');
 
-  var form = new Form({
+  var MyForm = Form.extend({
     schema: {
       name: 'Text',
       age: { type: 'Number' },
       password: 'Password'
     },
+
+    fieldsets: [
+      ['age', 'name']
+    ]
+  });
+
+  var form = new MyForm({
     fieldsets: [
       ['name', 'age'],
       ['password']
@@ -233,6 +240,33 @@ test('creates fieldsets - with "fieldsets" option', function() {
   same(schemaArg, ['password']);
 });
 
+test('creates fieldsets - second with prototype.fieldsets', function() {
+  this.sinon.spy(Form.prototype, 'createFieldset');
+
+  var MyForm = Form.extend({
+    schema: {
+      name: 'Text',
+      age: { type: 'Number' },
+      password: 'Password'
+    },
+
+    fieldsets: [
+      ['age', 'name']
+    ]
+  });
+
+  var form = new MyForm();
+
+  same(form.createFieldset.callCount, 1);
+  same(form.fieldsets.length, 1);
+
+  //Check createFieldset() was called correctly
+  var args = form.createFieldset.args[0],
+      schemaArg = args[0];
+
+  same(schemaArg, ['age', 'name']);
+});
+
 test('creates fieldsets - defaults to all fields in one fieldset', function() {
   this.sinon.spy(Form.prototype, 'createFieldset');
 
@@ -252,6 +286,39 @@ test('creates fieldsets - defaults to all fields in one fieldset', function() {
       schemaArg = args[0];
 
   same(schemaArg, ['name', 'age', 'password']);
+});
+
+test('submitButton option: missing - does not create button', function() {
+  var form = new Form({
+    schema: { name: 'Text' }
+  }).render();
+
+  var $btn = form.$('button');
+
+  same($btn.length, 0);
+});
+
+test('submitButton option: false - does not create button', function() {
+  var form = new Form({
+    schema: { name: 'Text' },
+    submitButton: false
+  }).render();
+
+  var $btn = form.$('button');
+
+  same($btn.length, 0);
+});
+
+test('submitButton option: string - creates button with given text', function() {
+  var form = new Form({
+    schema: { name: 'Text' },
+    submitButton: 'Next'
+  }).render();
+
+  var $btn = form.$('button[type="submit"]');
+
+  same($btn.length, 1);
+  same($btn.html(), 'Next');
 });
 
 
@@ -456,6 +523,23 @@ test('triggers general form events', function() {
     same(blurSpy.callCount, 1);
     same(blurSpy.args[0][0], form);
   }, 0);
+});
+
+test('triggers the submit event', function() {
+  var form = new Form();
+
+  var spy = sinon.spy(),
+      submitEvent;
+
+  form.on('submit', function(event) {
+    submitEvent = event;
+    spy(event);
+  });
+
+  form.$el.submit();
+
+  same(spy.callCount, 1);
+  same(spy.args[0][0], submitEvent);
 });
 
 

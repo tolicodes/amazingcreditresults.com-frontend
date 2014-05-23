@@ -19,16 +19,23 @@ define([
 				schema: this.schema
 			});
 			
-			console.log(this.model.toJSON());
-			
-			
 			this.form = new Backbone.Form({
-			    model: new user(this.model.toJSON())
+			    model: new user((this.model)?this.model.toJSON():{}),
+			    'submitButton': this.submitButtonText
 			 });
+			 
+			this.form.on('submit', function(form, titleEditor, extra) {
+			  form.preventDefault();
+			  
+			  if(!this.validateForms()) {
+			  	var values = this.getFormValue();
+			  	 this.handleFormSubmit(values);
+			  }
+			}.bind(this));
+			 
 			 
 			this.form.render();
 			this.$el.html(this.form.el);
-			
 		},
 		
 		// validate forms return false if it has errors

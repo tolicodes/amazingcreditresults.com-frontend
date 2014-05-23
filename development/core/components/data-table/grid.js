@@ -25,7 +25,11 @@ define([
 		generateTable: function() {
 			var Territories = Backbone.PageableCollection.extend({
 				url : this.url,
-				mode : this.mode || "client"
+				mode : this.mode || "client",
+				parse: this.parseFn || function(result) { return result; },
+				state: {
+    				pageSize: 5
+    			}
 			}), territories = new Territories(), grid = new Backgrid.Grid({
 				columns : this.columns || {},
 				collection : territories
@@ -33,8 +37,8 @@ define([
 				collection : territories
 			});
 
-			this.$el.find("#grid").append(grid.render().$el);
-			this.$el.find("#paginator").append(paginator.render().$el);
+			this.$el.find("#grid").html(grid.render().$el);
+			this.$el.find("#paginator").html(paginator.render().$el);
 			
 			territories.fetch();
 

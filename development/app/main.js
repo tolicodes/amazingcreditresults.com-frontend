@@ -34,8 +34,8 @@ require.config({
 		'auth' : 'app/modules/auth',
 		'buyer': 'app/modules/buyer',
 		'grid' : 'app/modules/grid',
-//		'adminLogin': 'app/modules/admin-login',
-//		'adminDashboard': 'app/modules/admin-dashboard',
+		'adminLogin': 'app/modules/admin-login',
+		'adminDashboard': 'app/modules/admin-dashboard',
 		'home' : 'app/modules/home',
 		'questionair' : 'app/modules/questionair',
 		

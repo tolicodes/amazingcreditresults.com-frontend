@@ -52,7 +52,7 @@ define([
 			var msg = "";
 			_.each(model.validationError, function(err, field) {
 				console.log(err, field);
-				msg += field +": "+ err+" <br/> ";
+				msg += err+" <br/> ";
 			});
 			if(msg) App.Mediator.trigger("messaging:showAlert", msg, "error");
 		}

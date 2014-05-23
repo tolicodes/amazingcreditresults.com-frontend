@@ -11,7 +11,9 @@ define([
 	"auth/layout/auth-layout", 
 	"questionair/views/questionair", 
 	"auth/models/myself", 
-	"buyer/views/inventory", 
+	"buyer/views/inventory",
+	"adminLogin/layout/auth-layout",
+	"adminDashboard/layout/dashboard", 
 	"less!cssPath/style"], function(
 	Backbone, 
 	home,
@@ -20,7 +22,9 @@ define([
 	authLayout,
 	questionair,
 	authModel, 
-	inventoryView
+	inventoryView,
+	adminLoginLayout,
+	adminDasboardLayout
 ) {
 
 	return Backbone.Router.extend({
@@ -32,11 +36,17 @@ define([
 			'setPassword/:apikey' : 'setPassword',
 			'login/:apikey' : 'login',
 			'inventory' : 'inventory',
-			"*splat" : "routeNotFound"
+			
+			// owner routes
+			"admin/login": "adminLogin",
+			"admin/dashboard": "adminDashboard",
+			
+			// 404 Page
+			"*splat" : "routeNotFound"		
 		},
 
 		// permission to access pages without login
-		noAuth : ["login", "setPassword"],
+		noAuth : ["login", "setPassword", "adminLogin"],
 		
 		initialize: function() {
 			
@@ -97,6 +107,16 @@ define([
 		// route not found
 		routeNotFound : function() {
 			alert("Not Found");
+		},
+		
+		/* Owner routes function */
+		
+		adminLogin: function() {
+			this.loadPage(adminLoginLayout, "adminLogin");
+		},
+		
+		adminDashboard: function() {
+			this.loadPage(adminDasboardLayout, "adminDashboard");
 		},
 
 		// set password
