@@ -42,18 +42,16 @@ define([
 		submitButtonText: "Create Buyer",
 		
 		handleFormSubmit: function(values) {
-			console.log(values);
-			
 			var createBuyer = new createBuyerModel();
 			this.bindModelValidation(createBuyer);
 			
 			createBuyer.bind('validated:valid', function(m, errors) {
 				this.listenTo(createBuyer, 'sync', function(response) {
-					App.Mediator.trigger("messaging:showAlert", "Buyer created successfully.", "success");
+					App.Mediator.trigger("messaging:showAlert", "Buyer created successfully.", "Green");
 				}.bind(this));
 				
 				this.listenTo(createBuyer, 'error', function() {
-					App.Mediator.trigger("messaging:showAlert", "Some error occured", "error");
+					App.Mediator.trigger("messaging:showAlert", "Some error occured", "Red");
 				});
 			}.bind(this));
 			

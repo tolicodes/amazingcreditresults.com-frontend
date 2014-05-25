@@ -27,16 +27,31 @@ define([
 				this.passwordCheck = new passwordneededModel({id: options[0].apiKey});
 				this.options = options;
 				this.listenTo(this.passwordCheck, 'sync', this._createPage.bind(this));
-				this.listenTo(this.passwordCheck, 'error', function() {});
+				this.listenTo(this.passwordCheck, 'error', function(model, response) {
+					var json = (response.responseText)?JSON.parse(response.responseText):{};
+					App.Mediator.trigger("messaging:showAlert", json.Error, "Red");
+				});
 				this.passwordCheck.fetch();
 			}
 		},
 		
-		_createPage: function() {
+		showView: function(viewObject) {
+			if(!viewObject)
+				viewObject = loginView;
 			
-			var viewObject = (this.passwordCheck.get("needToSetPassword"))?setPasswordView:loginView;
+			// remove old views
+			this.removeView();
+			
+			// pass controller object in options
+			this.options[0].layoutObject = this;
+			
 			var myView = new viewObject(this.options);
-			this.setViewInLayout( '.form-view', myView);			
+			this.setViewInLayout( '.form-view', myView);						
+		},
+		
+		_createPage: function() {
+			var viewObject = (this.passwordCheck.get("needToSetPassword"))?setPasswordView:loginView;
+			this.showView(viewObject);
 		}			
 
 	});

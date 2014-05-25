@@ -54,7 +54,7 @@ define([
 				console.log(err, field);
 				msg += err+" <br/> ";
 			});
-			if(msg) App.Mediator.trigger("messaging:showAlert", msg, "error");
+			if(msg) App.Mediator.trigger("messaging:showAlert", msg, "Red");
 		}
 		
 		

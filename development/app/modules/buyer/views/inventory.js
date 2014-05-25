@@ -1,124 +1,97 @@
-// info.js
+// inventory.js
 // --------------
 // Requires define
 // Return Backbone View {Object}
 
 
 define([
-	"base",
-	"buyer/models/product",
-	"buyer/models/tradeline",
-	"buyer/models/transaction",
-	"buyer/models/users"
+	"dataTable",
+	"buyer/collections/tradeline",
 ], function(
-	Base,
-	productModel,
-	tradelineModel,
-	transactionModel,
-	usersModel	
+	DataTable,
+	tradelineCollection
 ) {
 
-	return Base.extend({
-
-		// columns:  [{
-				// name : "Bar",
-				// editable : false,
-				// cell : Backgrid.IntegerCell.extend({
-					// orderSeparator : ''
-				// })
-			// }, {
-				// name : "Product Name",
-				// cell : "string"
-			// }, {
-				// name : "Statement",
-				// cell : "integer"
-			// }, {
-				// name : "Date",
-				// cell : "number"
-			// }, {
-				// name : "Payment",
-				// cell : "date"
-			// }, {
-				// name : "Current",
-				// cell : "uri"
-			// }],
-// 			
-// 			
-			/*, {
-				name : "Max",
-				cell : "uri"
-			}, {
-				name : "Credit",
-				cell : "uri"
-			}, {
-				name : "Cash",
-				cell : "uri"
-			}, {
-				name : "Balance",
-				cell : "uri"
-			}, {
-				name : "Ratings",
-				cell : "uri"
-			}, {
-				name : "Report",
-				cell : "uri"
-			}, {
-				name : "Cc",
-				cell : "uri"
-			}*/
-			
-		url: "http://backbone-paginator.github.io/backbone-pageable/examples/json/pageable-territories.json",
-		
+	return DataTable.extend({
+		el: undefined,
+		pageSize: 10,
+		columns:  [{
+			label: "Bar",
+			name : "balance",
+			cell : "string"
+		},
+		{
+			label: "Product Name",
+			name : "balance",
+			cell : "string",
+			formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
+		      fromRaw: function (rawValue, model) {
+		        return model.get("product").name;
+		      }
+		    })
+		},
+		{
+			label: "Statement",
+			name : "balance",
+			cell : "string"
+		},
+		{
+			label: "Date",
+			name : "balance",
+			cell : "string"
+		},
+		{
+			label: "Current",
+			name : "balance",
+			cell : "string"
+		},
+		{
+			label: "Max",
+			name : "balance",
+			cell : "string"
+		},
+		 {
+			label: "Cash Limit",
+			name : "cashLimit",
+			cell : "string"
+		}, {
+			label: "Cost",
+			name : "cost",
+			cell : "string"
+		},
+		{
+			label: "Balance",
+			name : "balance",
+			cell : "string"
+		},
+		{
+			label: "Ratings",
+			name : "bcRating",
+			cell : "string",
+			formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
+		      fromRaw: function (rawValue, model) {
+		      	var val = "SH GOLD, BC Silver";
+		      	//if(model.get("bcRating"))
+		      	//
+		        //return model.get("bcRating") +"-"+model.get("moRating")+"--"+model.get("ncRating");
+		      }
+		    })
+		},
+		{
+			label: "Report",
+			name : "balance",
+			cell : "string"
+		},
+		{
+			label: "CC",
+			name : "balance",
+			cell : "string"
+		}
+		],
 		
 		initializeBefore : function(options) {
-			/*	productModel,
-	tradelineModel,
-	transactionModel,
-	usersModel	
-*/
-
-		var product = new productModel();
-		product.set({ products : [{
-			"id" : 1,
-			"name" : "Chase Freedom"
-		}, {
-			"id" : 2,
-			"name" : "Chase Ink"
-		}]});
-		
-		var tradeline = new tradelineModel();
-		
-		//var transaction = new transactionModel();
-		
-		var users = new usersModel({species: 'Test', 'userId': tradeline});
-		
-		users.set({ users : [{
-			"id" : 1,
-			"name" : "Anatoliy",
-			"type" : "seller",
-			"tradeLines" : [{
-				"id" : 1233,
-				"productId" : 2,
-				"creditLimit" : 30000,
-				"auSlotsTotal" : 15,
-				"auSlotsAvailable" : 10
-			}]
-		}, {
-			"id" : 2,
-			"name" : "John",
-			"type" : "buyer",
-			"tradeLinesBought" : [{
-				"dateBought" : 012301293,
-				"tradeLineId" : 1233,
-				"rentedForTime" : 01233,
-				"expiration" : 01231231,
-				"amountPaid" : 300
-			}]
-		}],});
-		
-		alert( users.get( 'tradeline' ).pluck( 'species' ) );
-		//console.log()
-
+			this.collection = new tradelineCollection();
+			this.generateTable();
 		}
 	});
 });

@@ -22,13 +22,19 @@ define([
 
 		tpl: viewTemplate,
 
+		parse: function(result) { 
+			
+			console.log(result);
+			return result; 
+		},
+
 		generateTable: function() {
 			var Territories = Backbone.PageableCollection.extend({
-				url : this.url,
+				url : this.url || "",
 				mode : this.mode || "client",
-				parse: this.parseFn || function(result) { return result; },
+				parse: this.parse,
 				state: {
-    				pageSize: 5
+    				pageSize: this.pageSize || 5
     			}
 			}), territories = new Territories(), grid = new Backgrid.Grid({
 				columns : this.columns || {},
@@ -40,8 +46,22 @@ define([
 			this.$el.find("#grid").html(grid.render().$el);
 			this.$el.find("#paginator").html(paginator.render().$el);
 			
-			territories.fetch();
-
+			if(this.collection) {
+				this.listenTo(this.collection, 'sync', function(){
+					var data  = this.collection.toJSON();
+					for(var i in data) {
+						territories.add(data[i]);		
+					}
+					//console.log("territories collection", territories.toJSON());
+				}.bind(this));
+				
+				this.collection.fetch();
+				
+				//territories.fetch();
+				
+			} else {
+				territories.fetch();
+			}
 		},
 
 		afterRender: function() {

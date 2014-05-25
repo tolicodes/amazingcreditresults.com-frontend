@@ -90,7 +90,7 @@ define([
 			}.bind(this));
 			
 			this.listenTo(updateAnswers, 'error', function(){
-				App.Mediator.trigger("messaging:showAlert", "Some error occured", "error");
+				App.Mediator.trigger("messaging:showAlert", "Some error occured", "Red");
 			});
 			
 			updateAnswers.set(this.updateAnswer);	

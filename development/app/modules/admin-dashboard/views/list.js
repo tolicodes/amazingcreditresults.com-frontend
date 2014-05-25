@@ -51,7 +51,7 @@ define([
 			
 		url: "api/v1/admin/clients",
 		
-		parseFn: function(result) {
+		parse: function(result) {
 			return result.clients;
 		}
 

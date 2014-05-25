@@ -32,14 +32,12 @@ define([
 			this.bindModelValidation(this.model);
 			this.model.bind('validated:valid', function(m, errors) {
 				this.listenTo(this.model, 'sync', function(response) {
-					App.Mediator.trigger("messaging:showAlert", "saved successfully");
-					App.routing.navigate("login/"+this.apiKey, {
-						trigger : true
-					});
+					App.Mediator.trigger("messaging:showAlert", "Password reset successfully.");
+					this.layoutObject.showView();
 				}.bind(this));
 				
 				this.listenTo(this.model, 'error', function() {
-					App.Mediator.trigger("messaging:showAlert", "Some error occured", "error");
+					App.Mediator.trigger("messaging:showAlert", "Some error occured", "Red");
 				});
 				
 			}.bind(this));
@@ -59,12 +57,10 @@ define([
 		},
 		
 		initializeBefore : function(options) {
-			
-			console.log(options);
-			if(options && options[0])
+			if(options && options[0]) {
 				this.apiKey = options[0].apiKey;
+				this.layoutObject = options[0].layoutObject;
+			}
 		}
-
-		
 	});
 });

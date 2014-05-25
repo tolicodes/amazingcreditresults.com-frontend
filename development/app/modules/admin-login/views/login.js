@@ -35,7 +35,7 @@ define([
 		authorizeUser : function() {
 			this.user = new authModel();
 			this.user.fetchedDfd.fail(function() {
-				App.Mediator.trigger("messaging:showAlert", "Authorization failed. Please login.", "error");
+				App.Mediator.trigger("messaging:showAlert", "Authorization failed. Please login.", "Red");
 			});
 			return this.user.fetchedDfd;
 		},
@@ -64,7 +64,7 @@ define([
 				}.bind(this));
 				
 				this.listenTo(login, 'error', function() {
-					App.Mediator.trigger("messaging:showAlert", "Some error occured", "error");
+					App.Mediator.trigger("messaging:showAlert", "Some error occured", "Red");
 				});
 				
 			}.bind(this));

@@ -48,6 +48,9 @@ require.config({
 		'relationalModel' : 'app/relational-model',
 		'baseCollection' : 'app/base-collection',
 		
+		'currentUser' : 'app/common/entities/current-user',
+		
+		
 		// core components path
 		'formView': 'core/components/form/form-view',
 		'dataTable':'core/components/data-table/grid',
@@ -107,6 +110,7 @@ define([
 	'jquery', 
 	'application',
 	'Mediator',
+	'currentUser',
 	// bootstrap css file
 	"css!libs/bootstrap/dist/css/bootstrap"
 	], function(
@@ -114,13 +118,15 @@ define([
 	_, 
 	$, 
 	application,
-	mediator
+	mediator,
+	CurrentUser
 	) {
 	$(document).ready(function() {
 		App = {};
-		App.routing = new application();
-		Backbone.history.start({});
 		// create Mediatior object for messaging
 		App.Mediator = new mediator;		
+		App.CurrentUser = new CurrentUser();
+		App.routing = new application();
+		Backbone.history.start({});
 	});
 });

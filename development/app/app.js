@@ -36,7 +36,7 @@ define([
 			'setPassword/:apikey' : 'setPassword',
 			'login/:apikey' : 'login',
 			'inventory' : 'inventory',
-			
+			'buyer/:apikey' : 'buyer',
 			// owner routes
 			"admin/login": "adminLogin",
 			"admin/dashboard": "adminDashboard",
@@ -70,7 +70,7 @@ define([
 			if (!this.user) {
 				this.user = new authModel();
 				this.user.fetchedDfd.fail(function() {
-					App.Mediator.trigger("messaging:showAlert", "Authorization failed. Please login.", "error");
+					App.Mediator.trigger("messaging:showAlert", "Authorization failed. Please login.", "Red");
 				});
 			}
 			return this.user.fetchedDfd;
@@ -88,10 +88,10 @@ define([
 		},
 
 		_createPage : function() {
+			if(!_.isUndefined(App.CurrentUser) && this.user) App.CurrentUser.set(this.user.toJSON());
 			this.createPage(this.pageView, _({}).extend(this.pageOptions, {
 				userDetail : (this.user)?this.user.toJSON():{}
 			}));
-
 		},
 
 		// check if page has permission
@@ -102,7 +102,6 @@ define([
 		createPage : function(pageView, options) {
 			this.currentView = new pageView(options);
 		},		
-
 
 		// route not found
 		routeNotFound : function() {
@@ -141,8 +140,18 @@ define([
 		},
 
 		// home page route
-		buyer : function() {
-			this.loadPage(buyerInfo, 'buyer');
+		buyer : function(apiKey) {
+			// if apiKey is defined redirect to login page
+			if(apiKey) {
+				App.routing.navigate("login/"+apiKey, {
+					trigger : true
+				});
+			} else {
+				this.loadPage(buyerInfo, 'buyer', {
+					apiKey : apiKey,
+					page : "buyer"
+				});
+			}
 		},
 
 		dataGrid : function() {

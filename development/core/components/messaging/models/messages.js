@@ -1,4 +1,4 @@
-// current user.js
+// messages.js
 // --------------
 // Requires define
 // Return Backbone Model {Object}
@@ -7,7 +7,8 @@ define([
 	"baseModel"
 	], function(
 	BaseModel
-	) {
+) {
 
-	return BaseModel.extend();
+	return BaseModel.extend({
+	});
 });

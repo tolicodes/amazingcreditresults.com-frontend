@@ -14,8 +14,10 @@ define([
 		"needToSetPassword": "buyer/needToSetPassword/",
 		"adminClients" : "admin/clients/",
 		"saveQuestionnaireAnswers": "buyer/saveQuestionnaireAnswers",
-		"adminLogin": "owner/login"
+		"adminLogin": "owner/login",
+		"tradeline": "tradelines"
 	},
+	
 	addParams = function(url, params) {
 		_.each(params, function(p) {
 			url += p + "/";
