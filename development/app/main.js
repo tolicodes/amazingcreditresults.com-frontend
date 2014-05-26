@@ -37,7 +37,7 @@ require.config({
 		'adminLogin': 'app/modules/admin-login',
 		'adminDashboard': 'app/modules/admin-dashboard',
 		'home' : 'app/modules/home',
-		'questionair' : 'app/modules/questionair',
+		'questionnaire' : 'app/modules/questionnaire',
 		
 		'cssPath' : 'app/common/css',
 		
@@ -49,7 +49,6 @@ require.config({
 		'baseCollection' : 'app/base-collection',
 		
 		'currentUser' : 'app/common/entities/current-user',
-		
 		
 		// core components path
 		'formView': 'core/components/form/form-view',
@@ -115,7 +114,7 @@ define([
 	"css!libs/bootstrap/dist/css/bootstrap"
 	], function(
 	Backbone, 
-	_, 
+	_,
 	$, 
 	application,
 	mediator,

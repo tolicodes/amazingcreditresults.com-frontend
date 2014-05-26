@@ -51,8 +51,7 @@ define([
 		showErrors: function(model) {
 			var msg = "";
 			_.each(model.validationError, function(err, field) {
-				console.log(err, field);
-				msg += err+" <br/> ";
+				msg += "<p>"+err+"</p>";
 			});
 			if(msg) App.Mediator.trigger("messaging:showAlert", msg, "Red");
 		}

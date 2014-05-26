@@ -9,7 +9,7 @@ define([
 	"buyer/layout/buyer-layout", 
 	"grid/views/grid", 
 	"auth/layout/auth-layout", 
-	"questionair/views/questionair", 
+	"questionnaire/views/questionnaire", 
 	"auth/models/myself", 
 	"buyer/views/inventory",
 	"adminLogin/layout/auth-layout",
@@ -20,7 +20,7 @@ define([
 	buyerInfo,
 	dataGrid,
 	authLayout,
-	questionair,
+	questionnaire,
 	authModel, 
 	inventoryView,
 	adminLoginLayout,
@@ -32,7 +32,7 @@ define([
 		routes : {
 			'buyer' : 'buyer',
 			'grid' : 'dataGrid',
-			'questions' : 'questions',
+			'questionnaire' : 'questionnaire',
 			'setPassword/:apikey' : 'setPassword',
 			'login/:apikey' : 'login',
 			'inventory' : 'inventory',
@@ -126,9 +126,9 @@ define([
 			});
 		},
 
-		// questions page
-		questions : function() {
-			this.loadPage(questionair, 'questions');
+		// questionnaire page
+		questionnaire : function() {
+			this.loadPage(questionnaire, 'questions');
 		},
 
 		// set password
