@@ -4,9 +4,13 @@
 // Return Backbone View {Object}
 
 define([
-	"dataTable"
+	"dataTable",
+	"adminDashboard/models/reset-password",
+	"adminDashboard/models/welcome-email"
 	], function(
-	DataTable
+	DataTable,
+	resetPasswordModel,
+	welcomeEmailModel
 	) {
 
 	return DataTable.extend({
@@ -19,7 +23,6 @@ define([
 				cell : "string",
 				formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
 			      fromRaw: function (rawValue, model) {
-			      	console.log(rawValue, model);
 			        return model.get("name").givenName;
 			      }
 			    })
@@ -29,7 +32,6 @@ define([
 				cell : "string",
 				formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
 			      fromRaw: function (rawValue, model) {
-			      	console.log(rawValue, model);
 			        return model.get("name").familyName;
 			      }
 			    })
@@ -46,16 +48,24 @@ define([
 				name : "needQuestionnaire",
 				cell : "boolean"
 			},{
-				label: "actions",
+				label: "Reset Password Email",
+				name : "resetButton",
+				cell : "resetButton"
+			},{
+				label: "Welcome Email",
 				name : "actions",
-				cell : "delete"
+				cell : "welcomeEmail"			
 			}],
 			
 		url: "api/v1/admin/clients",
 		
 		parse: function(result) {
 			return result.clients;
+		},
+		
+		initializeBefore: function() {
+			this.addResetButton(resetPasswordModel);
+			this.welcomeEmailButton(welcomeEmailModel);
 		}
-
 	});
 });

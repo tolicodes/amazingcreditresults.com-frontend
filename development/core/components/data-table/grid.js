@@ -5,6 +5,7 @@
 
 define([
 	"base", 
+	"backbone",
 	"backgrid", 
 	"pageableCollection", 
 	"backgridPaginator",
@@ -13,6 +14,7 @@ define([
 	"css!libs/backgrid-paginator/backgrid-paginator"
 ], function(
 	Base, 
+	Backbone,
 	Backgrid, 
 	PageableCollection, 
 	BackgridPaginator, 
@@ -23,29 +25,75 @@ define([
 		tpl: viewTemplate,
 
 		parse: function(result) { 
-			
-			console.log(result);
 			return result; 
 		},
-
-		generateTable: function() {
-			
-			var DeleteCell = Backgrid.Cell.extend({
-			    template: _.template(" PUT YOUR HTML BUTTON TEMPLATE HERE "),
+		
+		addResetButton: function(resetPasswordModel) {
+			var ResetButtonCell = Backgrid.ResetButtonCell = Backbone.View.extend({
+			    template: _.template("<button>Reset password</button>"),
 			    events: {
-			      "click": "deleteRow"
+			      "click": "resetPassword"
 			    },
-			    deleteRow: function (e) {
+			    
+			    tagName: 'td',
+			    
+			    className: "boolean-cell renderable",
+			    
+			    initialize: function(options) {
+			    	console.log(options.model.get("id"));
+			    	if(options.model) {
+				    	this.model = new resetPasswordModel();
+				    	this.model.userId = options.model.get("id");
+				    }
+			    },
+			    
+			    resetPassword: function (e) {
 			      e.preventDefault();
-			      this.model.collection.remove(this.model);
+				  this.model.save();
 			    },
+			    
 			    render: function () {
 			      this.$el.html(this.template());
 			      this.delegateEvents();
 			      return this;
 			    }
 			});
+		},
 
+		welcomeEmailButton: function(welcomeEmailModel) {
+			var WelcomeEmailCell = Backgrid.WelcomeEmailCell = Backbone.View.extend({
+			    template: _.template("<button>Send Welcome Email</button>"),
+			    events: {
+			      "click": "welcomeEmail"
+			    },
+			    
+			    tagName: 'td',
+			    className: "boolean-cell renderable",
+			    
+			    initialize: function(options) {
+			    	console.log(options.model.get("id"));
+			    	if(options.model) {
+				    	this.model = new welcomeEmailModel();
+				    	this.model.userId = options.model.get("id");
+				    }
+			    },
+			    
+			    welcomeEmail: function (e) {
+			      e.preventDefault();
+				  this.model.save();
+			    },
+			    
+			    render: function () {
+			      this.$el.html(this.template());
+			      this.delegateEvents();
+			      return this;
+			    }
+			});
+		},
+
+
+
+		generateTable: function() {
 			var Rows = Backbone.PageableCollection.extend({
 				url : this.url || "",
 				mode : this.mode || "client",
