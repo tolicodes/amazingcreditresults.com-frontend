@@ -13,6 +13,21 @@ define([
 	BackboneForms
 ) {
 	return Base.extend({
+		
+		// hooks
+		extraHooks : {
+			'objectModifications' : ['objectModification']
+		},
+		
+		// before render
+		objectModification: function() {
+			// add schema objects
+			if(this.addSchema) {
+				_.each(this.addSchema, function(attr, name) {
+					this.schema[name] = attr;
+				}.bind(this));
+			}
+		},
 
 		afterRender: function() {
 			var user = Backbone.Model.extend({
@@ -32,11 +47,11 @@ define([
 			  	 this.handleFormSubmit(values);
 			  }
 			}.bind(this));
-			 
-			 
 			this.form.render();
 			this.$el.html(this.form.el);
 		},
+		
+		// reset form values
 		
 		// validate forms return false if it has errors
 		validateForms: function() {

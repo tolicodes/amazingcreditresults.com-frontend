@@ -29,18 +29,35 @@ define([
 		},
 
 		generateTable: function() {
-			var Territories = Backbone.PageableCollection.extend({
+			
+			var DeleteCell = Backgrid.Cell.extend({
+			    template: _.template(" PUT YOUR HTML BUTTON TEMPLATE HERE "),
+			    events: {
+			      "click": "deleteRow"
+			    },
+			    deleteRow: function (e) {
+			      e.preventDefault();
+			      this.model.collection.remove(this.model);
+			    },
+			    render: function () {
+			      this.$el.html(this.template());
+			      this.delegateEvents();
+			      return this;
+			    }
+			});
+
+			var Rows = Backbone.PageableCollection.extend({
 				url : this.url || "",
 				mode : this.mode || "client",
 				parse: this.parse,
 				state: {
     				pageSize: this.pageSize || 5
     			}
-			}), territories = new Territories(), grid = new Backgrid.Grid({
+			}), rows = new Rows(), grid = new Backgrid.Grid({
 				columns : this.columns || {},
-				collection : territories
+				collection : rows
 			}), paginator = new Backgrid.Extension.Paginator({
-				collection : territories
+				collection : rows
 			});
 
 			this.$el.find("#grid").html(grid.render().$el);
@@ -50,17 +67,12 @@ define([
 				this.listenTo(this.collection, 'sync', function(){
 					var data  = this.collection.toJSON();
 					for(var i in data) {
-						territories.add(data[i]);		
+						rows.add(data[i]);		
 					}
-					//console.log("territories collection", territories.toJSON());
 				}.bind(this));
-				
 				this.collection.fetch();
-				
-				//territories.fetch();
-				
 			} else {
-				territories.fetch();
+				rows.fetch();
 			}
 		},
 

@@ -10,28 +10,11 @@ define([
 	FormView, model) {
 
 	return FormView.extend({
-
+		
 		// schema to generate form
 		schema : {
-			'name' : {
-				type : 'Object',
-				subSchema : {
-					'givenName' : {
-						type : 'Text',
-						title : "First Name"
-					},
-					'familyName' : {
-						type : 'Text',
-						title : "Last Name"
-					}
-				}
-			},
 			'email' : {
 				validators : ['required', 'email']
-			},
-			'Address' : {
-				type : 'TextArea',
-				title : "Address"
 			},
 			'City' : {
 				type : 'Text',
@@ -53,7 +36,10 @@ define([
 				type : 'Text',
 				title : "Alt Phone"
 			},
+			'Address' : {
+				type : 'TextArea',
+				title : "Address"
+			}
 		}
-
 	});
 });

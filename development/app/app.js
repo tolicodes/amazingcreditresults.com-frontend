@@ -13,7 +13,8 @@ define([
 	"auth/models/myself", 
 	"buyer/views/inventory",
 	"adminLogin/layout/auth-layout",
-	"adminDashboard/layout/dashboard", 
+	"adminDashboard/layout/dashboard",
+	"adminManageOwner/layout/layout", 
 	"less!cssPath/style"], function(
 	Backbone, 
 	home,
@@ -24,7 +25,8 @@ define([
 	authModel, 
 	inventoryView,
 	adminLoginLayout,
-	adminDasboardLayout
+	adminDasboardLayout,
+	adminManageOwnerLayout
 ) {
 
 	return Backbone.Router.extend({
@@ -37,22 +39,27 @@ define([
 			'login/:apikey' : 'login',
 			'inventory' : 'inventory',
 			'buyer/:apikey' : 'buyer',
+			'logout' : 'logout',
 			// owner routes
 			"admin/login": "adminLogin",
 			"admin/dashboard": "adminDashboard",
+			"admin/owner": "adminOwner",			
 			
 			// 404 Page
 			"*splat" : "routeNotFound"		
 		},
 
 		// permission to access pages without login
-		noAuth : ["login", "setPassword", "adminLogin"],
+		noAuth : ["login", "setPassword", "adminLogin", "logout"],
+		
+		// user activity time in minutes
+		logoutTime: 5,
 		
 		initialize: function() {
 			
 			// append the main container into DOM
 			if(!$(".main-container").length)
-				$("body").append('<div class="main-container"></div>');
+				$("body").append('<div class="container"><div class="main-container"></div></div>');
 			
 			// setup hunkKey if exists
 			if(sessionStorage.getItem("huntKey")) {
@@ -60,8 +67,39 @@ define([
 					beforeSend: function (request) {
 	                	request.setRequestHeader("huntKey", sessionStorage.getItem("huntKey"));
 	            	}
-				});			
+				});
 			}
+			// set in activity timer
+			this.setInActivityTimer();
+		},
+		
+		// activity timer
+		setInActivityTimer: function() {
+			this.userActivityLastTime = new Date().getTime();
+			$("html").bind('mousemove click', function() {
+				this.userActivityLastTime = new Date().getTime();
+			}.bind(this));
+			
+			// bind interval to check user activity
+			var interval = setInterval(this.calculateActivityTime.bind(this), 60000);
+		},
+		
+		calculateActivityTime: function() {
+			if(sessionStorage.getItem("huntKey")) {
+				var diff = new Date().getTime() - this.userActivityLastTime, minutes = Math.floor((diff / 1000) / 60);
+				if (minutes >= (this.logoutTime - 1)) {
+					userActivityLastTime = new Date().getTime();
+					this.logoutUser();
+				}
+			}
+		},
+		
+		// logout user
+		logoutUser: function() {
+			//sessionStorage.removeItem("huntKey");
+			App.routing.navigate("logout", {
+				trigger : true
+			});
 		},
 
 
@@ -117,6 +155,10 @@ define([
 		adminDashboard: function() {
 			this.loadPage(adminDasboardLayout, "adminDashboard");
 		},
+		
+		adminOwner: function() {
+			this.loadPage(adminManageOwnerLayout, "adminManageOwner");
+		},
 
 		// set password
 		setPassword : function(apiKey) {
@@ -137,6 +179,10 @@ define([
 				apiKey : apiKey,
 				page : "login"
 			});
+		},
+		
+		logout: function() {
+			this.loadPage(authLayout, "logout");			
 		},
 
 		// home page route

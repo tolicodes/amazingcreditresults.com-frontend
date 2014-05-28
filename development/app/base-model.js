@@ -44,6 +44,7 @@ define([
 				this.fetched = false;
 				this.fetchedDfd.reject.apply(this, arguments);
 			}.bind(this));
+			
 			return Backbone.Model.prototype.fetch.apply(this, arguments);
 		},
 		

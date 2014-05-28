@@ -18,7 +18,7 @@ define([
 		},
 		
 		parse: function(result) {
-			return result.tradelines;
+			return result.data;
 		}
 
 	});

@@ -83,7 +83,7 @@ define([
 			
 			if(!_.isUndefined(App.CurrentUser)) App.CurrentUser.set(this.user.toJSON());
 			
-			var route = (this.user.get("profile").needQuestionnaire == "true") ? "questions" : "buyer";
+			var route = (this.user.get("profile").needQuestionnaire == "true") ? "questionnaire" : "buyer";
 			App.routing.navigate(route, {
 				trigger : true
 			});

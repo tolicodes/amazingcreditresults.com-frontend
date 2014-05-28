@@ -15,7 +15,8 @@ define([
 		"adminClients" : "admin/clients/",
 		"saveQuestionnaireAnswers": "buyer/saveQuestionnaireAnswers",
 		"adminLogin": "owner/login",
-		"tradeline": "tradelines"
+		"tradeline": "tradelines",
+		"createOwner" : "admin/createOwner"
 	},
 	
 	addParams = function(url, params) {

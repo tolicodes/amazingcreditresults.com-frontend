@@ -40,15 +40,13 @@ define([
 			}, {
 				label: "Verified",
 				name : "accountVerified",
-				cell : "boolean"
+				cell : "boolean",
+				editable: false
 			}, {
 				label: "needQuestionnaire",
 				name : "needQuestionnaire",
+				editable: false,
 				cell : "boolean"
-			},{
-				label: "actions",
-				name : "actions",
-				cell : "delete"
 			}],
 			
 		url: "api/v1/admin/clients",

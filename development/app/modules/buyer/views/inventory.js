@@ -16,9 +16,14 @@ define([
 		el: undefined,
 		pageSize: 10,
 		columns:  [{
-			label: "Bar",
+			label: "Bank",
 			name : "balance",
-			cell : "string"
+			cell : "string",
+			sformatter: _.extend({}, Backgrid.CellFormatter.prototype, {
+		      fromRaw: function (rawValue, model) {
+		        return model.get("product").bank;
+		      }
+		    })
 		},
 		{
 			label: "Product Name",
@@ -53,16 +58,31 @@ define([
 		 {
 			label: "Cash Limit",
 			name : "cashLimit",
-			cell : "string"
+			cell : "string",
+			formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
+		      fromRaw: function (rawValue, model) {
+		        return "$"+model.get("cashLimit");
+		      }
+		    })
 		}, {
-			label: "Cost",
-			name : "cost",
-			cell : "string"
+			label: "Credit Limit",
+			name : "creditLimit",
+			cell : "string",
+			formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
+		      fromRaw: function (rawValue, model) {
+		        return "$"+model.get("creditLimit");
+		      }
+		    })
 		},
 		{
 			label: "Balance",
 			name : "balance",
-			cell : "string"
+			cell : "string",
+			formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
+		      fromRaw: function (rawValue, model) {
+		        return "$"+model.get("balance");
+		      }
+		    })
 		},
 		{
 			label: "Ratings",
@@ -70,22 +90,43 @@ define([
 			cell : "string",
 			formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
 		      fromRaw: function (rawValue, model) {
-		      	var val = "SH GOLD, BC Silver";
-		      	//if(model.get("bcRating"))
-		      	//
-		        //return model.get("bcRating") +"-"+model.get("moRating")+"--"+model.get("ncRating");
+		        return "BC "+model.get("bcRating") +", MO "+model.get("moRating")+", NC "+model.get("ncRating");
 		      }
 		    })
 		},
 		{
 			label: "Report",
 			name : "balance",
-			cell : "string"
+			cell : "string",
+			formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
+		      fromRaw: function (rawValue, model) {
+		      	var text = [];
+		      	if(model.get("product").reportsToExperian && model.get("product").reportsToEquifax && model.get("product").reportsToTransunion) {
+		      		text.push("All");
+		      	} else if(model.get("product").reportsToExperian) {
+		      		text.push("Experian");
+		      	} else if(model.get("product").reportsToEquifax) {
+		      		text.push("Equifax");
+		      	} else if(model.get("product").reportsToTransunion) {
+		      		text.push("Transunion");
+		      	} else {
+		      		text.push("No Data");
+		      	}
+		      	var s = text.join(", ");
+		      	console.log(s);
+		        return s;
+		      }
+		    })			
 		},
 		{
-			label: "CC",
-			name : "balance",
-			cell : "string"
+			label: "Cost",
+			name : "cost",
+			cell : "string",
+			formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
+		      fromRaw: function (rawValue, model) {
+		        return "$"+model.get("balance");
+		      }
+		    })
 		}
 		],
 		

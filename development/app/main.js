@@ -36,6 +36,7 @@ require.config({
 		'grid' : 'app/modules/grid',
 		'adminLogin': 'app/modules/admin-login',
 		'adminDashboard': 'app/modules/admin-dashboard',
+		'adminManageOwner': 'app/modules/admin-owner',
 		'home' : 'app/modules/home',
 		'questionnaire' : 'app/modules/questionnaire',
 		
