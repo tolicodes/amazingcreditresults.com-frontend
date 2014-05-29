@@ -33,12 +33,16 @@ require.config({
 		// Should be used as required dependencies with use of `define`,
 		'auth' : 'app/modules/auth',
 		'buyer': 'app/modules/buyer',
+		'inventory': 'app/modules/inventory',
 		'grid' : 'app/modules/grid',
+		'buyerDashboard': 'app/modules/buyer-dashboard',
 		'adminLogin': 'app/modules/admin-login',
 		'adminDashboard': 'app/modules/admin-dashboard',
 		'adminManageOwner': 'app/modules/admin-owner',
 		'home' : 'app/modules/home',
 		'questionnaire' : 'app/modules/questionnaire',
+		'video' : 'app/modules/video',
+		'cart' : 'app/modules/cart',
 		
 		'cssPath' : 'app/common/css',
 		

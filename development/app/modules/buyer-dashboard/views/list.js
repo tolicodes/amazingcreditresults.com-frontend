@@ -6,13 +6,11 @@
 define([
 	"dataTable",
 	"adminDashboard/models/reset-password",
-	"adminDashboard/models/welcome-email",
-	"adminDashboard/models/update-buyer"
+	"adminDashboard/models/welcome-email"
 	], function(
 	DataTable,
 	resetPasswordModel,
-	welcomeEmailModel,
-	updateBuyerModel
+	welcomeEmailModel
 	) {
 
 	return DataTable.extend({
@@ -68,7 +66,6 @@ define([
 		initializeBefore: function() {
 			this.addResetButton(resetPasswordModel);
 			this.welcomeEmailButton(welcomeEmailModel);
-			this.addCheckbox(updateBuyerModel);
 		}
 	});
 });

@@ -9,9 +9,9 @@ define([
 	"buyer/layout/buyer-layout", 
 	"grid/views/grid", 
 	"auth/layout/auth-layout", 
-	"questionnaire/views/questionnaire", 
+	"buyerDashboard/layout/dashboard", 
 	"auth/models/myself", 
-	"buyer/views/inventory",
+	"inventory/layout/layout",
 	"adminLogin/layout/auth-layout",
 	"adminDashboard/layout/dashboard",
 	"adminManageOwner/layout/layout", 
@@ -21,9 +21,9 @@ define([
 	buyerInfo,
 	dataGrid,
 	authLayout,
-	questionnaire,
+	buyerDashboardLayout,
 	authModel, 
-	inventoryView,
+	inventoryLayout,
 	adminLoginLayout,
 	adminDasboardLayout,
 	adminManageOwnerLayout
@@ -34,7 +34,7 @@ define([
 		routes : {
 			'buyer' : 'buyer',
 			'grid' : 'dataGrid',
-			'questionnaire' : 'questionnaire',
+			'dashboard': 'dashboard',
 			'setPassword/:apikey' : 'setPassword',
 			'login/:apikey' : 'login',
 			'inventory' : 'inventory',
@@ -168,9 +168,8 @@ define([
 			});
 		},
 
-		// questionnaire page
-		questionnaire : function() {
-			this.loadPage(questionnaire, 'questions');
+		dashboard : function() {
+			this.loadPage(buyerDashboardLayout, 'buyerDashboard');
 		},
 
 		// set password
@@ -205,7 +204,7 @@ define([
 		},
 
 		inventory : function() {
-			this.loadPage(inventoryView, 'inventory');
+			this.loadPage(inventoryLayout, 'inventory');
 		}
 		
 

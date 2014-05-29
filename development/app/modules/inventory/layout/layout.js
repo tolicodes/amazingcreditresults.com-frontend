@@ -6,22 +6,22 @@
 
 define([
 	"baseLayout",
-	"hbs!buyer/templates/layout",
-	"buyer/views/info"
+	"hbs!inventory/templates/layout",
+	"inventory/views/inventory",
+	"inventory/views/tradelines"
 ], function(
 	BaseLayout,
 	viewTemplate,
-	infoView
+	inventoryView,
+	tradelinesView
 ) {
 
 	return BaseLayout.extend({
-		
 		template: viewTemplate,
-		
 		initializeAfter: function(options) {
 			this.render();
-			this.setViewInLayout('.buyer-info', new infoView(options));
-			//this.setViewInLayout('.inventory', new inventoryView(options));
-		}			
+			this.setViewInLayout('.tradelines', new tradelinesView(options));
+			this.setViewInLayout('.inventory', new inventoryView(options));
+		}
 	});
 });

@@ -28,6 +28,51 @@ define([
 			return result; 
 		},
 		
+		addCheckbox: function(updateModel) {
+			var BooleanCell = Backgrid.BooleanCell = Backbone.View.extend({
+			  className: "boolean-cell",
+			  
+			  tagName: 'td',
+			  className: "boolean-cell renderable",
+			 // editor: BooleanCellEditor,
+			  events: {
+			      "click": "enterEditMode",
+			      "click input": "inputClick"
+			  },
+			  
+			  initialize: function(options) {
+			  	if(options) {
+			  		this.column = options.column;
+			  		this.model = options.model;
+			  	}
+			  },
+
+			  render: function () {
+			    this.$el.empty();
+			    this.$el.append($("<input>", {
+			      tabIndex: -1,
+			      type: "checkbox",
+			      checked: this.model.get(this.column.get("name"))
+			    }));
+			    this.delegateEvents();
+			    return this;
+			  },
+			
+			  inputClick: function (event) {
+			      var attributes = {},
+			      model = new updateModel(), ob = {};
+			      attributes[this.column.get("name")] = $(event.target).prop("checked");
+			      this.model.set(attributes);
+			      
+			      model.id = this.model.get("id");
+			      ob[this.column.get("name")] = $(event.target).prop("checked");
+			      ob["id"] = this.model.get("id");
+			      model.save(ob);
+			  }
+			
+			});
+		},
+		
 		addResetButton: function(resetPasswordModel) {
 			var ResetButtonCell = Backgrid.ResetButtonCell = Backbone.View.extend({
 			    template: _.template("<button>Reset password</button>"),

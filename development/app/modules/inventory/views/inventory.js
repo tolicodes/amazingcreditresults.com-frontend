@@ -17,17 +17,20 @@ define([
 		pageSize: 10,
 		columns:  [{
 			label: "Bank",
-			name : "balance",
+			name : "bank_name",
+			editable: false,
 			cell : "string",
-			sformatter: _.extend({}, Backgrid.CellFormatter.prototype, {
+			formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
 		      fromRaw: function (rawValue, model) {
+		      	console.log(model.get("product"));
 		        return model.get("product").bank;
 		      }
 		    })
 		},
 		{
 			label: "Product Name",
-			name : "balance",
+			name : "product_name",
+			editable: false,
 			cell : "string",
 			formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
 		      fromRaw: function (rawValue, model) {
@@ -37,27 +40,42 @@ define([
 		},
 		{
 			label: "Statement",
-			name : "balance",
-			cell : "string"
+			name : "statement",
+			editable: false,
+			cell : "string",
+			formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
+		      fromRaw: function (rawValue, model) {
+		        return "--";
+		      }
+		    })
 		},
 		{
 			label: "Date",
-			name : "balance",
-			cell : "string"
+			name : "date",
+			editable: false,
+			cell : "string",
+			formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
+		      fromRaw: function (rawValue, model) {
+		        return "--";
+		      }
+		    })
 		},
 		{
 			label: "Current",
-			name : "balance",
+			name : "usedAus",
+			editable: false,
 			cell : "string"
 		},
 		{
 			label: "Max",
-			name : "balance",
+			name : "totalAus",
+			editable: false,
 			cell : "string"
 		},
 		 {
 			label: "Cash Limit",
 			name : "cashLimit",
+			editable: false,
 			cell : "string",
 			formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
 		      fromRaw: function (rawValue, model) {
@@ -67,6 +85,7 @@ define([
 		}, {
 			label: "Credit Limit",
 			name : "creditLimit",
+			editable: false,
 			cell : "string",
 			formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
 		      fromRaw: function (rawValue, model) {
@@ -77,6 +96,7 @@ define([
 		{
 			label: "Balance",
 			name : "balance",
+			editable: false,
 			cell : "string",
 			formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
 		      fromRaw: function (rawValue, model) {
@@ -87,6 +107,7 @@ define([
 		{
 			label: "Ratings",
 			name : "bcRating",
+			editable: false,
 			cell : "string",
 			formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
 		      fromRaw: function (rawValue, model) {
@@ -97,6 +118,7 @@ define([
 		{
 			label: "Report",
 			name : "balance",
+			editable: false,
 			cell : "string",
 			formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
 		      fromRaw: function (rawValue, model) {
@@ -113,7 +135,6 @@ define([
 		      		text.push("No Data");
 		      	}
 		      	var s = text.join(", ");
-		      	console.log(s);
 		        return s;
 		      }
 		    })			
@@ -121,10 +142,11 @@ define([
 		{
 			label: "Cost",
 			name : "cost",
+			editable: false,
 			cell : "string",
 			formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
 		      fromRaw: function (rawValue, model) {
-		        return "$"+model.get("balance");
+		        return "$"+model.get("cost");
 		      }
 		    })
 		}

@@ -18,6 +18,8 @@ define([
 ) {
 
 	return Base.extend({
+		
+		el: undefined,
 
 		tpl: viewTemplate,
 
@@ -35,10 +37,7 @@ define([
 		// answer range for calculated questions
 		answersRange : {
 			'3' : [{
-				min : 0,
-				max : 2
-			}, {
-				min : 2,
+				min : 1,
 				max : 5
 			}, {
 				min : 5,

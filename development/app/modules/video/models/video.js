@@ -10,8 +10,8 @@ define([
 	) {
 
 	return BaseModel.extend({
-		url : function() {
-			return this.getUrl("adminClients", {id: this.id});		
-		}
+		//url : function() {
+		//	return this.getUrl("adminClients", {id: this.id});		
+		//}
 	});
 });
