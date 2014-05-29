@@ -1,14 +1,13 @@
 {
   "name": "backbone-forms",
   "homepage": "https://github.com/powmedia/backbone-forms",
-  "version": "0.14.0",
-  "_release": "0.14.0",
+  "_release": "03ed75610a",
   "_resolution": {
-    "type": "version",
-    "tag": "v0.14.0",
-    "commit": "b1d90a5c1decaeeafe523037806fc61f780c3b8a"
+    "type": "branch",
+    "branch": "master",
+    "commit": "03ed75610afe5530786bedb78579fd5ff7ad8a65"
   },
   "_source": "git://github.com/powmedia/backbone-forms.git",
-  "_target": "*",
+  "_target": "master",
   "_originalSource": "backbone-forms"
 }

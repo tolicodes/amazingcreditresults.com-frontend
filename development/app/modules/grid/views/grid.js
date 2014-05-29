@@ -10,7 +10,7 @@ define([
 ) {
 
 	return DataTable.extend({
-
+		el: '.list-view',
 		columns:  [{
 				name : "id",
 				editable : false,

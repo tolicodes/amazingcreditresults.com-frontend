@@ -83,6 +83,8 @@ define([
 			if(options && options[0])
 				options = options[0];
 
+			this.trigger('objectModifications');
+			
 			// trigger before intialize
 			this.trigger('intialize:before', options);
 

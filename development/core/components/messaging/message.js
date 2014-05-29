@@ -5,14 +5,18 @@
 
 define([
 	"base",
-	"hbs!core/components/messaging/message"
+	"hbs!core/components/messaging/templates/message",
+	"core/components/messaging/collections/messages"
 ], function(
 	Base,
-	viewTemplate
+	viewTemplate,
+	Collection
 ) {
 	return Base.extend({
 		
 		tpl: viewTemplate,
+		
+		timeInterval : 10000,
 		
 		// hooks
 		extraHooks : {
@@ -23,6 +27,22 @@ define([
 		initializeBefore: function() {
 			if(!$(".message-area").length)
 				$("body").append('<div class="message-area"></div>');
+				
+			this.collection = new Collection();
+				
+		},
+		
+		alertsClass: {
+			"Green": "success",
+			"Red"  : "danger",
+			"Info"   : "info",
+			"Yellow": "warning"
+		},
+		
+		afterRender: function() {
+			$(".close-btn").click(function() {
+				this.hideMessage();
+			}.bind(this));
 		},
 		
 		 /*
@@ -34,13 +54,43 @@ define([
 		 * */		
 		
 		showMessage : function(options) {
+			if(this.type) this.hideMessage();
 			this.message = (options && options[0])?options[0]:"";
-			this.type = (options && options[1])?options[1]:"success";
+			var cls = (options && options[1])?options[1]:"Green";
+			var errors = (options && options[2])?options[2]:[];
+			this.type = this.alertsClass[cls];
+
+			if(errors) this.showFieldErrors(errors);
+
+			// set message in collection
+			this.collection.add({message: this.message, type: this.type });
+			
+			// show message on DOM
 			$(".alert-message-h").addClass("alert-"+this.type).removeClass('hide').html(this.message);			
-		}, 
+			$(".close-btn").show();
+			
+			// hide message after 10 seconds
+			setTimeout(this.hideMessage.bind(this), this.timeInterval);
+		},
 		
+		// show fields error
+		showFieldErrors: function(errors) {
+			_.each(errors, function(ob) {
+				var $target = $("#"+ob.field);
+				$target.parent().append("<div class='input-error alert-danger'>"+ob.message+"</div>");
+				$target.focus(function() {
+					$target.parent().find(".input-error").remove();
+				});
+				setTimeout(function() {
+					$target.parent().find(".input-error").remove();
+				}, this.timeInterval);
+			}.bind(this));
+		},
+		
+		// hide message
 		hideMessage : function() {
 			$(".alert-message-h").html("").removeClass('hide').removeClass("alert-"+this.type);
+			$(".close-btn").hide();
 		},
 		
 		appendTemplate : function() {

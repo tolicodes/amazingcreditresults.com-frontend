@@ -5,10 +5,10 @@
 
 define([
 	"base", 
-	"hbs!questionair/templates/questionair", 
-	"questionair/models/questionair", 
-	"questionair/models/update-answers",
-	"questionair/models/questions"
+	"hbs!questionnaire/templates/questionair", 
+	"questionnaire/models/questionnaire", 
+	"questionnaire/models/update-answers",
+	"questionnaire/models/questions"
 ], function(
 	Base, 
 	viewTemplate, 
@@ -90,7 +90,7 @@ define([
 			}.bind(this));
 			
 			this.listenTo(updateAnswers, 'error', function(){
-				App.Mediator.trigger("messaging:showAlert", "Some error occured", "error");
+				App.Mediator.trigger("messaging:showAlert", "Some error occured", "Red");
 			});
 			
 			updateAnswers.set(this.updateAnswer);	

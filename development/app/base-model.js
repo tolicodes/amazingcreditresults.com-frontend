@@ -44,6 +44,7 @@ define([
 				this.fetched = false;
 				this.fetchedDfd.reject.apply(this, arguments);
 			}.bind(this));
+			
 			return Backbone.Model.prototype.fetch.apply(this, arguments);
 		},
 		
@@ -51,10 +52,9 @@ define([
 		showErrors: function(model) {
 			var msg = "";
 			_.each(model.validationError, function(err, field) {
-				console.log(err, field);
-				msg += field +": "+ err+" <br/> ";
+				msg += "<p>"+err+"</p>";
 			});
-			if(msg) App.Mediator.trigger("messaging:showAlert", msg, "error");
+			if(msg) App.Mediator.trigger("messaging:showAlert", msg, "Red");
 		}
 		
 		

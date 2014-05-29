@@ -38,7 +38,7 @@ define([
 		authorizeUser : function() {
 			this.user = new authModel();
 			this.user.fetchedDfd.fail(function() {
-				App.Mediator.trigger("messaging:showAlert", "Authorization failed. Please login.", "error");
+				App.Mediator.trigger("messaging:showAlert", "Authorization failed. Please login.", "Red");
 			});
 			return this.user.fetchedDfd;
 		},
@@ -63,10 +63,10 @@ define([
 					this.authorizeUser().done(this._createForQuestionair.bind(this));
 				}.bind(this));
 				
-				this.listenTo(login, 'error', function() {
-					App.Mediator.trigger("messaging:showAlert", "Some error occured", "error");
+				this.listenTo(login, 'error', function(model, response) {
+					var json = (response.responseText)?JSON.parse(response.responseText):{};
+					App.Mediator.trigger("messaging:showAlert", "Incorrect Password. Forgot your password? Contact support at <a  href='mailto:support@amazingcreditresults.com'>support@amazingcreditresults.com</a>", "Red", json.errors);
 				});
-				
 			}.bind(this));
 			
 			login.bind('validated:invalid', function(model) {
@@ -80,7 +80,10 @@ define([
 		},
 		
 		_createForQuestionair: function() {
-			var route = (this.user.get("profile").needQuestionnaire == "true") ? "questions" : "buyer";
+			
+			if(!_.isUndefined(App.CurrentUser)) App.CurrentUser.set(this.user.toJSON());
+			
+			var route = (this.user.get("profile").needQuestionnaire == "true") ? "questionnaire" : "buyer";
 			App.routing.navigate(route, {
 				trigger : true
 			});

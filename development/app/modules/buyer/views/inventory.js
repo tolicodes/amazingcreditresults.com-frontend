@@ -1,124 +1,138 @@
-// info.js
+// inventory.js
 // --------------
 // Requires define
 // Return Backbone View {Object}
 
 
 define([
-	"base",
-	"buyer/models/product",
-	"buyer/models/tradeline",
-	"buyer/models/transaction",
-	"buyer/models/users"
+	"dataTable",
+	"buyer/collections/tradeline",
 ], function(
-	Base,
-	productModel,
-	tradelineModel,
-	transactionModel,
-	usersModel	
+	DataTable,
+	tradelineCollection
 ) {
 
-	return Base.extend({
-
-		// columns:  [{
-				// name : "Bar",
-				// editable : false,
-				// cell : Backgrid.IntegerCell.extend({
-					// orderSeparator : ''
-				// })
-			// }, {
-				// name : "Product Name",
-				// cell : "string"
-			// }, {
-				// name : "Statement",
-				// cell : "integer"
-			// }, {
-				// name : "Date",
-				// cell : "number"
-			// }, {
-				// name : "Payment",
-				// cell : "date"
-			// }, {
-				// name : "Current",
-				// cell : "uri"
-			// }],
-// 			
-// 			
-			/*, {
-				name : "Max",
-				cell : "uri"
-			}, {
-				name : "Credit",
-				cell : "uri"
-			}, {
-				name : "Cash",
-				cell : "uri"
-			}, {
-				name : "Balance",
-				cell : "uri"
-			}, {
-				name : "Ratings",
-				cell : "uri"
-			}, {
-				name : "Report",
-				cell : "uri"
-			}, {
-				name : "Cc",
-				cell : "uri"
-			}*/
-			
-		url: "http://backbone-paginator.github.io/backbone-pageable/examples/json/pageable-territories.json",
-		
+	return DataTable.extend({
+		el: undefined,
+		pageSize: 10,
+		columns:  [{
+			label: "Bank",
+			name : "balance",
+			cell : "string",
+			sformatter: _.extend({}, Backgrid.CellFormatter.prototype, {
+		      fromRaw: function (rawValue, model) {
+		        return model.get("product").bank;
+		      }
+		    })
+		},
+		{
+			label: "Product Name",
+			name : "balance",
+			cell : "string",
+			formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
+		      fromRaw: function (rawValue, model) {
+		        return model.get("product").name;
+		      }
+		    })
+		},
+		{
+			label: "Statement",
+			name : "balance",
+			cell : "string"
+		},
+		{
+			label: "Date",
+			name : "balance",
+			cell : "string"
+		},
+		{
+			label: "Current",
+			name : "balance",
+			cell : "string"
+		},
+		{
+			label: "Max",
+			name : "balance",
+			cell : "string"
+		},
+		 {
+			label: "Cash Limit",
+			name : "cashLimit",
+			cell : "string",
+			formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
+		      fromRaw: function (rawValue, model) {
+		        return "$"+model.get("cashLimit");
+		      }
+		    })
+		}, {
+			label: "Credit Limit",
+			name : "creditLimit",
+			cell : "string",
+			formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
+		      fromRaw: function (rawValue, model) {
+		        return "$"+model.get("creditLimit");
+		      }
+		    })
+		},
+		{
+			label: "Balance",
+			name : "balance",
+			cell : "string",
+			formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
+		      fromRaw: function (rawValue, model) {
+		        return "$"+model.get("balance");
+		      }
+		    })
+		},
+		{
+			label: "Ratings",
+			name : "bcRating",
+			cell : "string",
+			formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
+		      fromRaw: function (rawValue, model) {
+		        return "BC "+model.get("bcRating") +", MO "+model.get("moRating")+", NC "+model.get("ncRating");
+		      }
+		    })
+		},
+		{
+			label: "Report",
+			name : "balance",
+			cell : "string",
+			formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
+		      fromRaw: function (rawValue, model) {
+		      	var text = [];
+		      	if(model.get("product").reportsToExperian && model.get("product").reportsToEquifax && model.get("product").reportsToTransunion) {
+		      		text.push("All");
+		      	} else if(model.get("product").reportsToExperian) {
+		      		text.push("Experian");
+		      	} else if(model.get("product").reportsToEquifax) {
+		      		text.push("Equifax");
+		      	} else if(model.get("product").reportsToTransunion) {
+		      		text.push("Transunion");
+		      	} else {
+		      		text.push("No Data");
+		      	}
+		      	var s = text.join(", ");
+		      	console.log(s);
+		        return s;
+		      }
+		    })			
+		},
+		{
+			label: "Cost",
+			name : "cost",
+			cell : "string",
+			formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
+		      fromRaw: function (rawValue, model) {
+		        return "$"+model.get("balance");
+		      }
+		    })
+		}
+		],
 		
 		initializeBefore : function(options) {
-			/*	productModel,
-	tradelineModel,
-	transactionModel,
-	usersModel	
-*/
-
-		var product = new productModel();
-		product.set({ products : [{
-			"id" : 1,
-			"name" : "Chase Freedom"
-		}, {
-			"id" : 2,
-			"name" : "Chase Ink"
-		}]});
-		
-		var tradeline = new tradelineModel();
-		
-		//var transaction = new transactionModel();
-		
-		var users = new usersModel({species: 'Test', 'userId': tradeline});
-		
-		users.set({ users : [{
-			"id" : 1,
-			"name" : "Anatoliy",
-			"type" : "seller",
-			"tradeLines" : [{
-				"id" : 1233,
-				"productId" : 2,
-				"creditLimit" : 30000,
-				"auSlotsTotal" : 15,
-				"auSlotsAvailable" : 10
-			}]
-		}, {
-			"id" : 2,
-			"name" : "John",
-			"type" : "buyer",
-			"tradeLinesBought" : [{
-				"dateBought" : 012301293,
-				"tradeLineId" : 1233,
-				"rentedForTime" : 01233,
-				"expiration" : 01231231,
-				"amountPaid" : 300
-			}]
-		}],});
-		
-		alert( users.get( 'tradeline' ).pluck( 'species' ) );
-		//console.log()
-
+			this.collection = new tradelineCollection();
+			this.generateTable();
 		}
 	});
 });

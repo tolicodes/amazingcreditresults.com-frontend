@@ -13,23 +13,45 @@ define([
 	BackboneForms
 ) {
 	return Base.extend({
+		
+		// hooks
+		extraHooks : {
+			'objectModifications' : ['objectModification']
+		},
+		
+		// before render
+		objectModification: function() {
+			// add schema objects
+			if(this.addSchema) {
+				_.each(this.addSchema, function(attr, name) {
+					this.schema[name] = attr;
+				}.bind(this));
+			}
+		},
 
 		afterRender: function() {
 			var user = Backbone.Model.extend({
 				schema: this.schema
 			});
 			
-			console.log(this.model.toJSON());
-			
-			
 			this.form = new Backbone.Form({
-			    model: new user(this.model.toJSON())
+			    model: new user((this.model)?this.model.toJSON():{}),
+			    'submitButton': this.submitButtonText
 			 });
 			 
+			this.form.on('submit', function(form, titleEditor, extra) {
+			  form.preventDefault();
+			  
+			  if(!this.validateForms()) {
+			  	var values = this.getFormValue();
+			  	 this.handleFormSubmit(values);
+			  }
+			}.bind(this));
 			this.form.render();
 			this.$el.html(this.form.el);
-			
 		},
+		
+		// reset form values
 		
 		// validate forms return false if it has errors
 		validateForms: function() {

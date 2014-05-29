@@ -8,16 +8,23 @@ define([
 
 	var base = window.location.origin, 
 	apiPath = '/api/v1/', endpoints = {
-		"buyerLogin" : "buyer/login/",
-		"buyerSetPassword" : "buyer/setPassword/",
-		"authSelf" : "myself/",
-		"needToSetPassword": "buyer/needToSetPassword/",
-		"adminClients" : "admin/clients/",
-		"saveQuestionnaireAnswers": "buyer/saveQuestionnaireAnswers"
+		"buyerLogin" : "buyer/login",
+		"buyerSetPassword" : "buyer/setPassword",
+		"authSelf" : "myself",
+		"needToSetPassword": "buyer/needToSetPassword",
+		"adminClients" : "admin/clients",
+		"saveQuestionnaireAnswers": "buyer/saveQuestionnaireAnswers",
+		"adminLogin": "owner/login",
+		"tradeline": "tradelines",
+		"createOwner" : "admin/createOwner",
+		"resetPassword": "admin/clients/resetPassword",
+		"welcomeEmail": "admin/clients/welcome"
 	},
+	
 	addParams = function(url, params) {
+		console.log(params);
 		_.each(params, function(p) {
-			url += p + "/";
+			url += "/" + p;
 		});
 		return url;
 	};
