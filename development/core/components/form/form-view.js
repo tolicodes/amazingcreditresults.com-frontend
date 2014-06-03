@@ -53,12 +53,17 @@ define([
 			  }
 			}.bind(this));
 			this.form.render();
+			
+			if(this.formClass) {
+				this.form.$el.addClass(this.formClass);
+			}
+			
 			if(this.formArea)
 				this.$el.find(this.formArea).html(this.form.el);
 			else
 				this.$el.html(this.form.el);
 				
-				
+			console.log(this.form.el);	
 				
 		},
 		

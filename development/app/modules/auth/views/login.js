@@ -19,7 +19,7 @@ define([
 		
 		formArea: '.form-area',
 		
-		formClass: '',
+		formClass: 'login-form',
 		
 		el: undefined,
 		
