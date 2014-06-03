@@ -4,24 +4,32 @@
 // Return Backbone View {Object}
 
 define([
-	"base", 
+	"formView", 
 	"hbs!auth/templates/login", 
 	"auth/models/login", 
 	"auth/models/myself"
 	], function(
-	Base, 
+	FormView, 
 	viewTemplate, 
 	loginModel, 
 	authModel
 	) {
 
-	return Base.extend({
+	return FormView.extend({
 		
-		events : {
-			'submit .password-form' : 'handleFormSubmit'
-		},
+		formArea: '.form-area',
+		
+		formClass: '',
 		
 		el: undefined,
+		
+		// schema to generate form
+		schema : {
+			'password' : {
+				type : 'Password',
+				validators : ['required']
+			}
+		},
 		
 		tpl : viewTemplate,
 
@@ -42,17 +50,14 @@ define([
 			});
 			return this.user.fetchedDfd;
 		},
-
-		handleFormSubmit : function(e) {
-			e.preventDefault();
-			$(e.target).prop("disabled", true);
-			var password = $(e.target).find("#password").val();
 		
+		submitButtonText : "Login In START BUYING",
+
+		handleFormSubmit : function(values) {
 			// save the password and redirect
 			var login = new loginModel();
 			
 			this.bindModelValidation(login);
-			
 			login.bind('validated:valid', function(m, errors) {
 				this.listenTo(login, 'sync', function(response) {
 					// set the huntKey in session storage
@@ -70,11 +75,13 @@ define([
 			}.bind(this));
 			
 			login.bind('validated:invalid', function(model) {
-				$(e.target).prop("disabled", false);
 				login.showErrors(model);
 			});
 			
-			login.set({apiKey: this.apiKey, password: password});
+			if(values)
+				values.apiKey = this.apiKey;
+			
+			login.set(values);
 			login.save();
 
 		},

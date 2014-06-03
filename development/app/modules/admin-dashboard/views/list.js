@@ -23,6 +23,7 @@ define([
 				label: "First Name",
 				name : "name.givenName",
 				cell : "string",
+				editable: false,
 				formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
 			      fromRaw: function (rawValue, model) {
 			        return model.get("name").givenName;
@@ -32,15 +33,31 @@ define([
 				label: "Last Name",
 				name : "name.familyName",
 				cell : "string",
+				editable: false,
 				formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
 			      fromRaw: function (rawValue, model) {
 			        return model.get("name").familyName;
 			      }
 			    })
 			}, {
+				label: "Roles",
+				name : "roles",
+				cell : "string",
+				editable: false,
+				formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
+			      fromRaw: function (rawValue, model) {
+			        var roles = [];
+			        if(model.get("roles").owner) roles.push("owner");
+			        if(model.get("roles").buyer) roles.push("buyer");
+			        if(model.get("roles").seller) roles.push("seller");
+			        return roles.join(", ");
+			      }
+			    })
+			}, {
 				label: "Email",
 				name : "email",
-				cell : "string"
+				cell : "string",
+				editable: false
 			}, {
 				label: "Verified",
 				name : "accountVerified",
@@ -62,7 +79,7 @@ define([
 		url: "api/v1/admin/clients",
 		
 		parse: function(result) {
-			return result.clients;
+			return result.data;
 		},
 		
 		initializeBefore: function() {

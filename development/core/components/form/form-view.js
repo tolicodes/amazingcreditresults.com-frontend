@@ -13,6 +13,11 @@ define([
 	BackboneForms
 ) {
 	return Base.extend({
+		// if we need to insert inside view define the target here
+		formArea: undefined,
+		
+		// form class needs to be added
+		formClass: undefined,
 		
 		// hooks
 		extraHooks : {
@@ -48,7 +53,13 @@ define([
 			  }
 			}.bind(this));
 			this.form.render();
-			this.$el.html(this.form.el);
+			if(this.formArea)
+				this.$el.find(this.formArea).html(this.form.el);
+			else
+				this.$el.html(this.form.el);
+				
+				
+				
 		},
 		
 		// reset form values

@@ -51,14 +51,14 @@ define([
 		},
 		{
 			label: "Date",
-			name : "date",
+			name : "dateOpen",
 			editable: false,
 			cell : "string",
-			formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
-		      fromRaw: function (rawValue, model) {
-		        return "--";
-		      }
-		    })
+			//formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
+		     // fromRaw: function (rawValue, model) {
+		      //  return "--";
+		     // }
+		    //})
 		},
 		{
 			label: "Current",

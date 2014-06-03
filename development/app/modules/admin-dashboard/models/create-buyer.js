@@ -12,7 +12,7 @@ define([
 		url : function() {
 			return this.getUrl("adminClients");
 		},
-
+		
 		validation : {
 			givenName : {
 				required : true,
