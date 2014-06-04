@@ -7,6 +7,5 @@ define(["relationalModel"], function(RelationalModel) {
 
 	return RelationalModel.extend({
 
-
 	});
 });

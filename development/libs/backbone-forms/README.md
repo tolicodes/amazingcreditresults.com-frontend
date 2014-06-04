@@ -78,8 +78,8 @@ $('body').append(form.el);
 
 ###Live editable demos
 - [User form](http://jsfiddle.net/evilcelery/dW2Qu/)
-- [Form with Bootstrap templates and an Object list](http://jsfiddle.net/evilcelery/4XZMb/)
 - [Update form elements based on user input](http://jsfiddle.net/evilcelery/c5QHr/)
+- [Validate on blur](http://jsfiddle.net/evilcelery/FqLR2/)
 
 
 
@@ -131,7 +131,7 @@ To use a custom template pack, e.g. Bootstrap, include the relevant files after 
     <script src="backbone-forms/distribution/templates/bootstrap.js"></script>
     <link href="backbone-forms/distribution/templates/bootstrap.css" rel="stylesheet" />
 
-If you use Backbone with node.js, you can just `require('backbone-forms');` in your index file.
+If you use Backbone with browserify or node.js, you can just `require('backbone-forms');` in your index file.  If doing this you will need to set `Backbone.$`, e.g. `Backbone.$ = require('jquery')`.
 
 Note there is also a distribution file for RequireJS / AMD.
 
@@ -243,6 +243,10 @@ If a form has a model attached to it, the initial values are taken from the mode
 
   An array of field names (keys). Only the fields defined here will be added to the form. You can also use this to re-order the fields.
 
+- **`submitButton {String}`**
+
+  If provided, creates a submit button at the bottom of the form using the provided text
+
 - **`idPrefix`**
 
   A string that will be prefixed to the form DOM element IDs. Useful if you will have multiple forms on the same page. E.g. `idPrefix: 'user-'` will result in IDs like 'user-name', 'user-email', etc.
@@ -279,6 +283,10 @@ If a form has a model attached to it, the initial values are taken from the mode
             // where extra is an array of extra arguments that
             // a custom editor might need
         });
+
+- **`submit`**
+
+  Fired when the form is submitted. The native Event is passed as an argument, so you can do event.preventDefault() to stop the form from submitting.
 
 [Back to top](#top)
 
@@ -388,7 +396,7 @@ Creates and populates a `<select>` element.
 
   Options to populate the `<select>`.
 
-  Can be either:
+  Can be any of:
     - String of HTML `<option>`s
     - Array of strings/numbers
     - An array of option groups in the form `[{group: 'Option Group Label', options: <any of the forms from this list (except the option groups)>}]`
@@ -633,10 +641,11 @@ Validators can be defined in several ways:
 ###Built-in validators
 
 - **required**: Checks the field has been filled in
+- **number**: Checks it is a number, allowing a decimal point
 - **email**: Checks it is a valid email address
 - **url**: Checks it is a valid URL
 - **match**: Checks that the field matches another. The other field name must be set in the `field` option.
-- **regexp**: Runs a regular expression. Requires the `regexp` option, which takes a compiled regular expression.
+- **regexp**: Runs a regular expression. Requires the `regexp` option, which takes a compiled regular expression. Setting the `match` option to `false` ensures that the regexp does NOT pass.
 
 ####Examples
 
@@ -725,7 +734,7 @@ If you model provides a `validate` method, then this will be called when you cal
 ```js
 //Schema definition:
 var schema = {
-    name: { validators: ['required']
+    name: { validators: ['required'] }
 }
 
 var errors = form.commit();
@@ -940,6 +949,17 @@ var CustomEditor = Backbone.Form.editors.Base.extend({
 
 <a name="changelog"/>
 ##Changelog
+
+###master
+- Add `submitButton` to form constructor. Adds a submit button with given text.
+- No longer require jquery from within the CommonJS module. NOTE: You must now set Backbone.$ yourself if using CommonJS e.g. browserify
+- Fix CommonJS backend issues (ndrsn)
+- Added the `number` validator
+- Support specifying fieldsets on the Form prototype
+- Support specifying field and fieldset templates in their prototypes; allows extending Form, Field and Fieldset to create custom forms
+- Support regexp validator as string (gregsabia)
+- Fix bootstrap3 class list name #329
+- Add 'match' option to regexp validator
 
 ###0.14.0
 - Add Bootstrap 3 templates (powmedia)

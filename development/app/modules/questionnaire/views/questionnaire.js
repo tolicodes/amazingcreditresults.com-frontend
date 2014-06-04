@@ -5,10 +5,10 @@
 
 define([
 	"base", 
-	"hbs!questionair/templates/questionair", 
-	"questionair/models/questionair", 
-	"questionair/models/update-answers",
-	"questionair/models/questions"
+	"hbs!questionnaire/templates/questionair", 
+	"questionnaire/models/questionnaire", 
+	"questionnaire/models/update-answers",
+	"questionnaire/models/questions"
 ], function(
 	Base, 
 	viewTemplate, 
@@ -18,6 +18,8 @@ define([
 ) {
 
 	return Base.extend({
+		
+		el: undefined,
 
 		tpl: viewTemplate,
 
@@ -35,10 +37,7 @@ define([
 		// answer range for calculated questions
 		answersRange : {
 			'3' : [{
-				min : 0,
-				max : 2
-			}, {
-				min : 2,
+				min : 1,
 				max : 5
 			}, {
 				min : 5,
@@ -90,7 +89,7 @@ define([
 			}.bind(this));
 			
 			this.listenTo(updateAnswers, 'error', function(){
-				App.Mediator.trigger("messaging:showAlert", "Some error occured", "error");
+				App.Mediator.trigger("messaging:showAlert", "Some error occured", "Red");
 			});
 			
 			updateAnswers.set(this.updateAnswer);	

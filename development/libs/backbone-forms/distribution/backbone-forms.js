@@ -1,7 +1,7 @@
 /**
- * Backbone Forms v0.13.0
+ * Backbone Forms v0.14.0
  *
- * Copyright (c) 2013 Charles Davison, Pow Media Ltd
+ * Copyright (c) 2014 Charles Davison, Pow Media Ltd
  *
  * License and more information at:
  * http://github.com/powmedia/backbone-forms
@@ -11,15 +11,13 @@
   //DEPENDENCIES
   //CommonJS
   if (typeof exports !== 'undefined' && typeof require !== 'undefined') {
-    var $ = root.jQuery || root.Zepto || root.ender || require('jquery'),
-        _ = root._ || require('underscore'),
+    var _ = root._ || require('underscore'),
         Backbone = root.Backbone || require('backbone');
   }
 
   //Browser
   else {
-    var $ = root.jQuery,
-        _ = root._,
+    var _ = root._,
         Backbone = root.Backbone;
   }
 
@@ -30,6 +28,12 @@
 //==================================================================================================
 
 var Form = Backbone.View.extend({
+
+  events: {
+    'submit': function(event) {
+      this.trigger('submit', event);
+    }
+  },
 
   /**
    * Constructor
@@ -43,11 +47,15 @@ var Form = Backbone.View.extend({
    * @param {Form.Field} [options.Field]
    * @param {Form.Fieldset} [options.Fieldset]
    * @param {Function} [options.template]
+   * @param {Boolean|String} [options.submitButton]
    */
   initialize: function(options) {
     var self = this;
 
-    options = options || {};
+    //Merge default options
+    options = this.options = _.extend({
+      submitButton: false
+    }, options);
 
     //Find the schema to use
     var schema = this.schema = (function() {
@@ -56,14 +64,10 @@ var Form = Backbone.View.extend({
 
       //Then schema on model
       var model = options.model;
-      if (model && model.schema) {
-        return (_.isFunction(model.schema)) ? model.schema() : model.schema;
-      }
+      if (model && model.schema) return _.result(model, 'schema');
 
       //Then built-in schema
-      if (self.schema) {
-        return (_.isFunction(self.schema)) ? self.schema() : self.schema;
-      }
+      if (self.schema) return _.result(self, 'schema');
 
       //Fallback to empty schema
       return {};
@@ -91,7 +95,7 @@ var Form = Backbone.View.extend({
     }, this);
 
     //Create fieldsets
-    var fieldsetSchema = options.fieldsets || [selectedFields],
+    var fieldsetSchema = options.fieldsets || _.result(this, 'fieldsets') || [selectedFields],
         fieldsets = this.fieldsets = [];
 
     _.each(fieldsetSchema, function(itemSchema) {
@@ -185,9 +189,18 @@ var Form = Backbone.View.extend({
     }
   },
 
+  templateData: function() {
+    var options = this.options;
+
+    return {
+      submitButton: options.submitButton
+    }
+  },
+
   render: function() {
     var self = this,
-        fields = this.fields;
+        fields = this.fields,
+        $ = Backbone.$;
 
     //Render form
     var $form = $($.trim(this.template(_.result(this, 'templateData'))));
@@ -465,7 +478,12 @@ var Form = Backbone.View.extend({
 
   //STATICS
   template: _.template('\
-    <form data-fieldsets></form>\
+    <form>\
+     <div data-fieldsets></div>\
+      <% if (submitButton) { %>\
+        <button type="submit"><%= submitButton %></button>\
+      <% } %>\
+    </form>\
   ', null, this.templateSettings),
 
   templateSettings: {
@@ -490,6 +508,7 @@ Form.validators = (function() {
   validators.errMessages = {
     required: 'Required',
     regexp: 'Invalid',
+    number: 'Must be a number',
     email: 'Invalid email address',
     url: 'Invalid URL',
     match: _.template('Must match field "<%= field %>"', null, Form.templateSettings)
@@ -518,6 +537,7 @@ Form.validators = (function() {
   
     options = _.extend({
       type: 'regexp',
+      match: true,
       message: this.errMessages.regexp
     }, options);
     
@@ -532,8 +552,21 @@ Form.validators = (function() {
       //Don't check empty values (add a 'required' validator for this)
       if (value === null || value === undefined || value === '') return;
 
-      if (!options.regexp.test(value)) return err;
+      //Create RegExp from string if it's valid
+      if ('string' === typeof options.regexp) options.regexp = new RegExp(options.regexp, options.flags);
+
+      if ((options.match) ? !options.regexp.test(value) : options.regexp.test(value)) return err;
     };
+  };
+
+  validators.number = function(options) {
+    options = _.extend({
+      type: 'number',
+      message: this.errMessages.number,
+      regexp: /^[0-9]*\.?[0-9]*?$/
+    }, options);
+    
+    return validators.regexp(options);
   };
   
   validators.email = function(options) {
@@ -611,7 +644,7 @@ Form.Fieldset = Backbone.View.extend({
     this.fields = _.pick(options.fields, schema.fields);
     
     //Override defaults
-    this.template = options.template || this.constructor.template;
+    this.template = options.template || schema.template || this.template || this.constructor.template;
   },
 
   /**
@@ -662,7 +695,8 @@ Form.Fieldset = Backbone.View.extend({
    */
   render: function() {
     var schema = this.schema,
-        fields = this.fields;
+        fields = this.fields,
+        $ = Backbone.$;
 
     //Render fieldset
     var $fieldset = $($.trim(this.template(_.result(this, 'templateData'))));
@@ -738,8 +772,8 @@ Form.Field = Backbone.View.extend({
     var schema = this.schema = this.createSchema(options.schema);
 
     //Override defaults
-    this.template = options.template || schema.template || this.constructor.template;
-    this.errorClassName = options.errorClassName || this.constructor.errorClassName;
+    this.template = options.template || schema.template || this.template || this.constructor.template;
+    this.errorClassName = options.errorClassName || this.errorClassName || this.constructor.errorClassName;
 
     //Create editor
     this.editor = this.createEditor();
@@ -849,7 +883,8 @@ Form.Field = Backbone.View.extend({
    */
   render: function() {
     var schema = this.schema,
-        editor = this.editor;
+        editor = this.editor,
+        $ = Backbone.$;
 
     //Only render the editor if Hidden
     if (schema.type == Form.editors.Hidden) {
@@ -999,7 +1034,7 @@ Form.Field = Backbone.View.extend({
 
 Form.NestedField = Form.Field.extend({
 
-  template: _.template($.trim('\
+  template: _.template('\
     <div>\
       <span data-editor></span>\
       <% if (help) { %>\
@@ -1007,7 +1042,7 @@ Form.NestedField = Form.Field.extend({
       <% } %>\
       <div data-error></div>\
     </div>\
-  '), null, Form.templateSettings)
+  ', null, Form.templateSettings)
 
 });
 
@@ -1519,7 +1554,16 @@ Form.editors.Select = Form.editors.Base.extend({
 
   tagName: 'select',
 
+  previousValue: '',
+
   events: {
+    'keyup':    'determineChange',
+    'keypress': function(event) {
+      var self = this;
+      setTimeout(function() {
+        self.determineChange();
+      }, 0);
+    },
     'change': function(event) {
       this.trigger('change', this);
     },
@@ -1633,6 +1677,16 @@ Form.editors.Select = Form.editors.Base.extend({
     return html;
   },
 
+  determineChange: function(event) {
+    var currentValue = this.getValue();
+    var changed = (currentValue !== this.previousValue);
+
+    if (changed) {
+      this.previousValue = currentValue;
+
+      this.trigger('change', this);
+    }
+  },
 
   getValue: function() {
     return this.$el.val();
@@ -1755,6 +1809,15 @@ Form.editors.Radio = Form.editors.Select.extend({
     }
   },
 
+  /**
+   * Returns the template. Override for custom templates
+   *
+   * @return {Function}       Compiled template
+   */
+  getTemplate: function() {
+    return this.schema.template || this.constructor.template;
+  },
+
   getValue: function() {
     return this.$('input[type=radio]:checked').val();
   },
@@ -1788,26 +1851,43 @@ Form.editors.Radio = Form.editors.Select.extend({
    * @return {String} HTML
    */
   _arrayToHtml: function (array) {
-    var html = [];
     var self = this;
 
-    _.each(array, function(option, index) {
-      var itemHtml = '<li>';
+    var template = this.getTemplate(),
+        name = self.getName(),
+        id = self.id;
+
+    var items = _.map(array, function(option, index) {
+      var item = {
+        name: name,
+        id: id + '-' + index
+      }
+
       if (_.isObject(option)) {
-        var val = (option.val || option.val === 0) ? option.val : '';
-        itemHtml += ('<input type="radio" name="'+self.getName()+'" value="'+val+'" id="'+self.id+'-'+index+'" />');
-        itemHtml += ('<label for="'+self.id+'-'+index+'">'+option.label+'</label>');
+        item.value = (option.val || option.val === 0) ? option.val : '';
+        item.label = option.label;
+      } else {
+        item.value = option;
+        item.label = option;
       }
-      else {
-        itemHtml += ('<input type="radio" name="'+self.getName()+'" value="'+option+'" id="'+self.id+'-'+index+'" />');
-        itemHtml += ('<label for="'+self.id+'-'+index+'">'+option+'</label>');
-      }
-      itemHtml += '</li>';
-      html.push(itemHtml);
+
+      return item;
     });
 
-    return html.join('');
+    return template({ items: items });
   }
+
+}, {
+
+  //STATICS
+  template: _.template('\
+    <% _.each(items, function(item) { %>\
+      <li>\
+        <input type="radio" name="<%= item.name %>" value="<%= item.value %>" id="<%= item.id %>" />\
+        <label for="<%= item.id %>"><%= item.label %></label>\
+      </li>\
+    <% }); %>\
+  ', null, Form.templateSettings)
 
 });
 
@@ -2141,7 +2221,8 @@ Form.editors.Date = Form.editors.Base.extend({
 
   render: function() {
     var options = this.options,
-        schema = this.schema;
+        schema = this.schema,
+        $ = Backbone.$;
 
     var datesOptions = _.map(_.range(1, 32), function(date) {
       return '<option value="'+date+'">' + date + '</option>';
@@ -2314,7 +2395,8 @@ Form.editors.DateTime = Form.editors.Base.extend({
       return n < 10 ? '0' + n : n;
     }
 
-    var schema = this.schema;
+    var schema = this.schema,
+        $ = Backbone.$;
 
     //Create options
     var hoursOptions = _.map(_.range(0, 24), function(hour) {
@@ -2434,11 +2516,11 @@ Form.editors.DateTime = Form.editors.Base.extend({
 
 
   //Metadata
-  Form.VERSION = '0.13.0';
+  Form.VERSION = '0.14.0';
 
 
   //Exports
   Backbone.Form = Form;
-  if (typeof exports !== 'undefined') exports = Form;
+  if (typeof module !== 'undefined') module.exports = Form;
 
 })(window || global || this);

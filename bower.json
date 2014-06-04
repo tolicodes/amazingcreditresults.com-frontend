@@ -33,7 +33,7 @@
     "underscore": "*",
     "handlebars": "*",
     "requirejs-text": "*",
-    "backbone-forms": "*",
+    "backbone-forms": "master",
     "backbone-relational": "*",
     "layoutmanager": "*",
     "backbone-validation": "*"

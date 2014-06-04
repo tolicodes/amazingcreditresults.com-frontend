@@ -33,11 +33,16 @@ require.config({
 		// Should be used as required dependencies with use of `define`,
 		'auth' : 'app/modules/auth',
 		'buyer': 'app/modules/buyer',
+		'inventory': 'app/modules/inventory',
 		'grid' : 'app/modules/grid',
-//		'adminLogin': 'app/modules/admin-login',
-//		'adminDashboard': 'app/modules/admin-dashboard',
+		'buyerDashboard': 'app/modules/buyer-dashboard',
+		'adminLogin': 'app/modules/admin-login',
+		'adminDashboard': 'app/modules/admin-dashboard',
+		'adminManageOwner': 'app/modules/admin-owner',
 		'home' : 'app/modules/home',
-		'questionair' : 'app/modules/questionair',
+		'questionnaire' : 'app/modules/questionnaire',
+		'video' : 'app/modules/video',
+		'cart' : 'app/modules/cart',
 		
 		'cssPath' : 'app/common/css',
 		
@@ -47,6 +52,8 @@ require.config({
 		'baseModel' : 'app/base-model',
 		'relationalModel' : 'app/relational-model',
 		'baseCollection' : 'app/base-collection',
+		
+		'currentUser' : 'app/common/entities/current-user',
 		
 		// core components path
 		'formView': 'core/components/form/form-view',
@@ -107,20 +114,23 @@ define([
 	'jquery', 
 	'application',
 	'Mediator',
+	'currentUser',
 	// bootstrap css file
 	"css!libs/bootstrap/dist/css/bootstrap"
 	], function(
 	Backbone, 
-	_, 
+	_,
 	$, 
 	application,
-	mediator
+	mediator,
+	CurrentUser
 	) {
 	$(document).ready(function() {
 		App = {};
-		App.routing = new application();
-		Backbone.history.start({});
 		// create Mediatior object for messaging
 		App.Mediator = new mediator;		
+		App.CurrentUser = new CurrentUser();
+		App.routing = new application();
+		Backbone.history.start({});
 	});
 });

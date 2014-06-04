@@ -11,7 +11,12 @@ define(['jquery', 'underscore', 'backbone', 'backbone-forms'], function($, _, Ba
    * Bootstrap 3 templates
    */
   Form.template = _.template('\
-    <form class="form-horizontal" role="form" data-fieldsets></form>\
+    <form class="form-horizontal" role="form">\
+      <div data-fieldsets></div>\
+      <% if (submitButton) { %>\
+        <button type="submit" class="btn"><%= submitButton %></button>\
+      <% } %>\
+    </form>\
   ');
 
 
@@ -54,7 +59,7 @@ define(['jquery', 'underscore', 'backbone', 'backbone-forms'], function($, _, Ba
 
     Form.editors.List.template = _.template('\
       <div class="bbf-list">\
-        <ul class="unstyled clearfix" data-items></ul>\
+        <ul class="list-unstyled clearfix" data-items></ul>\
         <button type="button" class="btn bbf-add" data-action="add">Add</button>\
       </div>\
     ');
