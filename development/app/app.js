@@ -128,12 +128,22 @@ define([
 				this.authorizeUser().done(this._createPage.bind(this));
 			}
 		},
+		
+		showUserName: function() {
+			var name = (this.user.get("name").givenName)?this.user.get("name").givenName:"-";
+			name += " ";
+			name += (this.user.get("name").familyName)?this.user.get("name").familyName:"-";
+			$(".username").html(name);
+
+		},
 
 		_createPage : function() {
 			if(!_.isUndefined(App.CurrentUser) && this.user) App.CurrentUser.set(this.user.toJSON());
 			this.createPage(this.pageView, _({}).extend(this.pageOptions, {
 				userDetail : (this.user)?this.user.toJSON():{}
 			}));
+			// show username
+			this.showUserName();
 		},
 
 		// check if page has permission
