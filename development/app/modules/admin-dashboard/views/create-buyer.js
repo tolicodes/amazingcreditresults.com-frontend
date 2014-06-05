@@ -26,6 +26,16 @@ define([
 			'familyName' : {
 				type : 'Text',
 				title : "Last Name"
+			},
+			
+			'needQuestionnaire': {
+				type : 'Checkbox',
+				title : "need Questionnaire"				
+			},
+			
+			'accountVerified': {
+				type : 'Checkbox',
+				title : "Verified"				
 			}
 		},
 		

@@ -1,4 +1,4 @@
-// info.js
+// inventory layout.js
 // --------------
 // Requires define
 // Return Backbone View {Object}
@@ -19,7 +19,6 @@ define([
 	return BaseLayout.extend({
 		template: viewTemplate,
 		initializeAfter: function(options) {
-			this.render();
 			this.setViewInLayout('.tradelines', new tradelinesView(options));
 			this.setViewInLayout('.inventory', new inventoryView(options));
 		}

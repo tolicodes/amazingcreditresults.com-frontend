@@ -28,6 +28,37 @@ define([
 			return result; 
 		},
 		
+		// add action button
+		addActionButton: function(text, callback) {
+			var ActionButtonCell = Backgrid.ActionButtonCell = Backbone.View.extend({
+			    template: _.template("<button>"+text+"</button>"),
+			    events: {
+			      "click": "editRecord"
+			    },
+			    
+			    tagName: 'td',
+			    
+			    className: "boolean-cell renderable",
+			    
+			    initialize: function(options) {
+			    	if(options.model) {
+				    	this.userId = options.model.get("id");
+				    }
+			    },
+			    
+			    editRecord: function (e) {
+			      e.preventDefault();
+				  if(callback && _.isFunction(callback)) callback(this.userId);
+			    },
+			    
+			    render: function () {
+			      this.$el.html(this.template());
+			      this.delegateEvents();
+			      return this;
+			    }
+			});
+		},
+		
 		addCheckbox: function(updateModel) {
 			var BooleanCell = Backgrid.BooleanCell = Backbone.View.extend({
 			  className: "boolean-cell",

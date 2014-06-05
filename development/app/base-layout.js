@@ -16,7 +16,7 @@ define([
 		
 		template: defaultLayout,
 		 
-		el: '.main-container',
+		//el: '.main-view',
 		
 		// hooks
 		hooks : {
@@ -72,7 +72,7 @@ define([
 		// set view in layout
 		setViewInLayout: function(target, ob) {
 			Backbone.Layout.setupView(ob);
-			this.insertView(target, ob).render();
+			this.insertView(target, ob);
 		}
 		
 		

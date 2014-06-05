@@ -14,8 +14,10 @@ define([
 	"inventory/layout/layout",
 	"adminLogin/layout/auth-layout",
 	"adminDashboard/layout/dashboard",
-	"adminManageOwner/layout/layout", 
-	"less!cssPath/style"], function(
+	"adminManageOwner/layout/layout",
+	'mainLayout/layout/main',
+	"less!cssPath/style"
+], function(
 	Backbone, 
 	home,
 	buyerInfo,
@@ -26,7 +28,8 @@ define([
 	inventoryLayout,
 	adminLoginLayout,
 	adminDasboardLayout,
-	adminManageOwnerLayout
+	adminManageOwnerLayout,
+	mainLayout
 ) {
 
 	return Backbone.Router.extend({
@@ -43,7 +46,8 @@ define([
 			// owner routes
 			"admin/login": "adminLogin",
 			"admin/dashboard": "adminDashboard",
-			"admin/owner": "adminOwner",			
+			"admin/owner": "adminOwner",
+			"admin/user/:id": "editUser",			
 			
 			// 404 Page
 			"*splat" : "routeNotFound"		
@@ -138,7 +142,7 @@ define([
 		},
 
 		createPage : function(pageView, options) {
-			this.currentView = new pageView(options);
+			this.currentView = new mainLayout({page: pageView, options: options});
 		},		
 
 		// route not found
@@ -149,15 +153,29 @@ define([
 		/* Owner routes function */
 		
 		adminLogin: function() {
-			this.loadPage(adminLoginLayout, "adminLogin");
+			this.loadPage(adminLoginLayout, "adminLogin", {
+				pageType: "default"
+			});
 		},
 		
 		adminDashboard: function() {
-			this.loadPage(adminDasboardLayout, "adminDashboard");
+			this.loadPage(adminDasboardLayout, "adminDashboard", {
+				pageType: "admin"
+			});
 		},
 		
 		adminOwner: function() {
-			this.loadPage(adminManageOwnerLayout, "adminManageOwner");
+			this.loadPage(adminManageOwnerLayout, "adminManageOwner", {
+				pageType: "admin"
+			});
+		},
+		
+		editUser: function(userId) {
+			this.loadPage(adminDasboardLayout, "adminDashboard", {
+				page: "ediUser",
+				userId: userId,
+				pageType: "admin"
+			});
 		},
 
 		// set password
