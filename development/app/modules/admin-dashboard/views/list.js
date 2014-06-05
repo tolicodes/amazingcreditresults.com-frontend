@@ -17,7 +17,7 @@ define([
 
 	return DataTable.extend({
 
-		el: ".list-view",
+		el: undefined,
 
 		columns:  [{
 				label: "First Name",
@@ -63,6 +63,10 @@ define([
 				name : "accountVerified",
 				cell : "boolean"
 			}, {
+				label: "Edit",
+				name : "edit",
+				cell : "actionButton"
+			}, {
 				label: "needQuestionnaire",
 				name : "needQuestionnaire",
 				cell : "boolean"
@@ -86,6 +90,11 @@ define([
 			this.addResetButton(resetPasswordModel);
 			this.welcomeEmailButton(welcomeEmailModel);
 			this.addCheckbox(updateBuyerModel);
+			this.addActionButton("Edit", function(userId) {
+				App.routing.navigate("admin/user/"+userId, {
+					trigger : true
+				});
+			});
 		}
 	});
 });

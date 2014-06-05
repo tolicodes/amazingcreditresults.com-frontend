@@ -48,6 +48,7 @@ require.config({
 		
 		'application' : 'app/app',
 		'base' : 'app/base-view',
+		'mainLayout' : 'app/modules/main-layout',
 		'baseLayout' : 'app/base-layout',
 		'baseModel' : 'app/base-model',
 		'relationalModel' : 'app/relational-model',

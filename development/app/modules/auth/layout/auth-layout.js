@@ -49,7 +49,19 @@ define([
 			this.setViewInLayout( '.form-view', myView);						
 		},
 		
+		
+		showUserName: function() {
+			var name = (this.passwordCheck.get("name").givenName)?this.passwordCheck.get("name").givenName:"-";
+			name += " ";
+			name += (this.passwordCheck.get("name").familyName)?this.passwordCheck.get("name").familyName:"-";
+			$(".username").html(name);
+		},
+		
 		_createPage: function() {
+			
+			// show user name 
+			this.showUserName();
+			
 			var viewObject = (this.passwordCheck.get("needToSetPassword"))?setPasswordView:loginView;
 			this.showView(viewObject);
 		}			

@@ -6,20 +6,35 @@
 define([
 	"baseLayout",
 	"hbs!adminDashboard/templates/layout",
+	"hbs!adminDashboard/templates/edit-layout",
 	"adminDashboard/views/list",
-	"adminDashboard/views/create-buyer"
+	"adminDashboard/views/create-buyer",
+	"adminDashboard/views/edit-user"
 ], function(
 	BaseLayout,
 	templateView,
+	editLayout,
 	listView,
-	createBuyerView
+	createBuyerView,
+	editUserView
 ) {
 	return BaseLayout.extend({
-		el: ".main-container",
-		template: templateView,
+		initializeBefore: function(options) {
+			if(options && options[0] && options[0].page) {
+				this.template = editLayout;
+			} else {
+				this.template = templateView;
+			}
+		},
+		
 		initializeAfter: function(options) {
-			this.setViewInLayout('.list-view', new listView(options));
-			this.setViewInLayout('.create-buyer', new createBuyerView(options));
+			if(options && options[0] && options[0].page) {
+				this.setViewInLayout('.edit-buyer', new editUserView(options));
+			} else { 	
+				this.setViewInLayout('.list-view', new listView(options));
+				this.setViewInLayout('.create-buyer', new createBuyerView(options));							
+			}
 		}
+		
 	});
 });

@@ -20,8 +20,6 @@ define([
 		
 		formArea: '.form-area',
 		
-		el: undefined,
-		
 		// schema to generate form
 		schema : {
 			'password' : {

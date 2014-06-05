@@ -11,7 +11,7 @@ define([
 
 	return DataTable.extend({
 
-		el: ".list-view",
+		el: undefined,
 
 		columns:  [{
 				label: "First Name",

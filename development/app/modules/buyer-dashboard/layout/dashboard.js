@@ -17,7 +17,6 @@ define([
 	questionnaireView
 ) {
 	return BaseLayout.extend({
-		el: ".main-container",
 		template: templateView,
 		initializeAfter: function(options) {
 			this.setViewInLayout('.video-area', new videoView(options));

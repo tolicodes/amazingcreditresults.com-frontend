@@ -21,8 +21,6 @@ define([
 		
 		formClass: 'login-form',
 		
-		el: undefined,
-		
 		// schema to generate form
 		schema : {
 			'password' : {

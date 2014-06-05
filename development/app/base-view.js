@@ -25,7 +25,7 @@ define([
 		data: {},
 
 		// default target element
-		el : '.main-container',
+		el : '.main-view',
 
 		// hooks
 		hooks : {
@@ -107,8 +107,7 @@ define([
 		
 		appendTemplate: function() {
 			// if tpl is defined
-			if (this.tpl)
-				this.$el.html(this.tpl(_.extend(this.data, this.model && this.model.toJSON())));
+			if (this.tpl) this.$el.html(this.tpl(_.extend(this.data, this.model && this.model.toJSON())));
 		}
 	});
 });
