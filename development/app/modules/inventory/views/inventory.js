@@ -134,8 +134,7 @@ define([
 		      	} else {
 		      		text.push("No Data");
 		      	}
-		      	var s = text.join(", ");
-		        return s;
+		      	return text.join(", ");
 		      }
 		    })			
 		},

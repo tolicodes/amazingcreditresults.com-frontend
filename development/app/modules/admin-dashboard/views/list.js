@@ -18,7 +18,11 @@ define([
 	return DataTable.extend({
 
 		el: undefined,
-
+		
+		pageSize: 5,
+		
+		selectedRows: [],
+		
 		columns:  [{
 				label: "First Name",
 				name : "name.givenName",

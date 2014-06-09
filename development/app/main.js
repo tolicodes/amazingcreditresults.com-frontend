@@ -4,6 +4,7 @@
 // Requires `require`, `define`
 
 require.config({
+	urlArgs: "bust=" + (new Date()).getTime(),
 	baseUrl : './',
 	locale : 'en-us',
 	config : {
@@ -25,6 +26,7 @@ require.config({
 		'backgrid' : 'libs/backgrid/lib/backgrid',
 		'pageableCollection' : 'libs/backbone-pageable/lib/backbone-pageable',
 		'backgridPaginator' : 'libs/backgrid-paginator/backgrid-paginator',
+		'backgridSelect' : 'libs/backgrid-select-all/backgrid-select-all',
 		'hbs' : 'libs/require-handlebars-plugin/hbs',
 		'Handlebars': 'libs/handlebars/handlebars',
 		'bootstrap' : 'libs/bootstrap/dist/js/bootstrap',
@@ -39,6 +41,8 @@ require.config({
 		'adminLogin': 'app/modules/admin-login',
 		'adminDashboard': 'app/modules/admin-dashboard',
 		'adminManageOwner': 'app/modules/admin-owner',
+		'adminManageBuyer': 'app/modules/admin-buyer',
+		'adminProduct': 'app/modules/admin-product',
 		'home' : 'app/modules/home',
 		'questionnaire' : 'app/modules/questionnaire',
 		'video' : 'app/modules/video',
@@ -59,8 +63,11 @@ require.config({
 		// core components path
 		'formView': 'core/components/form/form-view',
 		'dataTable':'core/components/data-table/grid',
-		'Mediator': 'core/components/messaging/message'
-
+		'Mediator': 'core/components/messaging/message',
+		
+		
+		/// common paths
+		'dataPath': 'app/common/data',
 	},
 
 	map : {
@@ -101,6 +108,10 @@ require.config({
 		'backgridPaginator' : {
 			exports : 'BackgridPaginator',
 			deps : ['backbone', 'pageableCollection']
+		},
+		'backgridSelect' : {
+			exports : 'backgridSelect',
+			deps : ['backbone', 'backgrid']
 		}
 	},
 	priority : [],

@@ -9,6 +9,7 @@ define([
 	"backgrid", 
 	"pageableCollection", 
 	"backgridPaginator",
+	"backgridSelect",
 	"hbs!core/components/data-table/templates/grid",
 	"css!libs/backbone-pageable/examples/css/backgrid",
 	"css!libs/backgrid-paginator/backgrid-paginator"
@@ -18,6 +19,7 @@ define([
 	Backgrid, 
 	PageableCollection, 
 	BackgridPaginator, 
+	BackgridSelect,
 	viewTemplate
 ) {
 	return Base.extend({
@@ -28,10 +30,12 @@ define([
 			return result; 
 		},
 		
+		selectedRows: [],
+		
 		// add action button
-		addActionButton: function(text, callback) {
+		addActionButton: function(callback) {
 			var ActionButtonCell = Backgrid.ActionButtonCell = Backbone.View.extend({
-			    template: _.template("<button>"+text+"</button>"),
+			    template: _.template("<button><%=buttonText%></button>"),
 			    events: {
 			      "click": "editRecord"
 			    },
@@ -41,8 +45,10 @@ define([
 			    className: "boolean-cell renderable",
 			    
 			    initialize: function(options) {
-			    	if(options.model) {
+			    	console.log(options);
+			    	if(options) {
 				    	this.userId = options.model.get("id");
+				    	this.buttonText = options.column.get("name");
 				    }
 			    },
 			    
@@ -52,7 +58,7 @@ define([
 			    },
 			    
 			    render: function () {
-			      this.$el.html(this.template());
+			      this.$el.html(this.template({buttonText: this.buttonText}));
 			      this.delegateEvents();
 			      return this;
 			    }
@@ -188,16 +194,38 @@ define([
 			this.$el.find("#paginator").html(paginator.render().$el);
 			
 			if(this.collection) {
+				
+				this.collection.on("backgrid:selected", function (model, selected) {
+  					this.selectedRows.push(model);
+				}.bind(this));
+				
 				this.listenTo(this.collection, 'sync', function(){
 					var data  = this.collection.toJSON();
 					for(var i in data) {
-						rows.add(data[i]);		
+						rows.add(data[i]);
 					}
 				}.bind(this));
 				this.collection.fetch();
 			} else {
+				rows.on("backgrid:selected", function (model, selected) {
+  					this.selectedRows.push(model);
+				}.bind(this));
 				rows.fetch();
 			}
+		},
+		
+		// delete records
+		deleteRecords: function() {
+			_.each(this.selectedRows, function( model ) {
+				this.listenTo(model, 'sync', function() {
+					App.Mediator.trigger("messaging:showAlert", "Record deleted successfully.", "Green");
+				});
+				this.listenTo(model, 'error', function(model, response) {
+					var json = (response.responseText)?JSON.parse(response.responseText):{};
+					App.Mediator.trigger("messaging:showAlert", json.Error, "Red", json.errors);
+				});
+				model.destroy({silent: true});
+			}.bind(this));
 		},
 
 		afterRender: function() {

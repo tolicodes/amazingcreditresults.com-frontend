@@ -33,7 +33,7 @@ define([
 				}.bind(this));
 			}
 		},
-
+		
 		afterRender: function() {
 			var user = Backbone.Model.extend({
 				schema: this.schema

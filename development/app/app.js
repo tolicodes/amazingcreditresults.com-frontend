@@ -16,6 +16,10 @@ define([
 	"adminDashboard/layout/dashboard",
 	"adminManageOwner/layout/layout",
 	'mainLayout/layout/main',
+	"adminManageBuyer/layout/dashboard",
+	"adminProduct/layout/layout",
+
+
 	"less!cssPath/style"
 ], function(
 	Backbone, 
@@ -29,7 +33,9 @@ define([
 	adminLoginLayout,
 	adminDasboardLayout,
 	adminManageOwnerLayout,
-	mainLayout
+	mainLayout,
+	adminManageBuyerLayout,
+	adminCreateProductLayout
 ) {
 
 	return Backbone.Router.extend({
@@ -46,7 +52,13 @@ define([
 			// owner routes
 			"admin/login": "adminLogin",
 			"admin/dashboard": "adminDashboard",
+			"admin/buyer": "adminBuyer",
 			"admin/owner": "adminOwner",
+			
+			"admin/product/create": "adminCreateProduct",
+			"admin/product/create/:id": "adminCreateProduct",
+			
+			
 			"admin/user/:id": "editUser",			
 			
 			// 404 Page
@@ -174,14 +186,28 @@ define([
 			});
 		},
 		
+		adminCreateProduct: function(productId) {
+			this.loadPage(adminCreateProductLayout, "adminCreateProduct", {
+				pageType: "admin",
+				page: "create",
+				productId: productId
+			});
+		},
+		
 		adminOwner: function() {
 			this.loadPage(adminManageOwnerLayout, "adminManageOwner", {
 				pageType: "admin"
 			});
 		},
 		
+		adminBuyer: function() {
+			this.loadPage(adminManageBuyerLayout, "adminManageBuyer", {
+				pageType: "admin"
+			});
+		},
+		
 		editUser: function(userId) {
-			this.loadPage(adminDasboardLayout, "adminDashboard", {
+			this.loadPage(adminManageBuyerLayout, "adminManageBuyer", {
 				page: "ediUser",
 				userId: userId,
 				pageType: "admin"

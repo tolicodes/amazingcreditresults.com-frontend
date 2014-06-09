@@ -56,35 +56,41 @@ define([
 		showMessage : function(options) {
 			if(this.type) this.hideMessage();
 			this.message = (options && options[0])?options[0]:"";
-			var cls = (options && options[1])?options[1]:"Green";
-			var errors = (options && options[2])?options[2]:[];
-			this.type = this.alertsClass[cls];
-
-			if(errors) this.showFieldErrors(errors);
-
-			// set message in collection
-			this.collection.add({message: this.message, type: this.type });
-			
-			// show message on DOM
-			$(".alert-message-h").addClass("alert-"+this.type).removeClass('hide').html(this.message);			
-			$(".close-btn").show();
-			
-			// hide message after 10 seconds
-			setTimeout(this.hideMessage.bind(this), this.timeInterval);
+			if(this.message) {
+				var cls = (options && options[1])?options[1]:"Green";
+				var errors = (options && options[2])?options[2]:[];
+				this.type = this.alertsClass[cls];
+				if(errors) this.showFieldErrors(errors);
+				// set message in collection
+				this.collection.add({message: this.message, type: this.type });
+				// show message on DOM
+				$(".alert-message-h").addClass("alert-"+this.type).removeClass('hide').html(this.message);			
+				$(".close-btn").show();
+				// hide message after 10 seconds
+				setTimeout(this.hideMessage.bind(this), this.timeInterval);
+			}
 		},
-		
+			
 		// show fields error
 		showFieldErrors: function(errors) {
+			var html = "";
 			_.each(errors, function(ob) {
-				var $target = $("#"+ob.field);
-				$target.parent().append("<div class='input-error alert-danger'>"+ob.message+"</div>");
-				$target.focus(function() {
-					$target.parent().find(".input-error").remove();
-				});
-				setTimeout(function() {
-					$target.parent().find(".input-error").remove();
-				}, this.timeInterval);
+				if(ob.field) {
+					var $target = $("#"+ob.field);
+					$target.parent().append("<div class='input-error alert-danger'>"+ob.message+"</div>");
+					$target.focus(function() {
+						$target.parent().find(".input-error").remove();
+					});
+					setTimeout(function() {
+						$target.parent().find(".input-error").remove();
+					}, this.timeInterval);
+				} else {
+					html += ob.message;
+				}
 			}.bind(this));
+			
+			if(html)
+				this.showMessage([html, "Red"]);
 		},
 		
 		// hide message

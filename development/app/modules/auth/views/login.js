@@ -63,7 +63,7 @@ define([
 					// setup hunt key
 					this.setUpHuntkey();
 					// get the user detail
-					this.authorizeUser().done(this._createForQuestionair.bind(this));
+					this.authorizeUser().done(this._createForQuestionnaire.bind(this));
 				}.bind(this));
 				
 				this.listenTo(login, 'error', function(model, response) {
@@ -84,7 +84,7 @@ define([
 
 		},
 		
-		_createForQuestionair: function() {
+		_createForQuestionnaire: function() {
 			
 			if(!_.isUndefined(App.CurrentUser)) App.CurrentUser.set(this.user.toJSON());
 			

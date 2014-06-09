@@ -36,6 +36,7 @@
     "backbone-forms": "master",
     "backbone-relational": "*",
     "layoutmanager": "*",
-    "backbone-validation": "*"
+    "backbone-validation": "*",
+    "backgrid-select-all": ""
   }
 }

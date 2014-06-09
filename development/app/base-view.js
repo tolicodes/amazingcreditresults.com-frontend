@@ -94,6 +94,8 @@ define([
 				
 			// trigger after intialize
 			this.trigger('intialize:after', options);	
+			
+			return this;
 				
 		},
 
@@ -103,6 +105,8 @@ define([
 			this.appendTemplate();
 			// trigger after render
 			this.trigger('render:after');
+			
+			return this;
 		},
 		
 		appendTemplate: function() {

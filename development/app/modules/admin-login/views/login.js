@@ -31,15 +31,6 @@ define([
 			});			
 		},
 
-		// this function gives the current user detail
-		authorizeUser : function() {
-			this.user = new authModel();
-			this.user.fetchedDfd.fail(function() {
-				App.Mediator.trigger("messaging:showAlert", "Authorization failed. Please login.", "Red");
-			});
-			return this.user.fetchedDfd;
-		},
-
 		handleFormSubmit : function(e) {
 			e.preventDefault();
 			$(e.target).prop("disabled", true);
@@ -63,8 +54,9 @@ define([
 					});	
 				}.bind(this));
 				
-				this.listenTo(login, 'error', function() {
-					App.Mediator.trigger("messaging:showAlert", "Some error occured", "Red");
+				this.listenTo(login, 'error', function(model, response) {
+					var json = (response.responseText)?JSON.parse(response.responseText):{};
+					App.Mediator.trigger("messaging:showAlert", json.Error, "Red");
 				});
 				
 			}.bind(this));
@@ -78,14 +70,7 @@ define([
 			login.save();
 
 		},
-		
-		_createForQuestionair: function() {
-			var route = (this.user.get("profile").needQuestionnaire == "true") ? "questions" : "buyer";
-			App.routing.navigate(route, {
-				trigger : true
-			});
-		},
-		
+				
 		initializeBefore : function(options) {
 			if(options && options[0])
 				this.apiKey = options[0].apiKey;

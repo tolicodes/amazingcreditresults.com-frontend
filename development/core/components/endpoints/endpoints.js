@@ -18,7 +18,8 @@ define([
 		"tradeline": "tradelines",
 		"createOwner" : "admin/createOwner",
 		"resetPassword": "admin/clients/resetPassword",
-		"welcomeEmail": "admin/clients/welcome"
+		"welcomeEmail": "admin/clients/welcome",
+		"adminProduct": "owner/products"
 	},
 	
 	addParams = function(url, params) {
