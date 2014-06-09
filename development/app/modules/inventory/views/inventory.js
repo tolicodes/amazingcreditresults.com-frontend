@@ -53,7 +53,7 @@ define([
 			label: "Date",
 			name : "dateOpen",
 			editable: false,
-			cell : "string",
+			cell : "date",
 			//formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
 		     // fromRaw: function (rawValue, model) {
 		      //  return "--";
@@ -72,27 +72,27 @@ define([
 			editable: false,
 			cell : "string"
 		},
-		 {
-			label: "Cash Limit",
-			name : "cashLimit",
-			editable: false,
-			cell : "string",
-			formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
-		      fromRaw: function (rawValue, model) {
-		        return "$"+model.get("cashLimit");
-		      }
-		    })
-		}, {
-			label: "Credit Limit",
-			name : "creditLimit",
-			editable: false,
-			cell : "string",
-			formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
-		      fromRaw: function (rawValue, model) {
-		        return "$"+model.get("creditLimit");
-		      }
-		    })
-		},
+		 // {
+			// label: "Cash Limit",
+			// name : "cashLimit",
+			// editable: false,
+			// cell : "string",
+			// formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
+		      // fromRaw: function (rawValue, model) {
+		        // return "$"+model.get("cashLimit");
+		      // }
+		    // })
+		// }, {
+			// label: "Credit Limit",
+			// name : "creditLimit",
+			// editable: false,
+			// cell : "string",
+			// formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
+		      // fromRaw: function (rawValue, model) {
+		        // return "$"+model.get("creditLimit");
+		      // }
+		    // })
+		// },
 		{
 			label: "Balance",
 			name : "balance",

@@ -94,7 +94,7 @@ define([
 			this.addResetButton(resetPasswordModel);
 			this.welcomeEmailButton(welcomeEmailModel);
 			this.addCheckbox(updateBuyerModel);
-			this.addActionButton("Edit", function(userId) {
+			this.addActionButton(function(userId) {
 				App.routing.navigate("admin/user/"+userId, {
 					trigger : true
 				});

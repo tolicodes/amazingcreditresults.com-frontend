@@ -112,7 +112,7 @@ define([
 		
 		// logout user
 		logoutUser: function() {
-			//sessionStorage.removeItem("huntKey");
+			sessionStorage.removeItem("huntKey");
 			App.routing.navigate("logout", {
 				trigger : true
 			});

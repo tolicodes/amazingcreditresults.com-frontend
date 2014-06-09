@@ -39,70 +39,22 @@ define([
 		    })
 		},
 		{
-			label: "Statement",
-			name : "statement",
+			label: "Statement Date",
+			name : "statementDate",
 			editable: false,
-			cell : "string",
-			formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
-		      fromRaw: function (rawValue, model) {
-		        return "--";
-		      }
-		    })
+			cell : "string"
 		},
 		{
 			label: "Date",
-			name : "date",
-			editable: false,
-			cell : "string",
-			formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
-		      fromRaw: function (rawValue, model) {
-		        return "--";
-		      }
-		    })
-		},
-		{
-			label: "Current",
-			name : "usedAus",
+			name : "dateOpen",
 			editable: false,
 			cell : "string"
 		},
 		{
-			label: "Max",
-			name : "totalAus",
+			label: "Available",
+			name : "availableAus",
 			editable: false,
 			cell : "string"
-		},
-		 {
-			label: "Cash Limit",
-			name : "cashLimit",
-			editable: false,
-			cell : "string",
-			formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
-		      fromRaw: function (rawValue, model) {
-		        return "$"+model.get("cashLimit");
-		      }
-		    })
-		}, {
-			label: "Credit Limit",
-			name : "creditLimit",
-			editable: false,
-			cell : "string",
-			formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
-		      fromRaw: function (rawValue, model) {
-		        return "$"+model.get("creditLimit");
-		      }
-		    })
-		},
-		{
-			label: "Balance",
-			name : "balance",
-			editable: false,
-			cell : "string",
-			formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
-		      fromRaw: function (rawValue, model) {
-		        return "$"+model.get("balance");
-		      }
-		    })
 		},
 		{
 			label: "Ratings",
@@ -140,13 +92,13 @@ define([
 		    })			
 		},
 		{
-			label: "Cost",
-			name : "cost",
+			label: "Price",
+			name : "price",
 			editable: false,
 			cell : "string",
 			formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
 		      fromRaw: function (rawValue, model) {
-		        return "$"+model.get("cost");
+		        return "$"+model.get("price");
 		      }
 		    })
 		}
