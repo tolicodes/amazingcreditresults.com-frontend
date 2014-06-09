@@ -142,10 +142,12 @@ define([
 		},
 		
 		showUserName: function() {
-			var name = (this.user.get("name").givenName)?this.user.get("name").givenName:"-";
-			name += " ";
-			name += (this.user.get("name").familyName)?this.user.get("name").familyName:"-";
-			$(".username").html(name);
+			if(this.user) {
+				var name = (this.user.get("name").givenName)?this.user.get("name").givenName:"-";
+				name += " ";
+				name += (this.user.get("name").familyName)?this.user.get("name").familyName:"-";
+				$(".username").html(name);
+			}
 
 		},
 

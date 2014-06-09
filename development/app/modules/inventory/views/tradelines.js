@@ -42,13 +42,13 @@ define([
 			label: "Statement Date",
 			name : "statementDate",
 			editable: false,
-			cell : "string"
+			cell : "date"
 		},
 		{
 			label: "Date",
 			name : "dateOpen",
 			editable: false,
-			cell : "string"
+			cell : "date"
 		},
 		{
 			label: "Available",
