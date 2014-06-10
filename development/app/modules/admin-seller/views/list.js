@@ -79,7 +79,8 @@ define([
 				label: "needQuestionnaire",
 				name : "needQuestionnaire",
 				cell : "boolean"
-			},{
+			},
+			{
 				label: "Reset Password Email",
 				name : "resetButton",
 				cell : "resetButton"
@@ -87,9 +88,10 @@ define([
 				label: "Welcome Email",
 				name : "actions",
 				cell : "welcomeEmail"			
-			}],
+			}
+			],
 			
-		url: "api/v1/admin/clients",
+		url: "api/v1/admin/clients?role['seller']=true",
 		
 		parse: function(result) {
 			return result.data;

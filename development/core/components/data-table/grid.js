@@ -33,7 +33,7 @@ define([
 		selectedRows: [],
 		
 		// add action button
-		addActionButton: function(callback) {
+		addActionButton: function() {
 			var ActionButtonCell = Backgrid.ActionButtonCell = Backbone.View.extend({
 			    template: _.template("<button><%=buttonText%></button>"),
 			    events: {
@@ -49,12 +49,13 @@ define([
 			    	if(options) {
 				    	this.userId = options.model.get("id");
 				    	this.buttonText = options.column.get("name");
+				    	this.callback = options.column.get("callback");
 				    }
 			    },
 			    
 			    editRecord: function (e) {
 			      e.preventDefault();
-				  if(callback && _.isFunction(callback)) callback(this.userId);
+				  if(this.callback && _.isFunction(this.callback)) this.callback(this.userId);
 			    },
 			    
 			    render: function () {

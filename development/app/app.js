@@ -18,7 +18,7 @@ define([
 	'mainLayout/layout/main',
 	"adminManageBuyer/layout/dashboard",
 	"adminProduct/layout/layout",
-
+	"adminSeller/layout/layout",
 
 	"less!cssPath/style"
 ], function(
@@ -35,7 +35,8 @@ define([
 	adminManageOwnerLayout,
 	mainLayout,
 	adminManageBuyerLayout,
-	adminCreateProductLayout
+	adminCreateProductLayout,
+	adminSellerLayout
 ) {
 
 	return Backbone.Router.extend({
@@ -53,6 +54,7 @@ define([
 			"admin/login": "adminLogin",
 			"admin/dashboard": "adminDashboard",
 			"admin/buyer": "adminBuyer",
+			"admin/seller": "adminSeller",
 			"admin/owner": "adminOwner",
 			
 			"admin/product/create": "adminCreateProduct",
@@ -186,6 +188,12 @@ define([
 			this.loadPage(adminDasboardLayout, "adminDashboard", {
 				pageType: "admin"
 			});
+		},
+		
+		adminSeller: function() {
+			this.loadPage(adminSellerLayout, "adminSeller", {
+				pageType: "admin"
+			});			
 		},
 		
 		adminCreateProduct: function(productId) {

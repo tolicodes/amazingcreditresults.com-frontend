@@ -38,6 +38,7 @@ require.config({
 		'inventory': 'app/modules/inventory',
 		'grid' : 'app/modules/grid',
 		'buyerDashboard': 'app/modules/buyer-dashboard',
+		'adminSeller': 'app/modules/admin-seller',
 		'adminLogin': 'app/modules/admin-login',
 		'adminDashboard': 'app/modules/admin-dashboard',
 		'adminManageOwner': 'app/modules/admin-owner',
