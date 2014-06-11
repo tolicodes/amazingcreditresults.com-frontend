@@ -19,8 +19,8 @@ define([
 		template: templateView,
 		
 		initializeAfter: function(options) {
-			this.setViewInLayout('.list-view', new listView(options));
-			this.setViewInLayout('.product-view', new adminProductLayout(options));
+			this.setViewInLayout('.list-view', new listView(options), true);
+			this.setViewInLayout('.product-view', new adminProductLayout(options), true);
 		}
 	});
 });

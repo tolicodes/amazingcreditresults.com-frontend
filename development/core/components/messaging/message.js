@@ -56,11 +56,12 @@ define([
 		showMessage : function(options) {
 			if(this.type) this.hideMessage();
 			this.message = (options && options[0])?options[0]:"";
+			var cls = (options && options[1])?options[1]:"Green";
+			var errors = (options && options[2])?options[2]:[];
+			this.type = this.alertsClass[cls];
+			if(errors) this.showFieldErrors(errors);
+
 			if(this.message) {
-				var cls = (options && options[1])?options[1]:"Green";
-				var errors = (options && options[2])?options[2]:[];
-				this.type = this.alertsClass[cls];
-				if(errors) this.showFieldErrors(errors);
 				// set message in collection
 				this.collection.add({message: this.message, type: this.type });
 				// show message on DOM
@@ -74,23 +75,23 @@ define([
 		// show fields error
 		showFieldErrors: function(errors) {
 			var html = "";
+			console.log(errors);
 			_.each(errors, function(ob) {
+				console.log(ob);
 				if(ob.field) {
-					var $target = $("#"+ob.field);
-					$target.parent().append("<div class='input-error alert-danger'>"+ob.message+"</div>");
+					var $target = $("input[name="+ob.field+"]");
+					$target.parent().parent().find("div[data-error]").html(ob.message);
 					$target.focus(function() {
-						$target.parent().find(".input-error").remove();
+						$target.parent().parent().find("div[data-error]").html("");
 					});
 					setTimeout(function() {
-						$target.parent().find(".input-error").remove();
+						$target.parent().parent().find("div[data-error]").html("");
 					}, this.timeInterval);
 				} else {
 					html += ob.message;
 				}
 			}.bind(this));
-			
-			if(html)
-				this.showMessage([html, "Red"]);
+			if(html) this.showMessage([html, "Red"]);
 		},
 		
 		// hide message

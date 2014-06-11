@@ -39,9 +39,6 @@ define([
 			if(!viewObject)
 				viewObject = loginView;
 			
-			// remove old views
-			this.removeView();
-			
 			// pass controller object in options
 			this.options[0].layoutObject = this;
 			

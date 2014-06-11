@@ -17,6 +17,7 @@ define([
 	return BaseLayout.extend({
 		el: ".main-container",
 		template: templateView,
+		
 		initializeBefore: function(options) {
 			
 			if(options[0].options.pageType == "admin") {
@@ -24,7 +25,7 @@ define([
 			} else if(options[0].options.pageType == "default") {
 				this.template = defaultLayout;
 			}
-				
+
 			this.setViewInLayout('.main-view', new options[0].page(options[0].options));
 		}
 	});

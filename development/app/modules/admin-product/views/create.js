@@ -63,30 +63,19 @@ define([
 			},
 		},
 		
+		handleModelSuccessError: function(model) {
+			this.listenTo(createProduct, 'sync', function(response) {
+				App.Mediator.trigger("messaging:showAlert", "Product added successfully.", "Green");
+				App.routing.navigate("admin/dashboard", {
+					trigger : true
+				});
+			}.bind(this));			
+		},
+		
 		// function handles form submission and success and error handling.
 		handleFormSubmit : function(values) {
 			var createProduct = new createProductModel();
 			this.bindModelValidation(createProduct);
-
-			createProduct.bind('validated:valid', function(m, errors) {
-				this.listenTo(createProduct, 'sync', function(response) {
-					App.Mediator.trigger("messaging:showAlert", "Card added successfully.", "Green");
-					App.routing.navigate("admin/dashboard", {
-						trigger : true
-					});
-					
-				}.bind(this));
-
-				this.listenTo(createProduct, 'error', function(model, response) {
-					var json = (response.responseText)?JSON.parse(response.responseText):{};
-					App.Mediator.trigger("messaging:showAlert", json.Error, "Red");
-				});
-			}.bind(this));
-
-			createProduct.bind('validated:invalid', function(model) {
-				createProduct.showErrors(model);
-			});
-
 			createProduct.set(values);
 			createProduct.save();
 		}

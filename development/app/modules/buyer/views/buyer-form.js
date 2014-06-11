@@ -16,6 +16,19 @@ define([
 	return FormView.extend({
 		// schema to generate form
 		schema : {
+			'name' : {
+				type : 'Object',
+				subSchema : {
+					'givenName' : {
+						type : 'Text',
+						title : "First Name"
+					},
+					'familyName' : {
+						type : 'Text',
+						title : "Last Name"
+					}
+				}
+			},
 			'email' : {
 				validators : ['required', 'email']
 			},

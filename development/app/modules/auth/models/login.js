@@ -23,7 +23,5 @@ define([
 		      msg: 'Apikey is required.'
 		    }
 		}
-		
-		
 	});
 });

@@ -18,16 +18,6 @@ define([
 		
 		// add schema to common schema
 		addSchema: {
-			'givenName' : {
-				type : 'Text',
-				title : "First Name"
-			},
-			
-			'familyName' : {
-				type : 'Text',
-				title : "Last Name"
-			},
-			
 			'needQuestionnaire': {
 				type : 'Checkbox',
 				title : "need Questionnaire"				
@@ -39,26 +29,21 @@ define([
 			}
 		},
 		
+		handleModelSuccessError: function(model) {
+			this.listenTo(model, 'sync', function(response) {
+				App.Mediator.trigger("messaging:showAlert", "Buyer created successfully.", "Green");
+			}.bind(this));
+
+			this.listenTo(model, 'error', function(model, response) {
+				var json = (response.responseText)?JSON.parse(response.responseText):{};
+				App.Mediator.trigger("messaging:showAlert", "Some error occured", "Red", json.errors);
+			});
+		},
+		
 		// function handles form submission and success and error handling.
 		handleFormSubmit : function(values) {
 			var createBuyer = new createBuyerModel();
 			this.bindModelValidation(createBuyer);
-
-			createBuyer.bind('validated:valid', function(m, errors) {
-				this.listenTo(createBuyer, 'sync', function(response) {
-					App.Mediator.trigger("messaging:showAlert", "Buyer created successfully.", "Green");
-				}.bind(this));
-
-				this.listenTo(createBuyer, 'error', function(model, response) {
-					var json = (response.responseText)?JSON.parse(response.responseText):{};
-					App.Mediator.trigger("messaging:showAlert", "Some error occured", "Red", json.errors);
-				});
-			}.bind(this));
-
-			createBuyer.bind('validated:invalid', function(model) {
-				createBuyer.showErrors(model);
-			});
-
 			createBuyer.set(values);
 			createBuyer.save();
 		}

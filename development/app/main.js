@@ -48,6 +48,7 @@ require.config({
 		'questionnaire' : 'app/modules/questionnaire',
 		'video' : 'app/modules/video',
 		'cart' : 'app/modules/cart',
+		'logout' : 'app/modules/logout',
 		
 		'cssPath' : 'app/common/css',
 		

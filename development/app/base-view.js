@@ -64,16 +64,25 @@ define([
 			Backbone.Validation.bind(this, {
 		      model: model
 		    });
+		    
+			this.bindSuccessMethod(model);
 		},
 
 		// bind validation collection
 		bindCollectionValidation: function(collection) {
-			 Backbone.Validation.bind(this, {
+			Backbone.Validation.bind(this, {
 		      collection: collection
 		    });
+			
+			this.bindSuccessMethod(model);
 		},
-
-
+		
+		bindSuccessMethod: function(model) {
+			model.successValidation = function() {
+				if(this.handleModelSuccessError && _.isFunction(this.handleModelSuccessError))
+					this.handleModelSuccessError(model);
+			}.bind(this);			
+		},
 
 		// main initialize function
 		initialize : function(options) {
@@ -96,7 +105,6 @@ define([
 			this.trigger('intialize:after', options);	
 			
 			return this;
-				
 		},
 
 		render : function() {

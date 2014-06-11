@@ -19,7 +19,8 @@ define([
 	"adminManageBuyer/layout/dashboard",
 	"adminProduct/layout/layout",
 	"adminSeller/layout/layout",
-
+	"logout/views/logout",
+	
 	"less!cssPath/style"
 ], function(
 	Backbone, 
@@ -36,7 +37,8 @@ define([
 	mainLayout,
 	adminManageBuyerLayout,
 	adminCreateProductLayout,
-	adminSellerLayout
+	adminSellerLayout,
+	logoutView
 ) {
 
 	return Backbone.Router.extend({
@@ -245,7 +247,9 @@ define([
 		},
 		
 		logout: function() {
-			this.loadPage(authLayout, "logout");			
+			this.loadPage(logoutView, "logout", {
+				pageType: "default"
+			});			
 		},
 
 		// home page route

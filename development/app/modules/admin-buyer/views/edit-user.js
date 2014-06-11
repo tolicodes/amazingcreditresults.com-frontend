@@ -12,21 +12,7 @@ define([
 ) {
 	return BuyerFormView.extend({
 		el : undefined,
-		addSchema : {
-			'name' : {
-				type : 'Object',
-				subSchema : {
-					'givenName' : {
-						type : 'Text',
-						title : "First Name"
-					},
-					'familyName' : {
-						type : 'Text',
-						title : "Last Name"
-					}
-				}
-			},
-			
+		addSchema : {			
 			'needQuestionnaire': {
 				type : 'Checkbox',
 				title : "need Questionnaire"				
@@ -40,34 +26,21 @@ define([
 		
 		submitButtonText : "Edit User",
 		
-				// function handles form submission and success and error handling.
-		handleFormSubmit : function(values) {
-			this.bindModelValidation(this.model);
-
-			this.model.bind('validated:valid', function(m, errors) {
-				this.listenTo(this.model, 'sync', function(response) {
-					App.Mediator.trigger("messaging:showAlert", "User updated successfully.", "Green");
-					App.routing.navigate("admin/dashboard", {
-						trigger : true
-					});
-				}.bind(this));
-
-				this.listenTo(this.model, 'error', function(model, response) {
-					var json = (response.responseText)?JSON.parse(response.responseText):{};
-					App.Mediator.trigger("messaging:showAlert", "Some error occured", "Red", json.errors);
+		handleModelSuccessError: function(model) {
+			this.listenTo(this.model, 'sync', function(response) {
+				App.Mediator.trigger("messaging:showAlert", "User updated successfully.", "Green");
+				App.routing.navigate("admin/dashboard", {
+					trigger : true
 				});
 			}.bind(this));
-
-			this.model.bind('validated:invalid', function(model) {
-				this.model.showErrors(model);
-			}.bind(this));
-			
-			
-			console.log(values);
+		},		
+		
+		// function handles form submission and success and error handling.
+		handleFormSubmit : function(values) {
+			this.bindModelValidation(this.model);
 			this.model.set(values);
 			this.model.save();
 		},
-
 
 		initializeBefore : function(options) {
 			if (options && options[0] && options[0].userId) {

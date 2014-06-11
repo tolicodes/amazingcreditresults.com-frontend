@@ -65,14 +65,19 @@ define([
 			this.render();
 				
 			// trigger after intialize
-			this.trigger('intialize:after', options);	
+			this.trigger('intialize:after', options);
+			
+			this.$el.find("a[href='"+Backbone.history.location.hash+"']").parent().addClass("active");	
 
 		},
 		
 		// set view in layout
-		setViewInLayout: function(target, ob) {
+		setViewInLayout: function(target, ob, setUpView) {
 			Backbone.Layout.setupView(ob);
-			this.setView(target, ob);
+			if(setUpView)
+				this.setView(target, ob);
+			else
+				this.insertView(target, ob);	
 		}
 		
 		
