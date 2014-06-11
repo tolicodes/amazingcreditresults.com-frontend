@@ -17,8 +17,8 @@ define([
 
 		tpl: viewTemplate,
 		
-		initializeAfter: function() {
-			
+		initializeBefore: function() {
+			sessionStorage.removeItem("huntKey");
 		}
 
 	});

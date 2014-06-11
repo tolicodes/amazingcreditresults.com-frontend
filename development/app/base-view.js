@@ -78,6 +78,12 @@ define([
 		},
 		
 		bindSuccessMethod: function(model) {
+			
+			this.listenTo(model, 'error', function(model, response) {
+				var json = (response.responseText)?JSON.parse(response.responseText):{};
+				App.Mediator.trigger("messaging:showAlert", json.Error, "Red", json.errors);
+			}.bind(this));
+			
 			model.successValidation = function() {
 				if(this.handleModelSuccessError && _.isFunction(this.handleModelSuccessError))
 					this.handleModelSuccessError(model);

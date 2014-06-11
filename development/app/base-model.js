@@ -58,9 +58,7 @@ define([
 				this.fetchedDfd.resolve.apply(this, arguments);
 			}.bind(this));
 
-			this.listenTo(this, 'error', function(model, response) {
-				var json = (response.responseText)?JSON.parse(response.responseText):{};
-				App.Mediator.trigger("messaging:showAlert", json.Error, "Red", json.errors);
+			this.listenTo(this, 'error', function() {
 				this.fetched = false;
 				this.fetchedDfd.reject.apply(this, arguments);
 			}.bind(this));

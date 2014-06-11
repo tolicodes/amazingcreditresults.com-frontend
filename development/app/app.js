@@ -116,7 +116,6 @@ define([
 		
 		// logout user
 		logoutUser: function() {
-			sessionStorage.removeItem("huntKey");
 			App.routing.navigate("logout", {
 				trigger : true
 			});
@@ -129,7 +128,8 @@ define([
 				this.user = new authModel();
 				this.user.fetchedDfd.fail(function() {
 					App.Mediator.trigger("messaging:showAlert", "Authorization failed. Please login.", "Red");
-				});
+					this.logoutUser();
+				}.bind(this));
 			}
 			return this.user.fetchedDfd;
 		},
@@ -139,14 +139,14 @@ define([
 			this.pageView = pageView;
 			this.pageOptions = pageOptions;
 			if (this.checkNeedAuth(pageName)) {
-				this._createPage();
+				this._createPage("allow");
 			} else {
 				this.authorizeUser().done(this._createPage.bind(this));
 			}
 		},
 		
 		showUserName: function() {
-			if(this.user) {
+			if(this.user && this.user.get("name")) {
 				var name = (this.user.get("name").givenName)?this.user.get("name").givenName:"-";
 				name += " ";
 				name += (this.user.get("name").familyName)?this.user.get("name").familyName:"-";
@@ -155,13 +155,17 @@ define([
 
 		},
 
-		_createPage : function() {
-			if(!_.isUndefined(App.CurrentUser) && this.user) App.CurrentUser.set(this.user.toJSON());
-			this.createPage(this.pageView, _({}).extend(this.pageOptions, {
-				userDetail : (this.user)?this.user.toJSON():{}
-			}));
-			// show username
-			this.showUserName();
+		_createPage : function(allow) {
+			if(sessionStorage.getItem("huntKey") || allow == "allow") {
+				if(!_.isUndefined(App.CurrentUser) && this.user) App.CurrentUser.set(this.user.toJSON());
+				this.createPage(this.pageView, _({}).extend(this.pageOptions, {
+					userDetail : (this.user)?this.user.toJSON():{}
+				}));
+				// show username
+				this.showUserName();
+			} else {
+				this.logoutUser();
+			}
 		},
 
 		// check if page has permission

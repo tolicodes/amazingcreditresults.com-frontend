@@ -4,21 +4,36 @@
 // Return Backbone View {Object}
 
 define([
-	"base", 
+	"formView", 
 	"hbs!adminLogin/templates/login", 
 	"adminLogin/models/login"
 	], function(
-	Base, 
+	FormView, 
 	viewTemplate, 
 	loginModel
 	) {
 
-	return Base.extend({
-		events : {
-			'submit .password-form' : 'handleFormSubmit'
-		},
+	return FormView.extend({
+		//events : {
+		//	'submit .password-form' : 'handleFormSubmit'
+		//},
+		
+		submitButtonText : "Login",
+		
+		formArea: '.form-area',
 		
 		el: undefined,
+		
+		// schema to generate form
+		schema : {
+			'username' : {
+				type : 'Text'
+			},
+			'password' : {
+				type : 'Password'
+			}
+		},
+
 		
 		tpl : viewTemplate,
 
@@ -43,20 +58,17 @@ define([
 			}.bind(this));
 		},
 
-		handleFormSubmit : function(e) {
-			e.preventDefault();
-			var password = $(e.target).find("#password").val(),
-			username = $(e.target).find("#username").val();
+		handleFormSubmit : function(values) {
 			// save the password and redirect
 			var login = new loginModel();
 			this.bindModelValidation(login);
-			login.set({username: username, password: password});
+			login.set(values);
 			login.save();
 
 		},
 				
 		initializeBefore : function(options) {
-			if(options && options[0]) this.apiKey = options[0].apiKey;
+			//if(options && options[0]) this.apiKey = options[0].apiKey;
 		}
 	});
 });
