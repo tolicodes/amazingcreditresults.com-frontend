@@ -14,19 +14,6 @@ define([
 	return BuyerFormView.extend({
 		el : undefined,
 		addSchema : {
-			'name' : {
-				type : 'Object',
-				subSchema : {
-					'givenName' : {
-						type : 'Text',
-						title : "First Name"
-					},
-					'familyName' : {
-						type : 'Text',
-						title : "Last Name"
-					}
-				}
-			}
 		},
 
 		initializeBefore : function(options) {

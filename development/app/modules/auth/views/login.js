@@ -24,8 +24,7 @@ define([
 		// schema to generate form
 		schema : {
 			'password' : {
-				type : 'Password',
-				validators : ['required']
+				type : 'Password'
 			}
 		},
 		
@@ -51,40 +50,27 @@ define([
 		
 		submitButtonText : "Login In START BUYING",
 
+		handleModelSuccessError: function(model) {
+			this.listenTo(model, 'sync', function(response) {
+				// set the huntKey in session storage
+				sessionStorage.setItem("huntKey", response.get("huntKey"));
+				// setup hunt key
+				this.setUpHuntkey();
+				// get the user detail
+				this.authorizeUser().done(this._createForQuestionnaire.bind(this));
+			}.bind(this));
+		},
+
 		handleFormSubmit : function(values) {
 			// save the password and redirect
 			var login = new loginModel();
-			
 			this.bindModelValidation(login);
-			login.bind('validated:valid', function(m, errors) {
-				this.listenTo(login, 'sync', function(response) {
-					// set the huntKey in session storage
-					sessionStorage.setItem("huntKey", response.get("huntKey"));
-					// setup hunt key
-					this.setUpHuntkey();
-					// get the user detail
-					this.authorizeUser().done(this._createForQuestionair.bind(this));
-				}.bind(this));
-				
-				this.listenTo(login, 'error', function(model, response) {
-					var json = (response.responseText)?JSON.parse(response.responseText):{};
-					App.Mediator.trigger("messaging:showAlert", "Incorrect Password. Forgot your password? Contact support at <a  href='mailto:support@amazingcreditresults.com'>support@amazingcreditresults.com</a>", "Red", json.errors);
-				});
-			}.bind(this));
-			
-			login.bind('validated:invalid', function(model) {
-				login.showErrors(model);
-			});
-			
-			if(values)
-				values.apiKey = this.apiKey;
-			
+			if(values) values.apiKey = this.apiKey;
 			login.set(values);
 			login.save();
-
 		},
 		
-		_createForQuestionair: function() {
+		_createForQuestionnaire: function() {
 			
 			if(!_.isUndefined(App.CurrentUser)) App.CurrentUser.set(this.user.toJSON());
 			

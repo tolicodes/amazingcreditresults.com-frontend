@@ -64,16 +64,31 @@ define([
 			Backbone.Validation.bind(this, {
 		      model: model
 		    });
+		    
+			this.bindSuccessMethod(model);
 		},
 
 		// bind validation collection
 		bindCollectionValidation: function(collection) {
-			 Backbone.Validation.bind(this, {
+			Backbone.Validation.bind(this, {
 		      collection: collection
 		    });
+			
+			this.bindSuccessMethod(model);
 		},
-
-
+		
+		bindSuccessMethod: function(model) {
+			
+			this.listenTo(model, 'error', function(model, response) {
+				var json = (response.responseText)?JSON.parse(response.responseText):{};
+				App.Mediator.trigger("messaging:showAlert", json.Error, "Red", json.errors);
+			}.bind(this));
+			
+			model.successValidation = function() {
+				if(this.handleModelSuccessError && _.isFunction(this.handleModelSuccessError))
+					this.handleModelSuccessError(model);
+			}.bind(this);			
+		},
 
 		// main initialize function
 		initialize : function(options) {
@@ -94,7 +109,8 @@ define([
 				
 			// trigger after intialize
 			this.trigger('intialize:after', options);	
-				
+			
+			return this;
 		},
 
 		render : function() {
@@ -103,6 +119,8 @@ define([
 			this.appendTemplate();
 			// trigger after render
 			this.trigger('render:after');
+			
+			return this;
 		},
 		
 		appendTemplate: function() {

@@ -20,7 +20,7 @@ define([
 		template: viewTemplate,
 		initializeAfter: function(options) {
 			this.setViewInLayout('.tradelines', new tradelinesView(options));
-			this.setViewInLayout('.inventory', new inventoryView(options));
+			//this.setViewInLayout('.inventory', new inventoryView(options));
 		}
 	});
 });

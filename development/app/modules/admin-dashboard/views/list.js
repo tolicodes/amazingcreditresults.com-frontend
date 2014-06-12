@@ -18,7 +18,11 @@ define([
 	return DataTable.extend({
 
 		el: undefined,
-
+		
+		pageSize: 5,
+		
+		selectedRows: [],
+		
 		columns:  [{
 				label: "First Name",
 				name : "name.givenName",
@@ -65,7 +69,12 @@ define([
 			}, {
 				label: "Edit",
 				name : "edit",
-				cell : "actionButton"
+				cell : "actionButton",
+				callback: function(userId) {
+					App.routing.navigate("admin/user/"+userId, {
+						trigger : true
+					});
+				}
 			}, {
 				label: "needQuestionnaire",
 				name : "needQuestionnaire",
@@ -90,11 +99,7 @@ define([
 			this.addResetButton(resetPasswordModel);
 			this.welcomeEmailButton(welcomeEmailModel);
 			this.addCheckbox(updateBuyerModel);
-			this.addActionButton("Edit", function(userId) {
-				App.routing.navigate("admin/user/"+userId, {
-					trigger : true
-				});
-			});
+			this.addActionButton();
 		}
 	});
 });
