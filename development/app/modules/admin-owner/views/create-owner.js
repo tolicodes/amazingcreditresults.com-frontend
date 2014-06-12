@@ -26,29 +26,21 @@ define([
 				validators : ['required']
 			}
 		},
+		
+		handleModelSuccessError: function(model) {
+			this.listenTo(model, 'sync', function(response) {
+				App.Mediator.trigger("messaging:showAlert", "Owner acount created successfully.", "Green");
+			}.bind(this));
+
+			this.listenTo(model, 'error', function(model, response) {
+				App.Mediator.trigger("messaging:showAlert", response.responseText, "Red");
+			});
+		},
 				
 		// function handles form submission and success and error handling.
 		handleFormSubmit : function(values) {
 			var createOwner = new createOwnerModel();
 			this.bindModelValidation(createOwner);
-
-			createOwner.bind('validated:valid', function(m, errors) {
-				this.listenTo(createOwner, 'sync', function(response) {
-					App.Mediator.trigger("messaging:showAlert", "Owner acount created successfully.", "Green");
-				}.bind(this));
-
-				this.listenTo(createOwner, 'error', function(model, response) {
-					//var json = (response.responseText)?JSON.parse(response.responseText):{};
-					App.Mediator.trigger("messaging:showAlert", response.responseText, "Red");
-				});
-				
-				
-				
-			}.bind(this));
-
-			createOwner.bind('validated:invalid', function(model) {
-				createOwner.showErrors(model);
-			});
 			createOwner.set(values);
 			createOwner.save();
 		}

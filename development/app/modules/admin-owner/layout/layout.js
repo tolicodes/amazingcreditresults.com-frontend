@@ -15,7 +15,6 @@ define([
 	createOwnerView
 ) {
 	return BaseLayout.extend({
-		el: ".main-container",
 		template: templateView,
 		initializeAfter: function(options) {
 			this.setViewInLayout('.create-buyer', new createOwnerView(options));

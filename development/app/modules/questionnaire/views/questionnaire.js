@@ -5,19 +5,21 @@
 
 define([
 	"base", 
-	"hbs!questionnaire/templates/questionair", 
+	"hbs!questionnaire/templates/questionnaire", 
 	"questionnaire/models/questionnaire", 
 	"questionnaire/models/update-answers",
 	"questionnaire/models/questions"
 ], function(
 	Base, 
 	viewTemplate, 
-	questionairModel, 
+	questionnaireModel, 
 	updateAnswersModel,
 	questionModel
 ) {
 
 	return Base.extend({
+		
+		el: undefined,
 
 		tpl: viewTemplate,
 
@@ -26,7 +28,7 @@ define([
 		},
 
 		events : {
-			'submit .find-trade-form' : 'updateQuestionair',
+			'submit .find-trade-form' : 'updatequestionnaireModel',
 			'click .questainair-options' : 'updateAnswerFn',
 			'keyup .total-dept' : 'updateAmount',
 			'keyup .anual-income' : 'updateAmount'
@@ -35,10 +37,7 @@ define([
 		// answer range for calculated questions
 		answersRange : {
 			'3' : [{
-				min : 0,
-				max : 2
-			}, {
-				min : 2,
+				min : 1,
 				max : 5
 			}, {
 				min : 5,
@@ -79,11 +78,11 @@ define([
 			this.updateAnswer['answer' + (parseInt($(e.currentTarget).parents(".question-index").data("question")) + 1)] = parseInt($(e.currentTarget).parents(".q-option-index").data("answer")) + 1;
 		},
 
-		// uodate questionair
-		updateQuestionair : function(e) {
+		// uodate questionnaireModel
+		questionnaireModel : function(e) {
 			e.preventDefault();
 			var updateAnswers = new updateAnswersModel,
-			questionair = $(e.target).find(".questionair").prop('checked');
+			questionnaireModel = $(e.target).find(".questionnaireModel").prop('checked');
 
 			this.listenTo(updateAnswers, 'sync', function(){
 				this.goToBuyerPage();
@@ -94,7 +93,7 @@ define([
 			});
 			
 			updateAnswers.set(this.updateAnswer);	
-			updateAnswers.set({needQuestionnaire : questionair});
+			updateAnswers.set({needQuestionnaire : questionnaireModel});
 			updateAnswers.save();
 		},
 

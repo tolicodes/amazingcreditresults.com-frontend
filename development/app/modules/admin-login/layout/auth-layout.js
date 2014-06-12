@@ -1,4 +1,4 @@
-// info.js
+// auth layout.js
 // --------------
 // Requires define
 // Return Backbone View {Object}
@@ -15,7 +15,9 @@ define([
 ) {
 
 	return BaseLayout.extend({
+		
 		template: templateView,
+		
 		initializeAfter: function(options) {
 			this.setViewInLayout('.form-view', new loginView(options));
 		}

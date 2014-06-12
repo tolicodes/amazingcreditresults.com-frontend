@@ -9,24 +9,36 @@ define([
 	"buyer/layout/buyer-layout", 
 	"grid/views/grid", 
 	"auth/layout/auth-layout", 
-	"questionnaire/views/questionnaire", 
+	"buyerDashboard/layout/dashboard", 
 	"auth/models/myself", 
-	"buyer/views/inventory",
+	"inventory/layout/layout",
 	"adminLogin/layout/auth-layout",
 	"adminDashboard/layout/dashboard",
-	"adminManageOwner/layout/layout", 
-	"less!cssPath/style"], function(
+	"adminManageOwner/layout/layout",
+	'mainLayout/layout/main',
+	"adminManageBuyer/layout/dashboard",
+	"adminProduct/layout/layout",
+	"adminSeller/layout/layout",
+	"logout/views/logout",
+	
+	"less!cssPath/style"
+], function(
 	Backbone, 
 	home,
 	buyerInfo,
 	dataGrid,
 	authLayout,
-	questionnaire,
+	buyerDashboardLayout,
 	authModel, 
-	inventoryView,
+	inventoryLayout,
 	adminLoginLayout,
 	adminDasboardLayout,
-	adminManageOwnerLayout
+	adminManageOwnerLayout,
+	mainLayout,
+	adminManageBuyerLayout,
+	adminCreateProductLayout,
+	adminSellerLayout,
+	logoutView
 ) {
 
 	return Backbone.Router.extend({
@@ -34,7 +46,7 @@ define([
 		routes : {
 			'buyer' : 'buyer',
 			'grid' : 'dataGrid',
-			'questionnaire' : 'questionnaire',
+			'dashboard': 'dashboard',
 			'setPassword/:apikey' : 'setPassword',
 			'login/:apikey' : 'login',
 			'inventory' : 'inventory',
@@ -43,7 +55,15 @@ define([
 			// owner routes
 			"admin/login": "adminLogin",
 			"admin/dashboard": "adminDashboard",
-			"admin/owner": "adminOwner",			
+			"admin/buyer": "adminBuyer",
+			"admin/seller": "adminSeller",
+			"admin/owner": "adminOwner",
+			
+			"admin/product/create": "adminCreateProduct",
+			"admin/product/create/:id": "adminCreateProduct",
+			
+			
+			"admin/user/:id": "editUser",			
 			
 			// 404 Page
 			"*splat" : "routeNotFound"		
@@ -96,7 +116,6 @@ define([
 		
 		// logout user
 		logoutUser: function() {
-			//sessionStorage.removeItem("huntKey");
 			App.routing.navigate("logout", {
 				trigger : true
 			});
@@ -109,7 +128,8 @@ define([
 				this.user = new authModel();
 				this.user.fetchedDfd.fail(function() {
 					App.Mediator.trigger("messaging:showAlert", "Authorization failed. Please login.", "Red");
-				});
+					this.logoutUser();
+				}.bind(this));
 			}
 			return this.user.fetchedDfd;
 		},
@@ -119,17 +139,33 @@ define([
 			this.pageView = pageView;
 			this.pageOptions = pageOptions;
 			if (this.checkNeedAuth(pageName)) {
-				this._createPage();
+				this._createPage("allow");
 			} else {
 				this.authorizeUser().done(this._createPage.bind(this));
 			}
 		},
+		
+		showUserName: function() {
+			if(this.user && this.user.get("name")) {
+				var name = (this.user.get("name").givenName)?this.user.get("name").givenName:"-";
+				name += " ";
+				name += (this.user.get("name").familyName)?this.user.get("name").familyName:"-";
+				$(".username").html(name);
+			}
 
-		_createPage : function() {
-			if(!_.isUndefined(App.CurrentUser) && this.user) App.CurrentUser.set(this.user.toJSON());
-			this.createPage(this.pageView, _({}).extend(this.pageOptions, {
-				userDetail : (this.user)?this.user.toJSON():{}
-			}));
+		},
+
+		_createPage : function(allow) {
+			if(sessionStorage.getItem("huntKey") || allow == "allow") {
+				if(!_.isUndefined(App.CurrentUser) && this.user) App.CurrentUser.set(this.user.toJSON());
+				this.createPage(this.pageView, _({}).extend(this.pageOptions, {
+					userDetail : (this.user)?this.user.toJSON():{}
+				}));
+				// show username
+				this.showUserName();
+			} else {
+				this.logoutUser();
+			}
 		},
 
 		// check if page has permission
@@ -138,7 +174,7 @@ define([
 		},
 
 		createPage : function(pageView, options) {
-			this.currentView = new pageView(options);
+			this.currentView = new mainLayout({page: pageView, options: options});
 		},		
 
 		// route not found
@@ -149,15 +185,49 @@ define([
 		/* Owner routes function */
 		
 		adminLogin: function() {
-			this.loadPage(adminLoginLayout, "adminLogin");
+			this.loadPage(adminLoginLayout, "adminLogin", {
+				pageType: "default"
+			});
 		},
 		
 		adminDashboard: function() {
-			this.loadPage(adminDasboardLayout, "adminDashboard");
+			this.loadPage(adminDasboardLayout, "adminDashboard", {
+				pageType: "admin"
+			});
+		},
+		
+		adminSeller: function() {
+			this.loadPage(adminSellerLayout, "adminSeller", {
+				pageType: "admin"
+			});			
+		},
+		
+		adminCreateProduct: function(productId) {
+			this.loadPage(adminCreateProductLayout, "adminCreateProduct", {
+				pageType: "admin",
+				page: "create",
+				productId: productId
+			});
 		},
 		
 		adminOwner: function() {
-			this.loadPage(adminManageOwnerLayout, "adminManageOwner");
+			this.loadPage(adminManageOwnerLayout, "adminManageOwner", {
+				pageType: "admin"
+			});
+		},
+		
+		adminBuyer: function() {
+			this.loadPage(adminManageBuyerLayout, "adminManageBuyer", {
+				pageType: "admin"
+			});
+		},
+		
+		editUser: function(userId) {
+			this.loadPage(adminManageBuyerLayout, "adminManageBuyer", {
+				page: "ediUser",
+				userId: userId,
+				pageType: "admin"
+			});
 		},
 
 		// set password
@@ -168,9 +238,8 @@ define([
 			});
 		},
 
-		// questionnaire page
-		questionnaire : function() {
-			this.loadPage(questionnaire, 'questions');
+		dashboard : function() {
+			this.loadPage(buyerDashboardLayout, 'buyerDashboard');
 		},
 
 		// set password
@@ -182,7 +251,9 @@ define([
 		},
 		
 		logout: function() {
-			this.loadPage(authLayout, "logout");			
+			this.loadPage(logoutView, "logout", {
+				pageType: "default"
+			});			
 		},
 
 		// home page route
@@ -205,7 +276,7 @@ define([
 		},
 
 		inventory : function() {
-			this.loadPage(inventoryView, 'inventory');
+			this.loadPage(inventoryLayout, 'inventory');
 		}
 		
 

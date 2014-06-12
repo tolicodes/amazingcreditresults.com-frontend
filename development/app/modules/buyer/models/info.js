@@ -10,7 +10,6 @@ define([
 	) {
 
 	return BaseModel.extend({
-		id: undefined,
 		url : function() {
 			return this.getUrl("adminClients", {id: this.id});
 		}

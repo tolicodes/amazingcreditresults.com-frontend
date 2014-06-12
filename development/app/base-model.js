@@ -22,8 +22,26 @@ define([
 		// jquery Deferred Object
 		fetchedDfd: false,
 		
+		// validation status Default: true
+		bindValidation: true,
+		
 		initialize: function() {
+			
 			if(this.autoFetch) this.fetch();
+			
+			if(this.bindValidation) {
+				this.bind('validated:valid', function(model, errors) {
+					if(this.successValidation && _.isFunction(this.successValidation))
+						this.successValidation();
+				}.bind(this));
+				
+				// bind model validations
+				this.bind('validated:invalid', function(model) {
+					if(this.showErrors && _.isFunction(this.showErrors))
+						this.showErrors(model);
+				}.bind(this));
+			}
+			
 		},
 		
 		// get the url
@@ -50,13 +68,12 @@ define([
 		
 		// show errors
 		showErrors: function(model) {
-			var msg = "";
+			var errors = [];
 			_.each(model.validationError, function(err, field) {
-				msg += "<p>"+err+"</p>";
+				errors.push({message: err, field: field});
 			});
-			if(msg) App.Mediator.trigger("messaging:showAlert", msg, "Red");
+			App.Mediator.showFieldErrors(errors);
 		}
-		
 		
 	});
 });

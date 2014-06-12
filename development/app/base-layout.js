@@ -16,7 +16,7 @@ define([
 		
 		template: defaultLayout,
 		 
-		el: '.main-container',
+		//el: '.main-view',
 		
 		// hooks
 		hooks : {
@@ -61,18 +61,23 @@ define([
 			// trigger before intialize
 			this.trigger('intialize:before', options);
 
-			// render template if renderOnInitialize property is set to true
+			// render template
 			this.render();
 				
 			// trigger after intialize
-			this.trigger('intialize:after', options);	
+			this.trigger('intialize:after', options);
+			
+			this.$el.find("a[href='"+Backbone.history.location.hash+"']").parent().addClass("active");	
 
 		},
 		
 		// set view in layout
-		setViewInLayout: function(target, ob) {
+		setViewInLayout: function(target, ob, setUpView) {
 			Backbone.Layout.setupView(ob);
-			this.insertView(target, ob).render();
+			if(setUpView)
+				this.setView(target, ob);
+			else
+				this.insertView(target, ob);	
 		}
 		
 		

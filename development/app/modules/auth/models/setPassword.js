@@ -1,4 +1,4 @@
-// info.js
+// setPassword.js
 // --------------
 // Requires define
 // Return Backbone Model {Object}
@@ -9,9 +9,11 @@ define([
 	BaseModel
 ) {
 	return BaseModel.extend({
+		
 		url : function() {
 			return this.getUrl("buyerSetPassword");
 		},
+		
 		validation : {
 			password : {
 				required : true,
@@ -22,7 +24,6 @@ define([
 				msg : 'Please confirm password.'
 			}, {
 				fn : function(value, attr, computedState) {
-					console.log(value, computedState);
 					if (computedState.password != computedState.confirmPassword) {
 						return 'Please confirm password.';
 					}

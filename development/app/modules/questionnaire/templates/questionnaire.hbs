@@ -1,0 +1,33 @@
+	<h5>
+		Take our 3 Question Test to determine the right trade lines for you
+	</h5>
+	<ul class="questainair-questions">
+		
+		{{#each questions}}
+		<li class="question-index" data-question="{{@index}}">
+			{{question.q}}
+			<ul class="questainair">
+				{{#each question.options}}
+					<li class="q-option-index" data-answer="{{@index}}">
+						{{#if ../question.linkRequired}}
+							<input type="radio" name="answer_{{../../idx}}" class="questainair-options" /> {{this}}
+						{{else}}
+							<div class="calculation-question">{{{this}}}</div>
+						{{/if}}
+					</li>
+				{{/each}}
+			</ul>
+		</li>
+		{{/each}}
+	</ul>
+
+	<form role="form" action="#" class="find-trade-form" method="POST">
+		<div class="form-group">
+			<input type="checkbox" class="questionnaire" />
+			Skip this questionnaire the next time you visit
+		</div>
+
+		<div class="form-group">
+			<input type="submit" value="Find My Best Trade Lines" />
+		</div>
+	</form>
