@@ -14,15 +14,49 @@ define([
 		},
 		
 		validation : {
-			givenName : {
+			"name.givenName" : {
+				required : true,
+				msg : 'Please enter first name.'
+			},
+
+			"name.familyName" : {
 				required : true,
 				msg : 'Please enter last name.'
 			},
 
-			familyName : {
+			city : {
 				required : true,
-				msg : 'Please enter first name.'
+				msg : 'Please enter city name.'
 			},
+			
+			// state : {
+				// required : true,
+				// msg : 'Please select state.'
+			// },
+
+			// state: {
+				// required: function(value, attr, computedState) {
+					// console.log(value, attr, computedState);
+			        // return (value !== "Select")?true:false;
+			    // }
+			// },
+
+			zip : {
+				required : true,
+				msg : 'Please enter zip code.'
+			},
+
+			telefone : {
+				required : true,
+				msg : 'Please enter phone number.'
+			},
+
+
+			localAddress : {
+				required : true,
+				msg : 'Please enter address.'
+			},
+
 			email : [{
 				msg : 'Please enter valid email.',
 				pattern : 'email',

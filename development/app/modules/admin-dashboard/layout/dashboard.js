@@ -15,11 +15,20 @@ define([
 	adminProductLayout
 ) {
 	return BaseLayout.extend({
+
+		events: {
+			'click .delete-selected': 'deleteSelected'
+		},
+		
+		deleteSelected: function() {
+			this.listView.deleteRecords();
+		},
 		
 		template: templateView,
 		
 		initializeAfter: function(options) {
-			this.setViewInLayout('.list-view', new listView(options), true);
+			this.listView = new listView(options);
+			this.setViewInLayout('.list-view', this.listView, true);
 			this.setViewInLayout('.product-view', new adminProductLayout(options), true);
 		}
 	});

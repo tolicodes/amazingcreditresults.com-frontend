@@ -71,22 +71,28 @@ define([
 				setTimeout(this.hideMessage.bind(this), this.timeInterval);
 			}
 		},
+		
+		getFieldName: function(field) {
+			if(field.indexOf(".") != -1) {
+				var s = field.split(".");
+				return s[s.length - 1];
+			} else {
+				return field;
+			}
+			
+		},
 			
 		// show fields error
 		showFieldErrors: function(errors) {
-			var html = "";
-			console.log(errors);
+			var html = "", field;
 			_.each(errors, function(ob) {
-				console.log(ob);
 				if(ob.field) {
-					var $target = $("input[name="+ob.field+"]");
+					field = this.getFieldName(ob.field);
+					var $target = $("*[name="+field+"]");
 					$target.parent().parent().find("div[data-error]").html(ob.message);
 					$target.focus(function() {
 						$target.parent().parent().find("div[data-error]").html("");
 					});
-					setTimeout(function() {
-						$target.parent().parent().find("div[data-error]").html("");
-					}, this.timeInterval);
 				} else {
 					html += ob.message;
 				}
@@ -96,7 +102,7 @@ define([
 		
 		// hide message
 		hideMessage : function() {
-			$(".alert-message-h").html("").removeClass('hide').removeClass("alert-"+this.type);
+			$(".alert-message-h").html("").addClass('hide').removeClass("alert-"+this.type);
 			$(".close-btn").hide();
 		},
 		

@@ -10,10 +10,7 @@ define([
 	) {
 
 	return DataTable.extend({
-
 		el: undefined,
-	
-		
 		pageSize: 5,
 		selectedRows: [],
 		columns:  [
@@ -39,7 +36,7 @@ define([
 				editable: false,
 				formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
 			      fromRaw: function (rawValue, model) {
-			        return model.get("name").givenName;
+			        return model.get("ncRating");
 			      }
 			    })
 			}, {
@@ -49,7 +46,7 @@ define([
 				editable: false,
 				formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
 			      fromRaw: function (rawValue, model) {
-			        return model.get("name").givenName;
+			        return model.get("bcRating");
 			      }
 			    })
 			}, {
@@ -59,10 +56,45 @@ define([
 				cell : "string",
 				formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
 			      fromRaw: function (rawValue, model) {
-			        return model.get("name").givenName;
+			        return model.get("moRating");
 			      }
 			    })
-			}, {
+			},
+			
+			// {
+				// label: "improvingShortCreditHistory",
+				// editable: false,
+				// name : "improvingShortCreditHistory",
+				// cell : "string",
+				// formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
+			      // fromRaw: function (rawValue, model) {
+			        // return model.get("improvingShortCreditHistory");
+			      // }
+			    // })
+			// },
+			// {
+				// label: "improvingBadCreditScore",
+				// editable: false,
+				// name : "improvingBadCreditScore",
+				// cell : "string",
+				// formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
+			      // fromRaw: function (rawValue, model) {
+			        // return model.get("improvingBadCreditScore");
+			      // }
+			    // })
+			// },
+			// {
+				// label: "improvingMaxedOutCredit",
+				// editable: false,
+				// name : "improvingMaxedOutCredit",
+				// cell : "string",
+				// formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
+			      // fromRaw: function (rawValue, model) {
+			        // return model.get("improvingMaxedOutCredit");
+			      // }
+			    // })
+			// },
+			{
 				label: "Report To",
 				name : "edit",
 				editable: false,
@@ -91,15 +123,10 @@ define([
 				cell : "string"
 			},{
 				label: "Notes",
-				name : "resetButton",
+				name : "notes",
 				editable: false,
 				cell : "string"
 			}
-			//,{
-			//	label: "Actions",
-			//	name : "delete",
-			//	cell : "actionButton"			
-			//}
 			],
 			
 		url: "api/v1/owner/products",
@@ -109,11 +136,6 @@ define([
 		},
 		
 		initializeBefore: function() {
-			//this.addActionButton(function(cardId) {
-				//App.routing.navigate("admin/user/"+userId, {
-				//	trigger : true
-				//});
-			//});
 		}
 	});
 });

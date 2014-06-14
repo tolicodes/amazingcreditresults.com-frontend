@@ -152,7 +152,6 @@ define([
 				name += (this.user.get("name").familyName)?this.user.get("name").familyName:"-";
 				$(".username").html(name);
 			}
-
 		},
 
 		_createPage : function(allow) {

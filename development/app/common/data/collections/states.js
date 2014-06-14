@@ -14,9 +14,6 @@ define([
 	return BaseCollection.extend({
 		
 		model: Backbone.Model.extend({ 
-			toString: function() {
-				return this.get("label");
-			}
 		}),
 
 		url: function() {

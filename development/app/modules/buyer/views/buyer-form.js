@@ -30,21 +30,30 @@ define([
 				}
 			},
 			'email' : {
-				validators : ['required', 'email']
+				validators : ['email']
 			},
-			'City' : {
+			'city' : {
 				type : 'Text',
 				title : "City"
 			},
-			'State' : {
+			'state' : {
 				type : 'Select',
-				options :  new statesCollection()
+				options :  function(callback, editor) {
+	       		 var states = new statesCollection();
+	       		 states.fetch({
+	       		 	success: function() {
+	       		 		callback(states.toJSON());
+	       		 	}, 
+	       		 	error: function() {
+	       		 	}
+	       		 });
+    			}
 			},
-			'Zip' : {
+			'zip' : {
 				type : 'Text',
 				title : "Zip"
 			},
-			'phone' : {
+			'telefone' : {
 				type : 'Text',
 				title : "Phone"
 			},
@@ -52,7 +61,7 @@ define([
 				type : 'Text',
 				title : "Alt Phone"
 			},
-			'Address' : {
+			'localAddress' : {
 				type : 'TextArea',
 				title : "Address"
 			}
