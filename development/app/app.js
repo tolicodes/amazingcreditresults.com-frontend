@@ -155,6 +155,7 @@ define([
 		},
 
 		_createPage : function(allow) {
+			console.log("_create page", sessionStorage.getItem("huntKey"));
 			if(sessionStorage.getItem("huntKey") || allow == "allow") {
 				if(!_.isUndefined(App.CurrentUser) && this.user) App.CurrentUser.set(this.user.toJSON());
 				this.createPage(this.pageView, _({}).extend(this.pageOptions, {
@@ -190,6 +191,7 @@ define([
 		},
 		
 		adminDashboard: function() {
+			console.log("dashboard");
 			this.loadPage(adminDasboardLayout, "adminDashboard", {
 				pageType: "admin"
 			});
@@ -250,6 +252,9 @@ define([
 		},
 		
 		logout: function() {
+			// remove defined user
+			this.user = undefined;
+			
 			this.loadPage(logoutView, "logout", {
 				pageType: "default"
 			});			
