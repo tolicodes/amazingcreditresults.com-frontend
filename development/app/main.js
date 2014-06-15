@@ -14,6 +14,17 @@ require.config({
 			 }
 		 }
 	},
+	
+	deps: ['application'],
+	
+	//packages : [
+    //{ 
+     //   name: 'application',
+      //  location : '/',
+      //  main : 'setup'
+   // }
+   //],
+	
 	paths : {
 		// Libraries
 		'backbone' : 'libs/backbone/backbone',
@@ -122,7 +133,9 @@ require.config({
 });
 
 // initializing the router "application" on startup
-define([
+// application.js
+
+require([
 	'backbone', 
 	'underscore', 
 	'jquery', 

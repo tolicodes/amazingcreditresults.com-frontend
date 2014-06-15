@@ -23,7 +23,13 @@ define([
 		
 		selectedRows: [],
 		
-		columns:  [{
+		columns:  [
+					 {
+			     name: "",
+			     cell: "select-row",
+			     headerCell: "select-all" 
+ 			  },
+		{
 				label: "First Name",
 				name : "name.givenName",
 				cell : "string",

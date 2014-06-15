@@ -29,12 +29,9 @@ define([
 		
 		handleModelSuccessError: function(model) {
 			this.listenTo(model, 'sync', function(response) {
+				this.formReset();
 				App.Mediator.trigger("messaging:showAlert", "Owner acount created successfully.", "Green");
 			}.bind(this));
-
-			this.listenTo(model, 'error', function(model, response) {
-				App.Mediator.trigger("messaging:showAlert", response.responseText, "Red");
-			});
 		},
 				
 		// function handles form submission and success and error handling.

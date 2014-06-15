@@ -7,6 +7,7 @@ define([
 	"base", 
 	"backbone",
 	"backboneForms"
+	//"./custom-templates"
 ], function(
 	Base, 
 	Backbone,
@@ -21,7 +22,8 @@ define([
 		
 		// hooks
 		extraHooks : {
-			'objectModifications' : ['objectModification']
+			'objectModifications' : ['objectModification'],
+			'after:compileJSON': ['addRequiredAttribute']
 		},
 		
 		// before render
@@ -32,6 +34,10 @@ define([
 					this.schema[name] = attr;
 				}.bind(this));
 			}
+		},
+		
+		formReset: function() {
+			this.$el.find("form")[0].reset();
 		},
 		
 		afterRender: function() {
@@ -63,8 +69,13 @@ define([
 			else
 				this.$el.html(this.form.el);
 				
-			console.log(this.form.el);	
+		},
+		
+		addRequiredAttribute: function(json){
+			console.log(json);
+			//_(json).each(function(field){
 				
+			//});
 		},
 		
 		// reset form values

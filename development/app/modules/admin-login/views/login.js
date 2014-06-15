@@ -14,10 +14,7 @@ define([
 	) {
 
 	return FormView.extend({
-		//events : {
-		//	'submit .password-form' : 'handleFormSubmit'
-		//},
-		
+
 		submitButtonText : "Login",
 		
 		formArea: '.form-area',

@@ -28,7 +28,7 @@ define([
 		initialize: function() {
 			
 			if(this.autoFetch) this.fetch();
-			
+
 			if(this.bindValidation) {
 				this.bind('validated:valid', function(model, errors) {
 					if(this.successValidation && _.isFunction(this.successValidation))
@@ -72,6 +72,7 @@ define([
 			_.each(model.validationError, function(err, field) {
 				errors.push({message: err, field: field});
 			});
+			console.log(errors);
 			App.Mediator.showFieldErrors(errors);
 		}
 		
