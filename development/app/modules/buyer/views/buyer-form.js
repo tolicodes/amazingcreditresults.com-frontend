@@ -27,6 +27,10 @@ define([
 						type : 'Text',
 						title : "Last Name"
 					}
+					//'middleName' : {
+					//	type : 'Text',
+					//	title : "Middle Name"
+					//}
 				}
 			},
 			'email' : {
@@ -53,11 +57,11 @@ define([
 				type : 'Text',
 				title : "Zip"
 			},
-			'telefone' : {
+			'phone' : {
 				type : 'Text',
 				title : "Phone"
 			},
-			'AltPhone' : {
+			'altPhone' : {
 				type : 'Text',
 				title : "Alt Phone"
 			},

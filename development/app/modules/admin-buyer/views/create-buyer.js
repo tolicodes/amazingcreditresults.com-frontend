@@ -40,11 +40,13 @@ define([
 		
 		// function handles form submission and success and error handling.
 		handleFormSubmit : function(values) {
-			console.log(values);
-			var createBuyer = new createBuyerModel();
-			this.bindModelValidation(createBuyer);
-			createBuyer.set(values);
-			createBuyer.save();
+			this.model.set(values);
+			this.model.save();
+		},
+		
+		initializeBefore : function(options) {
+			this.model = new createBuyerModel();
+			this.bindModelValidation(this.model);
 		}
 	});
 });

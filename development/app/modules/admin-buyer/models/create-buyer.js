@@ -24,33 +24,20 @@ define([
 				msg : 'Please enter last name.'
 			},
 
-			city : {
-				required : true,
-				msg : 'Please enter city name.'
-			},
-			
-			// state : {
-				// required : true,
-				// msg : 'Please select state.'
-			// },
-
-			// state: {
-				// required: function(value, attr, computedState) {
-					// console.log(value, attr, computedState);
-			        // return (value !== "Select")?true:false;
-			    // }
-			// },
-
-			zip : {
-				required : true,
-				msg : 'Please enter zip code.'
-			},
-
-			telefone : {
+			phone : {
 				required : true,
 				msg : 'Please enter phone number.'
 			},
 
+			'city' : {
+				required : true,
+				msg : 'Please enter city name.'
+			},
+			
+			'zip' : {
+				required : true,
+				msg : 'Please enter zip code.'
+			},
 
 			localAddress : {
 				required : true,

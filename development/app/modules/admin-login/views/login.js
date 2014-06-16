@@ -31,7 +31,6 @@ define([
 			}
 		},
 
-		
 		tpl : viewTemplate,
 
 		// setup huntkey in header
