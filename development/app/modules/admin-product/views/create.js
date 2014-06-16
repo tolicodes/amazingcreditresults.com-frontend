@@ -28,12 +28,12 @@ define([
 				title : "Product Name"
 			},
 			
-			'ncRating': {type : 'Select', options: ["None", "Silver", "Gold", "Brown"]},
-			'bcRating': {type : 'Select', options: ["None", "Silver", "Gold", "Brown"]},
-			'moRating': {type : 'Select', options: ["None", "Silver", "Gold", "Brown"]},
-			'improvingShortCreditHistory': {type : 'Select', options: ["None", "Silver", "Gold", "Brown"]},
-			'improvingBadCreditScore': {type : 'Select', options: ["None", "Silver", "Gold", "Brown"]},
-			'improvingMaxedOutCredit': {type : 'Select', options: ["None", "Silver", "Gold", "Brown"]},
+			'ncRating': {type : 'Select', options: ["None", "Silver", "Gold", "Bronze"]},
+			'bcRating': {type : 'Select', options: ["None", "Silver", "Gold", "Bronze"]},
+			'moRating': {type : 'Select', options: ["None", "Silver", "Gold", "Bronze"]},
+			'improvingShortCreditHistory': {type : 'Select', options: ["None", "Silver", "Gold", "Bronze"]},
+			'improvingBadCreditScore': {type : 'Select', options: ["None", "Silver", "Gold", "Bronze"]},
+			'improvingMaxedOutCredit': {type : 'Select', options: ["None", "Silver", "Gold", "Bronze"]},
 
 			'reportsToExperian': {
 				type : 'Checkbox',

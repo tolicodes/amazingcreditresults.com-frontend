@@ -79,7 +79,6 @@ define([
 			} else {
 				return field;
 			}
-			
 		},
 			
 		// show fields error

@@ -3,22 +3,20 @@
  *
  * 'data-*' attributes control where elements are placed
  */
-define(['jquery', 'underscore', 'backbone', 'backbone-forms'], function($, _, Backbone) {
+define(['jquery', 'underscore', 'backbone', 'backboneForms'], function($, _, Backbone) {
   var Form = Backbone.Form;
 
-  
   /**
    * Bootstrap 3 templates
    */
   Form.template = _.template('\
-    <form class="form-horizontal" role="form">\
+    <form role="form" class="form-inline" role="form">\
       <div data-fieldsets></div>\
       <% if (submitButton) { %>\
-        <button type="submit" class="btn"><%= submitButton %></button>\
+        <div class="form-group form-button"><button type="submit" class="btn"><%= submitButton %></button></div>\
       <% } %>\
     </form>\
   ');
-
 
   Form.Fieldset.template = _.template('\
     <fieldset data-fields>\
@@ -28,19 +26,18 @@ define(['jquery', 'underscore', 'backbone', 'backbone-forms'], function($, _, Ba
     </fieldset>\
   ');
 
-
   Form.Field.template = _.template('\
     <div class="form-group field-<%= key %>">\
-      <label class="col-sm-2 control-label" for="<%= editorId %>"><%= title %><% if(required) {%><span class="required">*</span><% } %></label>\
-      <div class="col-sm-10">\
+      <label class="" for="<%= editorId %>"><%= title %>\
+      <% if(typeof required != "undefined") {%><span class="required">*</span><% } %>\
+      </label>\
+      <div class="">\
         <span data-editor></span>\
-        <p class="help-block" data-error></p>\
+        <div data-error></div>\
         <p class="help-block"><%= help %></p>\
       </div>\
-      <div class="error">{{error}}</div>
     </div>\
   ');
-
 
   Form.NestedField.template = _.template('\
     <div class="field-<%= key %>">\
@@ -54,7 +51,19 @@ define(['jquery', 'underscore', 'backbone', 'backbone-forms'], function($, _, Ba
 
   Form.editors.Base.prototype.className = 'form-control';
   Form.Field.errorClassName = 'has-error';
-
+  console.log(Form);
+  Form.Field.prototype.templateData = function() {
+    var schema = this.schema;
+    return {
+      help: schema.help || '',
+      title: schema.title,
+      fieldAttrs: schema.fieldAttrs,
+      editorAttrs: schema.editorAttrs,
+      key: this.key,
+      editorId: this.editor.id,
+      required: this.schema.required
+    };
+  };
 
   if (Form.editors.List) {
 
