@@ -16,7 +16,7 @@ define([
 		"saveQuestionnaireAnswers": "buyer/saveQuestionnaireAnswers",
 		"adminLogin": "owner/login",
 		"tradeline": "tradelines",
-		"createOwner" : "owners",
+		"createOwner" : "admin/owners",
 		"resetPassword": "admin/clients/resetPassword",
 		"welcomeEmail": "admin/clients/welcome",
 		"adminProduct": "admin/products"

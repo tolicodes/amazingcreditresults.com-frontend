@@ -58,7 +58,7 @@ define([
 		},
 		
 		afterRender: function() {
-			if(this.model) {
+			if(this.model && this.model.validate) {
 				var validFields = this.model.validate();
 				 _.each(validFields, function(msg, field) {
 					if(field.indexOf(".") != -1) {
@@ -81,10 +81,8 @@ define([
 			 
 			this.form.on('submit', function(form, titleEditor, extra) {
 			  form.preventDefault();
-			  if(!this.validateForms()) {
-			  	var values = this.getFormValue();
-			  	this.handleFormSubmit(values);
-			  }
+			  if(!this.validateForms())
+			  	this.handleFormSubmit(this.getFormValue());
 			}.bind(this));
 			this.form.render();
 			
