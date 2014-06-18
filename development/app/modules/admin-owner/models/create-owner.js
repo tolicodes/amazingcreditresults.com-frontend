@@ -3,6 +3,7 @@
 // Requires define
 // Return Backbone Model {Object}
 
+
 define([
 	"baseModel"
 	], function(
@@ -14,10 +15,14 @@ define([
 		},
 
 		validation : {
-			'password' : {
+			'password' : [{
 				required : true,
 				msg : 'Please enter password.'
-			},
+			}, {
+				rangeLength: [8, 20],
+				pattern : 'passwordValdition',
+				msg : 'Please enter a password between 8-20 characters include atleast one number, special character and capital letter.'
+			}],
 			'username' : [{
 				msg : 'Please enter valid email.',
 				pattern : 'email',

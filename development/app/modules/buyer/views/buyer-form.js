@@ -65,9 +65,13 @@ define([
 				type : 'Text',
 				title : "Alt Phone"
 			},
-			'localAddress' : {
+			'street1' : {
 				type : 'TextArea',
-				title : "Address"
+				title : "Street 1"
+			},
+			'street2' : {
+				type : 'TextArea',
+				title : "Street 2"
 			}
 		}
 	});

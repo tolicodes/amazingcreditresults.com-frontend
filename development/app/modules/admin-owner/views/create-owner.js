@@ -19,11 +19,10 @@ define([
 		// schema to generate form
 		schema : {
 			'username' : {
-				validators : ['required', 'email']
+				validators : ['email']
 			},
 			'password' : {
-				type : 'Password',
-				validators : ['required']
+				type : 'Password'
 			}
 		},
 		

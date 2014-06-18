@@ -66,7 +66,7 @@ define([
 			});
 		},
 		
-		addCheckbox: function(updateModel) {
+		addCheckbox: function() {
 			var BooleanCell = Backgrid.BooleanCell = Backbone.View.extend({
 			  className: "boolean-cell",
 			  
@@ -82,23 +82,27 @@ define([
 			  	if(options) {
 			  		this.column = options.column;
 			  		this.model = options.model;
+			  		this.getValue = options.column.get("getValue");
 			  	}
 			  },
 
 			  render: function () {
 			    this.$el.empty();
+			    var val = (this.getValue && this.getValue(this.model)) || undefined;
 			    this.$el.append($("<input>", {
 			      tabIndex: -1,
 			      type: "checkbox",
-			      checked: this.model.get(this.column.get("name"))
+			      checked: val || this.model.get(this.column.get("name"))
 			    }));
 			    this.delegateEvents();
 			    return this;
 			  },
 			
 			  inputClick: function (event) {
+			      console.log(this.column.get("model"));
 			      var attributes = {},
-			      model = new updateModel(), ob = {};
+			      m = eval(this.column.get("model")),
+			      model = new m(), ob = {};
 			      attributes[this.column.get("name")] = $(event.target).prop("checked");
 			      this.model.set(attributes);
 			      
