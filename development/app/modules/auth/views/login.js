@@ -63,17 +63,15 @@ define([
 
 		handleFormSubmit : function(values) {
 			// save the password and redirect
-			var login = new loginModel();
-			this.bindModelValidation(login);
+			this.model = new loginModel();
+			this.bindModelValidation(this.model);
 			if(values) values.apiKey = this.apiKey;
-			login.set(values);
-			login.save();
+			this.model.set(values);
+			this.model.save();
 		},
 		
 		_createForQuestionnaire: function() {
-			
 			if(!_.isUndefined(App.CurrentUser)) App.CurrentUser.set(this.user.toJSON());
-			
 			var route = (this.user.get("profile").needQuestionnaire == "true") ? "dashboard" : "buyer";
 			App.routing.navigate(route, {
 				trigger : true

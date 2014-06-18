@@ -29,10 +29,10 @@ define([
 				msg : 'Please enter phone number.'
 			},
 
-			//'state' : {
-			//	required : true,
-			//	msg : 'Please select state.'
-			//},
+			'state' : {
+				required : true,
+				msg : 'Please select state.'
+			},
 
 			'city' : {
 				required : true,
