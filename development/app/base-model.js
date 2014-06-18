@@ -12,6 +12,11 @@ define([
 	EndPoint
 	) {
 
+	// extend backbone validation
+	_.extend(Backbone.Validation.patterns, {
+  		passwordValdition: /^(?=.*?[A-Z])(?=(.*[a-z]){1,})(?=(.*[\d]){1,})(?=(.*[\W]){1,})(?!.*\s).{8,}$/,
+	});	
+
 	return Backbone.Model.extend({
 		// fetch the modelautomatically if set to true
 		autoFetch: false,

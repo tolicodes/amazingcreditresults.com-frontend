@@ -71,7 +71,8 @@ define([
 			}, {
 				label: "Verified",
 				name : "accountVerified",
-				cell : "boolean"
+				cell : "boolean",
+				model: updateBuyerModel
 			}, {
 				label: "Edit",
 				name : "edit",
@@ -84,7 +85,17 @@ define([
 			}, {
 				label: "needQuestionnaire",
 				name : "needQuestionnaire",
-				cell : "boolean"
+				getValue: function(model) {
+					return model.get("profile").needQuestionnaire;
+				},
+				cell : "boolean",
+				model: updateBuyerModel
+				// formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
+			      // fromRaw: function (rawValue, model) {
+			        // if(model.get("profile").needQuestionnaire) console.log(model.get("profile").needQuestionnaire);
+			        // return model.get("profile").needQuestionnaire;
+			      // }
+			    // })
 			},{
 				label: "Reset Password Email",
 				name : "resetButton",
@@ -104,7 +115,7 @@ define([
 		initializeBefore: function() {
 			this.addResetButton(resetPasswordModel);
 			this.welcomeEmailButton(welcomeEmailModel);
-			this.addCheckbox(updateBuyerModel);
+			this.addCheckbox();
 			this.addActionButton();
 		}
 	});

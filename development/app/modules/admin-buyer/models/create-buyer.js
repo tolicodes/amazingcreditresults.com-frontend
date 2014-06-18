@@ -29,6 +29,11 @@ define([
 				msg : 'Please enter phone number.'
 			},
 
+			//'state' : {
+			//	required : true,
+			//	msg : 'Please select state.'
+			//},
+
 			'city' : {
 				required : true,
 				msg : 'Please enter city name.'
@@ -39,7 +44,7 @@ define([
 				msg : 'Please enter zip code.'
 			},
 
-			localAddress : {
+			street1 : {
 				required : true,
 				msg : 'Please enter address.'
 			},
