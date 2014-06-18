@@ -55,9 +55,10 @@ define([
 		
 		showMessage : function(options) {
 			if(this.type) this.hideMessage();
+			var cls = (options && options[1])?options[1]:"Green", 
+			errors = (options && options[2])?options[2]:[];
+			
 			this.message = (options && options[0])?options[0]:"";
-			var cls = (options && options[1])?options[1]:"Green";
-			var errors = (options && options[2])?options[2]:[];
 			this.type = this.alertsClass[cls];
 			if(errors) this.showFieldErrors(errors);
 
