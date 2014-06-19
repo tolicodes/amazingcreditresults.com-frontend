@@ -254,7 +254,6 @@ define([
 		logout: function() {
 			// remove defined user
 			this.user = undefined;
-			
 			this.loadPage(logoutView, "logout", {
 				pageType: "default"
 			});			

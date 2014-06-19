@@ -72,13 +72,26 @@ define([
 				this.fetchedDfd.resolve.apply(this, arguments);
 			}.bind(this));
 
-			this.listenTo(this, 'error', function() {
+			this.listenTo(this, 'error', function(model, response) {
 				this.fetched = false;
 				this.fetchedDfd.reject.apply(this, arguments);
+				var json = (response.responseText)?JSON.parse(response.responseText):{};
+				App.Mediator.trigger("messaging:showAlert", json.Error, "Red", json.errors);
 			}.bind(this));
 			
 			return Backbone.Model.prototype.fetch.apply(this, arguments);
 		},
+
+		// fetch data
+		save: function() {
+			this.listenTo(this, 'error', function(model, response) {
+				var json = (response.responseText)?JSON.parse(response.responseText):{};
+				App.Mediator.trigger("messaging:showAlert", json.Error, "Red", json.errors);
+			}.bind(this));
+			return Backbone.Model.prototype.save.apply(this, arguments);
+		},
+
+
 		
 		// show errors
 		showErrors: function(model) {
