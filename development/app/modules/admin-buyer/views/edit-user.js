@@ -1,4 +1,4 @@
-// info.js
+// edit user.js
 // --------------
 // Requires define
 // Return Backbone View {Object}
@@ -17,6 +17,11 @@ define([
 				type : 'Checkbox',
 				title : "need Questionnaire"				
 			},
+			
+			'isBanned': {
+				type : 'Checkbox',
+				title : "Banned"				
+			},			
 			
 			'accountVerified': {
 				type : 'Checkbox',

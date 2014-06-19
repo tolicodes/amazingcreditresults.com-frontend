@@ -23,6 +23,11 @@ define([
 				title : "need Questionnaire"				
 			},
 			
+			'isBanned': {
+				type : 'Checkbox',
+				title : "Banned"				
+			},			
+			
 			'accountVerified': {
 				type : 'Checkbox',
 				title : "Verified"				

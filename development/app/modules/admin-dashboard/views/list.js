@@ -90,13 +90,13 @@ define([
 				},
 				cell : "boolean",
 				model: updateBuyerModel
-				// formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
-			      // fromRaw: function (rawValue, model) {
-			        // if(model.get("profile").needQuestionnaire) console.log(model.get("profile").needQuestionnaire);
-			        // return model.get("profile").needQuestionnaire;
-			      // }
-			    // })
 			},{
+				label: "Banned",
+				name : "isBanned",
+				cell : "boolean",
+				model: updateBuyerModel
+			}
+			,{
 				label: "Reset Password Email",
 				name : "resetButton",
 				cell : "resetButton"
