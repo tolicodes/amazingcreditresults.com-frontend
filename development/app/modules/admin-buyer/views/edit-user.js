@@ -1,4 +1,4 @@
-// info.js
+// edit user.js
 // --------------
 // Requires define
 // Return Backbone View {Object}
@@ -17,6 +17,11 @@ define([
 				type : 'Checkbox',
 				title : "need Questionnaire"				
 			},
+			
+			'isBanned': {
+				type : 'Checkbox',
+				title : "Banned"				
+			},			
 			
 			'accountVerified': {
 				type : 'Checkbox',
@@ -37,24 +42,23 @@ define([
 		
 		// function handles form submission and success and error handling.
 		handleFormSubmit : function(values) {
-			this.bindModelValidation(this.model);
 			this.model.set(values);
 			this.model.save();
 		},
 
 		initializeBefore : function(options) {
 			if (options && options[0] && options[0].userId) {
-				this.model = new userModel({id: options[0].userId});
-				
+				this.userId = options[0].userId;
+				this.model = new userModel({id: this.userId});
+				this.bindModelValidation(this.model);
 				this.listenTo(this.model, 'sync', function() {
-					console.log(this.model.toJSON());
 					this.render();
 				}.bind(this));
+				
 				this.listenTo(this.model, 'error', function(model, response) {
 					var json = (response.responseText)?JSON.parse(response.responseText):{};
 					App.Mediator.trigger("messaging:showAlert", json.Error, "Red");
 				});
-				
 				this.model.fetch();
 			}
 		}

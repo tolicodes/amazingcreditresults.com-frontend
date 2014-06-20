@@ -14,15 +14,41 @@ define([
 		},
 		
 		validation : {
-			givenName : {
+			"name.givenName" : {
+				required : true,
+				msg : 'Please enter first name.'
+			},
+
+			"name.familyName" : {
 				required : true,
 				msg : 'Please enter last name.'
 			},
 
-			familyName : {
+			phone : {
 				required : true,
-				msg : 'Please enter first name.'
+				msg : 'Please enter phone number.'
 			},
+
+			'state' : {
+				required : true,
+				msg : 'Please select state.'
+			},
+
+			'city' : {
+				required : true,
+				msg : 'Please enter city name.'
+			},
+			
+			'zip' : {
+				required : true,
+				msg : 'Please enter zip code.'
+			},
+
+			street1 : {
+				required : true,
+				msg : 'Please enter address.'
+			},
+
 			email : [{
 				msg : 'Please enter valid email.',
 				pattern : 'email',

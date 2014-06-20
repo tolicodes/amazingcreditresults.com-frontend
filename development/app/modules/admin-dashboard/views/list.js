@@ -23,7 +23,13 @@ define([
 		
 		selectedRows: [],
 		
-		columns:  [{
+		columns:  [
+					 {
+			     name: "",
+			     cell: "select-row",
+			     headerCell: "select-all" 
+ 			  },
+		{
 				label: "First Name",
 				name : "name.givenName",
 				cell : "string",
@@ -65,7 +71,8 @@ define([
 			}, {
 				label: "Verified",
 				name : "accountVerified",
-				cell : "boolean"
+				cell : "boolean",
+				model: updateBuyerModel
 			}, {
 				label: "Edit",
 				name : "edit",
@@ -78,8 +85,18 @@ define([
 			}, {
 				label: "needQuestionnaire",
 				name : "needQuestionnaire",
-				cell : "boolean"
+				getValue: function(model) {
+					return model.get("profile").needQuestionnaire;
+				},
+				cell : "boolean",
+				model: updateBuyerModel
 			},{
+				label: "Banned",
+				name : "isBanned",
+				cell : "boolean",
+				model: updateBuyerModel
+			}
+			,{
 				label: "Reset Password Email",
 				name : "resetButton",
 				cell : "resetButton"
@@ -98,7 +115,7 @@ define([
 		initializeBefore: function() {
 			this.addResetButton(resetPasswordModel);
 			this.welcomeEmailButton(welcomeEmailModel);
-			this.addCheckbox(updateBuyerModel);
+			this.addCheckbox();
 			this.addActionButton();
 		}
 	});

@@ -55,9 +55,10 @@ define([
 		
 		showMessage : function(options) {
 			if(this.type) this.hideMessage();
+			var cls = (options && options[1])?options[1]:"Green", 
+			errors = (options && options[2])?options[2]:[];
+			
 			this.message = (options && options[0])?options[0]:"";
-			var cls = (options && options[1])?options[1]:"Green";
-			var errors = (options && options[2])?options[2]:[];
 			this.type = this.alertsClass[cls];
 			if(errors) this.showFieldErrors(errors);
 
@@ -71,22 +72,27 @@ define([
 				setTimeout(this.hideMessage.bind(this), this.timeInterval);
 			}
 		},
+		
+		getFieldName: function(field) {
+			if(field.indexOf(".") != -1) {
+				var s = field.split(".");
+				return s[s.length - 1];
+			} else {
+				return field;
+			}
+		},
 			
 		// show fields error
 		showFieldErrors: function(errors) {
-			var html = "";
-			console.log(errors);
+			var html = "", field;
 			_.each(errors, function(ob) {
-				console.log(ob);
 				if(ob.field) {
-					var $target = $("input[name="+ob.field+"]");
+					field = this.getFieldName(ob.field);
+					var $target = $("*[name="+field+"]");
 					$target.parent().parent().find("div[data-error]").html(ob.message);
 					$target.focus(function() {
 						$target.parent().parent().find("div[data-error]").html("");
 					});
-					setTimeout(function() {
-						$target.parent().parent().find("div[data-error]").html("");
-					}, this.timeInterval);
 				} else {
 					html += ob.message;
 				}
@@ -96,7 +102,7 @@ define([
 		
 		// hide message
 		hideMessage : function() {
-			$(".alert-message-h").html("").removeClass('hide').removeClass("alert-"+this.type);
+			$(".alert-message-h").html("").addClass('hide').removeClass("alert-"+this.type);
 			$(".close-btn").hide();
 		},
 		

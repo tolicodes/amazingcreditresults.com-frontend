@@ -12,6 +12,20 @@ define([
 	EndPoint
 	) {
 
+	// extend backbone validation
+	_.extend(Backbone.Validation.patterns, {
+  		passwordValdition: /^(?=.*?[A-Z])(?=(.*[a-z]){1,})(?=(.*[\d]){1,})(?=(.*[\W]){1,})(?!.*\s).{8,}$/,
+	});	
+	
+	// overiding method these are creating issues in select box (remove all optons from select box)
+	_.extend(Backbone.Validation.callbacks, {
+		valid: function(view, attr, selector) {
+      	},
+      invalid: function(view, attr, error, selector) {
+      }
+
+	});
+
 	return Backbone.Model.extend({
 		// fetch the modelautomatically if set to true
 		autoFetch: false,
@@ -28,7 +42,7 @@ define([
 		initialize: function() {
 			
 			if(this.autoFetch) this.fetch();
-			
+
 			if(this.bindValidation) {
 				this.bind('validated:valid', function(model, errors) {
 					if(this.successValidation && _.isFunction(this.successValidation))
@@ -58,13 +72,26 @@ define([
 				this.fetchedDfd.resolve.apply(this, arguments);
 			}.bind(this));
 
-			this.listenTo(this, 'error', function() {
+			this.listenTo(this, 'error', function(model, response) {
 				this.fetched = false;
 				this.fetchedDfd.reject.apply(this, arguments);
+				var json = (response.responseText)?JSON.parse(response.responseText):{};
+				App.Mediator.trigger("messaging:showAlert", json.Error, "Red", json.errors);
 			}.bind(this));
 			
 			return Backbone.Model.prototype.fetch.apply(this, arguments);
 		},
+
+		// fetch data
+		save: function() {
+			this.listenTo(this, 'error', function(model, response) {
+				var json = (response.responseText)?JSON.parse(response.responseText):{};
+				App.Mediator.trigger("messaging:showAlert", json.Error, "Red", json.errors);
+			}.bind(this));
+			return Backbone.Model.prototype.save.apply(this, arguments);
+		},
+
+
 		
 		// show errors
 		showErrors: function(model) {
@@ -72,6 +99,7 @@ define([
 			_.each(model.validationError, function(err, field) {
 				errors.push({message: err, field: field});
 			});
+			console.log(errors);
 			App.Mediator.showFieldErrors(errors);
 		}
 		

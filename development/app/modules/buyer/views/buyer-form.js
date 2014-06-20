@@ -27,20 +27,33 @@ define([
 						type : 'Text',
 						title : "Last Name"
 					}
+					//'middleName' : {
+					//	type : 'Text',
+					//	title : "Middle Name"
+					//}
 				}
 			},
 			'email' : {
-				validators : ['required', 'email']
+				validators : ['email']
 			},
-			'City' : {
+			'city' : {
 				type : 'Text',
 				title : "City"
 			},
-			'State' : {
+			'state' : {
 				type : 'Select',
-				options :  new statesCollection()
+				options :  function(callback, editor) {
+	       		 var states = new statesCollection();
+	       		 states.fetch({
+	       		 	success: function() {
+	       		 		callback(states.toJSON());
+	       		 	}, 
+	       		 	error: function() {
+	       		 	}
+	       		 });
+    			}
 			},
-			'Zip' : {
+			'zip' : {
 				type : 'Text',
 				title : "Zip"
 			},
@@ -48,13 +61,17 @@ define([
 				type : 'Text',
 				title : "Phone"
 			},
-			'AltPhone' : {
+			'altPhone' : {
 				type : 'Text',
 				title : "Alt Phone"
 			},
-			'Address' : {
+			'street1' : {
 				type : 'TextArea',
-				title : "Address"
+				title : "Street 1"
+			},
+			'street2' : {
+				type : 'TextArea',
+				title : "Street 2"
 			}
 		}
 	});

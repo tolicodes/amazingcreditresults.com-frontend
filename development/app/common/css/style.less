@@ -38,18 +38,24 @@
   display: none;
 }
 
-div[data-error] {
-  margin-top: 5px;
-  color: red;
+.required {
+  color: #FF0000;
 }
 
-fieldset {
-  padding-bottom: 20px;
+div[data-error] {
+  margin-top: 2px;
+  color: red;
+  height: 10px;
+}
+
+div[data-fieldsets] button {
+  margin-bottom: 20px;
 }
 
 fieldset > div {
   display: inline-block;
   width: 45%;
+  vertical-align: top;
 }
 
 .left {
@@ -58,5 +64,33 @@ fieldset > div {
 
 .right {
   float: right;
+}
+
+.form-inline .form-control {
+  display: block;
+  border: none;
+  padding: 0;
+  box-shadow: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  -ms-box-shadow: none;
+  -os-box-shadow: none;
+}
+
+.form-inline input, .form-inline select, .form-inline textarea {
+  border: 1px solid !important;
+  padding: 0 5px !important;
+}
+
+input[type=text], input[type=password], select, textarea {
+  width: 90% !important;
+}
+
+textarea {
+  min-height: 50px;
+}
+
+.form-button button {
+  margin-bottom: 20px;
 }
 

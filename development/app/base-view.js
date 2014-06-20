@@ -64,7 +64,6 @@ define([
 			Backbone.Validation.bind(this, {
 		      model: model
 		    });
-		    
 			this.bindSuccessMethod(model);
 		},
 
@@ -73,12 +72,10 @@ define([
 			Backbone.Validation.bind(this, {
 		      collection: collection
 		    });
-			
 			this.bindSuccessMethod(model);
 		},
 		
 		bindSuccessMethod: function(model) {
-			
 			this.listenTo(model, 'error', function(model, response) {
 				var json = (response.responseText)?JSON.parse(response.responseText):{};
 				App.Mediator.trigger("messaging:showAlert", json.Error, "Red", json.errors);
@@ -124,8 +121,10 @@ define([
 		},
 		
 		appendTemplate: function() {
+			var json = _.extend(this.data, this.model && this.model.toJSON());
+			//this.trigger('after:compileJSON', json);
 			// if tpl is defined
-			if (this.tpl) this.$el.html(this.tpl(_.extend(this.data, this.model && this.model.toJSON())));
+			if (this.tpl) this.$el.html(this.tpl(json));
 		}
 	});
 });
