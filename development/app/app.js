@@ -52,6 +52,7 @@ define([
 			'inventory' : 'inventory',
 			'buyer/:apikey' : 'buyer',
 			'logout' : 'logout',
+			
 			// owner routes
 			"admin/login": "adminLogin",
 			"admin/dashboard": "adminDashboard",
@@ -61,7 +62,6 @@ define([
 			
 			"admin/product/create": "adminCreateProduct",
 			"admin/product/create/:id": "adminCreateProduct",
-			
 			
 			"admin/user/:id": "editUser",			
 			

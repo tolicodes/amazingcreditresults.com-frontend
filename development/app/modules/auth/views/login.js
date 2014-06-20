@@ -19,7 +19,7 @@ define([
 		
 		formArea: '.form-area',
 		
-		formClass: 'login-form',
+		formClass: "set-password",
 		
 		// schema to generate form
 		schema : {

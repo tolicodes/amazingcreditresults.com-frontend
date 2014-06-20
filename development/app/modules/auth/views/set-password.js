@@ -18,6 +18,8 @@ define([
 		
 		submitButtonText : "Set My Password And START BUYING",
 
+		formClass: "set-password",
+
 		formArea: '.form-area',
 		
 		// schema to generate form
