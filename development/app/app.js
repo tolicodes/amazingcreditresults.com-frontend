@@ -89,8 +89,10 @@ define([
 	            	}
 				});
 			}
-			// set in activity timer
-			this.setInActivityTimer();
+
+      if (!this.isLocalhost()) {
+        this.setInActivityTimer();
+      }
 		},
 		
 		// activity timer
@@ -101,7 +103,7 @@ define([
 			}.bind(this));
 			
 			// bind interval to check user activity
-			var interval = setInterval(this.calculateActivityTime.bind(this), 60000);
+			setInterval(this.calculateActivityTime.bind(this), 60000);
 		},
 		
 		calculateActivityTime: function() {
@@ -113,6 +115,10 @@ define([
 				}
 			}
 		},
+
+    isLocalhost: function() {
+      return window.location.hostname === 'localhost';
+    },
 		
 		// logout user
 		logoutUser: function() {
@@ -123,7 +129,7 @@ define([
 
 
 		// this function gives the current user detail
-		authorizeUser : function(callback) {
+		authorizeUser : function() {
 			if (!this.user) {
 				this.user = new authModel();
 				this.user.fetchedDfd.fail(function() {
@@ -174,7 +180,7 @@ define([
 		},
 
 		createPage : function(pageView, options) {
-			this.currentView = new mainLayout({page: pageView, options: options});
+			new mainLayout({page: pageView, options: options});
 		},		
 
 		// route not found
