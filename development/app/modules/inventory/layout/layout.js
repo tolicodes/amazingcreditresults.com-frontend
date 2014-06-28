@@ -8,19 +8,36 @@ define([
 	"baseLayout",
 	"hbs!inventory/templates/layout",
 	"inventory/views/inventory",
-	"inventory/views/tradelines"
+	"inventory/views/tradelines",
+	"cart/views/cart"
 ], function(
 	BaseLayout,
 	viewTemplate,
 	inventoryView,
-	tradelinesView
+	tradelinesView,
+	cartView
 ) {
 
 	return BaseLayout.extend({
 		template: viewTemplate,
+		
+		events: {
+			'click .checkout': 'checkout'
+		},
+		
+		checkout: function(e) {
+			e.preventDefault();
+			App.routing.navigate("checkout", {
+				trigger : true
+			});
+		},
+		
 		initializeAfter: function(options) {
-			this.setViewInLayout('.tradelines', new tradelinesView(options));
+			var cart = new cartView(options);
+			this.setViewInLayout('.cart', cart);
+			this.setViewInLayout('.tradelines', new tradelinesView(options, cart));
 			//this.setViewInLayout('.inventory', new inventoryView(options));
+			this.setViewInLayout('.inventory', new inventoryView(options));
 		}
 	});
 });

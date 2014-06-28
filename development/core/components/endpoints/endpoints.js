@@ -19,7 +19,10 @@ define([
 		"createOwner" : "admin/owners",
 		"resetPassword": "admin/clients/resetPassword",
 		"welcomeEmail": "admin/clients/welcome",
-		"adminProduct": "admin/products"
+		"adminProduct": "admin/products",
+		"cart": "cart/tradelines",
+		"importBuyer": "owner/bulkImport",
+		"account": "account"
 	},
 	
 	addParams = function(url, params) {

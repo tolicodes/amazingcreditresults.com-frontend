@@ -38,6 +38,7 @@ require.config({
 		'pageableCollection' : 'libs/backbone-pageable/lib/backbone-pageable',
 		'backgridPaginator' : 'libs/backgrid-paginator/backgrid-paginator',
 		'backgridSelect' : 'libs/backgrid-select-all/backgrid-select-all',
+		'backboneUploadModel' : 'libs/backbone-model-file-upload/backbone-model-file-upload',
 		'hbs' : 'libs/require-handlebars-plugin/hbs',
 		'Handlebars': 'libs/handlebars/handlebars',
 		'bootstrap' : 'libs/bootstrap/dist/js/bootstrap',
@@ -125,6 +126,10 @@ require.config({
 		'backgridSelect' : {
 			exports : 'backgridSelect',
 			deps : ['backbone', 'backgrid']
+		},
+		'backboneUploadModel' : {
+			exports : 'backboneUploadModel',
+			deps : ['backbone']
 		}
 	},
 	priority : [],

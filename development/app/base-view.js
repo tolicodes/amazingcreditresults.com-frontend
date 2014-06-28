@@ -5,9 +5,11 @@
 
 define([
 	"backbone",
+	"core/components/endpoints/endpoints",
 	"backboneValidator"
 	], function(
-	Backbone
+	Backbone,
+	EndPoint
 	) {
 
 	return Backbone.View.extend({
@@ -34,7 +36,7 @@ define([
 			'render:before': ['beforeRender'],
 			'render:after': ['afterRender']
 		},
-
+		
 		// function to implemnt hooks
 		implementHooks : function() {
 			var _self = this;
@@ -50,6 +52,10 @@ define([
 				});
 			}
 		},
+		
+		getUrl: function(name, params) {
+			return EndPoint.getUrl(name, params);
+		},		
 		
 		addViewHooks: function() {
 			if(this.extraHooks) {
@@ -96,6 +102,8 @@ define([
 				options = options[0];
 
 			this.trigger('objectModifications');
+
+			this.trigger('addActionItems');			
 			
 			// trigger before intialize
 			this.trigger('intialize:before', options);
@@ -106,13 +114,12 @@ define([
 				
 			// trigger after intialize
 			this.trigger('intialize:after', options);	
-			
-			return this;
 		},
 
 		render : function() {
 			// trigger before render
 			this.trigger('render:before');
+			
 			this.appendTemplate();
 			// trigger after render
 			this.trigger('render:after');
@@ -122,6 +129,7 @@ define([
 		
 		appendTemplate: function() {
 			var json = _.extend(this.data, this.model && this.model.toJSON());
+			console.log(json);
 			//this.trigger('after:compileJSON', json);
 			// if tpl is defined
 			if (this.tpl) this.$el.html(this.tpl(json));

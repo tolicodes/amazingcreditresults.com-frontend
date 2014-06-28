@@ -1,4 +1,4 @@
-// cart.js
+// create cart
 // --------------
 // Requires define
 // Return Backbone Model {Object}
@@ -10,6 +10,7 @@ define([
 	) {
 
 	return BaseModel.extend({
+		idAttribute: "_id",
 		url : function() {
 			return this.getUrl("cart");		
 		}

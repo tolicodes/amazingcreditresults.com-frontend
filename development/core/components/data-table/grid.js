@@ -11,6 +11,7 @@ define([
 	"backgridPaginator",
 	"backgridSelect",
 	"hbs!core/components/data-table/templates/grid",
+	"cart/models/create",
 	"css!libs/backbone-pageable/examples/css/backgrid",
 	"css!libs/backgrid-paginator/backgrid-paginator"
 ], function(
@@ -20,7 +21,8 @@ define([
 	PageableCollection, 
 	BackgridPaginator, 
 	BackgridSelect,
-	viewTemplate
+	viewTemplate,
+	createCartModel
 ) {
 	return Base.extend({
 
@@ -29,15 +31,24 @@ define([
 		parse: function(result) { 
 			return result; 
 		},
+
+		extraHooks: {
+			'addActionItems': ['addActionItems'],
+			'updateCart' : ['updateListView']
+		},
+		
+		addActionItems: function() {
+			this.addActionButton();
+		},
 		
 		selectedRows: [],
 		
 		// add action button
 		addActionButton: function() {
-			var ActionButtonCell = Backgrid.ActionButtonCell = Backbone.View.extend({
+			var _self = this, ActionButtonCell = Backgrid.ActionButtonCell = Backbone.View.extend({
 			    template: _.template("<button><%=buttonText%></button>"),
 			    events: {
-			      "click": "editRecord"
+			      "click": "clickAction"
 			    },
 			    
 			    tagName: 'td',
@@ -45,17 +56,30 @@ define([
 			    className: "boolean-cell renderable",
 			    
 			    initialize: function(options) {
-			    	console.log(options);
 			    	if(options) {
+			    		this.model = options.model;
 				    	this.userId = options.model.get("id");
 				    	this.buttonText = options.column.get("name");
 				    	this.callback = options.column.get("callback");
+				    	this.actionType = options.column.get("actionType");
 				    }
 			    },
 			    
-			    editRecord: function (e) {
+			    clickAction: function (e) {
 			      e.preventDefault();
-				  if(this.callback && _.isFunction(this.callback)) this.callback(this.userId);
+				  	if(this.actionType == "delete") {
+				  		_self.deleteRecord(this.model);
+				  	} else if(this.actionType == "addItemInCart") {
+						// disable button
+						this.$el.find("button").prop("disabled", true);		  		
+					  	if(_self.addItemToCart && _.isFunction(_self.addItemToCart)) {
+					  		_self.addItemToCart(this.userId);
+						}
+				  	} else {
+					  	if(this.callback && _.isFunction(this.callback)) {
+					  		this.callback(this.userId);	
+					  	}			  		
+				  	}
 			    },
 			    
 			    render: function () {
@@ -64,6 +88,16 @@ define([
 			      return this;
 			    }
 			});
+		},
+
+		addItemToCart: function(id) {
+			var cart = new createCartModel();
+			this.listenTo(cart, 'sync', function(response) {
+				// add to cart
+				App.Mediator.trigger("messaging:showAlert", "Item Added to cart successfully.", "Green");
+				App.routing.trigger("addItemToCart", response);
+			}.bind(this));
+			cart.save({id: id});			
 		},
 		
 		addCheckbox: function() {
@@ -178,11 +212,10 @@ define([
 			});
 		},
 
-
-
 		generateTable: function() {
-			var Rows = Backbone.PageableCollection.extend({
-				url : this.url || "",
+			var url = (this.url && _.isFunction(this.url))?this.url():this.url,
+			Rows = Backbone.PageableCollection.extend({
+				url : url || "",
 				mode : this.mode || "client",
 				parse: this.parse,
 				state: {
@@ -219,17 +252,22 @@ define([
 			}
 		},
 		
-		// delete records
+		// delete single record
+		deleteRecord: function(model, silent) {
+			this.listenTo(model, 'sync', function() {
+				App.Mediator.trigger("messaging:showAlert", "Record deleted successfully.", "Green");
+			});
+			this.listenTo(model, 'error', function(model, response) {
+				var json = (response.responseText)?JSON.parse(response.responseText):{};
+				App.Mediator.trigger("messaging:showAlert", json.Error, "Red", json.errors);
+			});
+			model.destroy({silent: (silent)?true:false});
+		},
+		
+		// delete multiple records
 		deleteRecords: function() {
 			_.each(this.selectedRows, function( model ) {
-				this.listenTo(model, 'sync', function() {
-					App.Mediator.trigger("messaging:showAlert", "Record deleted successfully.", "Green");
-				});
-				this.listenTo(model, 'error', function(model, response) {
-					var json = (response.responseText)?JSON.parse(response.responseText):{};
-					App.Mediator.trigger("messaging:showAlert", json.Error, "Red", json.errors);
-				});
-				model.destroy({silent: true});
+				this.deleteRecord(model, true);
 			}.bind(this));
 		},
 
