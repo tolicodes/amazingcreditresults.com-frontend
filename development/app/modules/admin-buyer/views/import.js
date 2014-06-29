@@ -5,9 +5,12 @@
 
 define([
 	"base",
-	"hbs!adminManageBuyer/templates/import",
+	"hbs!../templates/import",
 	"../models/import",
-	"backboneUploadModel"
+	"jqueryUpload",
+	"jqueryUploadIframe",
+	"css!libs/blueimp-file-upload/css/jquery.fileupload",
+	"css!libs/blueimp-file-upload/css/jquery.fileupload-ui"
 	], function(
 	Base,
 	viewTemplate,
@@ -18,25 +21,26 @@ define([
 		
 		tpl: viewTemplate,
 
-		events: {
-			'submit .import-form' : 'handleSubmit'
-		},
-
-		handleSubmit: function(e) {
-			e.preventDefault();
-			
-			var data = new FormData(),
-			importModel = new importBuyer(); 
-			files = $(e.target).find("input[type=file]")[0].files[0];
-			
-			importModel.set('file', files);
-			importModel.save();
-		},
-		
 		el: undefined,
 		
-		initializeBefore: function() {
-
+		initializeAfter: function() {
+			this.$el.find("#fileupload").fileupload({
+				url: this.getUrl("importBuyer"),
+		        dataType: 'json',
+				done: function (e, data) {
+		            //console.log(e, data.result);
+		            //$.each(data.result.files, function (index, file) {
+		             //   $('<p/>').text(file.name).appendTo('#files');
+		            //});
+		        },
+		        progressall: function (e, data) {
+		            var progress = parseInt(data.loaded / data.total * 100, 10);
+		            this.$el.find('#progress .progress-bar').css(
+		                'width',
+		                progress + '%'
+		            );
+		        }.bind(this)    		
+		     });
 		}
 	});
 });

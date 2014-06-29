@@ -1,4 +1,12 @@
-<form method="post" class="import-form" enctype="multipart/form-data">
-   <input type="file" name="myCsv"/>
-   <input type="submit">
-</form> 
+<span class="btn btn-success fileinput-button">
+	<i class="glyphicon glyphicon-plus"></i>
+	<span>Select files...</span>
+	<!-- The file input field used as target for the file upload widget -->
+	<input id="fileupload" type="file" name="myCsv">
+</span>            
+    
+<div id="files"></div> 
+    
+<div id="progress" class="progress" style="margin-top: 20px;">
+   <div class="progress-bar progress-bar-success"></div>
+</div>   

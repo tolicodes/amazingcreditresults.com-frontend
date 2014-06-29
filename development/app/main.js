@@ -39,6 +39,9 @@ require.config({
 		'backgridPaginator' : 'libs/backgrid-paginator/backgrid-paginator',
 		'backgridSelect' : 'libs/backgrid-select-all/backgrid-select-all',
 		'backboneUploadModel' : 'libs/backbone-model-file-upload/backbone-model-file-upload',
+		'jqueryUpload' : 'libs/blueimp-file-upload/js/jquery.fileupload',
+		'jqueryUploadIframe' : 'libs/blueimp-file-upload/js/jquery.iframe-transport',
+		'jquery.ui.widget': 'libs/blueimp-file-upload/js/vendor/jquery.ui.widget',
 		'hbs' : 'libs/require-handlebars-plugin/hbs',
 		'Handlebars': 'libs/handlebars/handlebars',
 		'bootstrap' : 'libs/bootstrap/dist/js/bootstrap',
@@ -130,7 +133,20 @@ require.config({
 		'backboneUploadModel' : {
 			exports : 'backboneUploadModel',
 			deps : ['backbone']
+		},
+		'jqueryUpload' : {
+			exports : 'jqueryUpload',
+			deps : ['jquery']
+		},
+		'jqueryUploadIframe': {
+			exports : 'jqueryUploadIframe',
+			deps : ['jquery']			
+		},
+		'jquery.ui.widget': {
+			exports : 'jquery.ui.widget',
+			deps : ['jquery']			
 		}
+
 	},
 	priority : [],
 	jquery : '1.10.2',
