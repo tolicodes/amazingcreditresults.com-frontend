@@ -14,7 +14,7 @@ define([
     },
 
     render: function() {
-      this.$el.html(template(this.user.attributes));
+      this.$el.html(template(this.user.toJSON()));
       return this;
     }
   });
