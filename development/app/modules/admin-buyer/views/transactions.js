@@ -18,18 +18,14 @@ define([
   return Backbone.View.extend({
     el: '#transactions',
 
-    initialize: function(params) {
-      this.user = params.user;
-    },
-
     render: function () {
-      this.$el.html(template({transactions: this.user.get('transactions')}));
+      this.$el.html(template({transactions: this.model.get('transactions')}));
       this.renderTransactionForm();
       return this;
     },
 
     renderTransactionForm: function() {
-      new TransactionView({user: this.user, list: this}).render();
+      new TransactionView({model: this.model, list: this}).render();
     }
   })
 });

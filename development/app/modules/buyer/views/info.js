@@ -27,7 +27,7 @@ define([
 
     afterRender: function() {
       BuyerFormView.prototype.afterRender.apply(this, arguments);
-      new PaymentInfoView({user: this.model}).render();
+      new PaymentInfoView({model: this.model}).render();
     }
 	});
 });

@@ -17,7 +17,6 @@ define([
     el: '#transaction',
 
     initialize: function(params) {
-      this.user = params.user;
       this.list = params.list;
     },
 
@@ -32,11 +31,11 @@ define([
 
     createTransaction: function() {
       new Transaction(this.transactionParams()).save();
-      this.user.fetch();
+      this.model.fetch();
     },
 
     transactionParams: function() {
-      return _.extend(this.formData(), {userId: this.user.id});
+      return _.extend(this.formData(), {userId: this.model.id});
     },
 
     formData: function() {

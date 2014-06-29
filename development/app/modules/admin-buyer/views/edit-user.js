@@ -67,7 +67,7 @@ define([
 		},
 
     renderTransactions: function() {
-      new TransactionsView({user: this.model}).render();
+      new TransactionsView({model: this.model}).render();
     }
 	});
 });
