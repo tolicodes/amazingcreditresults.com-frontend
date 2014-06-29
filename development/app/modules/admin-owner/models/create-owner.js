@@ -20,12 +20,12 @@ define([
 				msg : 'Please enter password.'
 			}, {
 				rangeLength: [8, 20],
-				pattern : 'passwordValdition',
+				pattern : 'passwordValidation',
 				msg : 'Please enter a password between 8-20 characters include atleast one number, special character and capital letter.'
 			}],
 			'username' : [{
 				msg : 'Please enter valid email.',
-				pattern : 'email',
+				pattern : 'email'
 			}, {
 				required : true,
 				msg : 'Please enter email.'

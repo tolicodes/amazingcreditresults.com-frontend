@@ -5,10 +5,12 @@
 
 define([
 	"buyer/views/buyer-form", 
-	"adminManageBuyer/models/user-info"
+	"adminManageBuyer/models/user-info",
+  "adminManageBuyer/views/transactions"
 ], function(
 	BuyerFormView, 
-	userModel
+	userModel,
+  TransactionsView
 ) {
 	return BuyerFormView.extend({
 		el : undefined,
@@ -53,6 +55,7 @@ define([
 				this.bindModelValidation(this.model);
 				this.listenTo(this.model, 'sync', function() {
 					this.render();
+          this.renderTransactions();
 				}.bind(this));
 				
 				this.listenTo(this.model, 'error', function(model, response) {
@@ -61,6 +64,10 @@ define([
 				});
 				this.model.fetch();
 			}
-		}
+		},
+
+    renderTransactions: function() {
+      new TransactionsView({user: this.model}).render();
+    }
 	});
 });

@@ -52,7 +52,7 @@ define([
 
 			email : [{
 				msg : 'Please enter valid email.',
-				pattern : 'email',
+				pattern : 'email'
 			}, {
 				required : true,
 				msg : 'Please enter email.'
@@ -60,7 +60,7 @@ define([
 		},
 		
 		parse: function(result) {
-			return result.data;
+			return _.extend(result.data, {transactions: result.transactions});
 		}
 	});
 });

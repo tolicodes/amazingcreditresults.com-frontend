@@ -231,7 +231,7 @@ define([
 		
 		editUser: function(userId) {
 			this.loadPage(adminManageBuyerLayout, "adminManageBuyer", {
-				page: "ediUser",
+				page: "editUser",
 				userId: userId,
 				pageType: "admin"
 			});
