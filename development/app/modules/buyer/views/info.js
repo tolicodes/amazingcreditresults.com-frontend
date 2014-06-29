@@ -4,10 +4,12 @@
 // Return Backbone View {Object}
 
 define([
-	"buyer/views/buyer-form", 
+	"buyer/views/buyer-form",
+  "buyer/views/payment-info",
 	"buyer/models/info"
 ], function(
-	BuyerFormView, 
+	BuyerFormView,
+  PaymentInfoView,
 	model
 ) {
 
@@ -21,6 +23,11 @@ define([
 				this.model = new model();
 				this.model.set(options[0].userDetail);
 			}
-		}
+		},
+
+    afterRender: function() {
+      BuyerFormView.prototype.afterRender.apply(this, arguments);
+      new PaymentInfoView({user: this.model}).render();
+    }
 	});
 });
