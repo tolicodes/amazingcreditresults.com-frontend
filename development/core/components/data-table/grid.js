@@ -71,7 +71,7 @@ define([
 				  		_self.deleteRecord(this.model);
 				  	} else if(this.actionType == "addItemInCart") {
 						// disable button
-						this.$el.find("button").prop("disabled", true);		  		
+						//this.$el.find("button").prop("disabled", true);		  		
 					  	if(_self.addItemToCart && _.isFunction(_self.addItemToCart)) {
 					  		_self.addItemToCart(this.userId);
 						}
