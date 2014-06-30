@@ -117,9 +117,11 @@ define([
 		
 		// logout user
 		logoutUser: function() {
-			// App.routing.navigate("logout", {
-				// trigger : true
-			// });
+			if(!window.location.host.match("localhost")) {
+				 App.routing.navigate("logout", {
+					 trigger : true
+				 });
+			}
 		},
 
 

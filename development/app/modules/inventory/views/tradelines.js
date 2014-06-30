@@ -5,18 +5,25 @@
 
 
 define([
-	"dataTable",
-	"inventory/collections/tradeline"
+	"dataTable"
 ], function(
-	DataTable,
-	tradelineCollection
+	DataTable
 ) {
 
 	return DataTable.extend({
 		el: undefined,
 		pageSize: 10,
+		
+		url: function() {
+			return this.getUrl("tradeline");
+		},
+		
+		parse: function(result) {
+			return result.data;
+		},
+		
 		columns:  [{
-			label: "",
+			label: "Name",
 			name : "name",
 			editable: false,
 			cell : "string",
@@ -28,7 +35,7 @@ define([
 		    })
 		},
 		{
-			label: "",
+			label: "Price",
 			name : "price",
 			editable: false,
 			cell : "string",
@@ -40,7 +47,7 @@ define([
 
 		},
 		{
-			label: "",
+			label: "Years",
 			name : "age",
 			editable: false,
 			cell : "string",
@@ -51,7 +58,7 @@ define([
 		    })
 		},
 		{
-			label: "",
+			label: "balance",
 			name : "availableAus",
 			editable: false,
 			cell : "string"
@@ -64,11 +71,8 @@ define([
 		}
 		],
 		
-
-		
 		initializeBefore : function(options, cart) {
 			this.cart = cart;
-			this.collection = new tradelineCollection();
 			this.generateTable();
 		}
 	});

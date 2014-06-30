@@ -87,10 +87,10 @@ define([
 		},		
 
 		initializeBefore : function(options) {
-			if (options && options[0] && options[0].userDetail) {
+			if (options && options.userDetail) {
 				this.model = new model();
 				this.model.buyer = true;
-				this.model.set(options[0].userDetail);
+				this.model.set(options.userDetail);
 				this.bindModelValidation(this.model);
 			}
 		}

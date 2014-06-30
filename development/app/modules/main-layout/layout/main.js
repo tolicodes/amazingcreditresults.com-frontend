@@ -19,14 +19,12 @@ define([
 		template: templateView,
 		
 		initializeBefore: function(options) {
-			
-			if(options[0].options.pageType == "admin") {
+			if(options.options.pageType == "admin") {
 				this.template = adminLayout;
-			} else if(options[0].options.pageType == "default") {
+			} else if(options.options.pageType == "default") {
 				this.template = defaultLayout;
 			}
-
-			this.setViewInLayout('.main-view', new options[0].page(options[0].options));
+			this.setViewInLayout('.main-view', new options.page(options.options));
 		}
 	});
 });

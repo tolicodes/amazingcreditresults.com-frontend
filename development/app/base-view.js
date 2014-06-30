@@ -39,23 +39,16 @@ define([
 		
 		// function to implemnt hooks
 		implementHooks : function() {
-			var _self = this;
-			if (this.hooks) {
-				_.each(this.hooks, function(hookCallbacks, hookName) {
-					_self.listenTo(_self, hookName, function() {
-						var arg = arguments;
-						_.each(hookCallbacks, function(hookTriggerFn) {
-							if (_.isFunction(_self[hookTriggerFn]))
-								_self[hookTriggerFn](arg);
-						});
-					});
-				});
-			}
+			_.each(this.hooks, function(callbacks, key){
+				_.each(callbacks, function(callback) {
+					this.listenTo(this, key, this[callback]);
+				}, this);
+			}, this);
 		},
 		
 		getUrl: function(name, params) {
 			return EndPoint.getUrl(name, params);
-		},		
+		},
 		
 		addViewHooks: function() {
 			if(this.extraHooks) {

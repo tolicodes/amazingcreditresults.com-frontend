@@ -63,8 +63,6 @@ define([
 
 		handleFormSubmit : function(values) {
 			// save the password and redirect
-			this.model = new loginModel();
-			this.bindModelValidation(this.model);
 			if(values) values.apiKey = this.apiKey;
 			this.model.set(values);
 			this.model.save();
@@ -72,15 +70,18 @@ define([
 		
 		_createForQuestionnaire: function() {
 			if(!_.isUndefined(App.CurrentUser)) App.CurrentUser.set(this.user.toJSON());
-			var route = (this.user.get("needQuestionnaire") == "true") ? "dashboard" : "inventory";
+			var route = (this.user.get("needQuestionnaire")) ? "dashboard" : "inventory";
 			App.routing.navigate(route, {
 				trigger : true
 			});
 		},
 		
 		initializeBefore : function(options) {
-			if(options && options[0])
-				this.apiKey = options[0].apiKey;
+			if(options)
+				this.apiKey = options.apiKey;
+
+			this.model = new loginModel();
+			this.bindModelValidation(this.model);
 		}
 
 	});

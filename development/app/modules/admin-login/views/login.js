@@ -56,15 +56,14 @@ define([
 
 		handleFormSubmit : function(values) {
 			// save the password and redirect
-			var login = new loginModel();
-			this.bindModelValidation(login);
-			login.set(values);
-			login.save();
+			this.model.set(values);
+			this.model.save();
 
 		},
 				
-		initializeBefore : function(options) {
-			//if(options && options[0]) this.apiKey = options[0].apiKey;
+		initializeBefore : function() {
+			this.model = new loginModel();
+			this.bindModelValidation(this.model);
 		}
 	});
 });

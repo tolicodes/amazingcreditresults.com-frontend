@@ -215,7 +215,7 @@ define([
 		generateTable: function() {
 			var url = (this.url && _.isFunction(this.url))?this.url():this.url,
 			Rows = Backbone.PageableCollection.extend({
-				url : url || "",
+				url : url || "http://abc",
 				mode : this.mode || "client",
 				parse: this.parse,
 				state: {
@@ -227,7 +227,7 @@ define([
 			}), paginator = new Backgrid.Extension.Paginator({
 				collection : rows
 			});
-
+//alert(url +"--"+ this.collection);
 			this.$el.find("#grid").html(grid.render().$el);
 			this.$el.find("#paginator").html(paginator.render().$el);
 			

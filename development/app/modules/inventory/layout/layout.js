@@ -36,7 +36,6 @@ define([
 			var cart = new cartView(options);
 			this.setViewInLayout('.cart', cart);
 			this.setViewInLayout('.tradelines', new tradelinesView(options, cart));
-			//this.setViewInLayout('.inventory', new inventoryView(options));
 			this.setViewInLayout('.inventory', new inventoryView(options));
 		}
 	});
