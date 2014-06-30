@@ -28,7 +28,7 @@ define([
 		},
 
 		events : {
-			'submit .find-trade-form' : 'updatequestionnaireModel',
+			'submit .find-trade-form' : 'questionnaireModel',
 			'click .questainair-options' : 'updateAnswerFn',
 			'keyup .total-dept' : 'updateAmount',
 			'keyup .anual-income' : 'updateAmount'
@@ -75,6 +75,7 @@ define([
 		},
 
 		updateAnswerFn : function(e) {
+			e.preventDefault();
 			this.updateAnswer['answer' + (parseInt($(e.currentTarget).parents(".question-index").data("question")) + 1)] = parseInt($(e.currentTarget).parents(".q-option-index").data("answer")) + 1;
 		},
 
@@ -99,7 +100,7 @@ define([
 
 		// redirect to buyer page
 		goToBuyerPage : function(count) {
-			App.routing.navigate("buyer", {
+			App.routing.navigate("checkout", {
 				trigger : true
 			});
 		},
