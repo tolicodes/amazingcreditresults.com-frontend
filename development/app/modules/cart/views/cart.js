@@ -53,14 +53,14 @@ define([
 			return result.data;
 		},
 		
-		updateListView: function(response) {
+		updateListView: function() {
 			this.generateTable();
 		},
 
 		initializeBefore: function() {
 			App.routing.off("addItemToCart");
 			App.routing.on("addItemToCart", function(response) {
-				this.updateListView(response);
+				this.updateListView();
 			}.bind(this));
 			this.trigger("addActionItems");
 		}
