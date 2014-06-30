@@ -44,7 +44,6 @@ define([
 		        return "$" + model.get("price");
 		      }
 		    })
-
 		},
 		{
 			label: "Years",
@@ -71,7 +70,16 @@ define([
 		}
 		],
 		
+		updateListView: function() {
+			this.generateTable();
+		},		
+		
 		initializeBefore : function(options, cart) {
+			App.routing.off("refreshTradelines");
+			App.routing.on("refreshTradelines", function(response) {
+				this.updateListView();
+			}.bind(this));
+
 			this.cart = cart;
 			this.generateTable();
 		}

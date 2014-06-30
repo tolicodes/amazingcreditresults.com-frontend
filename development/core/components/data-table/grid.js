@@ -68,10 +68,12 @@ define([
 			    clickAction: function (e) {
 			      e.preventDefault();
 				  	if(this.actionType == "delete") {
-				  		_self.deleteRecord(this.model);
+				  		_self.deleteRecord(this.model, false, function() {
+				  			App.routing.trigger("refreshTradelines");
+				  		});
 				  	} else if(this.actionType == "addItemInCart") {
 						// disable button
-						//this.$el.find("button").prop("disabled", true);		  		
+						this.$el.find("button").prop("disabled", true);		  		
 					  	if(_self.addItemToCart && _.isFunction(_self.addItemToCart)) {
 					  		_self.addItemToCart(this.userId);
 						}
@@ -84,6 +86,11 @@ define([
 			    
 			    render: function () {
 			      this.$el.html(this.template({buttonText: this.buttonText}));
+			      
+			      if(this.actionType == "addItemInCart") {
+			      	this.$el.find("button").prop("disabled", (this.model.get("inCart"))?true: false);
+			      }
+			      
 			      this.delegateEvents();
 			      return this;
 			    }
@@ -227,7 +234,6 @@ define([
 			}), paginator = new Backgrid.Extension.Paginator({
 				collection : rows
 			});
-//alert(url +"--"+ this.collection);
 			this.$el.find("#grid").html(grid.render().$el);
 			this.$el.find("#paginator").html(paginator.render().$el);
 			
@@ -253,10 +259,11 @@ define([
 		},
 		
 		// delete single record
-		deleteRecord: function(model, silent) {
+		deleteRecord: function(model, silent, callback) {
 			this.listenTo(model, 'sync', function() {
 				App.Mediator.trigger("messaging:showAlert", "Record deleted successfully.", "Green");
-			});
+				if(callback && _.isFunction(callback)) callback();
+			}.bind(this));
 			this.listenTo(model, 'error', function(model, response) {
 				var json = (response.responseText)?JSON.parse(response.responseText):{};
 				App.Mediator.trigger("messaging:showAlert", json.Error, "Red", json.errors);
