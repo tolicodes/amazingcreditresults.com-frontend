@@ -264,6 +264,7 @@ define([
 				App.Mediator.trigger("messaging:showAlert", "Record deleted successfully.", "Green");
 				if(callback && _.isFunction(callback)) callback();
 			}.bind(this));
+			
 			this.listenTo(model, 'error', function(model, response) {
 				var json = (response.responseText)?JSON.parse(response.responseText):{};
 				App.Mediator.trigger("messaging:showAlert", json.Error, "Red", json.errors);

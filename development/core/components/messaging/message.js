@@ -53,16 +53,17 @@ define([
 		 *  danger - to show error message
 		 * */		
 		
-		showMessage : function(options) {
+		showMessage : function(message, clas, errors) {
+			console.log(arguments);
 			if(this.type) this.hideMessage();
-			var cls = (options && options[1])?options[1]:"Green", 
-			errors = (options && options[2])?options[2]:[];
+			var cls = (clas)?clas:"Green", 
+			errors = (errors)?errors:[];
 			
-			this.message = (options && options[0])?options[0]:"";
+			this.message = message;
 			this.type = this.alertsClass[cls];
 			if(errors) this.showFieldErrors(errors);
 
-			if(this.message) {
+			if(this.message && this.message != "undefined") {
 				// set message in collection
 				this.collection.add({message: this.message, type: this.type });
 				// show message on DOM
