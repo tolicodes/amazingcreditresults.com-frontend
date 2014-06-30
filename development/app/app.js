@@ -44,13 +44,14 @@ define([
 	return Backbone.Router.extend({
 
 		routes : {
-			'buyer' : 'buyer',
+			'checkout' : 'checkout',
 			'grid' : 'dataGrid',
 			'dashboard': 'dashboard',
 			'setPassword/:apikey' : 'setPassword',
 			'login/:apikey' : 'login',
 			'inventory' : 'inventory',
-			'buyer/:apikey' : 'buyer',
+			'checkout/:apikey' : 'checkout',
+			'buyer/:apikey' : 'checkout',
 			'logout' : 'logout',
 			
 			// owner routes
@@ -122,9 +123,11 @@ define([
 		
 		// logout user
 		logoutUser: function() {
-			App.routing.navigate("logout", {
-				trigger : true
-			});
+			if(!window.location.host.match("localhost")) {
+				 App.routing.navigate("logout", {
+					 trigger : true
+				 });
+			}
 		},
 
 
@@ -266,16 +269,16 @@ define([
 		},
 
 		// home page route
-		buyer : function(apiKey) {
+		checkout : function(apiKey) {
 			// if apiKey is defined redirect to login page
 			if(apiKey) {
 				App.routing.navigate("login/"+apiKey, {
 					trigger : true
 				});
 			} else {
-				this.loadPage(buyerInfo, 'buyer', {
+				this.loadPage(buyerInfo, 'checkout', {
 					apiKey : apiKey,
-					page : "buyer"
+					page : "checkout"
 				});
 			}
 		},

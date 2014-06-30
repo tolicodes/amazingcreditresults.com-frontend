@@ -35,7 +35,8 @@ define([
 		},
 		
 		initializeBefore: function(options) {
-			if(options && options[0] && options[0].page == "create") {
+			console.log(options);
+			if(options && options.page == "create") {
 				this.template = editLayout;
 			} else {
 				this.template = templateView;
@@ -43,7 +44,8 @@ define([
 		},
 		
 		initializeAfter: function(options) {
-			if(options && options[0] && options[0].page == "create") {
+			console.log(options);
+			if(options && options.page == "create") {
 				this.setViewInLayout('.create', new createProductView(options));
 			} else {
 				this.productList = new listProducts(options);

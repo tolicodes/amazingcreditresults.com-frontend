@@ -1,39 +1,70 @@
-// home.js
+// cart.js
 // --------------
 // Requires define
-// Return Backbone View {Object}
+// Return DataTable View {Object}
 
 define([
-	"base", 
-	"hbs!cart/templates/cart", 
-	"cart/models/cart"
+	"dataTable"
 ], function(
-	Base, 
-	viewTemplate, 
-	questionModel
+	DataTable
 ) {
 
-	return Base.extend({
+	return DataTable.extend({
+		el : undefined,
+		pageSize : 5,
+		selectedRows : [],
 		
-		el: undefined,
-
-		tpl: viewTemplate,
-
-		extraHooks: {
-			'intialize:before' : ['showCart']
+		columns : [ {
+			label : "Bank",
+			name : "",
+			cell : "string",
+			editable : false,
+			formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
+		      fromRaw: function (rawValue, model) {
+		        return model.get("lender").bank;
+		      }
+		    })			
 		},
-		
-		events: {
-			'click .checkout-btn' : 'checkout'
+		 {
+			label : "LineAge",
+			name : "lineAge",
+			cell : "string",
+			editable : false
 		},
-		
-		checkout: function() {
-			
+		 {
+			label : "Price",
+			name : "price",
+			cell : "string",
+			editable : false
 		},
-
-		showCart: function() {
-			
+		 {
+			label: "Delete",
+			name : "delete",
+			cell : "actionButton",
+			actionType: "delete"
 		}
+		],
 
+		url : function() {
+			return this.getUrl("cart");
+		},
+
+		parse : function(result) {
+			return result.data;
+		},
+		
+		updateListView: function() {
+			this.generateTable();
+		},
+
+		initializeBefore: function() {
+			App.routing.off("addItemToCart");
+			App.routing.on("addItemToCart", function(response) {
+				this.updateListView();
+			}.bind(this));
+			this.trigger("addActionItems");
+		}
+		
+		
 	});
 });

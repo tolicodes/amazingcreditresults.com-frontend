@@ -14,10 +14,10 @@ define([
 
 	// extend backbone validation
 	_.extend(Backbone.Validation.patterns, {
-  		passwordValidation: /^(?=.*?[A-Z])(?=(.*[a-z]){1,})(?=(.*[\d]){1,})(?=(.*[\W]){1,})(?!.*\s).{8,}$/
+  		passwordValdition: /^(?=.*?[A-Z])(?=(.*[a-z]){1,})(?=(.*[\d]){1,})(?=(.*[\W]){1,})(?!.*\s).{8,}$/
 	});	
 	
-	// Overriding method these are creating issues in select box (remove all options from select box)
+	// overiding method these are creating issues in select box (remove all optons from select box)
 	_.extend(Backbone.Validation.callbacks, {
 		valid: function(view, attr, selector) {
       	},
@@ -44,7 +44,7 @@ define([
 			if(this.autoFetch) this.fetch();
 
 			if(this.bindValidation) {
-				this.bind('validated:valid', function() {
+				this.bind('validated:valid', function(model, errors) {
 					if(this.successValidation && _.isFunction(this.successValidation))
 						this.successValidation();
 				}.bind(this));

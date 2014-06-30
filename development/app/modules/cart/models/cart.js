@@ -1,4 +1,4 @@
-// info.js
+// cart.js
 // --------------
 // Requires define
 // Return Backbone Model {Object}
@@ -10,9 +10,8 @@ define([
 	) {
 
 	return BaseModel.extend({
-		id: undefined,
 		url : function() {
-			return this.getUrl("adminClients", {id: this.id});		
+			return this.getUrl("cart");		
 		}
 	});
 });

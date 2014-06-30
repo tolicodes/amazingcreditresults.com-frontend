@@ -49,6 +49,7 @@ define([
 		},
 
 		initializeBefore : function(options) {
+			console.log(options);
 			if (options && options[0] && options[0].userId) {
 				this.userId = options[0].userId;
 				this.model = new userModel({id: this.userId});

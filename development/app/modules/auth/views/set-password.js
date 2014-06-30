@@ -41,18 +41,18 @@ define([
 		
 		handleFormSubmit : function(values) {
 			// save the password and login
-			this.model = new setPassword();
-			this.bindModelValidation(this.model);
 			if(values) values.apiKey = this.apiKey;
 			this.model.set(values);
 			this.model.save();
 		},
 		
 		initializeBefore : function(options) {
-			if(options && options[0]) {
-				this.apiKey = options[0].apiKey;
-				this.layoutObject = options[0].layoutObject;
+			if(options) {
+				this.apiKey = options.apiKey;
+				this.layoutObject = options.layoutObject;
 			}
+			this.model = new setPassword();
+			this.bindModelValidation(this.model);
 		}
 	});
 });

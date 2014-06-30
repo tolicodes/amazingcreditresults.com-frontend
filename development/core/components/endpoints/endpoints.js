@@ -6,7 +6,7 @@ define([
 	], function(
 	) {
 
-	var base = window.location.origin,
+	var base = window.location.origin, 
 	apiPath = '/api/v1/', endpoints = {
 		"buyerLogin" : "buyer/login",
 		"buyerSetPassword" : "buyer/setPassword",
@@ -20,7 +20,10 @@ define([
 		"resetPassword": "admin/clients/resetPassword",
 		"welcomeEmail": "admin/clients/welcome",
 		"adminProduct": "admin/products",
-    "createTransaction": "admin/clients/balance"
+		"cart": "cart/tradelines",
+		"importBuyer": "owner/bulkImport",
+		"account": "account",
+        "createTransaction": "admin/clients/balance"
 	},
 	
 	addParams = function(url, params) {

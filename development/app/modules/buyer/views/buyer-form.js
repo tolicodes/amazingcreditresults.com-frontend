@@ -26,7 +26,7 @@ define([
 					'familyName' : {
 						type : 'Text',
 						title : "Last Name"
-					}
+					},
 					//'middleName' : {
 					//	type : 'Text',
 					//	title : "Middle Name"
