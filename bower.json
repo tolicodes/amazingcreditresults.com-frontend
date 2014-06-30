@@ -37,6 +37,8 @@
     "backbone-relational": "*",
     "layoutmanager": "*",
     "backbone-validation": "*",
-    "backgrid-select-all": ""
+    "backgrid-select-all": "",
+    "backbone-model-file-upload": "https://github.com/homeslicesolutions/backbone-model-file-upload.git",
+    "blueimp-file-upload": "*"
   }
 }

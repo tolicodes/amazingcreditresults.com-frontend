@@ -49,9 +49,126 @@ define(['jquery', 'underscore', 'backbone', 'backboneForms'], function($, _, Bac
     </div>\
   ');
 
+  
+  
+  
+  /**
+ * Text
+ * 
+ * Text input with focus, blur and change events
+ */
+Form.editors.MultipleInput = Form.Editor.extend({
+
+  defaultValue: '',
+
+  previousValue: '',
+
+  template: '\
+  	<div class="multiple-input-h">\
+    <% for(var i = 1; i <= total; i++ ) { %>\
+		<input type="text" class="form-control" />\
+		<% if(i != total) { %>\
+			- \
+		<% } %>\
+    <% } %><div>\
+    ',
+
+  events: {
+    'keyup':    'determineChange',
+    'keypress': function(event) {
+      var self = this;
+      setTimeout(function() {
+        self.determineChange();
+      }, 0);
+    },
+    'select':   function(event) {
+      this.trigger('select', this);
+    },
+    'focus':    function(event) {
+      this.trigger('focus', this);
+    },
+    'blur':     function(event) {
+      this.trigger('blur', this);
+    }
+  },
+
+  initialize: function(options) {
+    Form.editors.Base.prototype.initialize.call(this, options);
+
+    var schema = this.schema;
+
+    if (schema && schema.total) this.total = schema.total;
+  },
+
+  /**
+   * Adds the editor to the DOM
+   */
+  render: function() {
+  	this.$el.html(_.template(this.template, {total: this.total}));
+    this.setValue(this.value);
+    // this.setValue("123-456-879");
+    return this;
+  },
+
+  determineChange: function(event) {
+    var currentValue = this.$el.val();
+    var changed = (currentValue !== this.previousValue);
+
+    if (changed) {
+      this.previousValue = currentValue;
+
+      this.trigger('change', this);
+    }
+  },
+
+  /**
+   * Returns the current editor value
+   * @return {String}
+   */
+  getValue: function() {
+  	var val = [];
+    this.$el.find("input").each(function(index) {
+   	 val.push($(this).val());
+    });
+    return val.join("-");
+  },
+
+  /**
+   * Sets the value of the form element
+   * @param {String}
+   */
+  setValue: function(value) {
+  	var s = value.split("-");
+ 	this.$el.find("input").each(function(index) {
+ 	  $(this).val(s[index]);
+ 	});  		
+  },
+
+  focus: function() {
+    if (this.hasFocus) return;
+
+    this.$el.focus();
+  },
+
+  blur: function() {
+    if (!this.hasFocus) return;
+
+    this.$el.blur();
+  },
+
+  select: function() {
+    this.$el.select();
+  }
+
+});
+  
+  
+
+
+
   Form.editors.Base.prototype.className = 'form-control';
   Form.Field.errorClassName = 'has-error';
-  console.log(Form);
+
   Form.Field.prototype.templateData = function() {
     var schema = this.schema;
     return {
@@ -64,6 +181,16 @@ define(['jquery', 'underscore', 'backbone', 'backboneForms'], function($, _, Bac
       required: this.schema.required
     };
   };
+  
+    // override form value
+    Form.editors.Date.prototype.getValue = function() {
+	    var year = this.$year.val(),
+        month = this.$month.val(),
+        date = this.$date.val();
+	    if (!year || !month || !date) return null;
+	    return new Date(year, month, date).toString();
+  	};
+
 
   if (Form.editors.List) {
 

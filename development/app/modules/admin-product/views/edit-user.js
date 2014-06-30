@@ -54,7 +54,6 @@ define([
 					var json = (response.responseText)?JSON.parse(response.responseText):{};
 					App.Mediator.trigger("messaging:showAlert", json.Error, "Red");
 				});
-				
 				this.model.fetch();
 			}
 		}

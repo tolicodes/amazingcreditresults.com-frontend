@@ -75,10 +75,14 @@ define([
 		
 		// function handles form submission and success and error handling.
 		handleFormSubmit : function(values) {
-			var createProduct = new createProductModel();
-			this.bindModelValidation(createProduct);
-			createProduct.set(values);
-			createProduct.save();
+			this.model.set(values);
+			this.model.save();
+		},
+		
+		initializeBefore: function() {
+			this.model = new createProductModel();
+			this.bindModelValidation(this.model);			
 		}
+		
 	});
 });

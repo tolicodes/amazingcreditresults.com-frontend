@@ -23,8 +23,8 @@ define([
 		template: templateView,
 		
 		initializeAfter: function(options) {
-			if(options && options[0]) {
-				this.passwordCheck = new passwordneededModel({id: options[0].apiKey});
+			if(options) {
+				this.passwordCheck = new passwordneededModel({id: options.apiKey});
 				this.options = options;
 				this.listenTo(this.passwordCheck, 'sync', this._createPage.bind(this));
 				this.listenTo(this.passwordCheck, 'error', function(model, response) {
@@ -40,7 +40,7 @@ define([
 				viewObject = loginView;
 			
 			// pass controller object in options
-			this.options[0].layoutObject = this;
+			this.options.layoutObject = this;
 			
 			var myView = new viewObject(this.options);
 			this.setViewInLayout( '.form-view', myView);						

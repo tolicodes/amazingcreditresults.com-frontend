@@ -50,7 +50,9 @@ define([
 					// else 
 						// ob = ob.subSchema[name];	
 				// }.bind(this));
-			this.schema[(_.isArray(field))?field[0]:field].required = true;
+			try {
+				this.schema[(_.isArray(field))?field[0]:field].required = true;
+			} catch(e) {}
 				//ob.required = true;
 			//} else {
 			//	this.schema[field].required = true;

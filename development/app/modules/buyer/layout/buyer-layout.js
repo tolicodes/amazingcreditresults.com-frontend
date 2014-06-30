@@ -7,11 +7,13 @@
 define([
 	"baseLayout",
 	"hbs!buyer/templates/layout",
-	"buyer/views/info"
+	"buyer/views/info",
+	"buyer/layout/payment"
 ], function(
 	BaseLayout,
 	viewTemplate,
-	infoView
+	infoView,
+	paymentInfolayout
 ) {
 
 	return BaseLayout.extend({
@@ -19,9 +21,8 @@ define([
 		template: viewTemplate,
 		
 		initializeAfter: function(options) {
-			this.render();
-			this.setViewInLayout('.buyer-info', new infoView(options));
-			//this.setViewInLayout('.inventory', new inventoryView(options));
+			this.setViewInLayout('.buyer-info', new infoView(options), true);
+			this.setViewInLayout('.payment-info', new paymentInfolayout(options), true);
 		}			
 	});
 });

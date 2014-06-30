@@ -1744,7 +1744,6 @@ Form.editors.Select = Form.editors.Base.extend({
    */
   _arrayToHtml: function(array) {
     var html = [];
-console.log(array);
     //Generate HTML
     _.each(array, function(option) {
       if (_.isObject(option)) {

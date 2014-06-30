@@ -11,7 +11,7 @@ define([
 
 	return BaseModel.extend({
 		url : function() {
-			return this.getUrl("adminClients", {id: this.id});
+			return this.getUrl((this.buyer)?"authSelf":"adminClients", {id: this.id});
 		},
 		
 		validation : {

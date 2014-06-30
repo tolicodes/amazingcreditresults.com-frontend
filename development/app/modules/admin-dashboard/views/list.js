@@ -91,7 +91,7 @@ define([
 				cell : "boolean",
 				model: updateBuyerModel
 			},{
-				label: "Banned",
+				label: "Deactivate",
 				name : "isBanned",
 				cell : "boolean",
 				model: updateBuyerModel
@@ -116,7 +116,6 @@ define([
 			this.addResetButton(resetPasswordModel);
 			this.welcomeEmailButton(welcomeEmailModel);
 			this.addCheckbox();
-			this.addActionButton();
 		}
 	});
 });
