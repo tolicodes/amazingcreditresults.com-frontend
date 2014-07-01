@@ -51,13 +51,21 @@ define([
 				
 				// bind model validations
 				this.bind('validated:invalid', function(model) {
-					if(this.showErrors && _.isFunction(this.showErrors))
-						this.showErrors(model);
+					if(this.showValidationErrors && _.isFunction(this.showValidationErrors))
+						this.showValidationErrors(model);
 				}.bind(this));
 			}
-			
+
+      this.bind("error", this.defaultErrorHandler);
 		},
-		
+
+    defaultErrorHandler: function(event, xhr) {
+      if (xhr.status >= 500) {
+        var message = 'Oops, something is wrong with our server :-(. Please try again later.';
+        App.Mediator.trigger("messaging:showAlert", message, "Red");
+      }
+    },
+
 		// get the url
 		getUrl: function(name, params) {
 			return EndPoint.getUrl(name, params);
@@ -91,10 +99,7 @@ define([
 			return Backbone.Model.prototype.save.apply(this, arguments);
 		},
 
-
-		
-		// show errors
-		showErrors: function(model) {
+		showValidationErrors: function(model) {
 			var errors = [];
 			_.each(model.validationError, function(err, field) {
 				errors.push({message: err, field: field});
