@@ -98,7 +98,7 @@ define([
 					html += ob.message;
 				}
 			}.bind(this));
-			if(html) this.showMessage([html, "Red"]);
+			if(html) this.showMessage(html, "Red");
 		},
 		
 		// hide message
