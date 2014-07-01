@@ -28,9 +28,9 @@ require.config({
 	paths : {
 		// Libraries
 		'backbone' : 'libs/backbone/backbone',
+		'backboneValidator' : 'libs/backbone-validation/dist/backbone-validation-amd',		
 		'underscore' : 'libs/underscore/underscore',
 		'backboneRelational' : 'libs/backbone-relational/backbone-relational',
-		'backboneValidator' : 'libs/backbone-validation/dist/backbone-validation-amd',
 		'layoutManagers' : 'libs/layoutmanager/backbone.layoutmanager',
 		"backboneForms": 'libs/backbone-forms/distribution.amd/backbone-forms',
 		'jquery' : 'libs/jquery/jquery',

@@ -11,18 +11,18 @@ define([
 	Backbone,
 	EndPoint
 	) {
-
+	
 	// extend backbone validation
 	_.extend(Backbone.Validation.patterns, {
-  		passwordValdition: /^(?=.*?[A-Z])(?=(.*[a-z]){1,})(?=(.*[\d]){1,})(?=(.*[\W]){1,})(?!.*\s).{8,}$/
+  		passwordValidation: /^(?=.*?[A-Z])(?=(.*[a-z]){1,})(?=(.*[\d]){1,})(?=(.*[\W]){1,})(?!.*\s).{8,}$/
 	});	
 	
 	// overiding method these are creating issues in select box (remove all optons from select box)
 	_.extend(Backbone.Validation.callbacks, {
 		valid: function(view, attr, selector) {
       	},
-      invalid: function(view, attr, error, selector) {
-      }
+	    invalid: function(view, attr, error, selector) {
+	    }
 
 	});
 
@@ -99,7 +99,6 @@ define([
 			_.each(model.validationError, function(err, field) {
 				errors.push({message: err, field: field});
 			});
-			console.log(errors);
 			App.Mediator.showFieldErrors(errors);
 		}
 		

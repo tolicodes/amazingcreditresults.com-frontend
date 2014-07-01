@@ -93,12 +93,12 @@ define([
         this.model.set(options.userDetail);
         this.bindModelValidation(this.model);
       }
-    },
-
-    afterRender: function() {
-      BuyerFormView.prototype.afterRender.apply(this, arguments);
-      new PaymentInfoView({model: this.model}).render();
     }
+
+   // afterRender: function() {
+    //  BuyerFormView.prototype.afterRender.apply(this, arguments);
+     // new PaymentInfoView({model: this.model}).render();
+   // }
 
   });
 });
