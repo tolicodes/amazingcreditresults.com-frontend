@@ -44,6 +44,7 @@ define([
 	return Backbone.Router.extend({
 
 		routes : {
+      '' : 'dashboard',
 			'checkout' : 'checkout',
 			'grid' : 'dataGrid',
 			'dashboard': 'dashboard',
@@ -186,9 +187,9 @@ define([
 			new mainLayout({page: pageView, options: options});
 		},		
 
-		// route not found
 		routeNotFound : function() {
-			alert("Not Found");
+      App.Mediator.trigger("messaging:showAlert", "Path not found. Redirecting to the main page", "Red");
+      this.navigate('', true);
 		},
 		
 		/* Owner routes function */
