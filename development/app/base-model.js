@@ -12,20 +12,6 @@ define([
 	EndPoint
 	) {
 
-	// extend backbone validation
-	_.extend(Backbone.Validation.patterns, {
-  		passwordValdition: /^(?=.*?[A-Z])(?=(.*[a-z]){1,})(?=(.*[\d]){1,})(?=(.*[\W]){1,})(?!.*\s).{8,}$/
-	});	
-	
-	
-	// overiding method these are creating issues in select box (remove all optons from select box)
-	_.extend(Backbone.Validation.callbacks, {
-		valid: function(view, attr, selector) {
-      	},
-      invalid: function(view, attr, error, selector) {
-      }
-
-	});
 
 	return Backbone.Model.extend({
 		// fetch the modelautomatically if set to true
@@ -41,6 +27,22 @@ define([
 		bindValidation: true,
 		
 		initialize: function() {
+
+	// extend backbone validation
+	_.extend(Backbone.Validation.patterns, {
+  		passwordValdition: /^(?=.*?[A-Z])(?=(.*[a-z]){1,})(?=(.*[\d]){1,})(?=(.*[\W]){1,})(?!.*\s).{8,}$/
+	});	
+	
+	
+	// overiding method these are creating issues in select box (remove all optons from select box)
+	_.extend(Backbone.Validation.callbacks, {
+		valid: function(view, attr, selector) {
+      	},
+      invalid: function(view, attr, error, selector) {
+      }
+
+	});
+
 			
 			if(this.autoFetch) this.fetch();
 
