@@ -20,7 +20,7 @@ define([
 ) {
 	return BaseLayout.extend({
 		initializeBefore: function(options) {
-			if(options && options[0] && options[0].page) {
+			if(options && options.page) {
 				this.template = editLayout;
 			} else {
 				this.template = templateView;
@@ -28,7 +28,7 @@ define([
 		},
 		
 		initializeAfter: function(options) {
-			if(options && options[0] && options[0].page) {
+			if(options && options.page) {
 				this.setViewInLayout('.edit-buyer', new editUserView(options));
 			} else { 	
 				this.setViewInLayout('.create-buyer', new createBuyerView(options));
