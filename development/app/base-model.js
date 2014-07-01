@@ -17,7 +17,7 @@ define([
 	
 	// extend backbone validation
 	_.extend(Backbone.Validation.patterns, {
-  		passwordValdition: /^(?=.*?[A-Z])(?=(.*[a-z]){1,})(?=(.*[\d]){1,})(?=(.*[\W]){1,})(?!.*\s).{8,}$/
+  		passwordValidation: /^(?=.*?[A-Z])(?=(.*[a-z]){1,})(?=(.*[\d]){1,})(?=(.*[\W]){1,})(?!.*\s).{8,}$/
 	});	
 	
 	// overiding method these are creating issues in select box (remove all optons from select box)
