@@ -15,7 +15,7 @@ define([
 		addSchema : {			
 			'needQuestionnaire': {
 				type : 'Checkbox',
-				title : "need Questionnaire"				
+				title : "Questionary"				
 			},
 			
 			'accountVerified': {
