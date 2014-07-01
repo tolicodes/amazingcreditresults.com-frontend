@@ -12,9 +12,6 @@ define([
 	EndPoint
 	) {
 	
-	console.log(Backbone.Validation);
-	alert("base modal");
-	
 	// extend backbone validation
 	_.extend(Backbone.Validation.patterns, {
   		passwordValidation: /^(?=.*?[A-Z])(?=(.*[a-z]){1,})(?=(.*[\d]){1,})(?=(.*[\W]){1,})(?!.*\s).{8,}$/
