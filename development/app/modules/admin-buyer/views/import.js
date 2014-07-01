@@ -31,9 +31,6 @@ define([
 		
 		initializeAfter: function() {
 			
-			
-			
-			
 			this.$el.find("#fileupload").fileupload({
 				url: this.getUrl("importBuyer"),
 		        dataType: 'json',
