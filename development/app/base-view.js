@@ -46,8 +46,8 @@ define([
 			}, this);
 		},
 		
-		getUrl: function(name, params) {
-			return EndPoint.getUrl(name, params);
+		getUrl: function(name, params, addHuntKey) {
+			return EndPoint.getUrl(name, params, addHuntKey);
 		},
 		
 		addViewHooks: function() {
