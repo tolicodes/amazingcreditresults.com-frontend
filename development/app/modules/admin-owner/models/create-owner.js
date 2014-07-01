@@ -25,7 +25,7 @@ define([
 			}],
 			'username' : [{
 				msg : 'Please enter valid email.',
-				pattern : 'email',
+				pattern : 'email'
 			}, {
 				required : true,
 				msg : 'Please enter email.'

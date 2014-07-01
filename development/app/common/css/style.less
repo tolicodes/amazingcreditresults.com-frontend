@@ -114,4 +114,30 @@ fieldset {
 width: 100%;
 }
 
+.centered {
+  text-align: center;
+}
 
+.credit-panel {
+  input, select {
+    width: 100% !important;
+  }
+
+  .credit-details {
+    > div {
+      padding: 2px;
+
+      &:first-child {
+        padding-left: 0;
+      }
+
+      &:last-child {
+        padding-right: 0;
+      }
+    }
+  }
+}
+
+.payment-info {
+  margin-bottom: 20px;
+}

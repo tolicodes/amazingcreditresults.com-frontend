@@ -22,7 +22,8 @@ define([
 		"adminProduct": "admin/products",
 		"cart": "cart/tradelines",
 		"importBuyer": "owner/bulkImport",
-		"account": "account"
+		"account": "account",
+        "createTransaction": "admin/clients/balance"
 	},
 	
 	addParams = function(url, params) {
