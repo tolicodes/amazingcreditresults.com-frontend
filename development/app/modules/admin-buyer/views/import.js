@@ -23,7 +23,17 @@ define([
 
 		el: undefined,
 		
+		data: {},
+		
+		initializeBefore: function() {
+			this.data.url = this.getUrl("csvFilePath", undefined, true);
+		},
+		
 		initializeAfter: function() {
+			
+			
+			
+			
 			this.$el.find("#fileupload").fileupload({
 				url: this.getUrl("importBuyer"),
 		        dataType: 'json',
