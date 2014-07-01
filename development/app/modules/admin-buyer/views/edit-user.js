@@ -49,8 +49,6 @@ define([
 		},
 
 		initializeBefore : function(options) {
-			alert("here");
-			console.log(options);
 			if (options && options.userId) {
 				this.userId = options.userId;
 				this.model = new userModel({id: this.userId});
