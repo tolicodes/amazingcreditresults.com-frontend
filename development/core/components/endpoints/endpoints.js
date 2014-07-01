@@ -23,11 +23,11 @@ define([
 		"cart": "cart/tradelines",
 		"importBuyer": "owner/bulkImport",
 		"account": "account",
-        "createTransaction": "admin/clients/balance"
+        "createTransaction": "admin/clients/balance",
+        "csvFilePath" : "owner/clientsExample.csv"
 	},
 	
 	addParams = function(url, params) {
-		console.log(params);
 		_.each(params, function(p) {
 			url += "/" + p;
 		});
@@ -40,11 +40,12 @@ define([
 	 * */
 
 	return {
-		getUrl : function(name, params) {
+		getUrl : function(name, params, huntKey) {
 			var endpoint = endpoints[name],
 			url = base + apiPath + endpoint;
+			if(huntKey) url += "?huntKey=" + sessionStorage.getItem("huntKey");
 			if(params) url = addParams(url, params);
-			return  url;
+			return url;
 		}
 	};
 

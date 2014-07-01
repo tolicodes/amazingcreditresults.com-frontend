@@ -269,7 +269,8 @@ define([
 				var json = (response.responseText)?JSON.parse(response.responseText):{};
 				App.Mediator.trigger("messaging:showAlert", json.Error, "Red", json.errors);
 			});
-			model.destroy({silent: (silent)?true:false});
+			// {silent: (silent)?true:false}
+			model.destroy();
 		},
 		
 		// delete multiple records
