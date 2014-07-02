@@ -84,7 +84,7 @@ require.config({
 		
 		
 		/// common paths
-		'dataPath': 'app/common/data',
+		'dataPath': 'app/common/data'
 	},
 
 	map : {
