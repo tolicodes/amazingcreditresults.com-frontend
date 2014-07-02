@@ -79,7 +79,8 @@ define([
 			label: "Balance",
 			name : "availableAus",
 			editable: false,
-			cell : "string",
+			cell : "number",
+      headerCell: DataTable.alignedHeaderCell('right'),
 			formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
 		      fromRaw: function (rawValue, model) {
 		        return "$"+model.get("availableAus");

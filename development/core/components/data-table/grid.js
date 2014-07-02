@@ -24,7 +24,7 @@ define([
 	viewTemplate,
 	createCartModel
 ) {
-	return Base.extend({
+	var DataTable = Base.extend({
 
 		tpl: viewTemplate,
 
@@ -283,4 +283,12 @@ define([
 			setTimeout(this.generateTable(), 100);
 		}
 	});
+
+  DataTable.alignedHeaderCell = function(alignment) {
+    return Backgrid.HeaderCell.extend({
+      tagName: 'th style="text-align: ' + alignment + '"'
+    });
+  };
+
+  return DataTable;
 });
