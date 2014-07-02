@@ -57,13 +57,13 @@ define([
 		    })
 		},
 		{
-			label: "balance",
+			label: "Balance",
 			name : "availableAus",
 			editable: false,
 			cell : "string"
 		},
  		{
-			label: "",
+			label: "Add to Cart",
 			name : "addToCart",
 			cell : "actionButton",
 			actionType: "addItemInCart"
