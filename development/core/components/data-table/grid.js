@@ -59,7 +59,7 @@ define([
 			    	if(options) {
 			    		this.model = options.model;
 				    	this.userId = options.model.get("id");
-				    	this.buttonText = options.column.get("name");
+				    	this.buttonText = options.column.get("label") || options.column.get("name");
 				    	this.callback = options.column.get("callback");
 				    	this.actionType = options.column.get("actionType");
 				    }
@@ -67,7 +67,7 @@ define([
 			    
 			    clickAction: function (e) {
 			      e.preventDefault();
-				  	if(this.actionType == "delete") {
+				  	if(this.actionType == "delete" && confirm("Are you sure?")) {
 				  		_self.deleteRecord(this.model, false, function() {
 				  			App.routing.trigger("refreshTradelines");
 				  		});
