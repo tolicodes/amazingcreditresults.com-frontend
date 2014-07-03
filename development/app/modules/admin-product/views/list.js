@@ -60,43 +60,9 @@ define([
 			      }
 			    })
 			},
-			
-			// {
-				// label: "improvingShortCreditHistory",
-				// editable: false,
-				// name : "improvingShortCreditHistory",
-				// cell : "string",
-				// formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
-			      // fromRaw: function (rawValue, model) {
-			        // return model.get("improvingShortCreditHistory");
-			      // }
-			    // })
-			// },
-			// {
-				// label: "improvingBadCreditScore",
-				// editable: false,
-				// name : "improvingBadCreditScore",
-				// cell : "string",
-				// formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
-			      // fromRaw: function (rawValue, model) {
-			        // return model.get("improvingBadCreditScore");
-			      // }
-			    // })
-			// },
-			// {
-				// label: "improvingMaxedOutCredit",
-				// editable: false,
-				// name : "improvingMaxedOutCredit",
-				// cell : "string",
-				// formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
-			      // fromRaw: function (rawValue, model) {
-			        // return model.get("improvingMaxedOutCredit");
-			      // }
-			    // })
-			// },
 			{
 				label: "Report To",
-				name : "edit",
+				name : "reportTo",
 				editable: false,
 				cell : "string",
 			formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
@@ -129,7 +95,9 @@ define([
 			}
 			],
 			
-		url: "api/v1/owner/products",
+		url: function() {
+			return this.getUrl("products");
+		},
 		
 		parse: function(result) {
 			return result.data;

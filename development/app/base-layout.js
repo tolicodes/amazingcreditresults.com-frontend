@@ -61,18 +61,26 @@ define([
 			this.trigger('intialize:after', options);
 			
 			this.$el.find("a[href='"+Backbone.history.location.hash+"']").parent().addClass("active");	
-
 		},
+		
+		removeViewFromLayout: function(v) {
+			
+			this.getViews(v).each(function(view) {
+			  view.removeView();
+			});
+		},
+
+		//addedViews: [],
 		
 		// set view in layout
 		setViewInLayout: function(target, ob, setUpView) {
 			Backbone.Layout.setupView(ob);
+			//this.addedViews.push(target);
 			if(setUpView)
 				this.setView(target, ob);
 			else
 				this.insertView(target, ob);	
 		}
-		
 		
 	});
 });
