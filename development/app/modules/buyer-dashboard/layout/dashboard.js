@@ -21,7 +21,7 @@ define([
 		initializeAfter: function(options) {
 			this.setViewInLayout('.video-area', new videoView(options));
 			this.setViewInLayout('.questionnaire-area', new questionnaireView(options));
-			this.setViewInLayout('.cart-area', new cartView(options));
+			this.setViewInLayout('.cart-area', new cartView());
 		}
 	});
 });

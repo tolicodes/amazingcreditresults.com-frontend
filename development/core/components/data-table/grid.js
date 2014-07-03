@@ -177,6 +177,11 @@ define([
 			    
 			    resetPassword: function (e) {
 			      e.preventDefault();
+				  
+					this.listenTo(this.model, 'sync', function() {
+				  		App.Mediator.trigger("messaging:showAlert", "Reset Password email send successfully. Please check your inbox..", "Green");
+					}.bind(this));
+		  
 				  this.model.save();
 			    },
 			    
@@ -208,6 +213,10 @@ define([
 			    
 			    welcomeEmail: function (e) {
 			      e.preventDefault();
+					this.listenTo(this.model, 'sync', function() {
+				  		App.Mediator.trigger("messaging:showAlert", "Welcome email send successfully. Please check your inbox..", "Green");
+					}.bind(this));
+
 				  this.model.save();
 			    },
 			    
@@ -218,27 +227,43 @@ define([
 			    }
 			});
 		},
+		
+		refreshList: function() {
+			if(this.collection)
+				this.collection.fetch({reset: true});
+			else		
+				this.rows.fetch({reset: true});
+		},
 
 		generateTable: function() {
+			this.$el.find("#grid").html("");
+			this.$el.find("#paginator").html("");
+
 			var url = (this.url && _.isFunction(this.url))?this.url():this.url,
 			Rows = Backbone.PageableCollection.extend({
-				url : url || "http://abc",
+				url : url || "",
 				mode : this.mode || "client",
 				parse: this.parse,
 				state: {
     				pageSize: this.pageSize || 5
     			}
-			}), rows = new Rows(), grid = new Backgrid.Grid({
-				columns : this.columns || {},
-				collection : rows
-			}), paginator = new Backgrid.Extension.Paginator({
-				collection : rows
 			});
-			this.$el.find("#grid").html(grid.render().$el);
+			
+			this.rows = new Rows();
+			var paginator = new Backgrid.Extension.Paginator({
+				collection : this.rows
+			});
+			
+			this.grid = new Backgrid.Grid({
+				columns : this.columns || {},
+				collection : this.rows
+			});
+			
+			
+			this.$el.find("#grid").html(this.grid.render().$el);
 			this.$el.find("#paginator").html(paginator.render().$el);
 			
 			if(this.collection) {
-				
 				this.collection.on("backgrid:selected", function (model, selected) {
   					this.selectedRows.push(model);
 				}.bind(this));
@@ -249,12 +274,12 @@ define([
 						rows.add(data[i]);
 					}
 				}.bind(this));
-				this.collection.fetch();
+				this.collection.fetch({reset: true});
 			} else {
-				rows.on("backgrid:selected", function (model, selected) {
+				this.rows.on("backgrid:selected", function (model, selected) {
   					this.selectedRows.push(model);
 				}.bind(this));
-				rows.fetch();
+				this.rows.fetch({reset: true});
 			}
 		},
 		
@@ -280,7 +305,7 @@ define([
 		},
 
 		afterRender: function() {
-			setTimeout(this.generateTable(), 100);
+			setTimeout(this.generateTable(), 400);
 		}
 	});
 });

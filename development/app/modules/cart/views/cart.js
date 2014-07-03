@@ -8,7 +8,6 @@ define([
 ], function(
 	DataTable
 ) {
-
 	return DataTable.extend({
 		el : undefined,
 		pageSize : 5,
@@ -38,6 +37,7 @@ define([
 			editable : false
 		},
 		 {
+		 	sortable: false,
 			label: "Delete",
 			name : "delete",
 			cell : "actionButton",
@@ -50,21 +50,15 @@ define([
 		},
 
 		parse : function(result) {
-			return result.data;
+			this.reset(result.data);
+			//return result.data;
 		},
 		
-		updateListView: function() {
-			this.generateTable();
-		},
-
 		initializeBefore: function() {
 			App.routing.off("addItemToCart");
 			App.routing.on("addItemToCart", function(response) {
-				this.updateListView();
+				this.refreshList();
 			}.bind(this));
-			this.trigger("addActionItems");
 		}
-		
-		
 	});
 });

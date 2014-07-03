@@ -19,7 +19,8 @@ define([
 		},
 		
 		parse: function(result) {
-			return result.data;
+			this.reset(result.data);
+			//return result.data;
 		},
 		
 		columns:  [{
@@ -63,6 +64,7 @@ define([
 			cell : "string"
 		},
  		{
+ 			sortable: false,
 			label: "",
 			name : "addToCart",
 			cell : "actionButton",
@@ -70,14 +72,10 @@ define([
 		}
 		],
 		
-		updateListView: function() {
-			this.generateTable();
-		},		
-		
 		initializeBefore : function(options, cart) {
 			App.routing.off("refreshTradelines");
-			App.routing.on("refreshTradelines", function(response) {
-				this.updateListView();
+			App.routing.on("refreshTradelines", function() {
+				this.refreshList();
 			}.bind(this));
 
 			this.cart = cart;

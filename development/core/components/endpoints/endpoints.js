@@ -20,11 +20,13 @@ define([
 		"resetPassword": "admin/clients/resetPassword",
 		"welcomeEmail": "admin/clients/welcome",
 		"adminProduct": "admin/products",
+		"products" : "owner/products",
 		"cart": "cart/tradelines",
 		"importBuyer": "owner/bulkImport",
 		"account": "account",
         "createTransaction": "admin/clients/balance",
-        "csvFilePath" : "owner/clientsExample.csv"
+        "csvFilePath" : "owner/clientsExample.csv",
+        "seller": "admin/clients?role['seller']=true"
 	},
 	
 	addParams = function(url, params) {

@@ -27,8 +27,9 @@ define([
 			'click .goto-inventory' : 'goToInventory'
 		},
 		
-		goToInventory: function() {
-			App.routing.navigate("buyer", {
+		goToInventory: function(e) {
+			e.preventDefault();
+			App.routing.navigate("inventory", {
 				trigger : true
 			});
 		},
