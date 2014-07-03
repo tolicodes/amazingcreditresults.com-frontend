@@ -86,7 +86,7 @@ define([
 				}
 			}, {
 				sortable: false,
-				label: "needQuestionnaire",
+				label: "Questionnaire",
 				name : "needQuestionnaire",
 				getValue: function(model) {
 					return model.get("profile").needQuestionnaire;

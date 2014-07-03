@@ -18,7 +18,16 @@ define([
 		el: ".main-container",
 		template: templateView,
 		
+		data: {
+			loggedIn: false
+		},
+		
 		initializeBefore: function(options) {
+			
+			if(sessionStorage.getItem("huntKey")){
+				this.data.loggedIn = true;
+			}
+			
 			if(options.options.pageType == "admin") {
 				this.template = adminLayout;
 			} else if(options.options.pageType == "default") {

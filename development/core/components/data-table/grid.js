@@ -229,16 +229,15 @@ define([
 		},
 		
 		refreshList: function() {
-			if(this.collection)
-				this.collection.fetch({reset: true});
-			else		
-				this.rows.fetch({reset: true});
+			this.generateTable();
+			//if(this.collection)
+			//	this.collection.fetch({reset: true});
+			//else		
+			//	this.rows.fetch({reset: true});
 		},
 
 		generateTable: function() {
-			this.$el.find("#grid").html("");
-			this.$el.find("#paginator").html("");
-
+			
 			var url = (this.url && _.isFunction(this.url))?this.url():this.url,
 			Rows = Backbone.PageableCollection.extend({
 				url : url || "",
@@ -258,7 +257,6 @@ define([
 				columns : this.columns || {},
 				collection : this.rows
 			});
-			
 			
 			this.$el.find("#grid").html(this.grid.render().$el);
 			this.$el.find("#paginator").html(paginator.render().$el);
