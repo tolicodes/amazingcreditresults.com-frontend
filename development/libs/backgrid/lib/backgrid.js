@@ -2782,6 +2782,8 @@ var Grid = Backgrid.Grid = Backbone.View.extend({
     }
 
     this.listenTo(this.columns, "reset", function () {
+    alert("here");	
+    	
       if (this.header) {
         this.header = new (this.header.remove().constructor)(filteredOptions);
       }

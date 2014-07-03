@@ -25,7 +25,7 @@ define([
 		    }
 		    
 		  //  card: 'validateCard'
-		},
+		}
 		
 		// validateCard: function(value, attr, computedState) {
 		    // if(value !== 'something') {

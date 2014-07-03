@@ -24,7 +24,7 @@ define([
 	viewTemplate,
 	createCartModel
 ) {
-	return Base.extend({
+	var DataTable = Base.extend({
 
 		tpl: viewTemplate,
 
@@ -59,7 +59,7 @@ define([
 			    	if(options) {
 			    		this.model = options.model;
 				    	this.userId = options.model.get("id");
-				    	this.buttonText = options.column.get("name");
+				    	this.buttonText = options.column.get("label") || options.column.get("name");
 				    	this.callback = options.column.get("callback");
 				    	this.actionType = options.column.get("actionType");
 				    }
@@ -67,7 +67,7 @@ define([
 			    
 			    clickAction: function (e) {
 			      e.preventDefault();
-				  	if(this.actionType == "delete") {
+				  	if(this.actionType == "delete" && confirm("Are you sure?")) {
 				  		_self.deleteRecord(this.model, false, function() {
 				  			App.routing.trigger("refreshTradelines");
 				  		});
@@ -308,4 +308,12 @@ define([
 			setTimeout(this.generateTable(), 400);
 		}
 	});
+
+  DataTable.alignedHeaderCell = function(alignment) {
+    return Backgrid.HeaderCell.extend({
+      tagName: 'th style="text-align: ' + alignment + '"'
+    });
+  };
+
+  return DataTable;
 });
