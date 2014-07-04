@@ -60,6 +60,8 @@ define([
 			"admin/dashboard": "adminDashboard",
 			"admin/buyer": "adminBuyer",
 			"admin/seller": "adminSeller",
+			"admin/seller/add": "addAdminSeller",
+			"admin/seller/add/:id": "addAdminSeller",
 			"admin/owner": "adminOwner",
 			
 			"admin/product/create": "adminCreateProduct",
@@ -165,6 +167,7 @@ define([
 				var name = (this.user.get("name").givenName)?this.user.get("name").givenName:"-";
 				name += " ";
 				name += (this.user.get("name").familyName)?this.user.get("name").familyName:"-";
+				console.log(name);
 				$(".username").html(name);
 			}
 		},
@@ -218,6 +221,14 @@ define([
 			this.loadPage(adminSellerLayout, "adminSeller", {
 				pageType: "admin"
 			});			
+		},
+		
+		addAdminSeller: function(id) {
+			this.loadPage(adminSellerLayout, "adminSeller", {
+				pageType: "admin",
+				page: "create",
+				id: id
+			});
 		},
 		
 		adminCreateProduct: function(productId) {

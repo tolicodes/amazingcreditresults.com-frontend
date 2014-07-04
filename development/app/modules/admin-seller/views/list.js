@@ -20,7 +20,7 @@ define([
 		el: undefined,
 		
 		pageSize: 5,
-		
+
 		selectedRows: [],
 		
 		columns:  [{
@@ -73,7 +73,7 @@ define([
 				name : "edit",
 				cell : "actionButton",
 				callback: function(userId) {
-					App.routing.navigate("admin/user/"+userId, {
+					App.routing.navigate("admin/seller/add/"+userId, {
 						trigger : true
 					});
 				}
