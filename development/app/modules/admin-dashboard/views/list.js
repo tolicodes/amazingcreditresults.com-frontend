@@ -31,7 +31,7 @@ define([
  			  },
 		{
 				label: "First Name",
-				name : "name.givenName",
+				name : "name",
 				cell : "string",
 				editable: false,
 				formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
@@ -41,7 +41,7 @@ define([
 			    })
 			}, {
 				label: "Last Name",
-				name : "name.familyName",
+				name : "name",
 				cell : "string",
 				editable: false,
 				formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
@@ -69,11 +69,13 @@ define([
 				cell : "string",
 				editable: false
 			}, {
+				sortable: false,
 				label: "Verified",
 				name : "accountVerified",
 				cell : "boolean",
 				model: updateBuyerModel
 			}, {
+				sortable: false,
 				label: "Edit",
 				name : "edit",
 				cell : "actionButton",
@@ -83,7 +85,8 @@ define([
 					});
 				}
 			}, {
-				label: "needQuestionnaire",
+				sortable: false,
+				label: "Questionnaire",
 				name : "needQuestionnaire",
 				getValue: function(model) {
 					return model.get("profile").needQuestionnaire;
@@ -91,22 +94,26 @@ define([
 				cell : "boolean",
 				model: updateBuyerModel
 			},{
+				sortable: false,
 				label: "Deactivate",
 				name : "isBanned",
 				cell : "boolean",
 				model: updateBuyerModel
-			}
-			,{
+			},{
+				sortable: false,
 				label: "Reset Password Email",
 				name : "resetButton",
 				cell : "resetButton"
 			},{
+				sortable: false,
 				label: "Welcome Email",
 				name : "actions",
 				cell : "welcomeEmail"			
 			}],
 			
-		url: "api/v1/admin/clients",
+		url: function() {
+			return this.getUrl("adminClients");
+		},
 		
 		parse: function(result) {
 			return result.data;

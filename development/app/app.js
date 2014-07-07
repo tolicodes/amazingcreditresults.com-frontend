@@ -60,6 +60,8 @@ define([
 			"admin/dashboard": "adminDashboard",
 			"admin/buyer": "adminBuyer",
 			"admin/seller": "adminSeller",
+			"admin/seller/add": "addAdminSeller",
+			"admin/seller/add/:id": "addAdminSeller",
 			"admin/owner": "adminOwner",
 			
 			"admin/product/create": "adminCreateProduct",
@@ -153,17 +155,24 @@ define([
 			}
 		},
 		
+		_displayLogoutButton: function() {
+			if(sessionStorage.getItem("huntKey"))
+				$(".logout-btn").removeClass("hide");
+			else
+				$(".logout-btn").addClass("hide");
+		},
+		
 		showUserName: function() {
 			if(this.user && this.user.get("name")) {
 				var name = (this.user.get("name").givenName)?this.user.get("name").givenName:"-";
 				name += " ";
 				name += (this.user.get("name").familyName)?this.user.get("name").familyName:"-";
+				console.log(name);
 				$(".username").html(name);
 			}
 		},
 
 		_createPage : function(allow) {
-			console.log("_create page", sessionStorage.getItem("huntKey"));
 			if(sessionStorage.getItem("huntKey") || allow == "allow") {
 				if(!_.isUndefined(App.CurrentUser) && this.user) App.CurrentUser.set(this.user.toJSON());
 				this.createPage(this.pageView, _({}).extend(this.pageOptions, {
@@ -171,6 +180,9 @@ define([
 				}));
 				// show username
 				this.showUserName();
+				
+				this._displayLogoutButton();
+				
 			} else {
 				this.logoutUser();
 			}
@@ -209,6 +221,14 @@ define([
 			this.loadPage(adminSellerLayout, "adminSeller", {
 				pageType: "admin"
 			});			
+		},
+		
+		addAdminSeller: function(id) {
+			this.loadPage(adminSellerLayout, "adminSeller", {
+				pageType: "admin",
+				page: "create",
+				id: id
+			});
 		},
 		
 		adminCreateProduct: function(productId) {

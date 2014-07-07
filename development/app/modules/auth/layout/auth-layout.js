@@ -55,10 +55,14 @@ define([
 		},
 		
 		_createPage: function() {
-			
 			// show user name 
 			this.showUserName();
-			
+			// set mail To
+			if(this.passwordCheck && this.passwordCheck.get("email")) {
+				var message = encodeURIComponent("Amazing Credit Results-Reset Password Request for "+ this.passwordCheck.get("email"));
+				$(".mail-to-h").prop("href", "mailto:sales@amazingcreditresults.com?subject="+ message);
+			}
+
 			var viewObject = (this.passwordCheck.get("needToSetPassword"))?setPasswordView:loginView;
 			this.showView(viewObject);
 		}			

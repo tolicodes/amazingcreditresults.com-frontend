@@ -18,7 +18,8 @@ define([
 		},
 		
 		parse: function(result) {
-			return result.data;
+			this.reset(result.data);
+			//return result.data;
 		},
 		
 		columns:  [{
@@ -50,7 +51,7 @@ define([
 			name : "age",
 			editable: false,
 			cell : "number",
-      headerCell: DataTable.alignedHeaderCell('right'),
+     		headerCell: DataTable.alignedHeaderCell('right'),
 			formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
 		      fromRaw: function (rawValue, model) {
 		        return new Date().getFullYear() - new Date(model.get("dateOpen").split("T")[0]).getFullYear();
@@ -62,9 +63,10 @@ define([
 			name : "availableAus",
 			editable: false,
 			cell : "number",
-      headerCell: DataTable.alignedHeaderCell('right')
+		    headerCell: DataTable.alignedHeaderCell('right')
 		},
  		{
+ 			sortable: false,
 			label: "Add to Cart",
 			name : "addToCart",
 			cell : "actionButton",
@@ -72,18 +74,11 @@ define([
 		}
 		],
 		
-		updateListView: function() {
-			this.generateTable();
-		},		
-		
-		initializeBefore : function(options, cart) {
+		initializeBefore : function(options) {
 			App.routing.off("refreshTradelines");
-			App.routing.on("refreshTradelines", function(response) {
-				this.updateListView();
+			App.routing.on("refreshTradelines", function() {
+				this.render();
 			}.bind(this));
-
-			this.cart = cart;
-			this.generateTable();
 		}
 	});
 });

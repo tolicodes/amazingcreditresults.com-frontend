@@ -7,7 +7,7 @@ define([
 	"baseLayout",
 	"hbs!buyerDashboard/templates/layout",
 	"video/views/video",
-	"cart/views/cart",
+	"cart/layout/cart",
 	"questionnaire/views/questionnaire"
 ], function(
 	BaseLayout,
@@ -19,9 +19,9 @@ define([
 	return BaseLayout.extend({
 		template: templateView,
 		initializeAfter: function(options) {
-			this.setViewInLayout('.video-area', new videoView(options));
-			this.setViewInLayout('.questionnaire-area', new questionnaireView(options));
-			this.setViewInLayout('.cart-area', new cartView(options));
+			this.setViewInLayout('.video-area', new videoView(options), true);
+			this.setViewInLayout('.questionnaire-area', new questionnaireView(options), true);
+			this.setViewInLayout('.cart-area', new cartView(options), true);
 		}
 	});
 });
