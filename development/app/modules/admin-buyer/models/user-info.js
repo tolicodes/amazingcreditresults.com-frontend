@@ -1,4 +1,4 @@
-// info.js
+// user info.js
 // --------------
 // Requires define
 // Return Backbone Model {Object}
@@ -60,7 +60,10 @@ define([
 		},
 		
 		parse: function(result) {
-			return _.extend(result.data, {transactions: result.transactions});
+			if(result.transactions)
+				return _.extend(result.data, {transactions: result.transactions});
+			else
+				result.data;	
 		}
 	});
 });

@@ -20,7 +20,7 @@ define([
 		el: undefined,
 		
 		pageSize: 5,
-		
+
 		selectedRows: [],
 		
 		columns:  [{
@@ -63,35 +63,42 @@ define([
 				cell : "string",
 				editable: false
 			}, {
+				sortable: false,
 				label: "Verified",
 				name : "accountVerified",
 				cell : "boolean"
 			}, {
+				sortable: false,
 				label: "Edit",
 				name : "edit",
 				cell : "actionButton",
 				callback: function(userId) {
-					App.routing.navigate("admin/user/"+userId, {
+					App.routing.navigate("admin/seller/add/"+userId, {
 						trigger : true
 					});
 				}
 			}, {
+				sortable: false,
 				label: "needQuestionnaire",
 				name : "needQuestionnaire",
 				cell : "boolean"
 			},
 			{
+				sortable: false,
 				label: "Reset Password Email",
 				name : "resetButton",
 				cell : "resetButton"
 			},{
+				sortable: false,
 				label: "Welcome Email",
 				name : "actions",
 				cell : "welcomeEmail"			
 			}
 			],
 			
-		url: "api/v1/admin/clients?role['seller']=true",
+		url: function() {
+			return this.getUrl("seller");
+		},
 		
 		parse: function(result) {
 			return result.data;

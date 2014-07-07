@@ -57,6 +57,17 @@ define([
 		// update amount
 		updateAmount : function(e) {
 			var index = parseInt($(e.target).parents('.question-index').data("question")) + 1, dept = this.$el.find(".total-dept").val(), annual = this.$el.find(".anual-income").val(), cal;
+
+			if(!dept.match(/[0-9]$/) || dept <= 0) {
+				this.$el.find(".total-dept").val(dept.substr(0,(dept.length -1)));
+				dept = this.$el.find(".total-dept").val();
+			}
+			
+			if(!annual.match(/[0-9]$/) || annual <= 0) {
+				this.$el.find(".anual-income").val(annual.substr(0,(annual.length -1)));
+				annual = this.$el.find(".anual-income").val();
+			}
+			
 			cal = dept / annual;
 			this.$el.find(".result").html(cal);
 			this.updateAnswer['answer' + index] = this.getTheRange(cal, index);
@@ -75,7 +86,6 @@ define([
 		},
 
 		updateAnswerFn : function(e) {
-			e.preventDefault();
 			this.updateAnswer['answer' + (parseInt($(e.currentTarget).parents(".question-index").data("question")) + 1)] = parseInt($(e.currentTarget).parents(".q-option-index").data("answer")) + 1;
 		},
 
@@ -100,14 +110,13 @@ define([
 
 		// redirect to buyer page
 		goToBuyerPage : function(count) {
-			App.routing.navigate("checkout", {
+			App.routing.navigate("inventory", {
 				trigger : true
 			});
 		},
 		
 
 		setQuestions : function(options) {
-			
 			if(options && options[0])
 				this.userId = options[0].userDetail.id;
 			this.model = new questionModel();
@@ -130,7 +139,7 @@ define([
 		}, {
 			question : {
 				q : "What if your debt to income ratio (field for total credit card debt, field for annual income)",
-				options : ["<span>Total Debt:</span>  $<input type='text' class='total-dept' /> ", "<span>Annual Income:</span>  $<input type='text' class='anual-income' /> ", "<span>Your DTI: x%</span> <span class='result'></span>"],
+				options : ["<span>Total Debt:</span>  $<input type='text' class='total-dept'  /> ", "<span>Annual Income:</span>  $<input type='text' class='anual-income' /> ", "<span>Your DTI: x%</span> <span class='result'></span>"],
 				linkRequired : false
 			},
 			idx: 3
