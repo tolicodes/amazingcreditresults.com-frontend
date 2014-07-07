@@ -26,7 +26,7 @@ define([
 		    })			
 		},
 		 {
-			label : "LineAge",
+			label : "Line Age",
 			name : "lineAge",
 			cell : "string",
 			editable : false

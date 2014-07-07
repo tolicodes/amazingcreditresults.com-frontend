@@ -5,10 +5,12 @@
 
 define([
   "buyer/views/buyer-form",
+  "buyer/views/payment-info",
   "adminManageBuyer/models/create-buyer",
   "dataPath/collections/states"
 ], function(
   BuyerFormView,
+  PaymentInfoView,
   model,
   statesCollection
   ) {
@@ -93,12 +95,12 @@ define([
         this.model.set(options.userDetail);
         this.bindModelValidation(this.model);
       }
-    }
+    },
 
-   // afterRender: function() {
-    //  BuyerFormView.prototype.afterRender.apply(this, arguments);
-     // new PaymentInfoView({model: this.model}).render();
-   // }
+    afterRender: function() {
+      BuyerFormView.prototype.afterRender.apply(this, arguments);
+      new PaymentInfoView({model: this.model}).render();
+    }
 
   });
 });

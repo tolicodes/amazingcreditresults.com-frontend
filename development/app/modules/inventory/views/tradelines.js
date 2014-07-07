@@ -9,7 +9,6 @@ define([
 ], function(
 	DataTable
 ) {
-
 	return DataTable.extend({
 		el: undefined,
 		pageSize: 10,
@@ -38,8 +37,9 @@ define([
 			label: "Price",
 			name : "price",
 			editable: false,
-			cell : "string",
-			formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
+			cell : "number",
+      headerCell: DataTable.alignedHeaderCell('right'),
+      formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
 		      fromRaw: function (rawValue, model) {
 		        return "$" + model.get("price");
 		      }
@@ -49,7 +49,8 @@ define([
 			label: "Years",
 			name : "age",
 			editable: false,
-			cell : "string",
+			cell : "number",
+      headerCell: DataTable.alignedHeaderCell('right'),
 			formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
 		      fromRaw: function (rawValue, model) {
 		        return new Date().getFullYear() - new Date(model.get("dateOpen").split("T")[0]).getFullYear();
@@ -57,13 +58,14 @@ define([
 		    })
 		},
 		{
-			label: "balance",
+			label: "Balance",
 			name : "availableAus",
 			editable: false,
-			cell : "string"
+			cell : "number",
+      headerCell: DataTable.alignedHeaderCell('right')
 		},
  		{
-			label: "",
+			label: "Add to Cart",
 			name : "addToCart",
 			cell : "actionButton",
 			actionType: "addItemInCart"
