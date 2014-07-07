@@ -44,6 +44,8 @@ define([
 			actionType: "delete"
 		}
 		],
+		
+		emptyText: "No Items Added",
 
 		url : function() {
 			return this.getUrl("cart");

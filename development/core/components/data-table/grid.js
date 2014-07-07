@@ -255,11 +255,12 @@ define([
 			
 			this.grid = new Backgrid.Grid({
 				columns : this.columns || {},
-				collection : this.rows
+				collection : this.rows,
+				emptyText: this.emptyText || "No Record Found."
 			});
 			
-			this.$el.find("#grid").html(this.grid.render().$el);
-			this.$el.find("#paginator").html(paginator.render().$el);
+			this.$el.find(".grid").html(this.grid.render().$el);
+			this.$el.find(".paginator").html(paginator.render().$el);
 			
 			if(this.collection) {
 				this.collection.on("backgrid:selected", function (model, selected) {
