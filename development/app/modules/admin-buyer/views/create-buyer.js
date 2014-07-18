@@ -31,7 +31,13 @@ define([
 			'accountVerified': {
 				type : 'Checkbox',
 				title : "Verified"				
+			},
+			
+			'doNotSendEmail': {
+				type : 'Checkbox',
+				title : "Send Welcome Email"				
 			}
+			
 		},
 		
 		handleModelSuccessError: function(model) {
@@ -51,6 +57,7 @@ define([
 		
 		initializeBefore : function(options) {
 			this.model = new createBuyerModel();
+			this.model.set({'doNotSendEmail': true});
 			this.bindModelValidation(this.model);
 		}
 	});
