@@ -35,7 +35,7 @@ define([
 			
 			'doNotSendEmail': {
 				type : 'Checkbox',
-				title : "Send Welcome Email"				
+				title : "Do Not Send Welcome Email"				
 			}
 			
 		},
@@ -57,7 +57,6 @@ define([
 		
 		initializeBefore : function(options) {
 			this.model = new createBuyerModel();
-			this.model.set({'doNotSendEmail': true});
 			this.bindModelValidation(this.model);
 		}
 	});
