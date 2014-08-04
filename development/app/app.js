@@ -168,7 +168,6 @@ define([
 				var name = (this.user.get("name").givenName) ? this.user.get("name").givenName : "-";
 				name += " ";
 				name += (this.user.get("name").familyName) ? this.user.get("name").familyName : "-";
-				console.log(name);
 				$(".username").html(name);
 			}
 		},
@@ -215,7 +214,6 @@ define([
 		},
 
 		adminDashboard: function() {
-			console.log("dashboard");
 			this.loadPage(adminDasboardLayout, "adminDashboard", {
 				pageType: "admin"
 			});
@@ -267,7 +265,7 @@ define([
 		setPassword: function(apiKey) {
 			this.loadPage(authLayout, "setPassword", {
 				apiKey: apiKey,
-				page: "setPassword"
+				page: "setPassword" 
 			});
 		},
 

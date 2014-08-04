@@ -5,7 +5,7 @@
 
 define([
 	"base", 
-	"backbone",
+	"backbone", 
 	"backgrid", 
 	"pageableCollection", 
 	"backgridPaginator",
