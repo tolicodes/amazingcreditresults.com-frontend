@@ -211,7 +211,6 @@ require([
 	mediator,
 	CurrentUser
 ) {
-	console.log('hi');
 	$(document).ready(function() {
 		App = {};
 		// create Mediatior object for messaging

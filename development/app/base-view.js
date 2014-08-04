@@ -122,7 +122,6 @@ define([
 		
 		appendTemplate: function() {
 			var json = _.extend(this.data, this.model && this.model.toJSON());
-			console.log(json);
 			//this.trigger('after:compileJSON', json);
 			// if tpl is defined
 			if (this.tpl) this.$el.html(this.tpl(json));
