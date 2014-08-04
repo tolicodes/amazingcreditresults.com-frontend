@@ -4,13 +4,13 @@
 // Return {Object} App
 
 define([
-	"backbone", 
-	"home/views/home", 
-	"buyer/layout/buyer-layout", 
-	"grid/views/grid", 
-	"auth/layout/auth-layout", 
-	"buyerDashboard/layout/dashboard", 
-	"auth/models/myself", 
+	"backbone",
+	"home/views/home",
+	"buyer/layout/buyer-layout",
+	"grid/views/grid",
+	"auth/layout/auth-layout",
+	"buyerDashboard/layout/dashboard",
+	"auth/models/myself",
 	"inventory/layout/layout",
 	"adminLogin/layout/auth-layout",
 	"adminDashboard/layout/dashboard",
@@ -20,16 +20,16 @@ define([
 	"adminProduct/layout/layout",
 	"adminSeller/layout/layout",
 	"logout/views/logout",
-	
+
 	"less!cssPath/style"
 ], function(
-	Backbone, 
+	Backbone,
 	home,
 	buyerInfo,
 	dataGrid,
 	authLayout,
 	buyerDashboardLayout,
-	authModel, 
+	authModel,
 	inventoryLayout,
 	adminLoginLayout,
 	adminDasboardLayout,
@@ -43,18 +43,18 @@ define([
 
 	return Backbone.Router.extend({
 
-		routes : {
-      '' : 'dashboard',
-			'checkout' : 'checkout',
-			'grid' : 'dataGrid',
+		routes: {
+			'': 'dashboard',
+			'checkout': 'checkout',
+			'grid': 'dataGrid',
 			'dashboard': 'dashboard',
-			'setPassword/:apikey' : 'setPassword',
-			'login/:apikey' : 'login',
-			'inventory' : 'inventory',
-			'checkout/:apikey' : 'checkout',
-			'buyer/:apikey' : 'checkout',
-			'logout' : 'logout',
-			
+			'setPassword/:apikey': 'setPassword',
+			'login/:apikey': 'login',
+			'inventory': 'inventory',
+			'checkout/:apikey': 'checkout',
+			'buyer/:apikey': 'checkout',
+			'logout': 'logout',
+
 			// owner routes
 			"admin/login": "adminLogin",
 			"admin/dashboard": "adminDashboard",
@@ -63,56 +63,57 @@ define([
 			"admin/seller/add": "addAdminSeller",
 			"admin/seller/add/:id": "addAdminSeller",
 			"admin/owner": "adminOwner",
-			
+
 			"admin/product/create": "adminCreateProduct",
 			"admin/product/create/:id": "adminCreateProduct",
-			
-			"admin/user/:id": "editUser",			
-			
+
+			"admin/user/:id": "editUser",
+
 			// 404 Page
-			"*splat" : "routeNotFound"		
+			"*splat": "routeNotFound"
 		},
 
 		// permission to access pages without login
-		noAuth : ["login", "setPassword", "adminLogin", "logout"],
-		
+		noAuth: ["login", "setPassword", "adminLogin", "logout"],
+
 		// user activity time in minutes
 		logoutTime: 5,
-		
+
 		initialize: function() {
-			
+
 			// append the main container into DOM
-			if(!$(".main-container").length)
+			if (!$(".main-container").length)
 				$("body").append('<div class="container"><div class="main-container"></div></div>');
-			
+
 			// setup hunkKey if exists
-			if(sessionStorage.getItem("huntKey")) {
+			if (sessionStorage.getItem("huntKey")) {
 				$.ajaxSetup({
-					beforeSend: function (request) {
-	                	request.setRequestHeader("huntKey", sessionStorage.getItem("huntKey"));
-	            	}
+					beforeSend: function(request) {
+						request.setRequestHeader("huntKey", sessionStorage.getItem("huntKey"));
+					}
 				});
 			}
 
-      if (!this.isLocalhost()) {
-        this.setInActivityTimer();
-      }
+			if (!this.isLocalhost()) {
+				this.setInActivityTimer();
+			}
 		},
-		
+
 		// activity timer
 		setInActivityTimer: function() {
 			this.userActivityLastTime = new Date().getTime();
 			$("html").bind('mousemove click', function() {
 				this.userActivityLastTime = new Date().getTime();
 			}.bind(this));
-			
+
 			// bind interval to check user activity
 			setInterval(this.calculateActivityTime.bind(this), 60000);
 		},
-		
+
 		calculateActivityTime: function() {
-			if(sessionStorage.getItem("huntKey")) {
-				var diff = new Date().getTime() - this.userActivityLastTime, minutes = Math.floor((diff / 1000) / 60);
+			if (sessionStorage.getItem("huntKey")) {
+				var diff = new Date().getTime() - this.userActivityLastTime,
+					minutes = Math.floor((diff / 1000) / 60);
 				if (minutes >= (this.logoutTime - 1)) {
 					userActivityLastTime = new Date().getTime();
 					this.logoutUser();
@@ -120,20 +121,20 @@ define([
 			}
 		},
 
-    isLocalhost: function() {
-      return window.location.hostname === 'localhost';
-    },
-		
+		isLocalhost: function() {
+			return window.location.hostname === 'localhost';
+		},
+
 		// logout user
 		logoutUser: function() {
-			 App.routing.navigate("logout", {
-				 trigger : true
-			 });
+			App.routing.navigate("logout", {
+				trigger: true
+			});
 		},
 
 
 		// this function gives the current user detail
-		authorizeUser : function() {
+		authorizeUser: function() {
 			if (!this.user) {
 				this.user = new authModel();
 				this.user.fetchedDfd.fail(function() {
@@ -145,7 +146,7 @@ define([
 		},
 
 		// load page after checking auth
-		loadPage : function(pageView, pageName, pageOptions) {
+		loadPage: function(pageView, pageName, pageOptions) {
 			this.pageView = pageView;
 			this.pageOptions = pageOptions;
 			if (this.checkNeedAuth(pageName)) {
@@ -154,75 +155,78 @@ define([
 				this.authorizeUser().done(this._createPage.bind(this));
 			}
 		},
-		
+
 		_displayLogoutButton: function() {
-			if(sessionStorage.getItem("huntKey"))
+			if (sessionStorage.getItem("huntKey"))
 				$(".logout-btn").removeClass("hide");
 			else
 				$(".logout-btn").addClass("hide");
 		},
-		
+
 		showUserName: function() {
-			if(this.user && this.user.get("name")) {
-				var name = (this.user.get("name").givenName)?this.user.get("name").givenName:"-";
+			if (this.user && this.user.get("name")) {
+				var name = (this.user.get("name").givenName) ? this.user.get("name").givenName : "-";
 				name += " ";
-				name += (this.user.get("name").familyName)?this.user.get("name").familyName:"-";
+				name += (this.user.get("name").familyName) ? this.user.get("name").familyName : "-";
 				console.log(name);
 				$(".username").html(name);
 			}
 		},
 
-		_createPage : function(allow) {
-			if(sessionStorage.getItem("huntKey") || allow == "allow") {
-				if(!_.isUndefined(App.CurrentUser) && this.user) App.CurrentUser.set(this.user.toJSON());
+		_createPage: function(allow) {
+			if (sessionStorage.getItem("huntKey") || allow == "allow") {
+				if (!_.isUndefined(App.CurrentUser) && this.user) App.CurrentUser.set(this.user.toJSON());
 				this.createPage(this.pageView, _({}).extend(this.pageOptions, {
-					userDetail : (this.user)?this.user.toJSON():{}
+					userDetail: (this.user) ? this.user.toJSON() : {}
 				}));
 				// show username
 				this.showUserName();
-				
+
 				this._displayLogoutButton();
-				
+
 			} else {
 				this.logoutUser();
 			}
 		},
 
 		// check if page has permission
-		checkNeedAuth : function(pageName) {
+		checkNeedAuth: function(pageName) {
 			return _(this.noAuth).indexOf(pageName) !== -1;
 		},
 
-		createPage : function(pageView, options) {
-			new mainLayout({page: pageView, options: options});
-		},		
-
-		routeNotFound : function() {
-      App.Mediator.trigger("messaging:showAlert", "Path not found. Redirecting to the main page", "Red");
-      this.navigate('', true);
+		createPage: function(pageView, options) {
+			new mainLayout({
+				page: pageView,
+				options: options
+			});
 		},
-		
+
+		routeNotFound: function() {
+			App.Mediator.trigger("messaging:showAlert", "Path not found. Redirecting to the main page", "Red");
+			this.navigate('', true);
+		},
+
 		/* Owner routes function */
-		
+
 		adminLogin: function() {
 			this.loadPage(adminLoginLayout, "adminLogin", {
 				pageType: "default"
 			});
 		},
-		
+
 		adminDashboard: function() {
 			console.log("dashboard");
 			this.loadPage(adminDasboardLayout, "adminDashboard", {
 				pageType: "admin"
 			});
 		},
-		
+
 		adminSeller: function() {
 			this.loadPage(adminSellerLayout, "adminSeller", {
 				pageType: "admin"
-			});			
+			});
 		},
-		
+
 		addAdminSeller: function(id) {
 			this.loadPage(adminSellerLayout, "adminSeller", {
 				pageType: "admin",
@@ -230,7 +234,7 @@ define([
 				id: id
 			});
 		},
-		
+
 		adminCreateProduct: function(productId) {
 			this.loadPage(adminCreateProductLayout, "adminCreateProduct", {
 				pageType: "admin",
@@ -238,19 +242,19 @@ define([
 				productId: productId
 			});
 		},
-		
+
 		adminOwner: function() {
 			this.loadPage(adminManageOwnerLayout, "adminManageOwner", {
 				pageType: "admin"
 			});
 		},
-		
+
 		adminBuyer: function() {
 			this.loadPage(adminManageBuyerLayout, "adminManageBuyer", {
 				pageType: "admin"
 			});
 		},
-		
+
 		editUser: function(userId) {
 			this.loadPage(adminManageBuyerLayout, "adminManageBuyer", {
 				page: "editUser",
@@ -260,56 +264,56 @@ define([
 		},
 
 		// set password
-		setPassword : function(apiKey) {
+		setPassword: function(apiKey) {
 			this.loadPage(authLayout, "setPassword", {
-				apiKey : apiKey,
-				page : "setPassword"
+				apiKey: apiKey,
+				page: "setPassword"
 			});
 		},
 
-		dashboard : function() {
+		dashboard: function() {
 			this.loadPage(buyerDashboardLayout, 'buyerDashboard');
 		},
 
 		// set password
-		login : function(apiKey) {
+		login: function(apiKey) {
 			this.loadPage(authLayout, "login", {
-				apiKey : apiKey,
-				page : "login"
+				apiKey: apiKey,
+				page: "login"
 			});
 		},
-		
+
 		logout: function() {
 			// remove defined user
 			this.user = undefined;
 			this.loadPage(logoutView, "logout", {
 				pageType: "default"
-			});			
+			});
 		},
 
 		// home page route
-		checkout : function(apiKey) {
+		checkout: function(apiKey) {
 			// if apiKey is defined redirect to login page
-			if(apiKey) {
-				App.routing.navigate("login/"+apiKey, {
-					trigger : true
+			if (apiKey) {
+				App.routing.navigate("login/" + apiKey, {
+					trigger: true
 				});
 			} else {
 				this.loadPage(buyerInfo, 'checkout', {
-					apiKey : apiKey,
-					page : "checkout"
+					apiKey: apiKey,
+					page: "checkout"
 				});
 			}
 		},
 
-		dataGrid : function() {
+		dataGrid: function() {
 			this.loadPage(dataGrid, 'dataGrid');
 		},
 
-		inventory : function() {
+		inventory: function() {
 			this.loadPage(inventoryLayout, 'inventory');
 		}
-		
+
 
 	});
 });
