@@ -32,16 +32,6 @@ define([
 				}, this);
 			}, this);
 		},
-		
-		// before initialize function
-		initializeBefore:function() {
-			console.log("before initialize");
-		},
-		
-		// after initialize function
-		initializeAfter: function() {
-			console.log("After initialize");
-		},
 
 		
 		render: function() {
