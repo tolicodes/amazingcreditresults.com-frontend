@@ -10,7 +10,7 @@ define([
 	"adminManageBuyer/views/create-buyer",
 	"adminManageBuyer/views/edit-user",
 	"adminManageBuyer/views/import",
-	"../views/buyer-list"
+	"../views/buyer-list",
 ], function(
 	BaseLayout,
 	templateView,
@@ -30,15 +30,14 @@ define([
 		},
 		
 		initializeAfter: function(options) {
-			this.setViewInLayout('.buyer-list', new buyerListView(options));
-			console.log((new buyerListView(options)).el);
-
 			if(options && options.page) {
-				this.setViewInLayout('.edit-buyer', new editUserView(options));
+				this.setViewInLayout('.edit-buyer', new editUserView(options), true);
 			} else { 	
 				this.setViewInLayout('.create-buyer', new createBuyerView(options));
 				this.setViewInLayout('.import-buyer', new importBuyerView(options));							
 			}
+
+			this.setViewInLayout('.buyer-list', new buyerListView(options));
 		}
 		
 	});

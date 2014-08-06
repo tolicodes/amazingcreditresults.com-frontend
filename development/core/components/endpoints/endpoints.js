@@ -21,11 +21,14 @@ define([], function() {
 			"adminProduct": "admin/products",
 			"products": "owner/products",
 			"cart": "cart/tradelines",
-			"importBuyer": "owner/bulkImport",
+			"importBuyer": "owner/bulkImport", 
 			"account": "account",
 			"createTransaction": "admin/clients/balance",
 			"csvFilePath": "owner/clientsExample.csv",
-			"seller": "admin/clients?role['seller']=true"
+			"userList": "admin/clients",
+			"sellersList": "admin/clients?seller=true",
+			"buyersList": "admin/clients?buyer=true",
+			"ownersList": "admin/clients?buyer=true"
 		},
 
 		addParams = function(url, params) {

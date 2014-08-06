@@ -10,13 +10,10 @@ require.config({
 	config: {
 		text: {
 			useXhr: function (url, protocol, hostname, port) {
-		return true;
-	}
+			return true;
+		}
 		}
 	},
-	deps: [
-		"application"
-	],
 	paths: {
 		backbone: "../libs/backbone/backbone",
 		backboneValidator: "libs/backbone-validation/dist/backbone-validation-amd",
@@ -94,7 +91,9 @@ require.config({
 		"require-handlebars-plugin": "../libs/require-handlebars-plugin/hbs",
 		requirejs: "../libs/requirejs/require",
 		"requirejs-text": "../libs/requirejs-text/text",
-		select2: "../libs/select2/select2"
+		select2: "../libs/select2/select2",
+		"backbone-deep-model": "../libs/backbone-deep-model/index",
+		"backbone-pageable": "../libs/backbone-pageable/lib/backbone-pageable"
 	},
 	map: {
 		"*": {
