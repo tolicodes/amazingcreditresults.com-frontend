@@ -25,7 +25,3 @@ docs
 coverage/
 
 out/
-
-
-development/libs/*
-development/libs

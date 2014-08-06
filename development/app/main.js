@@ -10,8 +10,8 @@ require.config({
 	config: {
 		text: {
 			useXhr: function (url, protocol, hostname, port) {
-			return true;
-		}
+	return true;
+}
 		}
 	},
 	paths: {
@@ -63,7 +63,7 @@ require.config({
 		dataTable: "core/components/data-table/grid",
 		Mediator: "core/components/messaging/message",
 		dataPath: "app/common/data",
-		"backbone-forms": "../libs/backbone-forms/distribution.amd/backbone-forms",
+		"backbone-forms": "../libs/backbone-forms/distribution/backbone-forms",
 		"backbone-model-file-upload": "../libs/backbone-model-file-upload/backbone-model-file-upload",
 		"backbone-relational": "../libs/backbone-relational/backbone-relational",
 		"backbone-validation": "../libs/backbone-validation/dist/backbone-validation",
