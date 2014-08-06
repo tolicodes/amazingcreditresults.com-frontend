@@ -35,7 +35,6 @@ define([
 		},
 		
 		initializeBefore: function(options) {
-			console.log(options);
 			if(options && options.page == "create") {
 				this.template = editLayout;
 			} else {
@@ -44,7 +43,6 @@ define([
 		},
 		
 		initializeAfter: function(options) {
-			console.log(options);
 			if(options && options.page == "create") {
 				this.setViewInLayout('.create', new createProductView(options));
 			} else {

@@ -4,11 +4,12 @@
 // Return Backbone View {Object}
 
 define([
-	"app/common/components/user-table/views/user-table",
+	"app/common/components/user-table/views/user-table"
 ], function(
 	DataTable
 ) {
+
 	return DataTable.extend({
-		url: 'sellersList'
+		url: 'buyersList'
 	});
 });

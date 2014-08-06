@@ -5,7 +5,7 @@
 
 define([
 	"base", 
-	"backbone",
+	"backbone", 
 	"backgrid", 
 	"pageableCollection", 
 	"backgridPaginator",
@@ -140,7 +140,6 @@ define([
 			  },
 			
 			  inputClick: function (event) {
-			      console.log(this.column.get("model"));
 			      var attributes = {},
 			      m = eval(this.column.get("model")),
 			      model = new m(), ob = {};
@@ -168,7 +167,6 @@ define([
 			    className: "boolean-cell renderable",
 			    
 			    initialize: function(options) {
-			    	console.log(options.model.get("id"));
 			    	if(options.model) {
 				    	this.model = new resetPasswordModel();
 				    	this.model.userId = options.model.get("id");
@@ -204,7 +202,6 @@ define([
 			    className: "boolean-cell renderable",
 			    
 			    initialize: function(options) {
-			    	console.log(options.model.get("id"));
 			    	if(options.model) {
 				    	this.model = new welcomeEmailModel();
 				    	this.model.userId = options.model.get("id");
