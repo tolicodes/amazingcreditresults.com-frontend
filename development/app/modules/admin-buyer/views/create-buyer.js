@@ -31,7 +31,13 @@ define([
 			'accountVerified': {
 				type : 'Checkbox',
 				title : "Verified"				
+			},
+			
+			'doNotSendEmail': {
+				type : 'Checkbox',
+				title : "Do Not Send Welcome Email"				
 			}
+			
 		},
 		
 		handleModelSuccessError: function(model) {
