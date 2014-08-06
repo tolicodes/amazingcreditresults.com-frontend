@@ -1,6 +1,6 @@
 {
   "name": "amazingcreditresults.com-frontend",
-  "directory": "development/libs",
+  "directory" : "development/libs",
   "version": "0.1.0",
   "authors": [
     "Anatoliy Zaslavskiy <adz@nycitt.com>"
@@ -20,11 +20,11 @@
     "tests"
   ],
   "dependencies": {
-    "requirejs": "*",
+    "requirejs" : "*",
     "bootstrap": "~3.1.1",
     "backbone": "*",
-    "backbone.paginator": "2.0.2",
-    "backgrid-paginator": "master",
+    "backbone-pageable": "*",
+    "backgrid-paginator": "*",
     "backgrid": "*",
     "require-css": "*",
     "require-less": "*",
@@ -39,7 +39,6 @@
     "backbone-validation": "*",
     "backgrid-select-all": "",
     "backbone-model-file-upload": "https://github.com/homeslicesolutions/backbone-model-file-upload.git",
-    "blueimp-file-upload": "*",
-    "backbone-deep-model": "~0.10.4"
+    "blueimp-file-upload": "*"
   }
 }

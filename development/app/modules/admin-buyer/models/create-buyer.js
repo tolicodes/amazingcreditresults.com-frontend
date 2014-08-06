@@ -13,12 +13,6 @@ define([
 			return this.getUrl((this.buyer)?"authSelf":"adminClients");
 		},
 		
-		defaults: {
-			roles: {
-				buyer: true
-			}
-		},
-
 		validation : {
 			"name.givenName" : {
 				required : true,

@@ -23,6 +23,7 @@ define([
 		},
 		
 		initializeBefore: function(options) {
+			console.log(options.options.userDetail.email);
 			if(sessionStorage.getItem("huntKey")){
 				this.data.loggedIn = true;
 			}

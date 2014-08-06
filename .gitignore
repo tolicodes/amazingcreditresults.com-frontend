@@ -15,7 +15,6 @@ results
 node_modules/
 bower_components/
 
-
 nbproject
 *sublime*
 docs
@@ -26,6 +25,3 @@ coverage/
 
 out/
 
-
-development/libs/*
-development/libs

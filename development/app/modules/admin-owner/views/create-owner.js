@@ -12,6 +12,7 @@ define([
 ) {
 
 	return FormView.extend({
+		el : undefined,
 		// set the submit button text
 		submitButtonText : "Create Owner",
 		

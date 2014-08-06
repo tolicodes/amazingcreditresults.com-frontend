@@ -9,6 +9,7 @@ define([
 	DataTable
 ) {
 	return DataTable.extend({
+		el : undefined,
 		pageSize : 5,
 		selectedRows : [],
 		
