@@ -10,7 +10,7 @@ require.config({
 	config: {
 		text: {
 			useXhr: function (url, protocol, hostname, port) {
-	return true;
+return true;
 }
 		}
 	},
