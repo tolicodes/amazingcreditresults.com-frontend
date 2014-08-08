@@ -58,7 +58,6 @@ return true;
 		baseModel: "app/base-model",
 		relationalModel: "app/relational-model",
 		baseCollection: "app/base-collection",
-		currentUser: "app/common/entities/current-user",
 		formView: "core/components/form/form-view",
 		dataTable: "core/components/data-table/grid",
 		Mediator: "core/components/messaging/message",
@@ -199,7 +198,11 @@ require([
 	'jquery',
 	'application',
 	'Mediator',
-	'currentUser',
+
+	'core/components/inactivityTimer/inactivityTimer',
+	
+	'core/components/sessionKey/sessionKey',
+
 	// bootstrap css file
 	"css!libs/bootstrap/dist/css/bootstrap"
 ], function(
@@ -208,13 +211,19 @@ require([
 	$,
 	application,
 	mediator,
-	CurrentUser
+
+	inactivityTimer,
+	sessionKey
 ) {
 	$(document).ready(function() {
 		App = {};
 		// create Mediatior object for messaging
 		App.Mediator = new mediator;
-		App.CurrentUser = new CurrentUser();
+
+		_([inactivityTimer, sessionKey]).each(function(mod){
+			mod.init();
+		});
+
 		App.routing = new application();
 		Backbone.history.start({});
 	});

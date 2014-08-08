@@ -15,7 +15,8 @@ define([
 	adminProductLayout
 ) {
 	return BaseLayout.extend({
-
+		pageType: 'admin',
+		
 		events: {
 			'click .delete-selected': 'deleteSelected'
 		},
