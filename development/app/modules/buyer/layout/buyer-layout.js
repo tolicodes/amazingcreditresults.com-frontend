@@ -6,9 +6,9 @@
 
 define([
 	"baseLayout",
-	"hbs!buyer/templates/layout",
-	"buyer/views/info",
-	"buyer/layout/payment"
+	"hbs!../templates/layout",
+	"../views/info",
+	"../layout/payment"
 ], function(
 	BaseLayout,
 	viewTemplate,

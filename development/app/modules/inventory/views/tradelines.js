@@ -1,8 +1,7 @@
-// inventory.js
+// tradelines.js
 // --------------
 // Requires define
 // Return DataTable View {Object}
-
 
 define([
 	"dataTable"
@@ -10,75 +9,68 @@ define([
 	DataTable
 ) {
 	return DataTable.extend({
-		el: undefined,
-		pageSize: 10,
-		
-		url: function() {
+		el : undefined,
+		pageSize : 10,
+
+		url : function() {
 			return this.getUrl("tradeline");
 		},
-		
-		parse: function(result) {
-			this.reset(result.data);
-			//return result.data;
+
+		parse : function(result) {
+			return result.data;
 		},
-		
-		columns:  [{
-			label: "Name",
+
+		columns : [{
+			label : "Name",
 			name : "name",
-			editable: false,
+			editable : false,
 			cell : "string",
-			formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
-		      fromRaw: function (rawValue, model) {
-		      	console.log(model.get("product"));
-		        return model.get("product").name;
-		      }
-		    })
-		},
-		{
-			label: "Price",
+			formatter : _.extend({}, Backgrid.CellFormatter.prototype, {
+				fromRaw : function(rawValue, model) {
+					return model.get("product").name;
+				}
+			})
+		}, {
+			label : "Price",
 			name : "price",
-			editable: false,
+			editable : false,
 			cell : "number",
-      headerCell: DataTable.alignedHeaderCell('right'),
-      formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
-		      fromRaw: function (rawValue, model) {
-		        return "$" + model.get("price");
-		      }
-		    })
-		},
-		{
-			label: "Years",
+			headerCell : DataTable.alignedHeaderCell('right'),
+			formatter : _.extend({}, Backgrid.CellFormatter.prototype, {
+				fromRaw : function(rawValue, model) {
+					return "$" + model.get("price");
+				}
+			})
+		}, {
+			label : "Years",
 			name : "age",
-			editable: false,
+			editable : false,
 			cell : "number",
-     		headerCell: DataTable.alignedHeaderCell('right'),
-			formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
-		      fromRaw: function (rawValue, model) {
-		        return new Date().getFullYear() - new Date(model.get("dateOpen").split("T")[0]).getFullYear();
-		      }
-		    })
-		},
-		{
-			label: "Balance",
+			headerCell : DataTable.alignedHeaderCell('right'),
+			formatter : _.extend({}, Backgrid.CellFormatter.prototype, {
+				fromRaw : function(rawValue, model) {
+					return new Date().getFullYear() - new Date(model.get("dateOpen").split("T")[0]).getFullYear();
+				}
+			})
+		}, {
+			label : "Balance",
 			name : "availableAus",
-			editable: false,
+			editable : false,
 			cell : "number",
-		    headerCell: DataTable.alignedHeaderCell('right')
-		},
- 		{
- 			sortable: false,
-			label: "Add to Cart",
+			headerCell : DataTable.alignedHeaderCell('right')
+		}, {
+			sortable : false,
+			label : "Add to Cart",
 			name : "addToCart",
 			cell : "actionButton",
-			actionType: "addItemInCart"
-		}
-		],
-		
+			actionType : "addItemInCart"
+		}],
+
 		initializeBefore : function(options) {
 			App.routing.off("refreshTradelines");
 			App.routing.on("refreshTradelines", function() {
-				this.render();
+				this.refreshList();
 			}.bind(this));
 		}
 	});
-});
+}); 

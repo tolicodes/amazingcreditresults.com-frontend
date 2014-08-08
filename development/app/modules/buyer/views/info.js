@@ -4,9 +4,9 @@
 // Return Backbone View {Object}
 
 define([
-  "buyer/views/buyer-form",
-  "buyer/views/payment-info",
-  "adminManageBuyer/models/create-buyer",
+  "../views/buyer-form",
+  "../views/payment-info",
+  "admin/buyer/models/create-buyer",
   "dataPath/collections/states"
 ], function(
   BuyerFormView,

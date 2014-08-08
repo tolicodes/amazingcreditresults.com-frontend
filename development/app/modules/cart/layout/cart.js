@@ -6,7 +6,7 @@
 define([
 	"baseLayout",
 	"hbs!../templates/cart",
-	"cart/views/cart"
+	"../views/cart"
 ], function(
 	BaseLayout,
 	templateView,

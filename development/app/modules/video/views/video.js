@@ -5,8 +5,8 @@
 
 define([
 	"base", 
-	"hbs!video/templates/video", 
-	"video/models/video"
+	"hbs!../templates/video", 
+	"../models/video"
 ], function(
 	Base, 
 	viewTemplate, 

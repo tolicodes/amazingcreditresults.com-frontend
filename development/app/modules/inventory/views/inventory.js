@@ -30,7 +30,6 @@ define([
 			cell : "string",
 			formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
 		      fromRaw: function (rawValue, model) {
-		      	console.log(model.get("product"));
 		        return model.get("product").bank;
 		      }
 		    })

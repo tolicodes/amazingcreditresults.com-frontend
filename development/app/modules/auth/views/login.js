@@ -5,9 +5,9 @@
 
 define([
 	"formView", 
-	"hbs!auth/templates/login", 
-	"auth/models/login", 
-	"auth/models/myself"
+	"hbs!../templates/login", 
+	"../models/login", 
+	"../models/myself"
 	], function(
 	FormView, 
 	viewTemplate, 

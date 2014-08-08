@@ -12,6 +12,7 @@ define([
 	"backgridSelect",
 	"hbs!core/components/data-table/templates/grid",
 	"cart/models/create",
+	"Loader",
 	"css!libs/backbone-pageable/examples/css/backgrid",
 	"css!libs/backgrid-paginator/backgrid-paginator"
 ], function(
@@ -22,7 +23,8 @@ define([
 	BackgridPaginator, 
 	BackgridSelect,
 	viewTemplate,
-	createCartModel
+	createCartModel,
+	Loader
 ) {
 	var DataTable = Base.extend({
 
@@ -226,11 +228,19 @@ define([
 		},
 		
 		refreshList: function() {
-			this.generateTable();
-			//if(this.collection)
-			//	this.collection.fetch({reset: true});
-			//else		
-			//	this.rows.fetch({reset: true});
+			//this.generateTable();
+			if(this.collection)
+				this.collection.fetch({reset: true});
+			else		
+				this.rows.fetch({reset: true, success: function() {
+					//this.appendTemplate();
+					//alert("here");
+					this.grid.render();
+					console.log(this.$el.find(".grid"));
+					console.log($(".grid"));
+					
+					this.$el.find(".grid").html(this.grid.el);
+				}.bind(this)});
 		},
 
 		generateTable: function() {
@@ -275,7 +285,17 @@ define([
 				this.rows.on("backgrid:selected", function (model, selected) {
   					this.selectedRows.push(model);
 				}.bind(this));
-				this.rows.fetch({reset: true});
+				
+				this.loader = new Loader();
+				this.loader.showLoader();
+
+				this.rows.fetch({reset: true, success: function() {
+					this.loader.hideLoader();
+				}.bind(this),
+				error: function() {
+					this.loader.hideLoader();
+				}.bind(this)
+				});
 			}
 		},
 		

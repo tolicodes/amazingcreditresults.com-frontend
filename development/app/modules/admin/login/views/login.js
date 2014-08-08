@@ -1,0 +1,70 @@
+// login.js
+// --------------
+// Requires define
+// Return Backbone View {Object}
+
+define([
+	"formView", 
+	"hbs!../templates/login", 
+	"../models/login"
+	], function(
+	FormView, 
+	viewTemplate, 
+	loginModel
+	) {
+
+	return FormView.extend({
+
+		submitButtonText : "Login",
+		
+		formArea: '.form-area',
+		
+		el: undefined,
+		
+		// schema to generate form
+		schema : {
+			'username' : {
+				type : 'Text',
+				title : "Email"
+			},
+			'password' : {
+				type : 'Password'
+			}
+		},
+
+		tpl : viewTemplate,
+
+		// setup huntkey in header
+		setUpHuntkey: function() {
+			$.ajaxSetup({
+				beforeSend: function (request) {
+                	request.setRequestHeader("huntKey", sessionStorage.getItem("huntKey"));
+            	}
+			});			
+		},
+		
+		handleModelSuccessError: function(model) {
+			this.listenTo(model, 'sync', function(response) {
+				// set the huntKey in session storage
+				sessionStorage.setItem("huntKey", response.get("huntKey"));
+				// setup hunt key
+				this.setUpHuntkey();
+				App.routing.navigate("admin/dashboard", {
+					trigger : true
+				});	
+			}.bind(this));
+		},
+
+		handleFormSubmit : function(values) {
+			// save the password and redirect
+			this.model.set(values);
+			this.model.save();
+
+		},
+				
+		initializeBefore : function() {
+			this.model = new loginModel();
+			this.bindModelValidation(this.model);
+		}
+	});
+});

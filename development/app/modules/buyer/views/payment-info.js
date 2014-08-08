@@ -1,6 +1,6 @@
 define([
   "backbone",
-  "hbs!buyer/templates/payment-info"
+  "hbs!../templates/payment-info"
 ], function(
   Backbone,
   template

@@ -5,7 +5,7 @@
 
 define([
 	"buyer/views/buyer-form", 
-	"adminDashboard/models/create-buyer"
+	"admin/dashboard/models/create-buyer"
 ], function(
 	BuyerFormView, 
 	createBuyerModel

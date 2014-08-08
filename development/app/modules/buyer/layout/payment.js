@@ -6,10 +6,10 @@
 
 define([
 	"baseLayout",
-	"hbs!buyer/templates/payment",
-	"buyer/views/credit",
-	"buyer/views/card",
-	"buyer/views/bank",	
+	"hbs!../templates/payment",
+	"../views/credit",
+	"../views/card",
+	"../views/bank",	
 ], function(
 	BaseLayout,
 	viewTemplate,

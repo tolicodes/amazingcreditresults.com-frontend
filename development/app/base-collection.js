@@ -5,10 +5,12 @@
 
 define([
 	"backbone",
-	"core/components/endpoints/endpoints"
+	"core/components/endpoints/endpoints",
+	"Loader"
 	], function(
 	Backbone,
-	EndPoint
+	EndPoint,
+	Loader
 	) {
 	return Backbone.Collection.extend({
 		
