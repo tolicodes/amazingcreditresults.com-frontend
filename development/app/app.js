@@ -3,367 +3,211 @@
 // Requires define
 // Return {Object} App
 
-define(["backbone",
- "buyer/layout/buyer-layout", 
- "grid/views/grid", 
- "auth/layout/auth-layout", 
- "buyerDashboard/layout/dashboard", 
- "auth/models/myself", 
- "inventory/layout/layout", 
- "admin/login/layout/auth-layout", 
- "admin/dashboard/layout/layout", 
- "admin/owner/layout/layout", 
- "mainLayout/layout/main",
- "admin/buyer/layout/dashboard", 
- "admin/product/layout/layout", 
- "admin/seller/layout/layout",
- "admin/tradelines/layout/layout", 
- "logout/views/logout", 
- "Popup",
- "common/views/time-out/views/time-out",
- "less!cssPath/style"
- ], function(
- Backbone, 
- buyerInfo, 
- dataGrid, 
- authLayout, 
- buyerDashboardLayout, 
- authModel, 
- inventoryLayout, 
- adminLoginLayout, 
- adminDasboardLayout, 
- adminManageOwnerLayout, 
- mainLayout, 
- adminManageBuyerLayout, 
- adminCreateProductLayout, 
- adminSellerLayout, 
- adminTradelinesLayout,
- logoutView,
- PopupView,
- timeOutView
- ) {
+define([
+	"backbone",
+	"buyer/layout/buyer-layout",
+	"grid/views/grid",
+	"auth/layout/auth-layout",
+	"buyerDashboard/layout/dashboard",
+	"inventory/layout/layout",
+	"modules/admin/login/layout/auth-layout",
+	"modules/admin/dashboard/layout/layout",
+	"modules/admin/owner/layout/layout",
+	'mainLayout/layout/main',
+	"modules/admin/buyer/layout/dashboard",
+	"modules/admin/product/layout/layout",
+	"modules/admin/seller/layout/layout",
+	"logout/views/logout",
+	"core/components/auth/auth",
+
+	"less!cssPath/style"
+], function(
+	Backbone,
+	buyerInfo,
+	dataGrid,
+	authLayout,
+	buyerDashboardLayout,
+	
+	inventoryLayout,
+	adminLoginLayout,
+	adminDashboardLayout,
+	adminManageOwnerLayout,
+	mainLayout,
+	adminManageBuyerLayout,
+	adminCreateProductLayout,
+	adminSellerLayout,
+	logoutView,
+	auth
+) {
 
 	return Backbone.Router.extend({
 
-		routes : {
-			'' : 'dashboard',
-			'checkout' : 'checkout',
-			'grid' : 'dataGrid',
-			'dashboard' : 'dashboard',
-			'setPassword/:apikey' : 'setPassword',
-			'login/:apikey' : 'login',
-			'inventory' : 'inventory',
-			'checkout/:apikey' : 'checkout',
-			'buyer/:apikey' : 'checkout',
-			'logout' : 'logout',
-			'logout/:timeout': 'logout',
+		routes: {
+			'': 'dashboard',
+			
+			'grid': 'dataGrid',
+			'dashboard': 'dashboard',
+			'setPassword/:apikey': 'setPassword',
+			'login/:apikey': 'login',
+			'inventory': 'inventory',
+			'checkout/:apikey': 'checkout',
+			'buyer/:apikey': 'checkout',
+			'logout': 'logout',
+
 			// owner routes
-			"admin/login" : "adminLogin",
-			"admin/dashboard" : "adminDashboard",
-			"admin/buyer" : "adminBuyer",
-			"admin/seller" : "adminSeller",
-			"admin/seller/add" : "addAdminSeller",
-			"admin/seller/add/:id" : "addAdminSeller",
-			"admin/owner" : "adminOwner",
+			
+			"admin/buyer": "adminBuyer",
+			
+			"admin/seller/add": "addAdminSeller",
+			//"admin/seller/add/:id": "addAdminSeller",
+			
 
-			// tradelines
-			"admin/tradelines": "adminTradelines",
-			"admin/tradelines/seller/:id": "sellerTradelines",
-			"admin/tradelines/create": "createAdminTradelines",
-			"admin/tradelines/:id": "adminTradelines",
+			"admin/product/create": "adminCreateProduct",
+			"admin/product/create/:id": "adminCreateProduct",
 
-
-			"admin/product/create" : "adminCreateProduct",
-			"admin/product/create/:id" : "adminCreateProduct",
-
-			"admin/user/:id" : "editUser",
+			
 
 			// 404 Page
-			"*splat" : "routeNotFound"
+			"*splat": "routeNotFound"
+		},
+
+		pages: {
+			'dashboard': buyerDashboardLayout,
+			'inventory': inventoryLayout,
+			'checkout': buyerInfo,
+
+			'admin/dashboard': adminDashboardLayout,
+			'admin/login': adminLoginLayout,
+			'admin/seller': adminSellerLayout,
+			"admin/owner": adminManageOwnerLayout,
+			'admin/buyer': adminManageBuyerLayout,
+
+			"admin/user/:id": adminManageBuyerLayout,
+
+			"admin/seller/add/:userId": adminManageBuyerLayout
 		},
 
 		// permission to access pages without login
-		noAuth : ["login", "setPassword", "adminLogin", "logout"],
+		noAuth: ["login", "setPassword", "admin/login", "logout"],
 
-		// user activity time in minutes
-		logoutTime : 5,
-		
-		initialize : function() {
 
-			// append the main container into DOM
-			if (!$(".main-container").length)
-				$("body").append('<div class="container"><div class="main-container"></div></div>');
+		initialize: function() {
+			this._appendMainContainer();
 
-			// setup hunkKey if exists
-			if (sessionStorage.getItem("huntKey")) {
-				$.ajaxSetup({
-					beforeSend : function(request) {
-						request.setRequestHeader("huntKey", sessionStorage.getItem("huntKey"));
-					}
+			_.bindAll(this, '_createPage');
+
+			_(this.pages).each(function(pageView, route){
+				var optsArray = (route.match(/(\(\?)?:\w+/g));
+
+				optsArray = _.map(optsArray, function(opt){
+					return opt.substr(1);
 				});
-			}
 
-			if (!this.isLocalhost()) {
-				this.setInActivityTimer();
-				setTimeout(function() {
-					App.routing.off("resetActivityTimer");
-					App.routing.on("resetActivityTimer", this.resetActivityTime.bind(this));
-				}.bind(this), 2000);
-			}
+				this.route(route, function(){
+					var opts = {};
+
+					_.each(arguments, function(arg, i){
+						if(!optsArray[i]) { return; }
+						opts[optsArray[i]] = arg;
+					});
+
+					this.createPage(pageView, _.extend({
+						pageType: pageView.prototype.pageType || 'default'
+					}, opts));
+				});
+			}, this);
 		},
 
-		resetActivityTime : function() {
-			this.userActivityLastTime = new Date().getTime();
-			this.timerRunning = false;
-		},
-
-		// activity timer
-		setInActivityTimer : function() {
-			this.userActivityLastTime = new Date().getTime();
-			$("html").bind('mousemove click', function(e) {
-				if(!this.timerRunning)
-					this.userActivityLastTime = new Date().getTime();
-				
-				if(e.type == "click")
-					$(".refresh-session-outer").addClass("hide");
-			}.bind(this));
-
-			// bind interval to check user activity
-			setInterval(this.calculateActivityTime.bind(this), 60000);
-
-		},
-
-		calculateActivityTime : function() {
-			if (sessionStorage.getItem("huntKey")) {
-				var diff = new Date().getTime() - this.userActivityLastTime, minutes = Math.floor((diff / 1000) / 60);
-				if (minutes >= (this.logoutTime - 1)) {
-					userActivityLastTime = new Date().getTime();
-					this.logoutUser();
-					if(this.popup)
-						this.popup.closePopup();
-				} else if (minutes >= (this.logoutTime - 2)) {
-					this.popup = new PopupView({view: timeOutView, methodToCall: 'showTimerHTML'});
-				} else if (window.location.hash.match("setPassword") && (minutes >= (this.logoutTime - 3))) {
-					this.popup = new PopupView({view: timeOutView, methodToCall: 'showSetPasswordTimerHTML'});
-				}
-			}
+		_appendMainContainer: function(){
+			$("body").append('<div class="container"><div class="main-container"></div></div>');
 		},
 		
 
-		isLocalhost : function() {
-			//return false;
-			return window.location.hostname === 'localhost';
+		// load page after checking auth
+		loadPage: function(pageView, pageName, pageOptions) {
+			if (this.checkNeedAuth(pageName)) {
+
+				this._createPage(pageView, pageOptions);
+			} else {
+				auth.authorizeUser().done(
+					this._createPage.bind(this, pageView, pageOptions)
+				);
+			}
 		},
 
-		// logout user
-		logoutUser : function() {
-			App.routing.navigate("logout/timeout", {
-				trigger : true
+		// check if page has permission
+		checkNeedAuth: function(pageName) {
+			return _(this.noAuth).indexOf(pageName) === -1;
+		},
+
+		createPage: function(pageView, options) {
+			var layout = new mainLayout({
+				page: pageView,
+				options: options
 			});
 		},
 
-		// this function gives the current user detail
-		authorizeUser : function() {
-			if (!this.user) {
-				this.user = new authModel();
-				this.user.fetchedDfd.fail( function() {
-					App.Mediator.trigger("messaging:showAlert", "Authorization failed. Please login.", "Red");
-					this.logoutUser();
-				}.bind(this));
-			}
-			return this.user.fetchedDfd;
-		},
+		_createPage: function(pageView, pageOptions) {
+			var user = auth.getUser();
+			this.createPage(pageView, _({}).extend(pageOptions, {
+				userDetail: user ? user.toJSON() : {}
+			}));
 
-		// load page after checking auth
-		loadPage : function(pageView, pageName, pageOptions) {
-			this.pageView = pageView;
-			this.pageOptions = pageOptions;
-			if (this.checkNeedAuth(pageName)) {
-				this._createPage("allow");
-			} else {
-				this.authorizeUser().done(this._createPage.bind(this));
+			if(user) {
+				this._displayLogoutButton();
 			}
 		},
 
-		_displayLogoutButton : function() {
+		_displayLogoutButton: function() {
 			if (sessionStorage.getItem("huntKey"))
 				$(".logout-btn").removeClass("hide");
 			else
 				$(".logout-btn").addClass("hide");
 		},
 
-		showUserName : function() {
-			if (this.user && this.user.get("name")) {
-				var name = (this.user.get("name").givenName) ? this.user.get("name").givenName : "-";
-				name += " ";
-				name += (this.user.get("name").familyName) ? this.user.get("name").familyName : "-";
-				console.log(name);
-				$(".username").html(name);
-			}
-		},
-
-		_createPage : function(allow) {
-			if (sessionStorage.getItem("huntKey") || allow == "allow") {
-				if (!_.isUndefined(App.CurrentUser) && this.user)
-					App.CurrentUser.set(this.user.toJSON());
-				this.createPage(this.pageView, _({}).extend(this.pageOptions, {
-					userDetail : (this.user) ? this.user.toJSON() : {}
-				}));
-				// show username
-				this.showUserName();
-
-				this._displayLogoutButton();
-
-			} else {
-				this.logoutUser();
-			}
-		},
-
-		// check if page has permission
-		checkNeedAuth : function(pageName) {
-			return _(this.noAuth).indexOf(pageName) !== -1;
-		},
-
-		createPage : function(pageView, options) {
-			new mainLayout({
-				page : pageView,
-				options : options
-			});
-		},
-
-		routeNotFound : function() {
+		routeNotFound: function() {
 			App.Mediator.trigger("messaging:showAlert", "Path not found. Redirecting to the main page", "Red");
 			this.navigate('', true);
 		},
 
 		/* Owner routes function */
 
-		adminLogin : function() {
-			this.loadPage(adminLoginLayout, "adminLogin", {
-				pageType : "default"
-			});
-		},
-
-		adminDashboard : function() {
-			this.loadPage(adminDasboardLayout, "adminDashboard", {
-				pageType : "admin"
-			});
-		},
-		
-		adminTradelines: function(id) {
-			this.loadPage(adminTradelinesLayout, "adminTradelines", {
-				pageType : "admin",
-				tradelineId: id
-			});			
-		},
-		
-		createAdminTradelines: function() {
-			this.loadPage(adminTradelinesLayout, "adminTradelines", {
-				pageType : "admin",
-				pageName: "create"
-			});			
-		},
-
-		adminSeller : function() {
+		addAdminSeller: function(id) {
 			this.loadPage(adminSellerLayout, "adminSeller", {
-				pageType : "admin"
-			});
-		},
-		
-		// show seller tradelines
-		sellerTradelines: function(id) {
-			this.loadPage(adminTradelinesLayout, "adminTradelines", {
-				pageType : "admin",
-				sellerId: id
-			});			
-		},
-
-		addAdminSeller : function(id) {
-			this.loadPage(adminSellerLayout, "adminSeller", {
-				pageType : "admin",
-				page : "create",
-				id : id
+				pageType: "admin",
+				page: "create",
+				id: id
 			});
 		},
 
-		adminCreateProduct : function(productId) {
+		adminCreateProduct: function(productId) {
 			this.loadPage(adminCreateProductLayout, "adminCreateProduct", {
-				pageType : "admin",
-				page : "create",
-				productId : productId
-			});
-		},
-
-		adminOwner : function() {
-			this.loadPage(adminManageOwnerLayout, "adminManageOwner", {
-				pageType : "admin"
-			});
-		},
-
-		adminBuyer : function() {
-			this.loadPage(adminManageBuyerLayout, "adminManageBuyer", {
-				pageType : "admin"
-			});
-		},
-
-		editUser : function(userId) {
-			this.loadPage(adminManageBuyerLayout, "adminManageBuyer", {
-				page : "editUser",
-				userId : userId,
-				pageType : "admin"
+				pageType: "admin",
+				page: "create",
+				productId: productId
 			});
 		},
 
 		// set password
-		setPassword : function(apiKey) {
+		setPassword: function(apiKey) {
 			this.loadPage(authLayout, "setPassword", {
-				apiKey : apiKey,
-				page : "setPassword"
+				apiKey: apiKey,
+				page: "setPassword" 
 			});
-		},
-
-		dashboard : function() {
-			this.loadPage(buyerDashboardLayout, 'buyerDashboard');
 		},
 
 		// set password
-		login : function(apiKey) {
+		login: function(apiKey) {
 			this.loadPage(authLayout, "login", {
-				apiKey : apiKey,
-				page : "login"
+				apiKey: apiKey,
+				page: "login"
 			});
 		},
 
-		logout : function(sessionOut) {
-			// remove defined user
-			this.user = undefined;
+		logout: function() {
 			this.loadPage(logoutView, "logout", {
-				pageType : "default",
-				sessionOut: sessionOut
+				pageType: "default"
 			});
-		},
-
-		// home page route
-		checkout : function(apiKey) {
-			// if apiKey is defined redirect to login page
-			if (apiKey) {
-				App.routing.navigate("login/" + apiKey, {
-					trigger : true
-				});
-			} else {
-				this.loadPage(buyerInfo, 'checkout', {
-					apiKey : apiKey,
-					page : "checkout"
-				});
-			}
-		},
-
-		dataGrid : function() {
-			this.loadPage(dataGrid, 'dataGrid');
-		},
-
-		inventory : function() {
-			this.loadPage(inventoryLayout, 'inventory');
 		}
 	});
 });

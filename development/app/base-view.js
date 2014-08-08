@@ -31,11 +31,23 @@ define([
 
 		// hooks
 		hooks : {
-			'intialize:before' : ['initializeBefore'],
-			'intialize:after' : ['initializeAfter'],
+			'intialize:before': ['parseURL', 'initializeBefore'],
+			'intialize:after': ['initializeAfter'],
 			'render:before': ['beforeRender'],
 			'render:after': ['afterRender']
 		},
+		
+
+		parseURL: function(){
+			if(_.isString(this.url) && this.url.indexOf('http') !== 0) {
+				var url = this.url;
+
+				this.url = function(){
+					return EndPoint.getUrl(url);
+				};
+			}
+		},		
+		
 		
 		// function to implemnt hooks
 		implementHooks : function() {

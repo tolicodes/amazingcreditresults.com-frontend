@@ -6,7 +6,7 @@
 define([
   "../views/buyer-form",
   "../views/payment-info",
-  "admin/buyer/models/create-buyer",
+  "modules/admin/buyer/models/create-buyer",
   "dataPath/collections/states"
 ], function(
   BuyerFormView,

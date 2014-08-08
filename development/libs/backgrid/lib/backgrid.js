@@ -849,7 +849,6 @@ var Cell = Backgrid.Cell = Backbone.View.extend({
     this.editor = Backgrid.resolveNameToClass(this.editor, "CellEditor");
 
     this.listenTo(model, "change:" + column.get("name"), function () {
-    	alert("change: 852");
       if (!$el.hasClass("editor")) this.render();
     });
 
@@ -2302,13 +2301,14 @@ var Body = Backgrid.Body = Backbone.View.extend({
 
     this.emptyText = options.emptyText;
     this._unshiftEmptyRowMayBe();
+
     var collection = this.collection;
-   this.listenTo(collection, "add", this.insertRow);
+    this.listenTo(collection, "add", this.insertRow);
     this.listenTo(collection, "remove", this.removeRow);
     this.listenTo(collection, "sort", this.refresh);
     this.listenTo(collection, "reset", this.refresh);
-   this.listenTo(collection, "backgrid:sort", this.sort);
-   this.listenTo(collection, "backgrid:edited", this.moveToNextCell);
+    this.listenTo(collection, "backgrid:sort", this.sort);
+    this.listenTo(collection, "backgrid:edited", this.moveToNextCell);
   },
 
   _unshiftEmptyRowMayBe: function () {
@@ -2366,11 +2366,9 @@ var Body = Backgrid.Body = Backbone.View.extend({
     var $rowEl = row.render().$el;
 
     if (index >= $children.length) {
-      console.log($el, $rowEl);
       $el.append($rowEl);
     }
     else {
-      console.log($rowEl);
       $children.eq(index).before($rowEl);
     }
 
@@ -2402,6 +2400,7 @@ var Body = Backgrid.Body = Backbone.View.extend({
      - [Backbone.Collection#remove](http://backbonejs.org/#Collection-remove)
   */
   removeRow: function (model, collection, options) {
+
     // removeRow() is called directly
     if (!options) {
       this.collection.remove(model, (options = collection));
@@ -2455,13 +2454,13 @@ var Body = Backgrid.Body = Backbone.View.extend({
     this.$el.empty();
 
     var fragment = document.createDocumentFragment();
-   
     for (var i = 0; i < this.rows.length; i++) {
       var row = this.rows[i];
       fragment.appendChild(row.render().el);
     }
 
     this.el.appendChild(fragment);
+
     this.delegateEvents();
 
     return this;

@@ -9,16 +9,19 @@ define([
 	"hbs!../templates/edit-layout",
 	"../views/create-buyer",
 	"../views/edit-user",
-	"../views/import"
+	"../views/import",
+		"../views/buyer-list"
 ], function(
 	BaseLayout,
 	templateView,
 	editLayout,
 	createBuyerView,
 	editUserView,
-	importBuyerView
+	importBuyerView,
+		buyerListView
 ) {
 	return BaseLayout.extend({
+		pageType: 'admin',
 		initializeBefore: function(options) {
 			if(options && options.page) {
 				this.template = editLayout;
@@ -34,6 +37,7 @@ define([
 				this.setViewInLayout('.create-buyer', new createBuyerView(options));
 				this.setViewInLayout('.import-buyer', new importBuyerView(options));							
 			}
+			this.setViewInLayout('.buyer-list', new buyerListView(options));			
 		}
 		
 	});

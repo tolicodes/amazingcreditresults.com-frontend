@@ -27,7 +27,11 @@ define([
         "createTransaction": "admin/clients/balance",
         "csvFilePath" : "owner/clientsExample.csv",
         "seller": "admin/clients?role['seller']=true",
-        "adminTradelines": "owner/tradelines"
+        "adminTradelines": "owner/tradelines",
+        			"userList": "admin/clients",
+			"sellersList": "admin/clients?seller=true",
+			"buyersList": "admin/clients?buyer=true",
+			"ownersList": "admin/clients?buyer=true"
 	},
 	
 	addParams = function(url, params) {

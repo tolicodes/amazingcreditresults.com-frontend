@@ -15,6 +15,7 @@ define([
 	createOwnerView
 ) {
 	return BaseLayout.extend({
+		pageType: 'admin',
 		template: templateView,
 		initializeAfter: function(options) {
 			this.setViewInLayout('.create-buyer', new createOwnerView(options));

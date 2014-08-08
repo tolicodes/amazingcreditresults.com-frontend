@@ -69,7 +69,6 @@ define([
 		},
 		
 		_createForQuestionnaire: function() {
-			if(!_.isUndefined(App.CurrentUser)) App.CurrentUser.set(this.user.toJSON());
 			var route = (this.user.get("needQuestionnaire")) ? "dashboard" : "inventory";
 			App.routing.navigate(route, {
 				trigger : true

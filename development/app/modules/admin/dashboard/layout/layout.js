@@ -7,7 +7,7 @@ define([
 	"baseLayout",
 	"hbs!../templates/layout",
 	"../views/list",
-	"admin/product/layout/layout"
+	"modules/admin/product/layout/layout"
 ], function(
 	BaseLayout,
 	templateView,
@@ -15,7 +15,8 @@ define([
 	adminProductLayout
 ) {
 	return BaseLayout.extend({
-
+		pageType: 'admin',
+		
 		events: {
 			'click .delete-selected': 'deleteSelected'
 		},
