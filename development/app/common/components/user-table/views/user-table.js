@@ -1,13 +1,13 @@
 define([
 	"dataTable",
-	"adminDashboard/models/reset-password",
-	"adminDashboard/models/welcome-email",
-	"adminDashboard/models/update-buyer"
+	"adminDashboard/models/update-buyer",
+	"./reset-password-button-cell",
+	"./welcome-email-cell"
 ], function(
 	DataTable,
-	resetPasswordModel,
-	welcomeEmailModel,
-	updateBuyerModel
+	updateBuyerModel,
+	resetPasswordButtonCell,
+	welcomeEmailCell
 ) {
 
 	return DataTable.extend({
@@ -30,11 +30,12 @@ define([
 			name: "name.familyName",
 			cell: "string",
 			editable: false,
+			/*
 			formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
 				fromRaw: function(rawValue, model) {
 					return model.get("name").familyName;
 				}
-			})
+			})*/
 		}, {
 			label: "Roles",
 			name: "roles",
@@ -65,7 +66,7 @@ define([
 			name: "edit",
 			cell: "actionButton",
 			callback: function(userId) {
-				App.routing.navigate("admin/seller/add/" + userId, {
+				App.routing.navigate("admin/seller/" + userId, {
 					trigger: true
 				});
 			}
@@ -78,12 +79,12 @@ define([
 			sortable: false,
 			label: "Reset Password Email",
 			name: "resetButton",
-			cell: "resetButton"
+			cell: resetPasswordButtonCell
 		}, {
 			sortable: false,
 			label: "Welcome Email",
 			name: "actions",
-			cell: "welcomeEmail"
+			cell: welcomeEmailCell
 		}],
 
 		/**
@@ -95,9 +96,12 @@ define([
 			return result.data;
 		},
 
+		welcomeEmailButton: function(welcomeEmailModel) {
+			
+		},
+
 		initializeBefore: function() {
-			this.addResetButton(resetPasswordModel);
-			this.welcomeEmailButton(welcomeEmailModel);
+			this.welcomeEmailButton();
 			this.addCheckbox(updateBuyerModel);
 			this.addActionButton();
 		}

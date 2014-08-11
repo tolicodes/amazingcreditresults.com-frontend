@@ -32,8 +32,9 @@ define([
 			} else if(options.options.pageType == "default") {
 				this.template = defaultLayout;
 			}
-			
-			this.setViewInLayout('.main-view', new options.page(options.options));
+
+			this.setViewInLayout('.main-view', new options.page(
+				options.options));
 		},
 		
 		initializeAfter: function(options) {

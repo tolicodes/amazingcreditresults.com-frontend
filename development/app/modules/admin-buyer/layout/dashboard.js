@@ -21,6 +21,7 @@ define([
 	buyerListView
 ) {
 	return BaseLayout.extend({
+		pageType: 'admin',
 		initializeBefore: function(options) {
 			if(options && options.page) {
 				this.template = editLayout;

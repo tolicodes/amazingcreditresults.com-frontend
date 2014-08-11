@@ -17,6 +17,7 @@ define([
 	addSeller
 ) {
 	return BaseLayout.extend({
+		pageType: 'admin',
 		
 		events: {
 			'click .add-seller-h' : 'addSeller'

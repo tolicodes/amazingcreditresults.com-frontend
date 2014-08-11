@@ -14,7 +14,6 @@ define([
 ) {
 
 	return BuyerFormView.extend({
-		el : undefined,
 		// set the submit button text
 		submitButtonText : "Create Seller",
 		
@@ -52,15 +51,12 @@ define([
 					seller: true
 				};
 				
-				console.log(this.model);
-				
 				this.model.set(values);
 				this.model.save();
 			}
 		},
 		
-		initializeBefore : function(options) {
-			console.log(options);
+		initializeBefore: function(options) {
 			if (options && options.id) {
 				this.submitButtonText = "Update Seller";
 				this.userId = options.id;

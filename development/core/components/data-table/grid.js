@@ -4,22 +4,22 @@
 // Return Backbone View {Object}
 
 define([
-	"base", 
-	"backbone", 
-	"backgrid", 
-	"pageableCollection", 
+	"base",
+	"backbone",
+	"backgrid",
+	"pageableCollection",
 	"backgridPaginator",
 	"backgridSelect",
 	"hbs!core/components/data-table/templates/grid",
 	"cart/models/create",
-	"css!libs/backbone-pageable/examples/css/backgrid",
+	"css!libs/backbone.paginator/examples/css/backgrid",
 	"css!libs/backgrid-paginator/backgrid-paginator"
 ], function(
-	Base, 
+	Base,
 	Backbone,
-	Backgrid, 
-	PageableCollection, 
-	BackgridPaginator, 
+	Backgrid,
+	PageableCollection,
+	BackgridPaginator,
 	BackgridSelect,
 	viewTemplate,
 	createCartModel
@@ -28,73 +28,76 @@ define([
 
 		tpl: viewTemplate,
 
-		parse: function(result) { 
-			return result; 
+		parse: function(result) {
+			return result;
 		},
 
 		extraHooks: {
 			'addActionItems': ['addActionItems'],
-			'updateCart' : ['updateListView']
+			'updateCart': ['updateListView']
 		},
-		
+
 		addActionItems: function() {
 			this.addActionButton();
 		},
-		
+
 		selectedRows: [],
-		
+
 		// add action button
 		addActionButton: function() {
-			var _self = this, ActionButtonCell = Backgrid.ActionButtonCell = Backbone.View.extend({
-			    template: _.template("<button><%=buttonText%></button>"),
-			    events: {
-			      "click": "clickAction"
-			    },
-			    
-			    tagName: 'td',
-			    
-			    className: "boolean-cell renderable",
-			    
-			    initialize: function(options) {
-			    	if(options) {
-			    		this.model = options.model;
-				    	this.userId = options.model.get("id");
-				    	this.buttonText = options.column.get("label") || options.column.get("name");
-				    	this.callback = options.column.get("callback");
-				    	this.actionType = options.column.get("actionType");
-				    }
-			    },
-			    
-			    clickAction: function (e) {
-			      e.preventDefault();
-				  	if(this.actionType == "delete" && confirm("Are you sure?")) {
-				  		_self.deleteRecord(this.model, false, function() {
-				  			App.routing.trigger("refreshTradelines");
-				  		});
-				  	} else if(this.actionType == "addItemInCart") {
-						// disable button
-						this.$el.find("button").prop("disabled", true);		  		
-					  	if(_self.addItemToCart && _.isFunction(_self.addItemToCart)) {
-					  		_self.addItemToCart(this.userId);
+			var _self = this,
+				ActionButtonCell = Backgrid.ActionButtonCell = Backbone.View.extend({
+					template: _.template("<button><%=buttonText%></button>"),
+					events: {
+						"click": "clickAction"
+					},
+
+					tagName: 'td',
+
+					className: "boolean-cell renderable",
+
+					initialize: function(options) {
+						if (options) {
+							this.model = options.model;
+							this.userId = options.model.get("id");
+							this.buttonText = options.column.get("label") || options.column.get("name");
+							this.callback = options.column.get("callback");
+							this.actionType = options.column.get("actionType");
 						}
-				  	} else {
-					  	if(this.callback && _.isFunction(this.callback)) {
-					  		this.callback(this.userId);	
-					  	}			  		
-				  	}
-			    },
-			    
-			    render: function () {
-			      this.$el.html(this.template({buttonText: this.buttonText}));
-			      
-			      if(this.actionType == "addItemInCart") {
-			      	this.$el.find("button").prop("disabled", (this.model.get("inCart"))?true: false);
-			      }
-			      
-			      this.delegateEvents();
-			      return this;
-			    }
-			});
+					},
+
+					clickAction: function(e) {
+						e.preventDefault();
+						if (this.actionType == "delete" && confirm("Are you sure?")) {
+							_self.deleteRecord(this.model, false, function() {
+								App.routing.trigger("refreshTradelines");
+							});
+						} else if (this.actionType == "addItemInCart") {
+							// disable button
+							this.$el.find("button").prop("disabled", true);
+							if (_self.addItemToCart && _.isFunction(_self.addItemToCart)) {
+								_self.addItemToCart(this.userId);
+							}
+						} else {
+							if (this.callback && _.isFunction(this.callback)) {
+								this.callback(this.userId);
+							}
+						}
+					},
+
+					render: function() {
+						this.$el.html(this.template({
+							buttonText: this.buttonText
+						}));
+
+						if (this.actionType == "addItemInCart") {
+							this.$el.find("button").prop("disabled", (this.model.get("inCart")) ? true : false);
+						}
+
+						this.delegateEvents();
+						return this;
+					}
+				});
 		},
 
 		addItemToCart: function(id) {
@@ -104,127 +107,60 @@ define([
 				App.Mediator.trigger("messaging:showAlert", "Item Added to cart successfully.", "Green");
 				App.routing.trigger("addItemToCart", response);
 			}.bind(this));
-			cart.save({id: id});			
+			cart.save({
+				id: id
+			});
 		},
-		
+
 		addCheckbox: function() {
 			var BooleanCell = Backgrid.BooleanCell = Backbone.View.extend({
-			  className: "boolean-cell",
-			  
-			  tagName: 'td',
-			  className: "boolean-cell renderable",
-			 // editor: BooleanCellEditor,
-			  events: {
-			      "click": "enterEditMode",
-			      "click input": "inputClick"
-			  },
-			  
-			  initialize: function(options) {
-			  	if(options) {
-			  		this.column = options.column;
-			  		this.model = options.model;
-			  		this.getValue = options.column.get("getValue");
-			  	}
-			  },
+				className: "boolean-cell",
 
-			  render: function () {
-			    this.$el.empty();
-			    var val = (this.getValue && this.getValue(this.model)) || undefined;
-			    this.$el.append($("<input>", {
-			      tabIndex: -1,
-			      type: "checkbox",
-			      checked: val || this.model.get(this.column.get("name"))
-			    }));
-			    this.delegateEvents();
-			    return this;
-			  },
-			
-			  inputClick: function (event) {
-			      var attributes = {},
-			      m = eval(this.column.get("model")),
-			      model = new m(), ob = {};
-			      attributes[this.column.get("name")] = $(event.target).prop("checked");
-			      this.model.set(attributes);
-			      
-			      model.id = this.model.get("id");
-			      ob[this.column.get("name")] = $(event.target).prop("checked");
-			      ob["id"] = this.model.get("id");
-			      model.save(ob);
-			  }
-			
-			});
-		},
-		
-		addResetButton: function(resetPasswordModel) {
-			var ResetButtonCell = Backgrid.ResetButtonCell = Backbone.View.extend({
-			    template: _.template("<button>Reset password</button>"),
-			    events: {
-			      "click": "resetPassword"
-			    },
-			    
-			    tagName: 'td',
-			    
-			    className: "boolean-cell renderable",
-			    
-			    initialize: function(options) {
-			    	if(options.model) {
-				    	this.model = new resetPasswordModel();
-				    	this.model.userId = options.model.get("id");
-				    }
-			    },
-			    
-			    resetPassword: function (e) {
-			      e.preventDefault();
-				  
-					this.listenTo(this.model, 'sync', function() {
-				  		App.Mediator.trigger("messaging:showAlert", "Reset Password email send successfully. Please check your inbox..", "Green");
-					}.bind(this));
-		  
-				  this.model.save();
-			    },
-			    
-			    render: function () {
-			      this.$el.html(this.template());
-			      this.delegateEvents();
-			      return this;
-			    }
+				tagName: 'td',
+				className: "boolean-cell renderable",
+				// editor: BooleanCellEditor,
+				events: {
+					"click": "enterEditMode",
+					"click input": "inputClick"
+				},
+
+				initialize: function(options) {
+					if (options) {
+						this.column = options.column;
+						this.model = options.model;
+						this.getValue = options.column.get("getValue");
+					}
+				},
+
+				render: function() {
+					this.$el.empty();
+					var val = (this.getValue && this.getValue(this.model)) || undefined;
+					this.$el.append($("<input>", {
+						tabIndex: -1,
+						type: "checkbox",
+						checked: val || this.model.get(this.column.get("name"))
+					}));
+					this.delegateEvents();
+					return this;
+				},
+
+				inputClick: function(event) {
+					var attributes = {},
+						m = eval(this.column.get("model")),
+						model = new m(),
+						ob = {};
+					attributes[this.column.get("name")] = $(event.target).prop("checked");
+					this.model.set(attributes);
+
+					model.id = this.model.get("id");
+					ob[this.column.get("name")] = $(event.target).prop("checked");
+					ob["id"] = this.model.get("id");
+					model.save(ob);
+				}
+
 			});
 		},
 
-		welcomeEmailButton: function(welcomeEmailModel) {
-			var WelcomeEmailCell = Backgrid.WelcomeEmailCell = Backbone.View.extend({
-			    template: _.template("<button>Send Welcome Email</button>"),
-			    events: {
-			      "click": "welcomeEmail"
-			    },
-			    
-			    tagName: 'td',
-			    className: "boolean-cell renderable",
-			    
-			    initialize: function(options) {
-			    	if(options.model) {
-				    	this.model = new welcomeEmailModel();
-				    	this.model.userId = options.model.get("id");
-				    }
-			    },
-			    
-			    welcomeEmail: function (e) {
-			      e.preventDefault();
-					this.listenTo(this.model, 'sync', function() {
-				  		App.Mediator.trigger("messaging:showAlert", "Welcome email send successfully. Please check your inbox..", "Green");
-					}.bind(this));
-
-				  this.model.save();
-			    },
-			    
-			    render: function () {
-			      this.$el.html(this.template());
-			      this.delegateEvents();
-			      return this;
-			    }
-			});
-		},
-		
 		refreshList: function() {
 			this.generateTable();
 			//if(this.collection)
@@ -234,68 +170,74 @@ define([
 		},
 
 		generateTable: function() {
-			
-			var url = (this.url && _.isFunction(this.url))?this.url():this.url,
-			Rows = Backbone.PageableCollection.extend({
-				url : url || "",
-				mode : this.mode || "client",
-				parse: this.parse,
-				state: {
-    				pageSize: this.pageSize || 5
-    			}
-			});
-			
+
+			var url = (this.url && _.isFunction(this.url)) ? this.url() : this.url,
+				Rows = Backbone.PageableCollection.extend({
+					url: url || "",
+					mode: this.mode || "client",
+					parse: this.parse,
+					state: {
+						pageSize: this.pageSize || 5
+					}
+				});
+
 			this.rows = new Rows();
 			var paginator = new Backgrid.Extension.Paginator({
-				collection : this.rows
+				collection: this.rows
 			});
-			
+
 			this.grid = new Backgrid.Grid({
-				columns : this.columns || {},
-				collection : this.rows,
+				columns: this.columns || {},
+				collection: this.rows,
 				emptyText: this.emptyText || "No Record Found."
 			});
-			
+
 			this.$el.find(".grid").html(this.grid.render().$el);
 			this.$el.find(".paginator").html(paginator.render().$el);
-			
-			if(this.collection) {
-				this.collection.on("backgrid:selected", function (model, selected) {
-  					this.selectedRows.push(model);
+
+			if (this.collection) {
+				this.collection.on("backgrid:selected", function(model, selected) {
+					this.selectedRows.push(model);
 				}.bind(this));
-				
-				this.listenTo(this.collection, 'sync', function(){
-					var data  = this.collection.toJSON();
-					for(var i in data) {
+
+				this.listenTo(this.collection, 'sync', function() {
+					var data = this.collection.toJSON();
+					for (var i in data) {
 						rows.add(data[i]);
 					}
 				}.bind(this));
-				this.collection.fetch({reset: true});
+				this.collection.fetch({
+					reset: true
+				});
 			} else {
-				this.rows.on("backgrid:selected", function (model, selected) {
-  					this.selectedRows.push(model);
+				this.rows.on("backgrid:selected", function(model, selected) {
+					this.selectedRows.push(model);
 				}.bind(this));
-				this.rows.fetch({reset: true});
+				this.rows.fetch({
+					reset: true
+				});
 			}
 		},
-		
+
 		// delete single record
 		deleteRecord: function(model, silent, callback) {
 			this.listenTo(model, 'sync', function() {
 				App.Mediator.trigger("messaging:showAlert", "Record deleted successfully.", "Green");
-				if(callback && _.isFunction(callback)) callback();
+				if (callback && _.isFunction(callback)) callback();
 			}.bind(this));
-			
+
 			this.listenTo(model, 'error', function(model, response) {
-				var json = (response.responseText)?JSON.parse(response.responseText):{};
+				var json = (response.responseText) ? JSON.parse(response.responseText) : {};
 				App.Mediator.trigger("messaging:showAlert", json.Error, "Red", json.errors);
 			});
-			model.destroy({wait: true});
+			model.destroy({
+				wait: true
+			});
 		},
-		
+
 		// delete multiple records
 		deleteRecords: function() {
-			_.each(this.selectedRows, function( model ) {
+			_.each(this.selectedRows, function(model) {
 				this.deleteRecord(model, true);
 			}.bind(this));
 		},
@@ -305,11 +247,11 @@ define([
 		}
 	});
 
-  DataTable.alignedHeaderCell = function(alignment) {
-    return Backgrid.HeaderCell.extend({
-      tagName: 'th style="text-align: ' + alignment + '"'
-    });
-  };
+	DataTable.alignedHeaderCell = function(alignment) {
+		return Backgrid.HeaderCell.extend({
+			tagName: 'th style="text-align: ' + alignment + '"'
+		});
+	};
 
-  return DataTable;
+	return DataTable;
 });

@@ -15,7 +15,6 @@ define([
 ) {
 
 	return BaseLayout.extend({
-		
 		template: templateView,
 		
 		initializeAfter: function(options) {
