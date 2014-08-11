@@ -4,65 +4,46 @@
 // Return Backbone View {Object}
 
 define([
-	"formView", 
-	"hbs!../templates/login", 
-	"../models/login"
-	], function(
-	FormView, 
-	viewTemplate, 
-	loginModel
-	) {
+	"formView",
+	"hbs!../templates/login",
+	"../models/login",
+	"core/components/sessionKey/sessionKey"
+], function(
+	FormView,
+	loginTpl,
+	loginModel,
+	sessionKey
+) {
 
 	return FormView.extend({
+		submitButtonText: "Login",
 
-		submitButtonText : "Login",
-		
 		formArea: '.form-area',
-		
-		el: undefined,
-		
+
 		// schema to generate form
-		schema : {
-			'username' : {
-				type : 'Text',
-				title : "Email"
+		schema: {
+			'username': {
+				type: 'Text'
 			},
-			'password' : {
-				type : 'Password'
+			'password': {
+				type: 'Password'
 			}
 		},
 
-		tpl : viewTemplate,
+		tpl: loginTpl,
 
-		// setup huntkey in header
-		setUpHuntkey: function() {
-			$.ajaxSetup({
-				beforeSend: function (request) {
-                	request.setRequestHeader("huntKey", sessionStorage.getItem("huntKey"));
-            	}
-			});			
-		},
-		
 		handleModelSuccessError: function(model) {
 			this.listenTo(model, 'sync', function(response) {
-				// set the huntKey in session storage
-				sessionStorage.setItem("huntKey", response.get("huntKey"));
-				// setup hunt key
-				this.setUpHuntkey();
-				App.routing.navigate("admin/dashboard", {
-					trigger : true
-				});	
-			}.bind(this));
+				sessionKey.setSessionKey(response.get("huntKey"));
+				App.routing.navigate("admin/dashboard", {trigger: true});
+			});
 		},
 
-		handleFormSubmit : function(values) {
-			// save the password and redirect
-			this.model.set(values);
-			this.model.save();
-
+		handleFormSubmit: function(values) {
+			this.model.save(values);
 		},
-				
-		initializeBefore : function() {
+
+		initializeBefore: function() {
 			this.model = new loginModel();
 			this.bindModelValidation(this.model);
 		}

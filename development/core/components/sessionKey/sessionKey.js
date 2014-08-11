@@ -5,14 +5,20 @@ define([
 ){
 	return {
 		init: function(){
-			this._checkSessionStorage();
-			App.Mediator.on('setSessionKey', this.setAjaxHeaders);
-		},
-		_checkSessionStorage: function(){
-			var sessionStorageKey = sessionStorage.getItem("huntKey");
-			if(sessionStorageKey) {
-				this.setAjaxHeaders(sessionStorageKey);
+			var sessionKey = this.getSessionKey();
+
+			if(sessionKey) {
+				this.setAjaxHeaders(sessionKey);
 			}
+		},
+		getSessionKey: function(){
+			return sessionStorage.getItem("huntKey");
+			
+		},
+		setSessionKey: function(key){
+			sessionStorage.setItem("huntKey", key);
+			this.setAjaxHeaders(key);
+
 		},
 		setAjaxHeaders: function(key){
 			$.ajaxSetup({

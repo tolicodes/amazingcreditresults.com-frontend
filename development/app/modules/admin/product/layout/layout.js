@@ -42,7 +42,7 @@ define([
 		},
 		
 		initializeAfter: function(options) {
-			if(options && options.page == "create") {
+			if(options && options.id) {
 				this.setViewInLayout('.create', new createProductView(options));
 			} else {
 				this.productList = new listProducts(options);
