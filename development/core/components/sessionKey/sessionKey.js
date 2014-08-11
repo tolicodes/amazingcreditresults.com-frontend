@@ -6,7 +6,7 @@ define([
 	return {
 		init: function(){
 			var sessionKey = this.getSessionKey();
-			
+
 			if(sessionKey) {
 				this.setAjaxHeaders(sessionKey);
 			}

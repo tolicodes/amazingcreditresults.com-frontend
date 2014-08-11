@@ -220,12 +220,10 @@ require([
 		// create Mediatior object for messaging
 		App.Mediator = new mediator;
 
-		/*
+		
 		_([inactivityTimer, sessionKey]).each(function(mod){
-			mod._init();
-		});*/
-
-		console.log('ok')
+			mod.init();
+		});
 
 		App.routing = new application();
 		Backbone.history.start({});
