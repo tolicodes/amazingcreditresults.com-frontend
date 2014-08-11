@@ -6,10 +6,10 @@
 
 define([
 	"baseLayout",
-	"hbs!auth/templates/layout",
-	"auth/views/login",
-	"auth/views/set-password",
-	"auth/models/password-needed"
+	"hbs!../templates/layout",
+	"../views/login",
+	"../views/set-password",
+	"../models/password-needed"
 ], function(
 	BaseLayout,
 	templateView,
@@ -45,8 +45,7 @@ define([
 			var myView = new viewObject(this.options);
 			this.setViewInLayout( '.form-view', myView);						
 		},
-		
-		
+				
 		showUserName: function() {
 			var name = (this.passwordCheck.get("name").givenName)?this.passwordCheck.get("name").givenName:"-";
 			name += " ";

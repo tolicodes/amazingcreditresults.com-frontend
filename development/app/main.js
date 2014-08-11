@@ -33,19 +33,13 @@ return true;
 		hbs: "libs/require-handlebars-plugin/hbs",
 		Handlebars: "libs/handlebars/handlebars",
 		bootstrap: "../libs/bootstrap/dist/js/bootstrap",
+		bootstrapModal: "../libs/bootstrap/js/modal",
 		text: "libs/requirejs-text/text",
 		auth: "app/modules/auth",
 		buyer: "app/modules/buyer",
 		inventory: "app/modules/inventory",
 		grid: "app/modules/grid",
 		buyerDashboard: "app/modules/buyer-dashboard",
-		adminSeller: "app/modules/admin-seller",
-		adminLogin: "app/modules/admin-login",
-		adminDashboard: "app/modules/admin-dashboard",
-		adminManageOwner: "app/modules/admin-owner",
-		adminManageBuyer: "app/modules/admin-buyer",
-		adminProduct: "app/modules/admin-product",
-		home: "app/modules/home",
 		questionnaire: "app/modules/questionnaire",
 		video: "app/modules/video",
 		cart: "app/modules/cart",
@@ -61,7 +55,11 @@ return true;
 		formView: "core/components/form/form-view",
 		dataTable: "core/components/data-table/grid",
 		Mediator: "core/components/messaging/message",
+		Loader: "core/components/loader/loader",
+		Popup: "core/components/popup/popup",
 		dataPath: "app/common/data",
+		modules: "app/modules",
+		common : "app/common",
 		"backbone-forms": "../libs/backbone-forms/distribution/backbone-forms",
 		"backbone-model-file-upload": "../libs/backbone-model-file-upload/backbone-model-file-upload",
 		"backbone-relational": "../libs/backbone-relational/backbone-relational",
@@ -198,11 +196,8 @@ require([
 	'jquery',
 	'application',
 	'Mediator',
-
 	'core/components/inactivityTimer/inactivityTimer',
-	
 	'core/components/sessionKey/sessionKey',
-
 	// bootstrap css file
 	"css!libs/bootstrap/dist/css/bootstrap"
 ], function(
@@ -211,7 +206,6 @@ require([
 	$,
 	application,
 	mediator,
-
 	inactivityTimer,
 	sessionKey
 ) {

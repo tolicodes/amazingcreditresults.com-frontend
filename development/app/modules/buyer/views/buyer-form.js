@@ -5,7 +5,7 @@
 
 define([
 	"formView", 
-	"buyer/models/info", 
+	"../models/info", 
 	"dataPath/collections/states"
 ], function(
 	FormView, 

@@ -5,7 +5,7 @@
 
 define([
 	"formView", 
-	"buyer/models/bank"
+	"../models/bank"
 ], function(
 	FormView, 
 	model

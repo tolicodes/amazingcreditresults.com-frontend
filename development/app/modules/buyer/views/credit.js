@@ -5,8 +5,8 @@
 
 define([
 	"base", 
-	"buyer/models/credit",
-	"hbs!buyer/templates/credit"
+	"../models/credit",
+	"hbs!../templates/credit"
 ], function(
 	Base, 
 	model,

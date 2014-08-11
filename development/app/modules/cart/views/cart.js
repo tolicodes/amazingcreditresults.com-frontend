@@ -58,7 +58,7 @@ define([
 		initializeBefore: function() {
 			App.routing.off("addItemToCart");
 			App.routing.on("addItemToCart", function(response) {
-				this.render();
+				this.refreshList();
 			}.bind(this));
 		}
 	});

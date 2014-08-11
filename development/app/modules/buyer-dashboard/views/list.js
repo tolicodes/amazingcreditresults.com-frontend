@@ -5,8 +5,8 @@
 
 define([
 	"dataTable",
-	"adminDashboard/models/reset-password",
-	"adminDashboard/models/welcome-email"
+	"modules/admin/dashboard/models/reset-password",
+	"modules/admin/dashboard/models/welcome-email"
 	], function(
 	DataTable,
 	resetPasswordModel,

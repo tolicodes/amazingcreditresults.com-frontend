@@ -6,9 +6,9 @@
 
 define([
 	"baseLayout",
-	"hbs!inventory/templates/layout",
-	"inventory/views/inventory",
-	"inventory/views/tradelines",
+	"hbs!../templates/layout",
+	"../views/inventory",
+	"../views/tradelines",
 	"cart/layout/cart"
 ], function(
 	BaseLayout,

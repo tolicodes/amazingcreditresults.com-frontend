@@ -5,10 +5,10 @@
 
 define([
 	"base", 
-	"hbs!questionnaire/templates/questionnaire", 
-	"questionnaire/models/questionnaire", 
-	"questionnaire/models/update-answers",
-	"questionnaire/models/questions"
+	"hbs!../templates/questionnaire", 
+	"../models/questionnaire", 
+	"../models/update-answers",
+	"../models/questions"
 ], function(
 	Base, 
 	viewTemplate, 

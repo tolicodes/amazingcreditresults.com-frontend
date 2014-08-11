@@ -5,9 +5,9 @@
 
 define([
 	"baseLayout",
-	"hbs!mainLayout/templates/buyer-layout",
-	"hbs!mainLayout/templates/admin-layout",
-	"hbs!mainLayout/templates/default-layout"
+	"hbs!../templates/buyer-layout",
+	"hbs!../templates/admin-layout",
+	"hbs!../templates/default-layout"
 ], function(
 	BaseLayout,
 	templateView,
@@ -21,6 +21,7 @@ define([
 		data: {
 			loggedIn: false
 		},
+		
 		
 		initializeBefore: function(options) {
 			if(sessionStorage.getItem("huntKey")){

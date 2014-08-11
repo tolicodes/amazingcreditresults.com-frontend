@@ -5,8 +5,8 @@
 
 define([
 	"formView", 
-	"hbs!auth/templates/set-password", 
-	"auth/models/setPassword"
+	"hbs!../templates/set-password", 
+	"../models/setPassword"
 ], function(
 	FormView, 
 	viewTemplate, 

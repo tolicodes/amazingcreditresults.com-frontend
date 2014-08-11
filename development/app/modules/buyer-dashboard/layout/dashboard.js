@@ -5,7 +5,7 @@
 
 define([
 	"baseLayout",
-	"hbs!buyerDashboard/templates/layout",
+	"hbs!../templates/layout",
 	"video/views/video",
 	"cart/layout/cart",
 	"questionnaire/views/questionnaire"

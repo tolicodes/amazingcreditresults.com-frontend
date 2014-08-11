@@ -5,19 +5,26 @@
 
 define([
 	"base", 
-	"hbs!logout/templates/logout"
+	"hbs!../templates/logout",
+	"hbs!../templates/timeout-logout"
 ], function(
 	Base, 
-	viewTemplate
+	logoutTemplate,
+	timeOutLogoutTemplate
 ) {
 
 	return Base.extend({
 		
 		el: undefined,
 
-		tpl: viewTemplate,
 		
-		initializeBefore: function() {
+		
+		initializeBefore: function(options) {
+			if(options.sessionOut)
+				this.tpl = timeOutLogoutTemplate;
+			else
+				this.tpl = logoutTemplate;	
+				
 			sessionStorage.removeItem("huntKey");
 		}
 

@@ -5,27 +5,27 @@
 
 define([
 	"backbone",
-	"home/views/home",
 	"buyer/layout/buyer-layout",
+	"grid/views/grid",
 	"auth/layout/auth-layout",
 	"buyerDashboard/layout/dashboard",
-	
 	"inventory/layout/layout",
-	"adminLogin/layout/auth-layout",
-	"adminDashboard/layout/dashboard",
-	"adminManageOwner/layout/layout",
+	"modules/admin/login/layout/auth-layout",
+	"modules/admin/dashboard/layout/layout",
+	"modules/admin/owner/layout/layout",
 	'mainLayout/layout/main',
-	"adminManageBuyer/layout/dashboard",
-	"adminProduct/layout/layout",
-	"adminSeller/layout/layout",
+	"modules/admin/buyer/layout/dashboard",
+	"modules/admin/product/layout/layout",
+	"modules/admin/seller/layout/layout",
+	"modules/admin/tradelines/layout/layout", 
 	"logout/views/logout",
 	"core/components/auth/auth",
 
 	"less!cssPath/style"
 ], function(
 	Backbone,
-	home,
 	buyerInfo,
+	dataGrid,
 	authLayout,
 	buyerDashboardLayout,
 	
@@ -37,19 +37,14 @@ define([
 	adminManageBuyerLayout,
 	adminCreateProductLayout,
 	adminSellerLayout,
+	adminTradelineLayout,
 	logoutView,
 	auth
 ) {
 
 	return Backbone.Router.extend({
-		routes: {
-			'setPassword/:apikey': 'setPassword',
-			'login/:apikey': 'login',
-			
-			'checkout/:apikey': 'checkout',
-			'buyer/:apikey': 'checkout',
-			'logout': 'logout',
 
+		routes: {
 			// 404 Page
 			"*splat": "routeNotFound"
 		},
@@ -58,33 +53,39 @@ define([
 			'': buyerDashboardLayout,
 			'dashboard': buyerDashboardLayout,
 			'inventory': inventoryLayout,
-			'checkout/apikey': buyerInfo,
+			'checkout': buyerInfo,
 
+			'setPassword/:apikey': authLayout,
+			'login/:apikey': authLayout,
+
+			'logout': logoutView,
 
 			'admin/dashboard': adminDashboardLayout,
 			'admin/login': adminLoginLayout,
 			'admin/seller': adminSellerLayout,
+			"admin/seller/add": adminSellerLayout,
 			"admin/owner": adminManageOwnerLayout,
 			'admin/buyer': adminManageBuyerLayout,
+			'admin/tradelines': adminTradelineLayout,
+			'admin/tradelines/:page': adminTradelineLayout,
+			'admin/tradelines/:page/:id': adminTradelineLayout,
 
 			"admin/user/:id": adminManageBuyerLayout,
 
-			"admin/seller/add": adminSellerLayout,
-			"admin/seller/add/:userId": adminManageBuyerLayout,
+			"admin/product/:page": adminCreateProductLayout,
+			//"admin/product/create/:id": adminCreateProductLayout,
 
-
-			"admin/product/create": adminCreateProductLayout,
-
-			"admin/product/create/:id": adminCreateProductLayout,
+			"admin/user/add/:userId": adminManageBuyerLayout,
+			"admin/seller/:page": adminSellerLayout
 		},
 
 		// permission to access pages without login
-		noAuth: ["login/:apikey", "setPassword/:apikey", "admin/login", "logout"],
+		noAuth: ["login", "setPassword", "admin/login", "logout"],
 
 
 		initialize: function() {
 			this._appendMainContainer();
-			
+
 			_.bindAll(this, '_createPage');
 
 			_(this.pages).each(function(pageView, route){
@@ -92,7 +93,7 @@ define([
 
 				optsArray = _.map(optsArray, function(opt){
 					return opt.substr(1);
-				})
+				});
 
 				this.route(route, function(){
 					var opts = {};
@@ -162,6 +163,22 @@ define([
 		},
 
 		/* Owner routes function */
+
+		addAdminSeller: function(id) {
+			this.loadPage(adminSellerLayout, "adminSeller", {
+				pageType: "admin",
+				page: "create",
+				id: id
+			});
+		},
+
+		adminCreateProduct: function(productId) {
+			this.loadPage(adminCreateProductLayout, "adminCreateProduct", {
+				pageType: "admin",
+				page: "create",
+				productId: productId
+			});
+		},
 
 		// set password
 		setPassword: function(apiKey) {
