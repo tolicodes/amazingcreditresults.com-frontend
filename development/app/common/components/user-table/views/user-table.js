@@ -65,7 +65,7 @@ define([
 			name: "edit",
 			cell: "actionButton",
 			callback: function(userId) {
-				App.routing.navigate("admin/seller/add/" + userId, {
+				App.routing.navigate("admin/user/add/" + userId, {
 					trigger: true
 				});
 			}

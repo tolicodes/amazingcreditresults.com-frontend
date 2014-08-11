@@ -6,12 +6,10 @@
 define([
 	"baseLayout",
 	"hbs!../templates/layout",
-	"../views/list",
 	"../views/create-owner"
 ], function(
 	BaseLayout,
 	templateView,
-	listView,
 	createOwnerView
 ) {
 	return BaseLayout.extend({

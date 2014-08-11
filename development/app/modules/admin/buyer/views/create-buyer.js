@@ -5,10 +5,12 @@
 
 define([
 	"buyer/views/buyer-form", 
-	"../models/create-buyer"
+	"../models/create-buyer",
+	 "../views/transactions"
 ], function(
 	BuyerFormView, 
-	createBuyerModel
+	createBuyerModel,
+	TransactionsView
 ) {
 
 	return BuyerFormView.extend({
@@ -37,15 +39,13 @@ define([
 				type : 'Checkbox',
 				title : "Do Not Send Welcome Email"				
 			}
-			
 		},
 		
 		handleModelSuccessError: function(model) {
 			this.listenTo(model, 'sync', function(response) {
-				App.Mediator.trigger("messaging:showAlert", "Buyer created successfully.", "Green");
-				App.routing.navigate("admin/dashboard", {
-					trigger : true
-				});	
+				var msg = (this.userId)?"User updated successfully.":"Buyer created successfully.";
+				App.Mediator.trigger("messaging:showAlert", msg, "Green");
+				history.back(-1);
 			}.bind(this));
 		},
 		
@@ -56,8 +56,30 @@ define([
 		},
 		
 		initializeBefore : function(options) {
-			this.model = new createBuyerModel();
-			this.bindModelValidation(this.model);
-		}
+			if (options && options.userId) {
+				this.submitButtonText = "Edit";
+				this.userId = options.userId;
+				this.model = new createBuyerModel({id: this.userId});
+				this.listenTo(this.model, 'sync', function() {
+					this.render();
+          			this.renderTransactions();
+				}.bind(this));
+				
+				this.listenTo(this.model, 'error', function(model, response) {
+					var json = (response.responseText)?JSON.parse(response.responseText):{};
+					App.Mediator.trigger("messaging:showAlert", json.Error, "Red");
+				});
+
+				this.bindModelValidation(this.model);
+				this.model.fetch();
+			} else {
+				this.model = new createBuyerModel();
+				this.bindModelValidation(this.model);
+			}
+		},
+		    renderTransactions: function() {
+      new TransactionsView({model: this.model}).render();
+    }
+
 	});
 });

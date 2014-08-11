@@ -3,40 +3,40 @@
 // Requires define
 
 define([
-	], function(
-	) {
+	
+], function(
+	
+) {
 
-	var base = window.location.origin, 
-	apiPath = '/api/v1/', endpoints = {
+	var base = window.location.origin, apiPath = '/api/v1/', endpoints = {
 		"buyerLogin" : "buyer/login",
 		"buyerSetPassword" : "buyer/setPassword",
 		"authSelf" : "myself",
-		"needToSetPassword": "buyer/needToSetPassword",
+		"needToSetPassword" : "buyer/needToSetPassword",
 		"adminClients" : "admin/clients",
-		"saveQuestionnaireAnswers": "buyer/saveQuestionnaireAnswers",
-		"adminLogin": "owner/login",
-		"tradeline": "tradelines",
+		"saveQuestionnaireAnswers" : "buyer/saveQuestionnaireAnswers",
+		"adminLogin" : "owner/login",
+		"tradeline" : "tradelines",
 		"createOwner" : "admin/owners",
-		"resetPassword": "admin/clients/resetPassword",
-		"welcomeEmail": "admin/clients/welcome",
-		"adminProduct": "admin/products",
+		"resetPassword" : "admin/clients/resetPassword",
+		"welcomeEmail" : "admin/clients/welcome",
+		"adminProduct" : "admin/products",
 		"products" : "owner/products",
-		"cart": "cart/tradelines",
-		"importBuyer": "owner/bulkImport",
-		"account": "account",
-        "createTransaction": "admin/clients/balance",
-        "csvFilePath" : "owner/clientsExample.csv",
-        "seller": "admin/clients?role['seller']=true",
-        "adminTradelines": "owner/tradelines",
-        			"userList": "admin/clients",
-			"sellersList": "admin/clients?seller=true",
-			"buyersList": "admin/clients?buyer=true",
-			"ownersList": "admin/clients?buyer=true"
-	},
-	
-	addParams = function(url, params) {
+		"cart" : "cart/tradelines",
+		"importBuyer" : "owner/bulkImport",
+		"account" : "account",
+		"createTransaction" : "admin/clients/balance",
+		"csvFilePath" : "owner/clientsExample.csv",
+		"seller" : "admin/clients?role['seller']=true",
+		"adminTradelines" : "owner/tradelines",
+		"userList" : "admin/clients",
+		"sellersList" : "admin/clients?seller=true",
+		"buyersList" : "admin/clients?roles['buyer']=true",
+		"ownersList" : "admin/clients?buyer=true"
+	}, addParams = function(url, params) {
 		_.each(params, function(p) {
-			if(p) url += "/" + p;
+			if (p)
+				url += "/" + p;
 		});
 		return url;
 	};
@@ -44,14 +44,14 @@ define([
 	addFilters = function(url, params) {
 		var qFound = false;
 		_.each(params, function(p, k, j) {
-			if(p) {
-				if(!qFound) {
-					url += (url.indexOf("?") != -1)?"&":"?";
+			if (p) {
+				if (!qFound) {
+					url += (url.indexOf("?") != -1) ? "&" : "?";
 					qFound = true;
 				} else {
 					url += "&";
 				}
-				url += k+"=" + p;
+				url += k + "=" + p;
 			}
 		});
 		return url;
@@ -59,16 +59,18 @@ define([
 
 	/*
 	 * Params eg :
-	 * {id: 123, name: sanjay} 
+	 * {id: 123, name: sanjay}
 	 * */
 
 	return {
 		getUrl : function(name, params, huntKey, filters) {
-			var endpoint = endpoints[name],
-			url = base + apiPath + endpoint;
-			if(huntKey) url += "?huntKey=" + sessionStorage.getItem("huntKey");
-			if(params) url = addParams(url, params);
-			if(filters) url = addFilters(url, filters);
+			var endpoint = endpoints[name], url = base + apiPath + endpoint;
+			if (huntKey)
+				url += "?huntKey=" + sessionStorage.getItem("huntKey");
+			if (params)
+				url = addParams(url, params);
+			if (filters)
+				url = addFilters(url, filters);
 			return url;
 		}
 	};

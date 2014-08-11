@@ -5,12 +5,10 @@
 
 define([
 	"buyer/views/buyer-form", 
-	"modules/admin/buyer/models/create-buyer",
-	"modules/admin/buyer/models/user-info"	
+	"modules/admin/buyer/models/create-buyer"
 ], function(
 	BuyerFormView, 
-	createBuyerModel,
-	userInfo
+	createBuyerModel
 ) {
 
 	return BuyerFormView.extend({
@@ -60,11 +58,10 @@ define([
 		},
 		
 		initializeBefore : function(options) {
-			console.log(options);
 			if (options && options.id) {
 				this.submitButtonText = "Update Seller";
 				this.userId = options.id;
-				this.model = new userInfo({id: this.userId});
+				this.model = new createBuyerModel({id: this.userId});
 				this.model.id = this.userId;
 				this.bindModelValidation(this.model);
 				this.listenTo(this.model, 'sync', function(response) {

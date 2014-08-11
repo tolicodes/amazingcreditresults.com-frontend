@@ -65,7 +65,7 @@ define([
 				name : "edit",
 				cell : "actionButton",
 				callback: function(id) {
-					App.routing.navigate("admin/tradelines/"+id, {
+					App.routing.navigate("admin/tradelines/create/"+id, {
 						trigger : true
 					});
 				}

@@ -17,6 +17,7 @@ define([
 	"modules/admin/buyer/layout/dashboard",
 	"modules/admin/product/layout/layout",
 	"modules/admin/seller/layout/layout",
+	"modules/admin/tradelines/layout/layout", 
 	"logout/views/logout",
 	"core/components/auth/auth",
 
@@ -36,6 +37,7 @@ define([
 	adminManageBuyerLayout,
 	adminCreateProductLayout,
 	adminSellerLayout,
+	adminTradelineLayout,
 	logoutView,
 	auth
 ) {
@@ -43,48 +45,38 @@ define([
 	return Backbone.Router.extend({
 
 		routes: {
-			'': 'dashboard',
-			
-			'grid': 'dataGrid',
-			'dashboard': 'dashboard',
-			'setPassword/:apikey': 'setPassword',
-			'login/:apikey': 'login',
-			'inventory': 'inventory',
-			'checkout/:apikey': 'checkout',
-			'buyer/:apikey': 'checkout',
-			'logout': 'logout',
-
-			// owner routes
-			
-			"admin/buyer": "adminBuyer",
-			
-			"admin/seller/add": "addAdminSeller",
-			//"admin/seller/add/:id": "addAdminSeller",
-			
-
-			"admin/product/create": "adminCreateProduct",
-			"admin/product/create/:id": "adminCreateProduct",
-
-			
-
 			// 404 Page
 			"*splat": "routeNotFound"
 		},
 
 		pages: {
+			'': buyerDashboardLayout,
 			'dashboard': buyerDashboardLayout,
 			'inventory': inventoryLayout,
 			'checkout': buyerInfo,
 
+			'setPassword/:apikey': authLayout,
+			'login/:apikey': authLayout,
+
+			'logout': logoutView,
+
 			'admin/dashboard': adminDashboardLayout,
 			'admin/login': adminLoginLayout,
 			'admin/seller': adminSellerLayout,
+			"admin/seller/add": adminSellerLayout,
 			"admin/owner": adminManageOwnerLayout,
 			'admin/buyer': adminManageBuyerLayout,
+			'admin/tradelines': adminTradelineLayout,
+			'admin/tradelines/:page': adminTradelineLayout,
+			'admin/tradelines/:page/:id': adminTradelineLayout,
 
 			"admin/user/:id": adminManageBuyerLayout,
 
-			"admin/seller/add/:userId": adminManageBuyerLayout
+			"admin/product/:page": adminCreateProductLayout,
+			//"admin/product/create/:id": adminCreateProductLayout,
+
+			"admin/user/add/:userId": adminManageBuyerLayout,
+			"admin/seller/:page": adminSellerLayout
 		},
 
 		// permission to access pages without login

@@ -32,14 +32,11 @@ define([
 		},
 
 		initializeBefore: function(options) {
-			if(options && options.page) {
-				this.template = createLayout;
-			} else {
-				this.template = templateView;
-			}
+			this.template = (options && options.page)?createLayout:templateView;
 		},
 		
 		initializeAfter: function(options) {
+			console.log(options);
 			if(options && options.page) {
 				this.setViewInLayout('.create', new addSeller(options));
 			} else { 	

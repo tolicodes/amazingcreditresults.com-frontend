@@ -18,6 +18,8 @@ define([
 ) {
 	return BaseLayout.extend({
 		
+		pageType: "admin",
+		
 		events: {
 			'click .add-new-card': 'addNewCard',
 			'click .delete-selected': 'deleteSelected'
@@ -35,11 +37,8 @@ define([
 		},
 		
 		initializeBefore: function(options) {
-			if(options && options.page == "create") {
-				this.template = editLayout;
-			} else {
-				this.template = templateView;
-			}
+			console.log(options);
+			this.template = (options && options.page == "create")?editLayout:templateView;
 		},
 		
 		initializeAfter: function(options) {
@@ -47,7 +46,7 @@ define([
 				this.setViewInLayout('.create', new createProductView(options));
 			} else {
 				this.productList = new listProducts(options);
-				this.setViewInLayout('.list-product', this.productList);							
+				this.setViewInLayout('.list-product', this.productList);											
 			}
 		}
 	});

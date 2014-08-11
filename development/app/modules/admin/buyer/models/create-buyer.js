@@ -10,7 +10,7 @@ define([
 ) {
 	return BaseModel.extend({
 		url : function() {
-			return this.getUrl((this.buyer)?"authSelf":"adminClients");
+			return this.getUrl((this.buyer)?"authSelf":"adminClients", {id: this.id});
 		},
 		
 		defaults: {
@@ -62,7 +62,15 @@ define([
 				required : true,
 				msg : 'Please enter email.'
 			}]
+		},
+		
+		parse: function(result) {
+			if(result.transactions)
+				return _.extend(result.data, {transactions: result.transactions});
+			else
+				result.data;	
 		}
+
 
 	});
 }); 

@@ -19,7 +19,7 @@ define([
 	addView
 ) {
 	return BaseLayout.extend({
-
+		pageType: "admin",
 		events: {
 			'click .delete-selected': 'deleteSelected'
 		},
@@ -29,11 +29,12 @@ define([
 		},
 		
 		initializeBefore: function(options) {
-			this.template = (options.tradelineId || options.pageName == "create")?editLayout:templateView;
+			this.template = (options.id || options.page == "create")?editLayout:templateView;
 		},
 
 		initializeAfter: function(options) {
-			if(options.tradelineId || options.pageName == "create") {
+			console.log(options);
+			if(options.id || options.page == "create") {
 				this.setViewInLayout('.list-view', new addView(options), true);
 			} else {
 				this.listView = new listView(options);

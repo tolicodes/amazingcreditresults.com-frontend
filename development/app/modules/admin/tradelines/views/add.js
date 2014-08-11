@@ -115,9 +115,8 @@ define([
 		initializeBefore: function(options) {
 			this.model = new createModel();
 			this.bindModelValidation(this.model);			
-			console.log(options);
-			if(options.tradelineId) {
-				this.tradelineId = options.tradelineId;
+			if(options.id) {
+				this.tradelineId = options.id;
 				this.submitButtonText = "Edit Tradelines";
 				this.model.set({id: this.tradelineId});
 				this.listenTo(this.model, 'sync',  this.render.bind(this));			
