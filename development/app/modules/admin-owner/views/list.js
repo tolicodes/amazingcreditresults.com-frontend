@@ -4,7 +4,7 @@
 // Return Backbone View {Object}
 
 define([
-	"dataTable"
+	"app/common/components/user-table/views/user-table"
 ], function(
 	DataTable
 ) {

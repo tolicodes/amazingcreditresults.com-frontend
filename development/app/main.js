@@ -4,16 +4,8 @@
 // Requires `require`, `define`
 
 require.config({
-	urlArgs: "bust=1407176645869",
 	baseUrl: "./",
 	locale: "en-us",
-	config: {
-		text: {
-			useXhr: function (url, protocol, hostname, port) {
-return true;
-}
-		}
-	},
 	paths: {
 		backbone: "../libs/backbone/backbone",
 		backboneValidator: "libs/backbone-validation/dist/backbone-validation-amd",
@@ -178,15 +170,7 @@ return true;
 				"jquery"
 			]
 		}
-	},
-	priority: [
-
-	],
-	jquery: "1.10.2",
-	waitSeconds: 5,
-	packages: [
-
-	]
+	}
 });
 
 // initializing the router "application" on startup
@@ -200,7 +184,6 @@ require([
 	'Mediator',
 
 	'core/components/inactivityTimer/inactivityTimer',
-	
 	'core/components/sessionKey/sessionKey',
 
 	// bootstrap css file

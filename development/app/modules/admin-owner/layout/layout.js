@@ -18,6 +18,7 @@ define([
 		pageType: 'admin',
 		template: templateView,
 		initializeAfter: function(options) {
+			this.setViewInLayout('.owner-list', new listView(options));
 			this.setViewInLayout('.create-buyer', new createOwnerView(options));
 		}
 	});

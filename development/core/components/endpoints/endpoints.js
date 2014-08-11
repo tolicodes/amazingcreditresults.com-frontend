@@ -28,7 +28,7 @@ define([], function() {
 			"userList": "admin/clients",
 			"sellersList": "admin/clients?seller=true",
 			"buyersList": "admin/clients?buyer=true",
-			"ownersList": "admin/clients?buyer=true"
+			"ownersList": "admin/clients?owner=true"
 		},
 
 		addParams = function(url, params) {
