@@ -18,7 +18,7 @@ define([], function() {
 			"createOwner": "admin/owners",
 			"resetPassword": "admin/clients/resetPassword",
 			"welcomeEmail": "admin/clients/welcome",
-			"adminProduct": "admin/products",
+			"adminProduct": "owner/products",
 			"products": "owner/products",
 			"cart": "cart/tradelines",
 			"importBuyer": "owner/bulkImport", 

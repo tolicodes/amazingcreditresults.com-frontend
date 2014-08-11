@@ -17,6 +17,7 @@ define([
 	createProductView
 ) {
 	return BaseLayout.extend({
+		pageType: 'admin',
 		
 		events: {
 			'click .add-new-card': 'addNewCard',

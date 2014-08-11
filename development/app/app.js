@@ -16,7 +16,7 @@ define([
 	"adminManageOwner/layout/layout",
 	'mainLayout/layout/main',
 	"adminManageBuyer/layout/dashboard",
-	"adminProduct/layout/layout",
+	"adminProduct/views/create",
 	"adminSeller/layout/layout",
 	"logout/views/logout",
 	"core/components/auth/auth",

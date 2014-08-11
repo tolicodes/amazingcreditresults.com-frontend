@@ -4,85 +4,90 @@
 // Return Backbone View {Object}
 
 define([
-	"formView", 
+	"formView",
 	"adminProduct/models/create"
 ], function(
-	FormView, 
+	FormView,
 	createProductModel
 ) {
 
 	return FormView.extend({
-		el : undefined,
+		pageType: 'admin',
+
 		// set the submit button text
-		submitButtonText : "Create Card",
-		
+		submitButtonText: "Create Card",
+
 		// add schema to common schema
 		schema: {
-			'bank' : {
-				type : 'Text',
-				title : "Issuing Bank"
+			'bank': {
+				type: 'Text',
+				title: "Issuing Bank"
 			},
-			
-			'name' : {
-				type : 'Text',
-				title : "Product Name"
+
+			'name': {
+				type: 'Text',
+				title: "Product Name"
 			},
-			
-			'ncRating': {type : 'Select', options: ["None", "Silver", "Gold", "Bronze"]},
-			'bcRating': {type : 'Select', options: ["None", "Silver", "Gold", "Bronze"]},
-			'moRating': {type : 'Select', options: ["None", "Silver", "Gold", "Bronze"]},
-			'improvingShortCreditHistory': {type : 'Select', options: ["None", "Silver", "Gold", "Bronze"]},
-			'improvingBadCreditScore': {type : 'Select', options: ["None", "Silver", "Gold", "Bronze"]},
-			'improvingMaxedOutCredit': {type : 'Select', options: ["None", "Silver", "Gold", "Bronze"]},
+
+			'ncRating': {
+				type: 'Select',
+				options: ["None", "Silver", "Gold", "Bronze"]
+			},
+			'bcRating': {
+				type: 'Select',
+				options: ["None", "Silver", "Gold", "Bronze"]
+			},
+			'moRating': {
+				type: 'Select',
+				options: ["None", "Silver", "Gold", "Bronze"]
+			},
 
 			'reportsToExperian': {
-				type : 'Checkbox',
+				type: 'Checkbox',
 				name: "reportsToExperian",
-				title : "Experian"				
+				title: "Experian"
 			},
-			
+
 			'reportsToEquifax': {
-				type : 'Checkbox',
+				type: 'Checkbox',
 				name: "reportsToEquifax",
-				title : "Equifax"				
+				title: "Equifax"
 			},
-			
+
 			'reportsToTransunion': {
-				type : 'Checkbox',
+				type: 'Checkbox',
 				name: "reportsToTransunion",
-				title : "TransUnion"				
+				title: "TransUnion"
 			},
-			
+
 			'type': {
-				type : 'Text',
-				title : "Type"				
+				type: 'Select',
+				options: ['Visa', 'MasterCard', 'Amex', 'Discover'],
+				title: "Type"
 			},
-			
+
 			'notes': {
-				type : 'TextArea',
-				title : "Notes"				
+				type: 'TextArea',
+				title: "Notes"
 			},
 		},
-		
+
 		handleModelSuccessError: function(model) {
-			this.listenTo(createProduct, 'sync', function(response) {
+			this.listenTo(this.model, 'sync', function(response) {
 				App.Mediator.trigger("messaging:showAlert", "Product added successfully.", "Green");
-				App.routing.navigate("admin/dashboard", {
-					trigger : true
-				});
-			}.bind(this));			
+			}.bind(this));
 		},
-		
+
 		// function handles form submission and success and error handling.
-		handleFormSubmit : function(values) {
+		handleFormSubmit: function(values) {
 			this.model.set(values);
 			this.model.save();
 		},
-		
+
 		initializeBefore: function() {
 			this.model = new createProductModel();
-			this.bindModelValidation(this.model);			
+			this.bindModelValidation(this.model);
 		}
-		
+
 	});
 });
