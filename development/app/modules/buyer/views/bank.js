@@ -12,8 +12,6 @@ define([
 ) {
 
 	return FormView.extend({
-		el : undefined,
-
 		formClass: "full-width",
 
 		schema: {

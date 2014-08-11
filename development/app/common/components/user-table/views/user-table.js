@@ -1,13 +1,13 @@
 define([
 	"dataTable",
-	"adminDashboard/models/reset-password",
-	"adminDashboard/models/welcome-email",
-	"adminDashboard/models/update-buyer"
+	"adminDashboard/models/update-buyer",
+	"./reset-password-button-cell",
+	"./welcome-email-cell"
 ], function(
 	DataTable,
-	resetPasswordModel,
-	welcomeEmailModel,
-	updateBuyerModel
+	updateBuyerModel,
+	resetPasswordButtonCell,
+	welcomeEmailCell
 ) {
 
 	return DataTable.extend({
@@ -30,11 +30,12 @@ define([
 			name: "name.familyName",
 			cell: "string",
 			editable: false,
+			/*
 			formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
 				fromRaw: function(rawValue, model) {
 					return model.get("name").familyName;
 				}
-			})
+			})*/
 		}, {
 			label: "Roles",
 			name: "roles",
@@ -65,7 +66,7 @@ define([
 			name: "edit",
 			cell: "actionButton",
 			callback: function(userId) {
-				App.routing.navigate("admin/seller/add/" + userId, {
+				App.routing.navigate("admin/seller/" + userId, {
 					trigger: true
 				});
 			}
@@ -78,12 +79,12 @@ define([
 			sortable: false,
 			label: "Reset Password Email",
 			name: "resetButton",
-			cell: "resetButton"
+			cell: resetPasswordButtonCell
 		}, {
 			sortable: false,
 			label: "Welcome Email",
 			name: "actions",
-			cell: "welcomeEmail"
+			cell: welcomeEmailCell
 		}],
 
 		/**
@@ -95,79 +96,12 @@ define([
 			return result.data;
 		},
 
-				addResetButton: function(resetPasswordModel) {
-			var ResetButtonCell = Backgrid.ResetButtonCell = Backbone.View.extend({
-			    template: _.template("<button>Reset password</button>"),
-			    events: {
-			      "click": "resetPassword"
-			    },
-			    
-			    tagName: 'td',
-			    
-			    className: "boolean-cell renderable",
-			    
-			    initialize: function(options) {
-			    	if(options.model) {
-				    	this.model = new resetPasswordModel();
-				    	this.model.userId = options.model.get("id");
-				    }
-			    },
-			    
-			    resetPassword: function (e) {
-			      e.preventDefault();
-				  
-					this.listenTo(this.model, 'sync', function() {
-				  		App.Mediator.trigger("messaging:showAlert", "Reset Password email send successfully. Please check your inbox..", "Green");
-					}.bind(this));
-		  
-				  this.model.save();
-			    },
-			    
-			    render: function () {
-			      this.$el.html(this.template());
-			      this.delegateEvents();
-			      return this;
-			    }
-			});
-		},
-
 		welcomeEmailButton: function(welcomeEmailModel) {
-			var WelcomeEmailCell = Backgrid.WelcomeEmailCell = Backbone.View.extend({
-			    template: _.template("<button>Send Welcome Email</button>"),
-			    events: {
-			      "click": "welcomeEmail"
-			    },
-			    
-			    tagName: 'td',
-			    className: "boolean-cell renderable",
-			    
-			    initialize: function(options) {
-			    	if(options.model) {
-				    	this.model = new welcomeEmailModel();
-				    	this.model.userId = options.model.get("id");
-				    }
-			    },
-			    
-			    welcomeEmail: function (e) {
-			      e.preventDefault();
-					this.listenTo(this.model, 'sync', function() {
-				  		App.Mediator.trigger("messaging:showAlert", "Welcome email send successfully. Please check your inbox..", "Green");
-					}.bind(this));
-
-				  this.model.save();
-			    },
-			    
-			    render: function () {
-			      this.$el.html(this.template());
-			      this.delegateEvents();
-			      return this;
-			    }
-			});
+			
 		},
 
 		initializeBefore: function() {
-			this.addResetButton(resetPasswordModel);
-			this.welcomeEmailButton(welcomeEmailModel);
+			this.welcomeEmailButton();
 			this.addCheckbox(updateBuyerModel);
 			this.addActionButton();
 		}

@@ -183,7 +183,7 @@ return true;
 
 	],
 	jquery: "1.10.2",
-	waitSeconds: 60,
+	waitSeconds: 5,
 	packages: [
 
 	]
@@ -220,9 +220,12 @@ require([
 		// create Mediatior object for messaging
 		App.Mediator = new mediator;
 
+		/*
 		_([inactivityTimer, sessionKey]).each(function(mod){
-			mod.init();
-		});
+			mod._init();
+		});*/
+
+		console.log('ok')
 
 		App.routing = new application();
 		Backbone.history.start({});

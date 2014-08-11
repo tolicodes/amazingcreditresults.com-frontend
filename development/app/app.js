@@ -7,7 +7,6 @@ define([
 	"backbone",
 	"home/views/home",
 	"buyer/layout/buyer-layout",
-	"grid/views/grid",
 	"auth/layout/auth-layout",
 	"buyerDashboard/layout/dashboard",
 	
@@ -27,7 +26,6 @@ define([
 	Backbone,
 	home,
 	buyerInfo,
-	dataGrid,
 	authLayout,
 	buyerDashboardLayout,
 	
@@ -44,40 +42,24 @@ define([
 ) {
 
 	return Backbone.Router.extend({
-
 		routes: {
-			'': 'dashboard',
-			
-			'grid': 'dataGrid',
-			'dashboard': 'dashboard',
 			'setPassword/:apikey': 'setPassword',
 			'login/:apikey': 'login',
-			'inventory': 'inventory',
+			
 			'checkout/:apikey': 'checkout',
 			'buyer/:apikey': 'checkout',
 			'logout': 'logout',
-
-			// owner routes
-			
-			"admin/buyer": "adminBuyer",
-			
-			"admin/seller/add": "addAdminSeller",
-			//"admin/seller/add/:id": "addAdminSeller",
-			
-
-			"admin/product/create": "adminCreateProduct",
-			"admin/product/create/:id": "adminCreateProduct",
-
-			
 
 			// 404 Page
 			"*splat": "routeNotFound"
 		},
 
 		pages: {
+			'': buyerDashboardLayout,
 			'dashboard': buyerDashboardLayout,
 			'inventory': inventoryLayout,
-			'checkout': buyerInfo,
+			'checkout/apikey': buyerInfo,
+
 
 			'admin/dashboard': adminDashboardLayout,
 			'admin/login': adminLoginLayout,
@@ -87,16 +69,22 @@ define([
 
 			"admin/user/:id": adminManageBuyerLayout,
 
-			"admin/seller/add/:userId": adminManageBuyerLayout
+			"admin/seller/add": adminSellerLayout,
+			"admin/seller/add/:userId": adminManageBuyerLayout,
+
+
+			"admin/product/create": adminCreateProductLayout,
+
+			"admin/product/create/:id": adminCreateProductLayout,
 		},
 
 		// permission to access pages without login
-		noAuth: ["login", "setPassword", "admin/login", "logout"],
+		noAuth: ["login/:apikey", "setPassword/:apikey", "admin/login", "logout"],
 
 
 		initialize: function() {
 			this._appendMainContainer();
-
+			
 			_.bindAll(this, '_createPage');
 
 			_(this.pages).each(function(pageView, route){
@@ -174,22 +162,6 @@ define([
 		},
 
 		/* Owner routes function */
-
-		addAdminSeller: function(id) {
-			this.loadPage(adminSellerLayout, "adminSeller", {
-				pageType: "admin",
-				page: "create",
-				id: id
-			});
-		},
-
-		adminCreateProduct: function(productId) {
-			this.loadPage(adminCreateProductLayout, "adminCreateProduct", {
-				pageType: "admin",
-				page: "create",
-				productId: productId
-			});
-		},
 
 		// set password
 		setPassword: function(apiKey) {

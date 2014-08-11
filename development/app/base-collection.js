@@ -5,18 +5,21 @@
 
 define([
 	"backbone",
-	"core/components/endpoints/endpoints"
-	], function(
+	"core/components/endpoints/endpoints",
+	"baseModel"
+], function(
 	Backbone,
-	EndPoint
-	) {
+	EndPoint,
+	BaseModel
+) {
 	return Backbone.Collection.extend({
+		//model: BaseModel,
 		
-		// fetch the modelautomatically if set to true
+		// fetch the model automatically if set to true
 		autoFetch: false,
-		
+
 		initialize: function() {
-			if(this.autoFetch) this.fetch();
+			if (this.autoFetch) this.fetch();
 		},
 
 		// get the url
