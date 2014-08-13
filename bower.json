@@ -20,26 +20,12 @@
     "tests"
   ],
   "dependencies": {
-    "requirejs": "*",
-    "bootstrap": "~3.1.1",
-    "backbone": "*",
-    "backbone.paginator": "2.0.2",
-    "backgrid-paginator": "master",
-    "backgrid": "*",
-    "require-css": "*",
-    "require-less": "*",
-    "require-handlebars-plugin": "*",
-    "jquery": "*",
-    "underscore": "*",
-    "handlebars": "*",
-    "requirejs-text": "*",
-    "backbone-forms": "master",
-    "backbone-relational": "*",
-    "layoutmanager": "*",
-    "backbone-validation": "*",
-    "backgrid-select-all": "",
-    "backbone-model-file-upload": "https://github.com/homeslicesolutions/backbone-model-file-upload.git",
-    "blueimp-file-upload": "*",
-    "backbone-deep-model": "~0.10.4"
+    "backbone": "~1.1.2",
+    "requirejs": "~2.1.14",
+    "jquery": "~2.1.1",
+    "require-css": "~0.1.5",
+    "require-less": "~0.1.2",
+    "bootstrap": "~3.2.0",
+    "underscore": "~1.6.0"
   }
 }

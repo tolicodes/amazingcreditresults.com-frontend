@@ -1,44 +1,9 @@
-// app.js
-// --------------
-// Requires define
-// Return {Object} App
-
 define([
 	"backbone",
-	"home/views/home",
-	"buyer/layout/buyer-layout",
-	"auth/layout/auth-layout",
-	"buyerDashboard/layout/dashboard",
 	
-	"inventory/layout/layout",
-	"adminLogin/layout/auth-layout",
-	"adminDashboard/layout/dashboard",
-	"adminManageOwner/layout/layout",
-	'mainLayout/layout/main',
-	"adminManageBuyer/layout/dashboard",
-	"adminProduct/views/create",
-	"adminSeller/layout/layout",
-	"logout/views/logout",
-	"core/components/auth/auth",
-
-	"less!cssPath/style"
+	"less!common/css/style"
 ], function(
-	Backbone,
-	home,
-	buyerInfo,
-	authLayout,
-	buyerDashboardLayout,
-	
-	inventoryLayout,
-	adminLoginLayout,
-	adminDashboardLayout,
-	adminManageOwnerLayout,
-	mainLayout,
-	adminManageBuyerLayout,
-	adminCreateProductLayout,
-	adminSellerLayout,
-	logoutView,
-	auth
+	Backbone
 ) {
 
 	return Backbone.Router.extend({
@@ -55,27 +20,7 @@ define([
 		},
 
 		pages: {
-			'': buyerDashboardLayout,
-			'dashboard': buyerDashboardLayout,
-			'inventory': inventoryLayout,
-			'checkout/apikey': buyerInfo,
-
-
-			'admin/dashboard': adminDashboardLayout,
-			'admin/login': adminLoginLayout,
-			'admin/seller': adminSellerLayout,
-			"admin/owner": adminManageOwnerLayout,
-			'admin/buyer': adminManageBuyerLayout,
-
-			"admin/user/:id": adminManageBuyerLayout,
-
-			"admin/seller/add": adminSellerLayout,
-			"admin/seller/add/:userId": adminManageBuyerLayout,
-
-
-			"admin/product/create": adminCreateProductLayout,
-
-			"admin/product/create/:id": adminCreateProductLayout,
+			
 		},
 
 		// permission to access pages without login

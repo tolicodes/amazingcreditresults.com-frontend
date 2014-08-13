@@ -4,5 +4,9 @@
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-contrib-watch": "~0.4.4"
+  },
+  "dependencies": {
+    "bower": "^1.3.9",
+    "bower-requirejs": "^1.0.0"
   }
 }
