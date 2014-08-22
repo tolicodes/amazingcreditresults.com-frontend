@@ -1,4 +1,8 @@
-define([], function() {
+define([
+	"core/mediator/mediator"
+], function(
+	Mediator
+) {
 	/**
 	 * Turns arguments into a real array (so that we can do stuff like concat on it)
 	 * @param  {arguments} args Arguments
@@ -175,7 +179,14 @@ define([], function() {
 					this.listenTo(this, key, this[callback]);
 				}, this);
 			}, this);
-		}
+		},
+
+		relayMediator: function(){
+			this.relayTriggers('Mediator');
+			this.relayTriggers('M', this.Mediator);
+		},
+
+		Mediator: Mediator
 	};
 
 	return {
@@ -193,6 +204,7 @@ define([], function() {
 					this.implementHooks();
 					this.insertTriggers(this._insertTriggers);
 					this.mergeSuperProperties(this._mergeSuperProperties);
+					this.relayMediator();
 
 					this.trigger.apply(this, ['initialize:before'].concat(args));
 

@@ -23,7 +23,9 @@ require.config({
 		handlebars: "../libs/handlebars/handlebars",
 		"hbs-builder": "../libs/requirejs-hbs/hbs-builder",
 		"requirejs-text": "../libs/requirejs-text/text",
-		"backbone-validation": "../libs/backbone-validation/dist/backbone-validation"
+		"backbone-validation": "../libs/backbone-validation/dist/backbone-validation",
+		moment: "../libs/moment/moment",
+		"moment-duration-format": "../libs/moment-duration-format/lib/moment-duration-format"
 	},
 	map: {
 		"*": {
@@ -33,6 +35,12 @@ require.config({
 		}
 	},
 	shim: {
+		"moment-duration-format": {
+			deps: ["moment"]
+		},
+		bootstrap: {
+			deps: ['jquery']
+		},
 		handlebars: {
 			exports: "Handlebars"
 		},

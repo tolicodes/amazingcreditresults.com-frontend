@@ -33,7 +33,9 @@
     "handlebars": "~1.3.0",
     "requirejs-hbs": "~0.1.1",
     "requirejs-text": "~2.0.12",
-    "backbone-validation": "~0.9.1"
+    "backbone-validation": "~0.9.1",
+    "moment": "~2.8.2",
+    "moment-duration-format": "~1.3.0"
   },
   "resolutions": {
     "jquery": "~2.1.1"

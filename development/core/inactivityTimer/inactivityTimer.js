@@ -1,44 +1,88 @@
 define([
+	"core/modal/modal",
+	'./innerModal'
 ], function(
-
+	Modal,
+	innerModal
 ){
-	return {
-		// user activity time in minutes
-		logoutTime: 5,
+	return Modal.extend({
+		options: {
+			inactivityTimeout: 5 * 60 * 1000,
+			warningTimeout: 4 * 60 * 1000,
+			showClose: false,
+			showSave: false,
+			modalTitle: 'Inactivity Timeout'
+		},
+
+		started: false,
+
+		hooks: {
+			'initialize:before': 'listenToTriggers'
+		},
+
+		mainView: innerModal,
+
+		className: 'inactivity-timeout-modal',
+
+		listenToTriggers: function(){
+			var startTrigger = this.options.startTrigger,
+				stopTrigger = this.options.stopTrigger;
+
+			this.listenTo(startTrigger[0], startTrigger[1], this.start);
+			this.listenTo(stopTrigger[0], stopTrigger[1], this.stop);
+		},
+
+		start: function(){
+			if(this.started) { return; }
+			this.enableActivityTracking();
+			this.startCounters();
+		},
+
+		stop: function(){
+			if(!this.started) { return; }
+			this.disableActivityTracking();
+			this.stopCounters();
+		},
+
+		startCounters: function(){
+			_.bindAll(this, 'triggerInactivityTimeout', 'show');
+
+			this.inactivityCounter = setTimeout(this.triggerInactivityTimeout, this.options.inactivityTimeout)
+			this.warningCounter = setTimeout(this.show, this.options.warningTimeout);
+		},
+
+		stopCounters: function(){
+			clearTimeout(this.inactivityCounter);
+			clearTimeout(this.warningCounter);
+
+			this.hide();
+		},
+
+		resetCounters: function(){
+			this.stopCounters();
+			this.startCounters();
+		},
 		
-		init: function(){
-			if (this.isLocalhost()) {
-				return;
-			}
+		enableActivityTracking: function(){
+			this.lastActivity = new Date().getTime();
 
-			this.userActivityLastTime = new Date().getTime();
-			$("html").bind('mousemove click', function() {
-				this.userActivityLastTime = new Date().getTime();
-			}.bind(this));
-
-			// bind interval to check user activity
-			setInterval(this.calculateActivityTime.bind(this), 60000);
+			_(this).bindAll('onActivity');
+			
+			$("html").on('mousemove click', this.onActivity);
 		},
 
-		isLocalhost: function() {
-			return window.location.hostname === 'localhost';
+		disableActivityTracking: function(){
+			$('html').off('mousemove click', this.onActivity);
 		},
 
-		calculateActivityTime: function() {
-			if (sessionStorage.getItem("huntKey")) {
-				var diff = new Date().getTime() - this.userActivityLastTime,
-					minutes = Math.floor((diff / 1000) / 60);
-
-				if (minutes >= (this.logoutTime - 1)) {
-					userActivityLastTime = new Date().getTime();
-					this.logoutUser();
-				}
-			}
+		onActivity: function() {
+			this.lastActivity = new Date().getTime();
+			this.resetCounters();
 		},
 
-		// logout
-		logoutUser: function() {
-			router.navigate("logout", { trigger: true });
+		triggerInactivityTimeout: function(){
+			this.Mediator.trigger('inactivityTimeout');
+			this.hide();
 		}
-	}
+	});
 })

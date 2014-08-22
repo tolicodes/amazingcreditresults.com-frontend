@@ -1,9 +1,11 @@
 define([
 	'backbone',
-	'core/hooks/hooks'
+	'core/hooks/hooks',
+	'core/mediator/mediator'
 ], function(
 	Backbone,
-	hooks
+	hooks,
+	Mediator
 ){
 	var Controller = function(options) {
 		this.initialize.apply(this, arguments);
@@ -21,7 +23,9 @@ define([
 		},
 
 		copyOptions: function(options){
-			_(this.options).extend(_(options).pick(['model', 'collection']));
+			_(this.options).extend(
+				_(options || {}).pick(['model', 'collection'])
+			);
 		},
 
 		initialize: function(){
@@ -29,7 +33,9 @@ define([
 		}
 	};
 
-	_(Controller.prototype).extend(Backbone.Events);
+	_(Controller.prototype).extend(Backbone.Events, {
+		Mediator: Mediator
+	});
 
 	Controller.extend = Backbone.View.extend;
 

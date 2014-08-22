@@ -1,6 +1,6 @@
 define([
 	"core/mvc/layout",
-	"hbs!common/layouts/login"
+	"hbs!./login"
 ], function(
 	Layout,
 	loginTpl
@@ -8,6 +8,12 @@ define([
 	return Layout.extend({
 		className: 'container login-layout',
 		tpl: loginTpl,
-		noAuth: true
+		noAuthentication: true,
+		hooks: {
+			'initialize:before': 'triggerLogout'
+		},
+		triggerLogout: function(){
+			this.Mediator.trigger('logout');
+		}
 	});
 });

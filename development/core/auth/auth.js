@@ -11,11 +11,17 @@ define([
 		authDfd: null,
 
 		hooks: {
+			'initialize:before': '_setupAuthorizationsHash',
 			'user:sync': ['_resolveDfd'],
-			'user:error': ['_rejectDdf']
+			'user:error': ['_rejectDdf'],
+			'M:logout': 'destroyUser'
 		},
 
-		isAuthed: function() {
+		/**
+		 * Is user authenticated (logged in)
+		 * @return {JQuery.Deferred} [description]
+		 */
+		isAuthenticated: function() {
 			if (!this.user) {
 				return this._createUser();
 			} else {
@@ -25,11 +31,17 @@ define([
 			}
 		},
 
+		_setupAuthorizationsHash: function(){
+			this.authorizations = _({}).extend(this.options.authorizations);
+		},
+
 		_resolveDfd: function() {
+			this.Mediator.trigger('auth:success');
 			this.authDfd.resolve();
 		},
 
 		_rejectDdf: function() {
+			this.Mediator.trigger('auth:fail');
 			this.authDfd.reject();
 		},
 
@@ -44,6 +56,11 @@ define([
 			this.authDfd = this.authDfd || $.Deferred();
 			this.user.fetch();
 			return this.authDfd;
+		},
+
+		destroyUser: function() {
+			delete this.user;
+			this.authDfd = null;
 		},
 
 		getUser: function() {

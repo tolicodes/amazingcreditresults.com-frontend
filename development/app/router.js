@@ -1,104 +1,50 @@
 define([
-	"backbone",
+	"core/router/router",
+
 	"common/layouts/login",
 	"modules/admin/login/loginView",
-	"core/app/app",
+	"common/views/logout",
 
+	"common/layouts/admin",
+	"modules/admin/dashboard/dashboardView",
+ 
 	"less!common/css/style"
 ], function(
-	Backbone,
+	Router,
+
 	loginLayout,
 	adminLoginView,
-	App
+	logoutView,
+
+	adminLayout,
+	adminDashboard
 ) {
 
-	return Backbone.Router.extend({
-		routes: {
-			// 404 Page
-			"*splat": "routeNotFound",
-
-			"not-authed": "notAuthorized"
+	return Router.extend({
+		hooks: {
+			'M:inactivityTimeout': 'navigateLogout'
 		},
 
 		pages: {
 			admin: {
-
+				'admin/dashboard': adminDashboard
 			},
 			buyer: {
 
 			},
 			login: {
-				'admin/login': adminLoginView
+				'admin/login': adminLoginView,
+				'logout': logoutView
 			}
 		},
 
 		layouts: {
-			login: loginLayout
+			login: loginLayout,
+			admin: adminLayout
 		},
 
-		initialize: function() {
-			_(this.pages).each(function(pages, layout) {
-				_(pages).each(function(pageView, route) {
-					var optsArray = route.match(/(\(\?)?:\w+/g);
-
-					//strip #
-					optsArray = _.map(optsArray, function(opt) {
-						return opt.substr(1);
-					});
-
-					this._addRoute(route, layout, pageView, optsArray);
-				}, this);
-			}, this);
-		},
-
-		notAuthorized: function() {
-			alert('Not authorized!!!');
-		},
-
-		needsAuth: function(layout) {
-			return !this.layouts[layout].prototype.noAuth;
-		},
-
-		_addRoute: function(route, layout, pageView, optsArray) {
-			var args = arguments;
-
-			this.route(route, function() {
-				var $el;
-
-				if (!this.needsAuth(layout)) {
-					this._routePage.apply(this, args);
-				} else {
-					App.Auth.isAuthed().then(function(){
-						this._routePage.apply(this, args);
-					});
-				}
-			});
-		},
-
-		_routePage: function(route, layout, pageView, optsArray) {
-			if (this.currentLayout === layout) {
-				$el = this._currentLayout.$mainEl;
-			} else {
-				if (this._currentLayout) {
-					this._currentLayout.close();
-				}
-
-				this._currentLayout = new this.layouts[layout];
-			}
-
-			var opts = {};
-
-			_.each(arguments, function(arg, i) {
-				if (!optsArray[i]) {
-					return;
-				}
-				opts[optsArray[i]] = arg;
-			});
-
-			this._currentLayout.addView(
-				'.main',
-				new pageView(opts)
-			);
+		navigateLogout: function(){
+			this.navigate('#/logout', {trigger: true});
 		}
 	});
 });

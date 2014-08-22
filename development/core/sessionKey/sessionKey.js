@@ -1,31 +1,51 @@
 define([
-	'jquery'
+	'core/mvc/controller'
 ], function(
-	$
-){
-	return {
-		init: function(){
+	Controller
+) {
+	return Controller.extend({
+		hooks: {
+			'initialize:after': ['checkSessionStorage'],
+			'M:logout': ['destroySessionKey']
+		},
+		
+		checkSessionStorage: function() {
 			var sessionKey = this.getSessionKey();
 
-			if(sessionKey) {
+			if (sessionKey) {
 				this.setAjaxHeaders(sessionKey);
 			}
 		},
-		getSessionKey: function(){
+		
+		getSessionKey: function() {
 			return sessionStorage.getItem("huntKey");
-			
+
 		},
-		setSessionKey: function(key){
+		
+		setSessionKey: function(key) {
 			sessionStorage.setItem("huntKey", key);
 			this.setAjaxHeaders(key);
 
 		},
-		setAjaxHeaders: function(key){
+		
+		destroySessionKey: function() {
+			sessionStorage.removeItem("huntKey");
+			this.unsetAjaxHeaders();
+		},
+
+		setAjaxHeaders: function(key) {
 			$.ajaxSetup({
-				beforeSend: function(request) {
-					request.setRequestHeader("huntKey", key);
+				headers: {
+					'huntKey': key
+				}
+			});
+		},
+		unsetAjaxHeaders: function() {
+			$.ajaxSetup({
+				headers: {
+					'huntKey': ''
 				}
 			});
 		}
-	}
+	});
 })

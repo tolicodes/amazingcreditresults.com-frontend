@@ -1,7 +1,7 @@
 define([
 	"backbone",
 	"core/hooks/hooks",
-	"core/mediator/mediator"
+	
 ], function(
 	Backbone,
 	hooks,
@@ -31,12 +31,10 @@ define([
 		_insertTriggers: ['render', 'close'],
 
 		hooks: {
-			'initialize:before': ['_addInstanceOptions', '_overwriteOptions', '_setupSubViewsContainer', '_relayMediator', '_relayModelCollection'],
+			'initialize:before': ['_mergeClassName', '_addInstanceOptions',  '_overwriteOptions', '_setupContainers', '_relayModelCollection'],
 			'initialize:after': ['_relayModelCollection', '_autoRender'],
 			'render:before': ['appendEl']
 		},
-
-		Mediator: Mediator,
 
 		_overwriteOptions: function(){
 			_(this).extend(
@@ -44,17 +42,27 @@ define([
 			);
 		},
 
+		_mergeClassName: function(){
+			var superChain = this.getSuperChain();
+			
+			this.className = _(superChain).reduce(function(memo, superView){
+				if(superView.className) {
+					memo += ' ' + superView.className;
+				}
+
+				return memo;
+			}, this.className || '');
+
+			this.$el.attr('class', this.className);
+		},
+
 		_addInstanceOptions: function(options) {
 			_(this.options).extend(options);
 		},
 		
-		_setupSubViewsContainer: function() {
+		_setupContainers: function() {
 			this._views = {};
-		},
-
-		_relayMediator: function(){
-			this.relayTriggers('Mediator');
-			this.relayTriggers('M', this.Mediator);
+			this.templateData = {};
 		},
 
 		/**
@@ -81,15 +89,22 @@ define([
 		},
 
 		addView: function(selector, view) {
+			view.parentView = this;
+
 			this._views[selector] = view;
 
+			view.trigger('append:before');
+
 			view.$el.appendTo(this.$(selector));
+
+			view.trigger('append:after');
 		},
 
 		close: function() {
 			_(this._views).each(function(view) {
-				view.remove();
+				view.close();
 			});
+			this.remove();
 		},
 
 		render: function() {

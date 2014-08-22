@@ -7,6 +7,7 @@ define([
 	var base = window.location.origin,
 		apiPath = '/api/v1/',
 		endpoints = {
+			"myself": "myself",
 			"buyerLogin": "buyer/login",
 			"buyerSetPassword": "buyer/setPassword",
 			"authSelf": "myself",

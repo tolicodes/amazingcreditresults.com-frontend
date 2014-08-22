@@ -1,11 +1,13 @@
 define([
 	'form',
 	'./loginModel',
-	'hbs!./loginTpl'
+	'hbs!./loginTpl',
+	'core/app/app'
 ], function(
 	Form,
 	loginModel,
-	loginTpl
+	loginTpl,
+	App
 ){
 	return Form.extend({
 		className: "row well col-md-6 col-md-offset-3",
@@ -15,11 +17,15 @@ define([
 		tpl: loginTpl,
 		
 		hooks: {
-			'form:submit:success': 'redirectToDashboard'
+			'form:submit:success': ['saveSessionKey', 'redirectToDashboard']
+		},
+
+		saveSessionKey: function(model) {
+			App.SessionKey.setSessionKey(model.get('huntKey'));
 		},
 
 		redirectToDashboard: function(){
-			
+			App.Router.navigate('admin/dashboard', {trigger: true});
 		},
 		
 		options: {
