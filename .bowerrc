@@ -1,6 +1,6 @@
 {
   "directory": "development/libs",
   "scripts": {
-     "postinstall": "bower-requirejs -c development/app/main.js"
+     "postinstall": "bower-requirejs -c development/app/config.js"
   }
 }

@@ -1,133 +1,104 @@
 define([
 	"backbone",
-	
+	"common/layouts/login",
+	"modules/admin/login/loginView",
+	"core/app/app",
+
 	"less!common/css/style"
 ], function(
-	Backbone
+	Backbone,
+	loginLayout,
+	adminLoginView,
+	App
 ) {
 
 	return Backbone.Router.extend({
 		routes: {
-			'setPassword/:apikey': 'setPassword',
-			'login/:apikey': 'login',
-			
-			'checkout/:apikey': 'checkout',
-			'buyer/:apikey': 'checkout',
-			'logout': 'logout',
-
 			// 404 Page
-			"*splat": "routeNotFound"
+			"*splat": "routeNotFound",
+
+			"not-authed": "notAuthorized"
 		},
 
 		pages: {
-			
+			admin: {
+
+			},
+			buyer: {
+
+			},
+			login: {
+				'admin/login': adminLoginView
+			}
 		},
 
-		// permission to access pages without login
-		noAuth: ["login/:apikey", "setPassword/:apikey", "admin/login", "logout"],
-
+		layouts: {
+			login: loginLayout
+		},
 
 		initialize: function() {
-			this._appendMainContainer();
-			
-			_.bindAll(this, '_createPage');
+			_(this.pages).each(function(pages, layout) {
+				_(pages).each(function(pageView, route) {
+					var optsArray = route.match(/(\(\?)?:\w+/g);
 
-			_(this.pages).each(function(pageView, route){
-				var optsArray = (route.match(/(\(\?)?:\w+/g));
-
-				optsArray = _.map(optsArray, function(opt){
-					return opt.substr(1);
-				})
-
-				this.route(route, function(){
-					var opts = {};
-
-					_.each(arguments, function(arg, i){
-						if(!optsArray[i]) { return; }
-						opts[optsArray[i]] = arg;
+					//strip #
+					optsArray = _.map(optsArray, function(opt) {
+						return opt.substr(1);
 					});
 
-					this.createPage(pageView, _.extend({
-						pageType: pageView.prototype.pageType || 'default'
-					}, opts));
-				});
+					this._addRoute(route, layout, pageView, optsArray);
+				}, this);
 			}, this);
 		},
 
-		_appendMainContainer: function(){
-			$("body").append('<div class="container"><div class="main-container"></div></div>');
+		notAuthorized: function() {
+			alert('Not authorized!!!');
 		},
-		
 
-		// load page after checking auth
-		loadPage: function(pageView, pageName, pageOptions) {
-			if (this.checkNeedAuth(pageName)) {
+		needsAuth: function(layout) {
+			return !this.layouts[layout].prototype.noAuth;
+		},
 
-				this._createPage(pageView, pageOptions);
+		_addRoute: function(route, layout, pageView, optsArray) {
+			var args = arguments;
+
+			this.route(route, function() {
+				var $el;
+
+				if (!this.needsAuth(layout)) {
+					this._routePage.apply(this, args);
+				} else {
+					App.Auth.isAuthed().then(function(){
+						this._routePage.apply(this, args);
+					});
+				}
+			});
+		},
+
+		_routePage: function(route, layout, pageView, optsArray) {
+			if (this.currentLayout === layout) {
+				$el = this._currentLayout.$mainEl;
 			} else {
-				auth.authorizeUser().done(
-					this._createPage.bind(this, pageView, pageOptions)
-				);
+				if (this._currentLayout) {
+					this._currentLayout.close();
+				}
+
+				this._currentLayout = new this.layouts[layout];
 			}
-		},
 
-		// check if page has permission
-		checkNeedAuth: function(pageName) {
-			return _(this.noAuth).indexOf(pageName) === -1;
-		},
+			var opts = {};
 
-		createPage: function(pageView, options) {
-			var layout = new mainLayout({
-				page: pageView,
-				options: options
+			_.each(arguments, function(arg, i) {
+				if (!optsArray[i]) {
+					return;
+				}
+				opts[optsArray[i]] = arg;
 			});
-		},
 
-		_createPage: function(pageView, pageOptions) {
-			var user = auth.getUser();
-			this.createPage(pageView, _({}).extend(pageOptions, {
-				userDetail: user ? user.toJSON() : {}
-			}));
-
-			if(user) {
-				this._displayLogoutButton();
-			}
-		},
-
-		_displayLogoutButton: function() {
-			if (sessionStorage.getItem("huntKey"))
-				$(".logout-btn").removeClass("hide");
-			else
-				$(".logout-btn").addClass("hide");
-		},
-
-		routeNotFound: function() {
-			App.Mediator.trigger("messaging:showAlert", "Path not found. Redirecting to the main page", "Red");
-			this.navigate('', true);
-		},
-
-		/* Owner routes function */
-
-		// set password
-		setPassword: function(apiKey) {
-			this.loadPage(authLayout, "setPassword", {
-				apiKey: apiKey,
-				page: "setPassword" 
-			});
-		},
-
-		// set password
-		login: function(apiKey) {
-			this.loadPage(authLayout, "login", {
-				apiKey: apiKey,
-				page: "login"
-			});
-		},
-
-		logout: function() {
-			this.loadPage(logoutView, "logout", {
-				pageType: "default"
-			});
+			this._currentLayout.addView(
+				'.main',
+				new pageView(opts)
+			);
 		}
 	});
 });

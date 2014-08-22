@@ -1,41 +1,53 @@
 define([
-	"auth/models/myself"
+	"core/mvc/controller"
 ], function(
-	authModel
-){
-	return {
-		authorizeUser: function() {
+	Controller
+) {
+	return Controller.extend({
+		/**
+		 * Will hold the deferred for getting the User Model
+		 * @type {JQuery.Deferred}
+		 */
+		authDfd: null,
+
+		hooks: {
+			'user:sync': ['_resolveDfd'],
+			'user:error': ['_rejectDdf']
+		},
+
+		isAuthed: function() {
 			if (!this.user) {
-				this.user = new authModel();
-				this.user.fetchedDfd
-					.fail(function() {
-						App.Mediator.trigger("messaging:showAlert", "Authorization failed. Please login.", "Red");
-						this.logoutUser();
-					}.bind(this))
-					.done(this.showUserName.bind(this));
+				return this._createUser();
+			} else {
+				return this.user.syncing ?
+					this.authDfd :
+					this.fetchUser();
 			}
-
-			return this.user.fetchedDfd;
 		},
 
-		getUser: function(){
+		_resolveDfd: function() {
+			this.authDfd.resolve();
+		},
+
+		_rejectDdf: function() {
+			this.authDfd.reject();
+		},
+
+		_createUser: function() {
+			this.user = new this.options.UserModel();
+			this.relayTriggers('user');
+
+			return this.fetchUser();
+		},
+
+		fetchUser: function() {
+			this.authDfd = this.authDfd || $.Deferred();
+			this.user.fetch();
+			return this.authDfd;
+		},
+
+		getUser: function() {
 			return this.user;
-		},
-
-		// logout
-		logoutUser: function() {
-			delete this.user;
-			router.navigate("logout", { trigger: true });
-		},
-
-		showUserName: function() {
-			if (this.user && this.user.get("name")) {
-				var name = (this.user.get("name").givenName) ? 
-					this.user.get("name").givenName : "-";
-				name += " ";
-				name += (this.user.get("name").familyName) ? this.user.get("name").familyName : "-";
-				$(".username").html(name);
-			}
 		}
-	}
+	});
 })
