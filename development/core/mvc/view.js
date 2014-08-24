@@ -33,7 +33,8 @@ define([
 		hooks: {
 			'initialize:before': ['_mergeClassName', '_addInstanceOptions',  '_overwriteOptions', '_setupContainers', '_relayModelCollection'],
 			'initialize:after': ['_relayModelCollection', '_autoRender'],
-			'render:before': ['appendEl']
+			'render:before': ['appendEl'],
+			'render:after': ['_addViews']
 		},
 
 		_overwriteOptions: function(){
@@ -88,7 +89,23 @@ define([
 			}
 		},
 
-		addView: function(selector, view) {
+		_addViews: function(){
+			_(this.views).each(function(view, selector){
+				var viewInstance;
+
+				if(!(view.prototype instanceof Backbone.View)) {
+					viewInstance = view.apply(this); 
+				} else {
+					viewInstance = new view;
+				}
+
+				this.addView(viewInstance, selector);
+
+			}, this);
+		},
+
+		addView: function(view, selector) {
+			console.log(view, selector)
 			view.parentView = this;
 
 			this._views[selector] = view;
@@ -117,6 +134,7 @@ define([
 			if (!this.tpl) {
 				return;
 			}
+
 			this.$el.html(
 				this.tpl(data)
 			);

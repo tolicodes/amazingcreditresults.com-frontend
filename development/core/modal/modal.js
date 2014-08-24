@@ -8,8 +8,7 @@ define([
 ){
 	return view.extend({
 		hooks: {
-			'render:before': ['setOptions'], 
-			'render:after': ['addMainView']
+			'render:before': ['setOptions']
 		},
 
 		options: {
@@ -29,9 +28,10 @@ define([
 			_(this.templateData).extend(this.options);
 		},
 
-		addMainView: function(){
-			if(!this.mainView) { return }
-			this.addView('.modal-body', new this.mainView)
+		views: {
+			'.modal-body': function(){
+				return new this.mainView;
+			}
 		},
 
 		activateModal: function(){

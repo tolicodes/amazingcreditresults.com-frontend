@@ -50,17 +50,17 @@ define([
 		},
 
 		_routePage: function(route, layout, pageView, optsArray) {
-			if (this.currentLayout === layout) {
-				$el = this._currentLayout.$mainEl;
-			} else {
-
+			if (this.currentLayout !== layout) {
 				if (this._currentLayout) {
 					this._currentLayout.close();
 				}
 
+				this.currentLayout = layout;
+
 				this._currentLayout = new this.layouts[layout];
 			}
 
+			var $mainEl = this._currentLayout.$mainEl;
 			var opts = {};
 
 			_.each(arguments, function(arg, i) {
@@ -71,8 +71,8 @@ define([
 			});
 
 			this._currentLayout.addView(
-				'.main',
-				new pageView(opts)
+				new pageView(opts),
+				$mainEl
 			);
 		}
 	});

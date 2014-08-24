@@ -10,12 +10,8 @@ define([
 	return Layout.extend({
 		className: 'container admin-layout',
 		tpl: adminTpl,
-		hooks: {
-			'render:after': 'setupViews'
-		},
-
-		setupViews: function(){
-			this.addView('.navbar', new NavbarView);
+		views: {
+			'.navbar': NavbarView
 		}
 	});
 });
