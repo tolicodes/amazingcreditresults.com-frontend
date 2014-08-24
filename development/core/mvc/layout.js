@@ -4,6 +4,7 @@ define([
 	view
 ) {
 	return view.extend({
-		appendTo: 'body'
+		appendTo: 'body',
+		$mainEl: '.main'
 	});
 });

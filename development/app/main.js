@@ -3,7 +3,7 @@ require([
 
 	'core/app/app',
 	
-	'router',
+	'./router',
 	'core/messages/messages',
 	'core/auth/auth',
 	'core/sessionKey/sessionKey',

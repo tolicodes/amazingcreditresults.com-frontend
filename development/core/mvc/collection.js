@@ -1,11 +1,11 @@
 define([
-	'backbone',
+	'backbone.paginator',
 	'./model'
 ], function(
-	Backbone,
-	model
+	PageableCollection,
+	Model
 ){
-	return Backbone.Collection.extend({
-		model: model
-	})
-})
+	return PageableCollection.extend({
+		model: Model
+	});
+});

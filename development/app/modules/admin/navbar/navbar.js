@@ -14,7 +14,6 @@ define([
 			'render:before': 'getUserData'
 		},
 		getUserData: function(){
-			console.log(this.templateData)
 			_(this.templateData).extend({
 				user: App.Auth.getUser().toJSON()
 			});

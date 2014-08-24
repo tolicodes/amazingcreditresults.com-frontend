@@ -28,8 +28,7 @@ define([
 			"adminTradelines": "owner/tradelines",
 			"userList": "admin/clients",
 			"sellersList": "admin/clients?seller=true",
-			"buyersList": "admin/clients?roles['buyer']=true",
-			"ownersList": "admin/clients?buyer=true"
+			"buyersList": "admin/clients?buyer=true"
 		},
 		addParams = function(url, params) {
 			_.each(params, function(p) {

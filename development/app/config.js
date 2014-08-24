@@ -25,7 +25,10 @@ require.config({
 		"requirejs-text": "../libs/requirejs-text/text",
 		"backbone-validation": "../libs/backbone-validation/dist/backbone-validation",
 		moment: "../libs/moment/moment",
-		"moment-duration-format": "../libs/moment-duration-format/lib/moment-duration-format"
+		"moment-duration-format": "../libs/moment-duration-format/lib/moment-duration-format",
+		"backbone.paginator": "../libs/backbone.paginator/lib/backbone.paginator",
+		"backgrid-paginator": "../libs/backgrid-paginator/backgrid-paginator",
+		"backgrid": "../libs/backgrid/lib/backgrid"
 	},
 	map: {
 		"*": {
@@ -36,14 +39,32 @@ require.config({
 	},
 	shim: {
 		"moment-duration-format": {
-			deps: ["moment"]
+			deps: [
+				"moment"
+			]
 		},
 		bootstrap: {
-			deps: ['jquery']
+			deps: [
+				"jquery"
+			]
 		},
+
+		'backgrid': {
+			deps: ['css!./backgrid']
+		},
+		
+		'backbone-validation': {
+			deps: ['backbone']
+		},
+
 		handlebars: {
 			exports: "Handlebars"
 		},
+
+		'backgrid-paginator': {
+			deps: ['backgrid', 'backbone.paginator']
+		},
+
 		backbone: {
 			exports: "Backbone",
 			deps: [
