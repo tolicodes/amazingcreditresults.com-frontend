@@ -1,35 +1,12 @@
 define([
-	"core/hooks/hooks",
-	"backbone",
-	"endpoints",
-	"core/mediator/mediator"
+	"./modelCollectionMixins",
+	"backbone-deep-model"
 ], function(
-	hooks,
-	Backbone,
-	endpoints,
-	Mediator
+	modelCollectionMixins
 ) {
-	var model = Backbone.Model.extend({
-		// fetch the model automatically if set to true
-		autoFetch: false,
-
-		fetchDfd: null,
-		
-		// has the model been fetched
-		fetched: false,
-
-		syncing: false,
-
-		Mediator: Mediator,
-
+	var model = Backbone.DeepModel.extend({
 		hooks: {
-			'initialize:before': ['_listenToSync', '_parseUrl', '_implementSeparateUrls', '_implementAutoFetch'],
-			'success': 'handleServerSuccess',
-			'error': 'handleServerError'
-		},
-
-		_implementAutoFetch: function(){
-			if (this.autoFetch) this.fetch();
+			'initialize:before': ['_implementSeparateUrls']
 		},
 
 		/**
@@ -58,46 +35,8 @@ define([
 
 				return oldSync.apply(this, arguments);
 			}
-		},
-
-		handleServerSuccess: function(json){
-			this.fetched = true;
-			this.syncing = false;
-
-			if(json.message) {
-				this.Mediator.trigger('server:message', json.message);
-			}
-		},
-
-		handleServerError: function(model, response) {
-			this.fetched = false;
-			this.syncing = false;
-
-			var json = response.responseText && JSON.parse(response.responseText);
-			
-			if(json && json.errors) {
-				this.Mediator.trigger('server:error', json.errors, response.status);
-			} else {
-				this.Mediator.trigger('server:rawError', response, response.status);
-			}
-		},
-
-		_parseUrl: function(){
-			if(_.isString(this.url)) {
-				this.url = endpoints.getUrl(this.url) || this.url;
-			}
-		},
-
-		// get the url
-		getUrl: function(url) {
-			return endpoints.getUrl(url);
-		},
-
-		// fetch data
-		fetch: function() {
-			return this.fetchDfd = Backbone.Model.prototype.fetch.apply(this, arguments);
 		}
 	});
 
-	return hooks.mixInto(model);
+	return modelCollectionMixins.mixInto(model);
 });

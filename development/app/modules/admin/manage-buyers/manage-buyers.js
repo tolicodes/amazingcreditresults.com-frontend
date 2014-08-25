@@ -1,13 +1,19 @@
 define([
 	'core/mvc/view',
-	'./buyers-list-view'
+	'./buyers-list-view',
+	'hbs!./manage-buyers',
+	'./modify-buyer-view'
 ], function(
 	view,
-	BuyerListView
+	BuyerListView,
+	ManageBuyersTpl,
+	ModifyBuyerView
 ){
 	return view.extend({
+		tpl: ManageBuyersTpl,
 		views: {
-			'.buyer-list': BuyerListView
+			'.buyers-list': BuyerListView,
+			'.modify-buyer': ModifyBuyerView
 		}
 	});
-})
+});

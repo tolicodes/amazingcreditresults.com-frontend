@@ -3,14 +3,16 @@ define([
 ], function(
 	Mediator
 ) {
-	/**
+	_.mixin({
+		/**
 	 * Turns arguments into a real array (so that we can do stuff like concat on it)
 	 * @param  {arguments} args Arguments
 	 * @return {Array}      An array
 	 */
-	function argsToArray(args){
-		return Array.prototype.slice.call( args, 0 );
-	}
+		argsToArray: function(args){
+			return Array.prototype.slice.call( args, 0 );
+		}
+	})
 
 	var mixin = {	
 		/**
@@ -35,7 +37,7 @@ define([
 					var realTrigger = trigger.substring(ns.length + 1);
 
 					this.listenTo(obj, realTrigger, function() {
-						this.trigger.apply(this, [trigger].concat(argsToArray(arguments)));
+						this.trigger.apply(this, [trigger].concat(_.argsToArray(arguments)));
 					});
 				}
 			}, this);
@@ -49,7 +51,7 @@ define([
 		insertTriggers: function(funcs) {
 			_(funcs).each(function(func) {
 				var oldFunc = this[func],
-					args = argsToArray(arguments);
+					args = _.argsToArray(arguments);
 
 				this[func] = function() {
 					this.trigger.apply(this, [func + ':before'].concat(args));
@@ -197,7 +199,7 @@ define([
 
 			if(initialize) {
 				child.prototype.initialize = function(){
-					var args = argsToArray(arguments);
+					var args = _.argsToArray(arguments);
 
 					this.mergeSuperProperties(['_mergeSuperProperties', '_insertTriggers']);
 

@@ -8,6 +8,7 @@ define([
 	"backbone",
 	"backbone-forms",
 	"./custom-templates",
+	"./custom-editors",
 	"backbone-validation"
 ], function(
 	view,
@@ -17,8 +18,7 @@ define([
 ) {
 	return view.extend({
 		hooks: {
-			'initialize:before': ['setupForm'],
-			'render:after': ['renderForm'],
+			'appendInDom:after': ['setupForm', 'renderForm'],
 			'close:before': 'destroyForm',
 			'form:submit': ['saveModel']
 		},
@@ -37,7 +37,10 @@ define([
 		$formEl: null,
 
 		setupForm: function() {
-			this.model = this.formModel && new this.formModel;
+			if(!this.model && this.FormModel) {
+				this.model =  new this.FormModel
+			}
+
 			Backbone.Validation.bind(this);
 
 			var formOpts = {
@@ -107,8 +110,7 @@ define([
 				this.$el;
 
 			this.form.render();
-
-			this.form.$el.appendTo(this.$formEl);
+			this.$formEl.html(this.form.$el);
 		},
 
 		destroyForm: function() {

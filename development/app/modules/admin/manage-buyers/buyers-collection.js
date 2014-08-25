@@ -1,9 +1,12 @@
 define([
-	'core/mvc/collection'
+	'core/data-table/data-table-collection'
 ], function(
 	Collection
 ){
 	return Collection.extend({
-		url: 'buyersList'
+		url: 'buyersList',
+		columns: [{
+			name: 'Name'
+		}]
 	});
 });

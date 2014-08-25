@@ -7,6 +7,7 @@ define([
 
 	"common/layouts/admin",
 	"modules/admin/dashboard/dashboardView",
+	"modules/admin/manage-buyers/manage-buyers",
  
 	"less!common/css/style"
 ], function(
@@ -17,7 +18,8 @@ define([
 	logoutView,
 
 	adminLayout,
-	adminDashboard
+	adminDashboard,
+	adminManageBuyers
 ) {
 
 	return Router.extend({
@@ -27,7 +29,8 @@ define([
 
 		pages: {
 			admin: {
-				'admin/dashboard': adminDashboard
+				'admin/dashboard': adminDashboard,
+				'admin/manage-buyers': adminManageBuyers
 			},
 			buyer: {
 

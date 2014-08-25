@@ -12,9 +12,11 @@ define([
 	return Form.extend({
 		className: "row well col-md-6 col-md-offset-3",
 		
-		formModel: loginModel,
+		FormModel: loginModel,
 
 		tpl: loginTpl,
+
+		$formEl: '.form',
 		
 		hooks: {
 			'form:submit:success': ['saveSessionKey', 'redirectToDashboard']

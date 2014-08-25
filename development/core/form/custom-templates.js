@@ -11,6 +11,14 @@ define([
     Form,
     formTpl
 ) {
+    Backbone.Validation.configure({
+        labelFormatter: 'backboneForm'
+    });
+
+    Backbone.Validation.labelFormatters.backboneForm = function(attrName, child) {
+        return child.schema[attrName].title || this.sentenceCase(attrName, child);
+    };
+
     /**
      * Bootstrap 3 templates
      */

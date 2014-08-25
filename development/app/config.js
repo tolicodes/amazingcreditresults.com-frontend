@@ -28,7 +28,9 @@ require.config({
 		"moment-duration-format": "../libs/moment-duration-format/lib/moment-duration-format",
 		"backbone.paginator": "../libs/backbone.paginator/lib/backbone.paginator",
 		"backgrid-paginator": "../libs/backgrid-paginator/backgrid-paginator",
-		"backgrid": "../libs/backgrid/lib/backgrid"
+		backgrid: "../libs/backgrid/lib/backgrid",
+		"backbone-deep-model": "../libs/backbone-deep-model/distribution/deep-model",
+		"bootstrap-datepicker": "../libs/bootstrap-datepicker/js/bootstrap-datepicker"
 	},
 	map: {
 		"*": {
@@ -48,23 +50,30 @@ require.config({
 				"jquery"
 			]
 		},
-
-		'backgrid': {
-			deps: ['css!./backgrid']
+		backgrid: {
+			deps: [
+				"css!./backgrid"
+			]
 		},
-		
-		'backbone-validation': {
+
+		'deep-model': {
 			deps: ['backbone']
 		},
 
+		"backbone-validation": {
+			deps: [
+				"backbone"
+			]
+		},
 		handlebars: {
 			exports: "Handlebars"
 		},
-
-		'backgrid-paginator': {
-			deps: ['backgrid', 'backbone.paginator']
+		"backgrid-paginator": {
+			deps: [
+				"backgrid",
+				"backbone.paginator"
+			]
 		},
-
 		backbone: {
 			exports: "Backbone",
 			deps: [

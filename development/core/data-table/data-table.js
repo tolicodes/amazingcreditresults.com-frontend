@@ -1,15 +1,15 @@
 define([
 	"core/mvc/view",
-	"backgrid",
 	"backgrid-paginator",
 
 	"hbs!./templates/data-table",
+ 
+	"backgrid",
 	
 	"css!libs/backbone.paginator/examples/css/backgrid",
 	"css!libs/backgrid-paginator/backgrid-paginator"
 ], function(
 	view,
-	Backgrid,
 	BackgridPaginator,
 	
 	tpl
@@ -21,8 +21,10 @@ define([
 			'emptyText': 'No Records Found.'
 		},
 
+		className: 'data-table',
+
 		hooks: {
-			//'initialize:before': 'createCollection'
+			'initialize:before': 'createCollection'
 		},
 
 		/**
@@ -33,23 +35,24 @@ define([
 
 		createCollection: function(){
 			if(this.Collection) {
-				this.collection = new Collection();
+				this.collection = new this.Collection();
 			}
+			this.collection.fetch();
 		},
 
-		generateTable: function() {
-			this.paginator = new Backgrid.Extension.Paginator({
-				collection: this.collection
-			});
-
-			this.grid = new Backgrid.Grid({
-				columns: this.columns || {},
-				collection: this.collection,
-				emptyText: this.options.emptyText
-			});
-
-			this.addView(this.grid.render(), '.grid');
-			this.addView(this.paginator.render(), '.paginator');
+		views: {
+			'.paginator': function(){
+				return (new Backgrid.Extension.Paginator({
+					collection: this.collection
+				})).render();
+			},
+			'.grid': function(){
+				return (new Backgrid.Grid({
+					columns: this.columns || {},
+					collection: this.collection,
+					emptyText: this.options.emptyText
+				})).render();
+			}
 		}
 	});
 	

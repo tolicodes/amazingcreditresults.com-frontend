@@ -25,9 +25,7 @@ define([
 			if (!this.user) {
 				return this._createUser();
 			} else {
-				return this.user.syncing ?
-					this.authDfd :
-					this.fetchUser();
+				return this.authDfd;
 			}
 		},
 

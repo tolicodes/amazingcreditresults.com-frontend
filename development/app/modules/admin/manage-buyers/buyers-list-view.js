@@ -3,9 +3,9 @@ define([
 	'./buyers-collection'
 ], function(
 	DataTable,
-	buyersCollection
+	BuyersCollection
 ){
 	return DataTable.extend({
-		Collection: new buyersCollection
+		Collection: BuyersCollection
 	});
 })

@@ -10,7 +10,9 @@ define([
 
 	var Router = Backbone.Router.extend({
 		routes: {
-			// 404 Page
+			/**
+			 * 404 Page
+			 */
 			"*splat": "routeNotFound"
 		},
 
@@ -34,10 +36,13 @@ define([
 		},
 
 		_addRoute: function(route, layout, pageView, optsArray) {
-			var args = arguments;
+			var args = _.argsToArray(arguments);
 
 			this.route(route, function() {
-				var $el;
+				this.Mediator.trigger.apply(
+					this.Mediator, 
+					['router:route:before'].concat(args)
+				);
 
 				if (!this.needsAuthentication(layout)) {
 					this._routePage.apply(this, args);
@@ -56,7 +61,6 @@ define([
 				}
 
 				this.currentLayout = layout;
-
 				this._currentLayout = new this.layouts[layout];
 			}
 
@@ -73,6 +77,13 @@ define([
 			this._currentLayout.addView(
 				new pageView(opts),
 				$mainEl
+			);
+
+			var args = _.argsToArray(arguments);
+
+			this.Mediator.trigger.apply(
+				this.Mediator, 
+				['router:route:after'].concat(args)
 			);
 		}
 	});
