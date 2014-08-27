@@ -59,15 +59,15 @@ define([
 		_copyRequired: function(model) {
 			_(model.validation).each(function(validations, field) {
 				if (validations.required) {
-					var existingSchema = model.schema[field];
+					var existingSchema = _(model).result('schema')[field];
 
 					if (_(existingSchema).isString()) {
-						model.schema[field] = {
+						_(model).result('schema')[field] = {
 							type: existingSchema,
 							required: true
 						};
 					} else {
-						model.schema[field].required = true;
+						_(model).result('schema')[field].required = true;
 					}
 				}
 			}, this);

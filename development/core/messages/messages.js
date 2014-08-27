@@ -23,11 +23,25 @@ define([
 			'M:server:error': 'serverError',
 			'M:server:rawError': 'rawServerError',
 			'M:server:message': 'serverMessage',
-			'collection:add': 'listenToTimeout'
+			'M:message': 'message'
 		},
 
 		setupCollection: function(){
 			this.collection = new messagesCollection();
+		},
+
+		serverMessage: function(message) {
+			this.collection.add({
+				type: 'info',
+				message: message
+			});
+		},
+
+		message: function(message, type){
+			this.collection.add({
+				type: type,
+				message: message
+			})
 		},
 
 		serverError: function(errors, code){

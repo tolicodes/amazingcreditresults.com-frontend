@@ -18,7 +18,7 @@ define([
 
 		hooks: {
 			'initialize:before': ['_listenToSync', '_parseUrl', '_implementAutoFetch'],
-			'success': 'handleServerSuccess',
+			'sync': 'handleServerSuccess',
 			'error': 'handleServerError'
 		},
 
@@ -29,9 +29,8 @@ define([
 		handleServerSuccess: function(json){
 			this.fetched = true;
 			this.syncing = false;
-
-			if(json.message) {
-				this.Mediator.trigger('server:message', json.message);
+			if(json.get('message')) {
+				this.Mediator.trigger('server:message', json.get('message'));
 			}
 		},
 
@@ -53,18 +52,20 @@ define([
 
 		_parseUrl: function(){
 			if(_.isString(this.url)) {
-				this.url = endpoints.getUrl(this.url) || this.url;
+				this.url = this.getUrl(this.url) || this.url;
 			}
 		},
 
 		// get the url
 		getUrl: function(url) {
-			return endpoints.getUrl(url);
+			return endpoints.getUrl(url, this);
 		},
 
 		// fetch data
 		fetch: function() {
-			return this.fetchDfd = Backbone.Model.prototype.fetch.apply(this, arguments);
+			var Base = _(this.getSuperChain()).last();
+			return this.fetchDfd = 
+				Base.fetch.apply(this, arguments);
 		}
 	};
 

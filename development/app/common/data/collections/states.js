@@ -1,23 +1,15 @@
-// states.js
-// --------------
-// Requires define
-// Return Backbone Collection {Object}
-
 define([
-	"baseCollection",
-	"backbone"
-	], function(
-	BaseCollection,
-	Backbone
+	"core/mvc/collection"
+], function(
+	BaseCollection
 ) {
-
-	return BaseCollection.extend({
-		
-		model: Backbone.Model.extend({ 
-		}),
-
-		url: function() {
-			return "app/common/data/json/states.json";
-		}
+	return BaseCollection.extend({	
+		url: "app/common/data/json/states.json",
+		model: Backbone.Model.extend({
+			toString: function() {
+				return this.get('label')
+			},
+			idAttribute: 'val'
+		})
 	});
 });

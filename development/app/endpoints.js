@@ -12,12 +12,15 @@ define([
 			"buyerSetPassword": "buyer/setPassword",
 			"authSelf": "myself",
 			"needToSetPassword": "buyer/needToSetPassword",
-			"adminClients": "admin/clients",
+			"createClient": "admin/clients",
+			"adminClients": "admin/clients/:id",
 			"adminLogin": "owner/login",
 			"tradeline": "tradelines",
 			"createOwner": "admin/owners",
-			"resetPassword": "admin/clients/resetPassword",
-			"welcomeEmail": "admin/clients/welcome",
+			
+			"resetPassword": "admin/clients/resetPassword/:userId",
+			"sendWelcomeEmail": "admin/clients/welcome/:userId",
+			
 			"adminProduct": "admin/products",
 			"products": "owner/products",
 			"cart": "cart/tradelines",
@@ -54,19 +57,22 @@ define([
 		};
 
 	return {
-		getUrl: function(name, params, filters) {
-			var endpoint = endpoints[name];
-
-			if(!endpoint) {
-				return;
+		getUrl: function(name, model) {
+			if(!name) {
+				throw Error("No URL specified");
 			}
 
+			var endpoint = endpoints[name];
+
+			if(!endpoint) { return name }
+
+			var namedParams = /:\w+/g;
+
+			_(endpoint.match(namedParams)).each(function(param){
+				endpoint = endpoint.replace(param, model.get(param.substring(1)));
+			}, this);
+
 			var url = base + apiPath + endpoint;
-			
-			if (params)
-				url = addParams(url, params);
-			if (filters)
-				url = addFilters(url, filters);
 			
 			return url;
 		}

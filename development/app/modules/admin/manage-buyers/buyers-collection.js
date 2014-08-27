@@ -1,12 +1,17 @@
 define([
-	'core/data-table/data-table-collection'
+	'core/data-table/data-table-collection',
+	'./buyer-model'
 ], function(
-	Collection
+	Collection,
+	BuyerModel
 ){
 	return Collection.extend({
 		url: 'buyersList',
-		columns: [{
-			name: 'Name'
-		}]
+		model: BuyerModel,
+		parse: function(){
+			return _(Collection.prototype.parse.apply(this, arguments)).filter(function(m){
+				return m.roles.buyer;
+			});
+		}
 	});
 });

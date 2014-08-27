@@ -30,7 +30,9 @@ require.config({
 		"backgrid-paginator": "../libs/backgrid-paginator/backgrid-paginator",
 		backgrid: "../libs/backgrid/lib/backgrid",
 		"backbone-deep-model": "../libs/backbone-deep-model/distribution/deep-model",
-		"bootstrap-datepicker": "../libs/bootstrap-datepicker/js/bootstrap-datepicker"
+		"bootstrap-datepicker": "../libs/bootstrap-datepicker/js/bootstrap-datepicker",
+		"jquery-color": "../libs/jquery-color/jquery.color"
+
 	},
 	map: {
 		"*": {
@@ -45,6 +47,14 @@ require.config({
 				"moment"
 			]
 		},
+		"bootstrap-datepicker": {
+			deps: [
+				"jquery"
+			]
+		},
+		"jquery-color": {
+			deps: ['jquery']
+		},
 		bootstrap: {
 			deps: [
 				"jquery"
@@ -52,14 +62,15 @@ require.config({
 		},
 		backgrid: {
 			deps: [
+				"backbone",
 				"css!./backgrid"
 			]
 		},
-
-		'deep-model': {
-			deps: ['backbone']
+		"backbone-deep-model": {
+			deps: [
+				"backbone"
+			]
 		},
-
 		"backbone-validation": {
 			deps: [
 				"backbone"

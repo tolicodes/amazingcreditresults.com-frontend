@@ -5,6 +5,9 @@ define([
 	"hbs!./templates/data-table",
  
 	"backgrid",
+
+	//For color animation (fading success)
+	"jquery-color",
 	
 	"css!libs/backbone.paginator/examples/css/backgrid",
 	"css!libs/backgrid-paginator/backgrid-paginator"
@@ -24,7 +27,8 @@ define([
 		className: 'data-table',
 
 		hooks: {
-			'initialize:before': 'createCollection'
+			'initialize:before': 'createCollection',
+			'collection:backgrid:edited': 'edited'
 		},
 
 		/**
@@ -33,10 +37,41 @@ define([
 		 */
 		columns: null,
 
+		edited: function(model, col){
+			//if(errors) {
+			//	this.getCell.$el.tooltip({
+			//		title: errors
+			//	})
+			//} else {
+				model.save().done(this.flashGreen.bind(this, model, col));
+			//}
+		},
+
+		flashGreen: function(model, col){
+			this.getCell(model, col).$el
+				.css('backgroundColor', '#dff0d8')
+				.animate({
+					backgroundColor: "white"
+				}, 3000);
+		},
+
+		getCell: function(model, col) {
+			var rows = this._views['.grid'].body.rows;
+
+			var row = _(rows).findWhere({
+				model: model
+			});
+
+			return _(row.cells).findWhere({
+				column: col
+			});
+		},
+
 		createCollection: function(){
 			if(this.Collection) {
 				this.collection = new this.Collection();
 			}
+
 			this.collection.fetch();
 		},
 
@@ -48,7 +83,7 @@ define([
 			},
 			'.grid': function(){
 				return (new Backgrid.Grid({
-					columns: this.columns || {},
+					columns: this.columns,
 					collection: this.collection,
 					emptyText: this.options.emptyText
 				})).render();

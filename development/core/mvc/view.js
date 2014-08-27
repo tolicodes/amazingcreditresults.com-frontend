@@ -10,15 +10,13 @@ define([
 	var view = Backbone.View.extend({
 		options: {
 			/**
-			 * Does the view render on initialize
+			 * When does rendering happen
+			 * false: manually
+			 * initialize: on initialize
+			 * append: on append
+			 * @type {String|Boolean}
 			 */
-			renderOnInitialize: true,
-
-			/**
-			 * Does the view render on appending
-			 * @type {Boolean}
-			 */
-			renderOnAppend: false,
+			renderOn: 'initialize',
 
 			/**
 			 * Data that would be merged into the templateData
@@ -37,9 +35,8 @@ define([
 		_insertTriggers: ['render', 'close'],
 
 		hooks: {
-			'initialize:before': ['_mergeClassName', '_addInstanceOptions', '_overwriteOptions', '_setupContainers', '_relayModelCollection'],
+			'initialize:before': ['_bindMessageCB', '_mergeClassName', '_addInstanceOptions', '_overwriteOptions', '_setupContainers', '_relayModelCollection'],
 			'initialize:after': ['_relayModelCollection', '_renderOnInitialize'],
-			'render:before': ['appendEl'],
 			'append:after': ['_renderOnAppend', '_addViews']
 		},
 
@@ -47,6 +44,19 @@ define([
 			_(this).extend(
 				_(this.options).pick(['appendTo'])
 			);
+		},
+
+		_bindMessageCB: function() {
+			_(this).bindAll('messageCB');
+		},
+
+		messageCB: function(message, type) {
+			return _(this.message).bind(this, message, type);
+		},
+
+		message: function(message, type) {
+			type = type || 'success';
+			this.Mediator.trigger('message', message, type);
 		},
 
 		_mergeClassName: function() {
@@ -90,8 +100,14 @@ define([
 		},
 
 		_renderOnInitialize: function() {
-			if (this.options.renderOnInitialize && 
-				!this.options.renderOnAppend) {
+			if (this.options.renderOn === 'initialize') {
+				this.render();
+				this.appendEl();
+			}
+		},
+
+		_renderOnAppend: function(){
+			if(this.options.renderOn === 'append') {
 				this.render();
 			}
 		},
@@ -114,9 +130,9 @@ define([
 		propagateToChildren: function() {
 			var args = _.argsToArray(arguments);
 
-			_(this._views).each(function(view, key){
+			_(this._views).each(function(view, key) {
 				view.trigger.apply(view, args);
-				if(view.propagateToChildren) {
+				if (view.propagateToChildren) {
 					view.propagateToChildren.apply(view, args);
 				}
 			}, this);
@@ -131,21 +147,21 @@ define([
 			this._views[selector] = view;
 
 			view.trigger.call(view, 'append:before', this);
-			if(this.$el.closest('html').length) {
+			if (this.$el.closest('html').length) {
 				view.trigger.call(view, 'appendInDom:before', this);
 			}
 
 			this.$(selector).html(view.$el);
 
 			view.trigger.call(view, 'append:after', this);
-			if(this.$el.closest('html').length) {
+			if (this.$el.closest('html').length) {
 				view.trigger.call(view, 'appendInDom:after', this);
 			}
 		},
 
 		close: function() {
 			_(this._views).each(function(view) {
-				if(view.close) {
+				if (view.close) {
 					view.close();
 				} else {
 					view.remove();
@@ -172,7 +188,17 @@ define([
 
 		appendEl: function() {
 			if (this.appendTo) {
+				this.trigger('append:before');
+				if (this.$el.closest('html').length) {
+					this.trigger('appendInDom:before');
+				}
+
 				this.$el.appendTo(this.appendTo);
+
+				this.trigger('append:after');
+				if (this.$el.closest('html').length) {
+					this.trigger('appendInDom:after');
+				}
 			}
 		}
 	});

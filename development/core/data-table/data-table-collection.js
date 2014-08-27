@@ -6,6 +6,9 @@ define([
 	return Collection.extend({
 		parse: function(data) {
 			return data.data;
+		},
+		state: {
+			pageSize: 10
 		}
 	});	
 });

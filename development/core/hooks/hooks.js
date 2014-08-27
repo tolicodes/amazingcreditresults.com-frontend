@@ -50,14 +50,14 @@ define([
 		 */
 		insertTriggers: function(funcs) {
 			_(funcs).each(function(func) {
-				var oldFunc = this[func],
-					args = _.argsToArray(arguments);
+				var oldFunc = this[func];
 
 				this[func] = function() {
+					args = _.argsToArray(arguments);
 					this.trigger.apply(this, [func + ':before'].concat(args));
-					var out = oldFunc.apply(this, arguments);
+					var out = oldFunc.apply(this, args);
 
-					this.trigger.apply(this, [func + ':after'].concat(args));
+					this.trigger.apply(this, [func + ':after'].concat(out).concat(args));
 					return out || this;
 				};
 			}, this);
@@ -172,13 +172,30 @@ define([
 			return out;
 		},
 
-		// function to implemnt hooks
+		/**
+		 * Implements hoooks
+		 * @todo  fix all functionality
+		 * @return {[type]} [description]
+		 */
 		implementHooks: function() {
 			this._extendHooks();
 
 			_.each(this.hooks, function(callbacks, key) {
+				var hasStar = key.indexOf(':*') !== -1;
+
 				_.each(callbacks, function(callback) {
-					this.listenTo(this, key, this[callback]);
+					if(hasStar) {
+						this.listenTo(this, 'all', _(function(event){
+							listenToEvent = key.substring(0, key.length - 2);
+							console.log(event);
+							if(event.indexOf(listenToEvent) !== -1) {
+
+								this[callback].apply(this, _(arguments).rest());
+							}
+						}).bind(this));
+					} else {
+						this.listenTo(this, key, this[callback]);
+					}
 				}, this);
 			}, this);
 		},
@@ -193,30 +210,33 @@ define([
 
 	return {
 		mixInto: function(child) {
-			_(child.prototype).extend(mixin);
+			if(child.extend) {
+				child = child.extend(mixin);
+			} else {
+				_(child.prototype).extend(mixin);
+			}
 			
 			var initialize = child.prototype.initialize;
 
-			if(initialize) {
-				child.prototype.initialize = function(){
-					var args = _.argsToArray(arguments);
+			child.prototype.initialize = function(){
+				var args = _.argsToArray(arguments);
 
-					this.mergeSuperProperties(['_mergeSuperProperties', '_insertTriggers']);
+				this.mergeSuperProperties(['_mergeSuperProperties', '_insertTriggers']);
 
-					this.implementHooks();
-					this.insertTriggers(this._insertTriggers);
-					this.mergeSuperProperties(this._mergeSuperProperties);
-					this.relayMediator();
+				this.implementHooks();
+				this.insertTriggers(this._insertTriggers);
+				this.mergeSuperProperties(this._mergeSuperProperties);
+				this.relayMediator();
 
-					this.trigger.apply(this, ['initialize:before'].concat(args));
+				this.trigger.apply(this, ['initialize:before'].concat(args));
 
-					var out = initialize.apply(this, arguments);
+				var out = initialize.apply(this, arguments);
 
-					this.trigger.apply(this, ['initialize:after'].concat(args));
+				this.trigger.apply(this, ['initialize:after'].concat(out).concat(args));
 
-					return out;
-				}
-			} 
+				return out;
+			}
+			
 			
 			return child;
 		}

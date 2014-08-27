@@ -16,7 +16,7 @@ define([
     });
 
     Backbone.Validation.labelFormatters.backboneForm = function(attrName, child) {
-        return child.schema[attrName].title || this.sentenceCase(attrName, child);
+        return _(child).result('schema')[attrName].title || this.sentenceCase(attrName, child);
     };
 
     /**

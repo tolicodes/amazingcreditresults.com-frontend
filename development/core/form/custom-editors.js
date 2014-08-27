@@ -11,14 +11,34 @@ define([
 	Form.editors.MultiText = Form.editors.Base.extend({
 		_checkField: function(opts, e) {
 			//list of functional/control keys that you want to allow always
-            var keys = [8, 9, 16, 17, 18, 19, 20, 27, 33, 34, 35, 36, 37, 38, 39, 40, 45, 46, 144, 145];
-            var text = $(e.target).val() + String.fromCharCode(e.keyCode);
+            var keys = [8, 9, 16, 17, 18, 19, 20, 27, 33, 34, 35, 36, 37, 38, 39, 40, 45, 46, 144, 145],
+            	keyCode = e.keyCode || e.which,
+            	keyPressed = String.fromCharCode(keyCode),
+            	text = $(e.target).val() + keyPressed;
 
-            if( $.inArray(e.keyCode, keys) == -1) {
-                if (text.length > opts.textLength || !text.match(opts.regex)) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                }
+            if( _.indexOf(keyCode, keys) !== -1) {
+            	return;
+            }
+            var atMaxLength = text.length > opts.textLength;
+            var unMatchedRegex = !text.match(opts.regex);
+
+            if (atMaxLength || unMatchedRegex) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+
+            if(atMaxLength && opts.goToNextField) {
+            	var $field = $(e.target);
+            	var index = $field.index();
+            	$field
+            		.parent()
+            		.find(':input')
+            		.filter(function(){
+            			return $(this).index() > index
+            		})
+            		.eq(0)
+            		.focus()
+            		.val(keyPressed)
             }
 		},
 
@@ -45,11 +65,13 @@ define([
 			return {
 				'.area-code': {
 					textLength: 3,
-					regex: numeric
+					regex: numeric,
+					goToNextField: true
 				},
 				'.phone-1': {
 					textLength: 3,
-					regex: numeric
+					regex: numeric,
+					goToNextField: true
 				},
 				'.phone-2': {
 					textLength: 4,
@@ -84,15 +106,18 @@ define([
 			return {
 				'.part-1': {
 					textLength: 3,
-					regex: numeric
+					regex: numeric,
+					goToNextField: true
 				},
 				'.part-2': {
 					textLength: 2,
-					regex: numeric
+					regex: numeric,
+					goToNextField: true
 				},
 				'.part-3': {
 					textLength: 4,
-					regex: numeric
+					regex: numeric,
+					goToNextField: true
 				}
 			};
 		},

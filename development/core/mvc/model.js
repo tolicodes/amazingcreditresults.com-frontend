@@ -6,8 +6,11 @@ define([
 ) {
 	var model = Backbone.DeepModel.extend({
 		hooks: {
-			'initialize:before': ['_implementSeparateUrls']
+			'initialize:before': ['_implementSeparateUrls'],
+			'sync:after': ['_implementSyncMessages']
 		},
+
+		_insertTriggers: ['sync'],
 
 		/**
 		 * Implements separate URLs for different url
@@ -33,8 +36,18 @@ define([
 
 				this.syncing = true;
 
-				return oldSync.apply(this, arguments);
+				return oldSync.call(this, method, model, options);
+			}.bind(this)
+		},
+
+		_implementSyncMessages: function(dfd, method) {
+			if(this.syncMessages && this.syncMessages[method]) {
+				dfd.done(function(){
+					this.Mediator.trigger('message', this.syncMessages[method], 'success');
+				}.bind(this));
 			}
+
+			return dfd;
 		}
 	});
 
