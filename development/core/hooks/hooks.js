@@ -151,7 +151,7 @@ define([
 
 			return prop;
 		},
-
+		
 		getSuperChain: function(excludeSelf) {
 			var out = [];
 

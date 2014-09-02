@@ -5,7 +5,6 @@ define([
 ){
 	return Form.extend({
 		options: {
-			renderOn: 'initialize',
 			templateData: {
 				submitButton: 'Create User'
 			}

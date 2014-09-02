@@ -5,15 +5,15 @@ define([
 	'./modify-buyer-view'
 ], function(
 	view,
-	BuyerListView,
+	ListView,
 	ManageBuyersTpl,
-	ModifyBuyerView
+	ModifyUserView
 ){
 	return view.extend({
 		tpl: ManageBuyersTpl,
 		views: {
-			'.buyers-list': BuyerListView,
-			'.modify-buyer': ModifyBuyerView
+			'.list': ListView,
+			'.modify-buyer': ModifyUserView
 		}
 	});
 });

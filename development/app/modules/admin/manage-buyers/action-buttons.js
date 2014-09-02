@@ -8,17 +8,9 @@ define([
 	ResetPasswordModel
 ) {
 	return ActionButtonsCell.extend({
+		resourceName: 'user',
+
 		buttons: {
-			'edit btn-primary': {
-				label: 'Edit',
-				icon: 'glyphicon glyphicon-pencil',
-				onClick: 'edit'
-			},
-			'delete btn-danger': {
-				label: 'Delete',
-				icon: 'glyphicon glyphicon-remove-circle',
-				onClick: 'delete'
-			},
 			'resend-email': {
 				label: 'Send Welcome Email',
 				icon: 'glyphicon glyphicon-envelope',
@@ -41,10 +33,6 @@ define([
 			}
 		},
 
-		edit: function(){
-			this.Mediator.trigger('edit-buyer', this.model);
-		},
-
 		resendEmail: function(){
 			var model = new SendWelcomeEmailModel({
 				userId: this.model.get('id')
@@ -59,12 +47,6 @@ define([
 			});
 
 			model.save();
-		},
-
-		'delete': function(){
-			if(confirm("You Sure?")) {
-				this.model.destroy();
-			}
 		},
 
 		activate: function() {

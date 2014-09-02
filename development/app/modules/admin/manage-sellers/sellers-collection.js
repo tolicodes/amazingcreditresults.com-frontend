@@ -1,12 +1,12 @@
 define([
 	'core/data-table/data-table-collection',
-	'./buyer-model'
+	'./seller-model'
 ], function(
 	Collection,
-	UserModel
+	Model
 ){
 	return Collection.extend({
-		url: 'buyersList',
-		model: UserModel
+		url: 'sellersList',
+		model: Model
 	});
 });

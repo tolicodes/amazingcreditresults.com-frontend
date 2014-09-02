@@ -1,14 +1,9 @@
 define([
-	'core/data-table/data-table',
-	'./buyers-collection',
-	'./action-buttons'
+	'core/data-table/data-table'
 ], function(
-	DataTable,
-	Collection,
-	ActionButtonsCell
+	DataTable
 ){
 	return DataTable.extend({
-		Collection: Collection,
 		columns: [{
 			label: "First Name",
 			name: "name.givenName",
@@ -24,12 +19,8 @@ define([
 			cell: "string"
 		}, {
 			label: "Email",
-			name: "username",
+			name: "email",
 			cell: "string"
-		},  {
-			label: "Actions",
-			cell: ActionButtonsCell,
-			editable: false
 		}]
 	});
 })

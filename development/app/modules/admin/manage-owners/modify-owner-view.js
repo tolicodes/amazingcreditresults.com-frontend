@@ -1,16 +1,16 @@
 define([
 	'modules/admin/manage-users/modify-user-view',
 	'modules/admin/manage-users/general-info',
-	'./buyer-model',
-	'hbs!./modify-buyer'
+	'./owner-model',
+	'hbs!./modify-owner'
 ], function(
 	View,
 	GeneralInfoView,
 	UserModel,
-	tpl
+	modifySellerTpl
 ){
 	return View.extend({
-		tpl: tpl,
+		tpl: modifySellerTpl,
 
 		UserModel: UserModel,
 

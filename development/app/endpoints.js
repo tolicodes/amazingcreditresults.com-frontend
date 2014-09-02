@@ -7,38 +7,30 @@ define([
 	var base = window.location.origin,
 		apiPath = '/api/v1/',
 		endpoints = {
-			"myself": "myself",
+			"adminLogin": "owner/login",
+			
+			"needToSetPassword": "buyer/needToSetPassword",
 			"buyerLogin": "buyer/login",
 			"buyerSetPassword": "buyer/setPassword",
-			"authSelf": "myself",
-			"needToSetPassword": "buyer/needToSetPassword",
+			
+			"myself": "myself",
+			
 			"createClient": "admin/clients",
 			"adminClients": "admin/clients/:id",
-			"adminLogin": "owner/login",
-			"tradeline": "tradelines",
-			"createOwner": "admin/owners",
-			
+
+			"sellersList": "admin/clients?seller=true",
+			"buyersList": "admin/clients?buyer=true",
+			"ownersList": "admin/clients?owner=true",
+
 			"resetPassword": "admin/clients/resetPassword/:userId",
 			"sendWelcomeEmail": "admin/clients/welcome/:userId",
+
+			"adminProducts": "owner/products",
 			
-			"adminProduct": "admin/products",
-			"products": "owner/products",
-			"cart": "cart/tradelines",
-			"importBuyer": "owner/bulkImport",
-			"createTransaction": "admin/clients/balance",
-			"csvFilePath": "owner/clientsExample.csv",
-			"seller": "admin/clients?role['seller']=true",
-			"adminTradelines": "owner/tradelines",
-			"userList": "admin/clients",
-			"sellersList": "admin/clients?seller=true",
-			"buyersList": "admin/clients?buyer=true"
-		},
-		addParams = function(url, params) {
-			_.each(params, function(p) {
-				if (p)
-					url += "/" + p;
-			});
-			return url;
+			"tradeline": "tradelines",
+
+			"manageOwner": "admin/owners",
+			"modifyOwner": "admin/owners/:id"
 		},
 		addFilters = function(url, params) {
 			var qFound = false;

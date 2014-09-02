@@ -15,6 +15,9 @@ define([
 		},
 		hasNext: function(){
 			return this.hasNextPage();
+		},
+		state: {
+			pageSize: 100000
 		}
 	});
 

@@ -16,9 +16,10 @@ define([
             	keyPressed = String.fromCharCode(keyCode),
             	text = $(e.target).val() + keyPressed;
 
-            if( _.indexOf(keyCode, keys) !== -1) {
+            if( _.indexOf(keys, keyCode) !== -1) {
             	return;
             }
+
             var atMaxLength = text.length > opts.textLength;
             var unMatchedRegex = !text.match(opts.regex);
 
@@ -83,12 +84,24 @@ define([
 		className: 'phone-editor',
 		
 		getValue: function(){
-			return this.$('.area-code').val() + '-' + this.$('.phone-1').val() + '-' + this.$('.phone-2').val();
+			var areaCode = this.$('.area-code').val(),
+				phone1 = this.$('.phone-1').val(),
+				phone2 = this.$('.phone-2').val();
+
+			if(areaCode && phone1 && phone2) {
+				return areaCode + '-' + phone1 + '-' + phone2;
+			} else {
+				return '';
+			}
 		},
 
 		setValue: function(val){
 			var phoneRegex = /(\d{3})-(\d{3})-(\d{4})/;
 			var match = val.match(phoneRegex);
+
+			if(!match) {
+				return;
+			}
 
 			this.$('.area-code').val(match[0]);
 			this.$('.phone-1').val(match[1]);

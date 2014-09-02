@@ -27,7 +27,7 @@ define([
 		},
 
 		redirectToDashboard: function(){
-			App.Router.navigate('admin/dashboard', {trigger: true});
+			App.Router.navigate('admin/manage-buyers', {trigger: true});
 		},
 		
 		options: {

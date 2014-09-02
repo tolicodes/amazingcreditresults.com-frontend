@@ -6,8 +6,11 @@ define([
 	"common/views/logout",
 
 	"common/layouts/admin",
-	"modules/admin/dashboard/dashboardView",
 	"modules/admin/manage-buyers/manage-buyers",
+	"modules/admin/manage-sellers/manage-sellers",
+	"modules/admin/manage-owners/manage-owners",
+
+	"modules/admin/manage-products/manage-products",
  
 	"less!common/css/style"
 ], function(
@@ -18,8 +21,11 @@ define([
 	logoutView,
 
 	adminLayout,
-	adminDashboard,
-	adminManageBuyers
+	adminManageBuyers,
+	adminManageSellers,
+	adminManageOwners,
+
+	adminManageProducts
 ) {
 
 	return Router.extend({
@@ -29,8 +35,11 @@ define([
 
 		pages: {
 			admin: {
-				'admin/dashboard': adminDashboard,
-				'admin/manage-buyers': adminManageBuyers
+				'admin/manage-buyers': adminManageBuyers,
+				'admin/manage-sellers': adminManageSellers,
+				'admin/manage-owners': adminManageOwners,
+
+				'admin/manage-products': adminManageProducts
 			},
 			buyer: {
 

@@ -30,7 +30,6 @@ define([
 
 		views: {
 			'.modal-body': function(){
-				console.log('render');
 				return new this.mainView;
 			}
 		},
