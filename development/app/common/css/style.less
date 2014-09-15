@@ -1,26 +1,170 @@
-.buyer-info .form-group {
-  width: 49%;
-  margin-bottom: 10px;
+.form-group {
+  .dash {
+    display: inline-block;
+    margin: 6px 5px 0 5px;
+  }
+
+  .phone-editor {
+    .area-code, .phone-1, .phone-2 {
+     width: 30%;
+     display: inline-block;
+    } 
+  }
+
+  .ssn-editor {
+    .part-1,  .part-2,  .part-3 {
+      display: inline-block;
+    }
+
+    .part-1 {
+      width: 30%;
+    }
+
+    .part-2 {
+      width: 40%
+    }
+
+    .part-3 {
+      width: 20%;
+    }
+  }
 }
 
-.buyer-info .form-group label {
-  width: 25%;
+.grid {
+  overflow-x: auto;
 }
 
-.buyer-info .form-group input, .buyer-info .form-group textarea, .buyer-info .form-group select {
-  width: 70%;
+.login-layout {
+  position: absolute;
+  top:0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  height: 200px;
+  
+  margin: auto;  
 }
 
-.buyer-info .form-group .ssn-input {
-  width: 20%;
+.select2-cell .editor {
+  width: 100%;
 }
 
-.questainair li {
-  list-style-type: lower-alpha;
+.modify-product {
+  .field-reportsTo {
+    ul {
+      list-style: none;
+
+      li {
+        float: left;
+        margin-right: 10px;
+
+        label {
+          margin-lefT: 5px;
+        }
+      }
+    }
+  }
 }
 
-.questainair-questions {
-  list-style-type: decimal;
+.buyer-layout .inventory {
+  h3, .message {
+    text-align: left;
+  }
+
+  .cart {
+    width: 25%;
+    float: right;
+    background-color: #EEE;
+    border-radius: 5px;
+    text-align:center;
+
+    .cart-title {
+      font-size: 20px;
+    }
+
+    .tradeline-container {
+      text-align: left;
+    }
+  }
+
+  .recommendations {
+    float: left;
+    width: 75%;
+
+    text-align: center;
+
+    .add-all {
+      clear: both;
+    }
+  }
+
+  .list {
+    width: 100%;
+    float: left;
+  }
+
+  .tradelines-list {
+    width: 75%;
+  }
+
+  .tradeline-container {
+    width: 227px;
+    float: left;
+    margin-right: 1%;
+    margin-bottom: 10px;
+    overflow: hidden;
+    padding: 10px;
+    text-align: left;
+
+    border-radius: 10px;
+
+    .details {
+      width: 150px;
+      float: left;
+
+      .field-label {
+        font-weight: bold;
+        width: 92px;
+        display: inline-block;
+        float: left;
+      }
+
+      .value {
+        width: 50px;
+        float: left;
+      }
+    }
+
+    .buy {
+      width: 50px;
+      float: right;
+      font-weight: bold;
+      text-align: center;
+      font-size: 16px;
+      margin-top: 10px
+    }
+
+    .tradeline-title {
+      margin-bottom: 5px;
+      float: left;
+
+      margin-left: -10px;
+      margin-top: -10px;
+
+      padding: 5px 0 5px 10px;
+      background-color: #428bca;
+      color: white;
+      
+      width: 111%;
+
+      .logo {
+        width: 35px;
+        float: right;
+        margin: 0 10px;
+      }
+    }
+  }
 }
 
 .message-area {
@@ -29,17 +173,103 @@
   width: 100%;
   margin: 0;
   padding: 0;
+
+  > div {
+    width: 600px;
+    margin: 10px 50%;
+    left: -300px;
+    position: relative;
+
+    .message {
+      width: 500px;
+    }
+
+    .code {
+      position: absolute;
+      top: 8px;
+      right: 35px;
+    }
+
+    .close-btn {
+      position: absolute;
+      right: 5px;
+      top: 5px;
+    } 
+  }
 }
 
-.close-btn {
-  position: absolute;
-  right: 20px;
-  top: 20px;
-  display: none;
+.backgrid  {
+  .action-buttons {
+    width: 100px;
+  }
+
+  .action-buttons .btn {
+    margin-right: 5px;
+  }
+}
+
+.inactivity-timeout-modal {
+  .clock {
+    text-align:center;
+    font-size: 30px;
+    font-weight: bold;
+  }
+}
+
+.submit-button {
+  text-align: center;
 }
 
 .required {
   color: #FF0000;
+}
+
+.general-info {
+  .field-name\.title {
+    width: 10%;
+  }
+
+  .field-name\.givenName {
+    width: 35%;
+  } 
+
+  .field-name\.middleName { 
+    width: 10%;
+  }
+
+  .field-name\.familyName { 
+    width: 35%;
+  }
+ 
+  .field-name\.generation { 
+    width: 9%;
+  }
+
+  .field-street1 {
+    width: 101%;
+  }
+
+  .field-state {
+    width: 24%;
+  }
+
+  .field-zip {
+    width: 25.5%;
+  }
+
+  .field-sendWelcomeEmail, .field-evsVerified, .field-phoneVerified {
+    width: 33%
+  }
+}
+
+.modify-owner {
+   .field-name\.givenName {
+    width: 50%;
+  }
+
+  .field-name\.familyName { 
+    width: 50%;
+  }
 }
 
 div[data-error] {
@@ -54,20 +284,16 @@ div[data-fieldsets] button {
 
 fieldset > div {
   display: inline-block;
-  width: 45%;
+  width: 100%;
   vertical-align: top;
+}
+
+.form-group {
+  width: 50%;
 }
 
 .full-width fieldset > div {
   width: 90%;
-}
-
-.left {
-  float: left;
-}
-
-.right {
-  float: right;
 }
 
 .form-inline .form-control {
@@ -87,71 +313,9 @@ fieldset > div {
 }
 
 input[type=text], input[type=password], select, textarea {
-  width: 90% !important;
+  width: 98% !important;
 }
 
 textarea {
   min-height: 50px;
-}
-
-.form-button button {
-  margin-bottom: 20px;
-}
-
-.set-password .form-group, .set-password .form-group input {
-  width: 100%;
-}
-
-
-.field-birthday select, .multiple-input-h input {
-  width: 30% !important;
-  height: 34px;
-  display: inline-block !important;
-}
-
-fieldset {
-  float: left;
-width: 100%;
-}
-
-.centered {
-  text-align: center;
-}
-
-.credit-panel {
-  input, select {
-    width: 100% !important;
-  }
-
-  .credit-details {
-    > div {
-      padding: 2px;
-
-      &:first-child {
-        padding-left: 0;
-      }
-
-      &:last-child {
-        padding-right: 0;
-      }
-    }
-  }
-}
-
-.payment-info {
-  margin-bottom: 20px;
-}
-
-.logout-btn {
-  padding: 5px 10px 0 0;
-}
-
-.backgrid tbody tr.empty td {
-  display: table-cell;
-}
-
-#loader-area {
-  position: fixed;
-  top: 48%;
-  left: 48%;
 }
