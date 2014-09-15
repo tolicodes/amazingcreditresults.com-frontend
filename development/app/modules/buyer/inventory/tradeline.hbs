@@ -1,0 +1,36 @@
+<div class="tradeline-title">
+	<img src="images/{{logo}}.jpg" class="logo"/>
+	<div class="product">{{product.bank}} {{product.name}}</div>
+</div>
+
+<div class="buy">
+	<div class="price">{{price}}</div>
+	{{#if inCart}}
+	<button class="remove-from-cart btn btn-small btn-primary glyphicon glyphicon-remove"></button>
+	{{else}}
+	<button class="add-to-cart btn btn-small btn-primary glyphicon glyphicon-shopping-cart"></button>
+	{{/if}}
+</div>
+
+<div class="details">
+	<div class="limit">
+		<span class="field-label">Credit Line</span>
+		<span class="value">{{creditLimit}}</span>
+	</div>
+
+	<div class="lineAge">
+		<span class="field-label">Line Age</span>
+		<span class="value">{{lineAge}}</span>
+	</div>
+
+	<div class="statementDate">
+		<span class="field-label">Stmt. Date</span>
+		<span class="value">{{statementDate}}</span>
+	</div>
+
+	<div class="availableAus">
+		<span class="field-label">AUs Avail.</span>
+		<span class="value">{{availableAus}}</span>
+	</div>
+</div>
+
