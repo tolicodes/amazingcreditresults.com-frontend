@@ -9,7 +9,7 @@ define([
 	return view.extend({
 		hooks: {
 			'render:before': ['setOptions'],
-			'close:before': 'hide'
+			'close:before': ['hide', 'removeBackdrop']
 		},
 
 		events: {
@@ -63,9 +63,15 @@ define([
 				return;
 			}
 
-			this._showing = true;
+			this._showing = false;
 
 			this.$el.modal('hide');
+		},
+
+		removeBackdrop: function(){
+			$('.modal-backdrop').fadeOut('fast', function(){
+				$(this).remove();
+			});
 		}
 	});
 });

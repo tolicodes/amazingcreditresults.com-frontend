@@ -59,7 +59,7 @@ define([
 			login: {
 				'admin/login': adminLoginView,
 				'logout': logoutView,
-				'buyer/login/:welcomeKey': buyerLoginView
+				'login/:welcomeKey': buyerLoginView
 			}
 		},
 
