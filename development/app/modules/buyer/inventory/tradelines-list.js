@@ -30,11 +30,9 @@ define([
 		itemRemoved: function(view) {
 			this.masonry.remove(view.el);
 			this.masonry.layout();
-
 		},
 
 		applyMasonry: function() {
-
 			if (this.masonry) {
 				this.masonry.layout();
 				return;

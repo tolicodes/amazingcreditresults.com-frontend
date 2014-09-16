@@ -6,7 +6,7 @@ define([
 	return view.extend({
 		hooks: {
 			'initialize:before': ['_ensureItemView', 'setupContainer'],
-			'render:after': ['renderCollection'],
+			//'render:after': ['renderCollection'],
 			'collection:add': ['appendView'],
 			'collection:remove': 'removeView'
 		},
@@ -27,18 +27,11 @@ define([
 
 		setupContainer: function(){
 			this._collectionViews = [];
-		}, 
-
-		renderCollection: function(){
-			this.collection.each(this.appendView);
-			this.trigger('renderCollection:after');
 		},
 
 		appendView: function(model) {
-			
 			var view = new this.itemView({
 				model: model,
-				//appendTo: $listEl,
 				parentView: this
 			});
 

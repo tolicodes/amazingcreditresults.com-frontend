@@ -19,7 +19,7 @@ define([
 		},
 
 		hooks: {
-			'collection:sync': 'checkEmpty'
+			'collection:sync': ['checkEmpty', 'saveOriginal']
 		},
 
 		checkEmpty: function() {
@@ -28,10 +28,26 @@ define([
 			}
 		},
 
+		saveOriginal: function(){
+			this.original = this.collection.map(function(model){
+				return model.get('_id');
+			});
+		},
+
 		addAll: function() {
 			_(this._collectionViews).each(function(view) {
 				view.addToCart();
 			});
+		},
+
+		removeFromList: function(model) {
+			this.collection.remove(model);
+		},
+
+		addToList: function(model) {
+			if(this.original.indexOf(model.get('_id')) !== -1) {
+				this.collection.add(model);
+			}
 		}
 	});
 })
