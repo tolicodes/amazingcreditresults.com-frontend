@@ -6,7 +6,7 @@ define([
 	return view.extend({
 		hooks: {
 			'initialize:before': ['_ensureItemView', 'setupContainer'],
-			'after:render': ['renderCollection'],
+			'render:after': ['renderCollection'],
 			'collection:add': ['appendView'],
 			'collection:remove': 'removeView'
 		},
@@ -31,16 +31,34 @@ define([
 
 		renderCollection: function(){
 			this.collection.each(this.appendView);
+			this.trigger('renderCollection:after');
 		},
 
 		appendView: function(model) {
+			
+			var view = new this.itemView({
+				model: model,
+				//appendTo: $listEl,
+				parentView: this
+			});
+
+			this.doAppend(view);
+
+			this._collectionViews.push(view);
+		},
+
+		doAppend: function(view) {
+			this.trigger('appendItem:before', view);
 			var $listEl = this.$listEl ? this.$(this.$listEl) : this.$el;
 
-			this._collectionViews.push(new this.itemView({
-				model: model,
-				appendTo: $listEl,
-				parentView: this
-			}));
+			view.$el.appendTo($listEl);
+			this.trigger('appendItem:after', view);
+		},
+
+		doRemove: function(view){
+			this.trigger('removeItem:before', view);
+			view.remove();
+			this.trigger('removeItem:after', view);
 		},
 
 		removeView: function(model){
@@ -54,7 +72,7 @@ define([
 				return;
 			}
 
-			view.remove();
+			this.doRemove(view);
 
 			cv = _(cv).without(view);
 		}

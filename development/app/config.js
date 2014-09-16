@@ -34,7 +34,8 @@ require.config({
 		"jquery-color": "../libs/jquery-color/jquery.color",
 		"numeral": "../libs/numeral/numeral",
 		"backgrid-select2-cell": "../libs/backgrid-select2-cell/backgrid-select2-cell",
-		"select2": "../libs/select2/select2"
+		"select2": "../libs/select2/select2",
+		"masonry": "../libs/masonry/dist/masonry.pkgd"
 	},
 	map: {
 		"*": {
