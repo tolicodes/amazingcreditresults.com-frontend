@@ -11,50 +11,50 @@ define([
 	ssnTpl,
 	currencyTpl,
 	formatters
-){
+) {
 	Form.editors.MultiText = Form.editors.Base.extend({
 		_checkField: function(opts, e) {
 			//list of functional/control keys that you want to allow always
-            var keys = [8, 9, 16, 17, 18, 19, 20, 27, 33, 34, 35, 36, 37, 38, 39, 40, 45, 46, 144, 145],
-            	keyCode = e.keyCode || e.which,
-            	keyPressed = String.fromCharCode(keyCode),
-            	text = $(e.target).val() + keyPressed;
+			var keys = [8, 9, 16, 17, 18, 19, 20, 27, 33, 34, 35, 36, 37, 38, 39, 40, 45, 46, 144, 145],
+				keyCode = e.keyCode || e.which,
+				keyPressed = String.fromCharCode(keyCode),
+				text = $(e.target).val() + keyPressed;
 
-            if( _.indexOf(keys, keyCode) !== -1) {
-            	return;
-            }
+			if (_.indexOf(keys, keyCode) !== -1) {
+				return;
+			}
 
-            var atMaxLength = text.length > opts.textLength;
-            var unMatchedRegex = !text.match(opts.regex);
+			var atMaxLength = text.length > opts.textLength;
+			var unMatchedRegex = !text.match(opts.regex);
 
-            if (atMaxLength || unMatchedRegex) {
-                e.preventDefault();
-                e.stopPropagation();
-            }
+			if (atMaxLength || unMatchedRegex) {
+				e.preventDefault();
+				e.stopPropagation();
+			}
 
-            if(atMaxLength && opts.goToNextField) {
-            	var $field = $(e.target);
-            	var index = $field.index();
-            	$field
-            		.parent()
-            		.find(':input')
-            		.filter(function(){
-            			return $(this).index() > index
-            		})
-            		.eq(0)
-            		.focus()
-            		.val(keyPressed)
-            }
+			if (atMaxLength && opts.goToNextField) {
+				var $field = $(e.target);
+				var index = $field.index();
+				$field
+					.parent()
+					.find(':input')
+					.filter(function() {
+						return $(this).index() > index
+					})
+					.eq(0)
+					.focus()
+					.val(keyPressed)
+			}
 		},
 
-		render: function(){
+		render: function() {
 			this.$el.html(this.template());
 			this._applyFieldRules();
 			return this;
 		},
 
-		_applyFieldRules: function(){
-			_(_(this).result('fieldRules')).each(function(field, key){
+		_applyFieldRules: function() {
+			_(_(this).result('fieldRules')).each(function(field, key) {
 				this.$(key).keydown(
 					_.bind(this._checkField, this, field)
 				);
@@ -65,7 +65,7 @@ define([
 	Form.editors.Phone = Form.editors.MultiText.extend({
 		template: phoneTpl,
 
-		fieldRules: function(){
+		fieldRules: function() {
 			var numeric = /\d+/;
 			return {
 				'.area-code': {
@@ -86,24 +86,24 @@ define([
 		},
 
 		className: 'phone-editor',
-		
-		getValue: function(){
+
+		getValue: function() {
 			var areaCode = this.$('.area-code').val(),
 				phone1 = this.$('.phone-1').val(),
 				phone2 = this.$('.phone-2').val();
 
-			if(areaCode && phone1 && phone2) {
+			if (areaCode && phone1 && phone2) {
 				return areaCode + '-' + phone1 + '-' + phone2;
 			} else {
 				return '';
 			}
 		},
 
-		setValue: function(val){
+		setValue: function(val) {
 			var phoneRegex = /(\d{3})-(\d{3})-(\d{4})/;
 			var match = val.match(phoneRegex);
 
-			if(!match) {
+			if (!match) {
 				return;
 			}
 
@@ -113,12 +113,12 @@ define([
 		}
 	});
 
-	Form.editors.SSN = Form.editors.MultiText.extend ({
+	Form.editors.SSN = Form.editors.MultiText.extend({
 		template: ssnTpl,
 
 		className: 'ssn-editor',
 
-		fieldRules: function(){
+		fieldRules: function() {
 			var numeric = /\d+/;
 			return {
 				'.part-1': {
@@ -139,13 +139,13 @@ define([
 			};
 		},
 
-		getValue: function(){
-			return this.$('.part-1').val() + 
-				this.$('.part-2').val() + 
+		getValue: function() {
+			return this.$('.part-1').val() +
+				this.$('.part-2').val() +
 				this.$('.part-3').val();
 		},
-		
-		setValue: function(val){
+
+		setValue: function(val) {
 			var phoneRegex = /(\d{3})(\d{4})(\d{2})/;
 			var match = val.match(phoneRegex);
 
@@ -156,13 +156,15 @@ define([
 	});
 
 	Form.editors.DatePicker = Form.editors.Text.extend({
-		render: function(){
+		render: function() {
 			Form.editors.Text.prototype.render.apply(this, arguments);
- 			this.$el.addClass('datepicker input-small-custom');
-			
-			this.$el.datepicker().on('changeDate', function(){
-				$(this).datepicker('hide');
-			});
+			this.$el.addClass('datepicker input-small-custom');
+
+			//setTimeout(function() {
+				this.$el.datepicker().on('changeDate', function() {
+					$(this).datepicker('hide');
+				});
+			//}.bind(this));
 
 			return this;
 		}
@@ -173,15 +175,15 @@ define([
 
 		formatter: formatters.CurrencyFormatter,
 
-		getValue: function(){
+		getValue: function() {
 			return this.formatter.toRaw(this.$('input').val());
 		},
-		
-		setValue: function(val){
+
+		setValue: function(val) {
 			this.$('input').val(this.formatter.fromRaw(val));
 		},
 
-		render: function(){
+		render: function() {
 			this.$el.html(this.template({
 				before: '$'
 			}));
