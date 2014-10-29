@@ -1,6 +1,6 @@
 'use strict';
 
-define(['angular', 'services'], function (angular, services) {
+define(['angular', 'services'], function (angular) {
 
 	/* Filters */
 	

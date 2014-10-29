@@ -5,7 +5,7 @@ define(['angular', 'services'], function (angular) {
 	/* Controllers */
 	
 	return angular.module('myApp.controllers', ['myApp.services'])
-        .controller('Login', ['$scope', '$http', '$q', '$window', 'AuthService', function($scope, $http, $q, $window, AuthService) {
+        .controller('Login', ['$scope', 'AuthService', function($scope, AuthService) {
             // credentials to login with
             $scope.creds = {
                 username: '',
@@ -17,19 +17,21 @@ define(['angular', 'services'], function (angular) {
                 login: function() {
                     AuthService.login($scope.creds);
                 }
-            }
+            };
         }])
-        .factory('AuthService', function($http, Session) {
+        .factory('AuthService', function($http) {
             var authservice = {
                 login: function(credentials) {
                     return $http
                         .post('/api/v1/owner/login', credentials)
                         .then(function(res) {
-                            debugger;
+                            // debugger;
+                            window.console.log(res);
                         });
                 }
-            }
-        });
+            };
+            return authservice;
+        })
 		// Sample controller where service is being used
 		.controller('MyCtrl1', ['$scope', 'version', function ($scope, version) {
 			$scope.scopedAppVersion = version;

@@ -6,7 +6,6 @@ module.exports = function(grunt) {
                 curly: true,
                 eqeqeq: true,
                 maxparams: 3,
-                strict: true,
                 unused: true,
                 immed: true,
                 latedef: true,
@@ -17,14 +16,18 @@ module.exports = function(grunt) {
                 globals: {
                     window: true,
                     moment: true,
-                    document: true
+                    document: true,
+                    require: true,
+                    define: true
                 },
                 // suppress warnings about mixed spaces and tabs
                 '-W099': true,
                 // supress warnings about Constructors not starting with Capitals
-                '-W055': true
+                '-W055': true,
+                // supress warning about use strict
+                '-W097': true
             },
-            files: ['app/**/*.js']
+            files: ['app/js/**/*.js']
         },
         haml: {
             dev: {

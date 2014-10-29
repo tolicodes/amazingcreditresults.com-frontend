@@ -7,7 +7,7 @@ define([
 	'directives',
 	'controllers',
 	'angularRoute',
-	], function (angular, filters, services, directives, controllers) {
+	], function (angular /*, filters, services, directives, controllers*/) {
 
 		// Declare app level module which depends on filters, and services
 		
