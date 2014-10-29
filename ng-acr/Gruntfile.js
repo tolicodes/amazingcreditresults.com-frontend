@@ -1,23 +1,6 @@
 module.exports = function(grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('bower.json'),
-        less: {
-            development: {
-                options: {
-                    dumpLineNumbers: 'all',
-                    // rootPath: 'css',
-                    paths: ['css/less']
-                },
-                files: {
-                    "css/calendar.css": "css/less/calendar.less"
-                }
-            },
-            prod: {
-                files: {
-                    'dist/calendar.css': 'css/less/calendar.less'
-                }
-            }
-        },
         jshint: {
             options: {
                 curly: true,
@@ -43,24 +26,6 @@ module.exports = function(grunt) {
             },
             files: ['app/**/*.js']
         },
-        watch: {
-            less: {
-                files: 'css/**/*.less',
-                tasks: 'less:development',
-                options: {
-                    atBegin: true,
-                    livereload: true
-                }
-            },
-            scripts: {
-                files: 'js/**/*.js',
-                tasks: 'jshint:files',
-                options: {
-                    atBegin: true,
-                    livereload: true
-                }
-            }
-        },
         haml: {
             dev: {
                 options: {
@@ -70,14 +35,30 @@ module.exports = function(grunt) {
                     'app/partials/login.html': 'app/partials/haml/login.haml'
                 }
             }
+        },
+        watch: {
+            scripts: {
+                files: 'js/**/*.js',
+                tasks: 'jshint:files',
+                options: {
+                    atBegin: true,
+                    livereload: true
+                }
+            },
+            haml: {
+                files: 'app/partials/**/*.haml',
+                tasks: 'haml:dev',
+                options: {
+                    atBegin: true
+                }
+            }
         }
     });
 
 
-    grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-haml2html');
 
-    grunt.registerTask('default', ['less', 'jshint']);
+    grunt.registerTask('default', ['haml', 'jshint']);
 };

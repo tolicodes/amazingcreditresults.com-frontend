@@ -5,8 +5,31 @@ define(['angular', 'services'], function (angular) {
 	/* Controllers */
 	
 	return angular.module('myApp.controllers', ['myApp.services'])
-        .controller('Login', ['$http', '$q', '$window', function($http, $q, $window) {
+        .controller('Login', ['$scope', '$http', '$q', '$window', 'AuthService', function($scope, $http, $q, $window, AuthService) {
+            // credentials to login with
+            $scope.creds = {
+                username: '',
+                password: ''
+            };
+
+            // the functions that do things
+            $scope.do = {
+                login: function() {
+                    AuthService.login($scope.creds);
+                }
+            }
         }])
+        .factory('AuthService', function($http, Session) {
+            var authservice = {
+                login: function(credentials) {
+                    return $http
+                        .post('/api/v1/owner/login', credentials)
+                        .then(function(res) {
+                            debugger;
+                        });
+                }
+            }
+        });
 		// Sample controller where service is being used
 		.controller('MyCtrl1', ['$scope', 'version', function ($scope, version) {
 			$scope.scopedAppVersion = version;
