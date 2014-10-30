@@ -1,14 +1,17 @@
 <div class='col-lg-4 col-lg-offset-4 col-xs-12'>
   <h4 class='text-center'>Welcome to Amazing Credit Results</h4>
-  <div class='form-group'>
-    <label>Username</label>
-    <input class='form-control' ng-model='creds.username' type='text'>
-  </div>
-  <div class='form-group'>
-    <label>Password</label>
-    <input class='form-control' ng-model='creds.password' type='password'>
-  </div>
-  <div class='form-group text-center'>
-    <input class='btn btn-success' ng-click='do.login()' value='Login'>
-  </div>
+  <form ng-submit='do.login()'>
+    <div class='alert alert-danger' ng-bind='res.message' ng-show='res.message'></div>
+    <div class='form-group'>
+      <label>Username</label>
+      <input class='form-control' ng-model='creds.username' type='text'>
+    </div>
+    <div class='form-group'>
+      <label>Password</label>
+      <input class='form-control' ng-model='creds.password' type='password'>
+    </div>
+    <div class='form-group text-center'>
+      <input class='btn btn-success' type='submit' value='Login'>
+    </div>
+  </form>
 </div>
