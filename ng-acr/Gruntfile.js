@@ -35,7 +35,8 @@ module.exports = function(grunt) {
                     style: 'expanded'
                 },
                 files: {
-                    'app/partials/login.html': 'app/partials/haml/login.haml'
+                    'app/partials/login.html': 'app/partials/haml/login.haml',
+                    'app/partials/sellers.html': 'app/partials/haml/sellers.haml'
                 }
             }
         },
