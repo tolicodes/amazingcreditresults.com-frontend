@@ -5,6 +5,7 @@ define([
 	'filters',
 	'services',
 	'directives',
+    'resources',
 	'controllers',
 	'angularRoute',
     'controllers/sellersCtrl'

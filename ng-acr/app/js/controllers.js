@@ -1,4 +1,4 @@
-define(['angular', 'services'], function (angular) {
+define(['angular'], function (angular) {
     'use strict';
 
 	/* Controllers */
@@ -23,4 +23,15 @@ define(['angular', 'services'], function (angular) {
                 }
             };
         }])
+        .controller('Logout', ['$scope', '$window', 'AuthService', '$location', function($scope, $window, AuthService, $location) {
+            $scope.view = {secondLeftToRedirect: 5};
+            AuthService.logout();
+            var interval = $window.setInterval(function() {
+                if($scope.view.secondLeftToRedirect-- <= 1) {
+                    $location.path('/login');
+                    $window.clearInterval(interval);
+                }
+                $scope.$apply();
+            }, 1000);
+        }]);
 });

@@ -1,4 +1,3 @@
-
 define(['angular', 'app'], function(angular, app) {
     'use strict';
 
@@ -7,13 +6,15 @@ define(['angular', 'app'], function(angular, app) {
             templateUrl: 'app/partials/login.html',
             controller: 'Login'
         });
+        $routeProvider.when('/logout', {
+            templateUrl: 'app/partials/logout.html',
+            controller: 'Logout'
+        });
         $routeProvider.when('/sellers', {
             templateUrl: 'app/partials/sellers.html',
             controller: 'Sellers',
-            resolve: {
-                permission: function() {
-                }
-            }
+            // In the AuthService; services.js
+            resolve: { permission: function() {} }
         });
 		$routeProvider.otherwise({redirectTo: '/sellers'});
 	}]);

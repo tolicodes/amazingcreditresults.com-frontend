@@ -17,7 +17,13 @@
 </head>
 <body>
     <div class="container">
-        <h1>Amazing Credit Results</h1>
+        <div class="row">
+            <h1 class="col-md-6 col-xs-12"><a href="/#/sellers" class="brand">Amazing Credit Results</a></h1>
+            <div class="col-md-3 col-xs-12 pull-right" ng-if="userInfo">
+                <h5 ng-bind="userInfo.name.givenName"></h5>
+                <a href="/#/logout">Logout</a>
+            </div>
+        </div>
         <!-- <ul class="menu">
             <li><a href="#/view1">view1</a></li>
             <li><a href="#/view2">view2</a></li>

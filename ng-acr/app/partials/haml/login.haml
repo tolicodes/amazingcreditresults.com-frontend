@@ -4,9 +4,9 @@
     .alert.alert-danger(ng-bind="res.message" ng-show="res.message")
     .form-group
       %label Username
-      %input.form-control(type="text" ng-model="creds.username")
+      %input.form-control(type="text" ng-model="creds.username" tabindex="1")
     .form-group
       %label Password
-      %input.form-control(type="password" ng-model="creds.password")
+      %input.form-control(type="password" ng-model="creds.password" tabindex="2")
     .form-group.text-center
-      %input.btn.btn-success(type="submit" value="Login")
+      %input.btn.btn-success(type="submit" value="Login" tabindex="3")

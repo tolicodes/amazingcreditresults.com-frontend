@@ -8,7 +8,7 @@ define(['angular'], function (angular) {
 	// In this case it is a simple value service.
 	angular.module('myApp.services', [])
 		.value('version', '0.1')
-        .factory('AuthService', ['$http', '$window', '$location', '$rootScope', function($http, $window, $location/*, $rootScope*/) {
+        .factory('AuthService', ['$http', '$window', '$location', '$rootScope', function($http, $window, $location, $rootScope) {
             var userInfo = {},
                 roles = {
                     admin: 0,
@@ -17,7 +17,7 @@ define(['angular'], function (angular) {
                 },
                 huntKey = function(key) {
                     // if no key, try and get from the session
-                    if(!key) {
+                    if(angular.isUndefined(key)) {
                         // if they have a session, use it
                         if($window.sessionStorage.ACRUserInfo) {
                             key = $window.JSON.parse($window.sessionStorage.ACRUserInfo).huntKey;
@@ -47,6 +47,7 @@ define(['angular'], function (angular) {
                             errorCb(res.errors[0].message);
                         });
                 },
+                logout: function() { huntKey(false); },
                 // get the user if we already have him, otherwise go get and give it up.
                 getUser: function(cb) {
                     if(userInfo.id) {
