@@ -1,6 +1,6 @@
-'use strict';
 
 define(['angular', 'app'], function(angular, app) {
+    'use strict';
 
 	return app.config(['$routeProvider', function($routeProvider) {
         $routeProvider.when('/login', {
@@ -9,7 +9,11 @@ define(['angular', 'app'], function(angular, app) {
         });
         $routeProvider.when('/sellers', {
             templateUrl: 'app/partials/sellers.html',
-            controller: 'Sellers'
+            controller: 'Sellers',
+            resolve: {
+                permission: function() {
+                }
+            }
         });
 		$routeProvider.otherwise({redirectTo: '/sellers'});
 	}]);
