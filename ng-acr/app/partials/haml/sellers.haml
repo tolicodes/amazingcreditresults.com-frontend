@@ -1,1 +1,8 @@
 %h2 Sellers
+%input(type="search" ng-model="view.q" placeholder="Filter Sellers")
+%ul
+  /*%li(ng-repeat="seller in view.sellers | filter:view.q as results")*/
+  %li(ng-repeat="seller in view.sellers")
+    .bold(ng-bind="seller.name.givenName")
+  %li(ng-if="results.length === 0")
+    .bg-info No Sellers found

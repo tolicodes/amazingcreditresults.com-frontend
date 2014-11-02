@@ -50,6 +50,7 @@ define(['angular'], function (angular) {
                 logout: function() { huntKey(false); },
                 // get the user if we already have him, otherwise go get and give it up.
                 getUser: function(cb) {
+                    cb = cb || function() {return false};
                     if(userInfo.id) {
                         // give it back to the function
                         cb(userInfo);

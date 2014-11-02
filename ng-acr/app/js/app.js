@@ -18,6 +18,7 @@ define([
 			'myApp.filters',
 			'myApp.services',
 			'myApp.directives',
+			'myApp.resources',
 			'myApp.controllers'
 		]);
 });

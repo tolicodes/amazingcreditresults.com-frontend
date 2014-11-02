@@ -1,1 +1,11 @@
 <h2>Sellers</h2>
+<input ng-model='view.q' placeholder='Filter Sellers' type='search'>
+<ul>
+  <!-- *%li(ng-repeat="seller in view.sellers | filter:view.q as results")*/ -->
+  <li ng-repeat='seller in view.sellers'>
+    <div class='bold' ng-bind='seller.name.givenName'></div>
+  </li>
+  <li ng-if='results.length === 0'>
+    <div class='bg-info'>No Sellers found</div>
+  </li>
+</ul>

@@ -2,7 +2,7 @@ define(['angular'], function (angular) {
     'use strict';
 
 	/* Controllers */
-	return angular.module('myApp.controllers', ['myApp.services'])
+	return angular.module('myApp.controllers', ['myApp.services', 'myApp.resources'])
         .controller('Login', ['$scope', 'AuthService', function($scope, AuthService) {
             // credentials to login with
             $scope.creds = {
