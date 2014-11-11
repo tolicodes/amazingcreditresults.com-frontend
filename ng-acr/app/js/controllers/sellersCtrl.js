@@ -1,15 +1,22 @@
-define(['angular', 'table', 'controllers'], function(angular, table) {
+define(['angular', 'table', 'controllers'], function(angular) {
     'use strict';
 
     return angular.module('myApp.controllers').controller('Sellers', ['$scope', 'AuthService', 'Resources', 'ngTableParams', function($scope, AuthService, Resources, ngTable) {
             // TODO move this to on route change success
             AuthService.getUser();
-            table;
-
 
             $scope.view = {
                 form: {
                     create: function() {
+                        $scope.view.form.model.roles = {
+                            seller: true,
+                            buyer: false,
+                            owner: false
+                        };
+                        Resources.Post($scope.view.form.model, function(/* newObj */) {
+                            // Refresh the table data
+                            $scope.view.tableParams.reload();
+                        });
                     }
                 },
                 tableParams: new ngTable({

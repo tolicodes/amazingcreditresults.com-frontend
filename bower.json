@@ -49,5 +49,8 @@
   "resolutions": {
     "jquery": "~2.1.1",
     "underscore": "~1.6.0"
+  },
+  "devDependencies": {
+    "Calendar": "/var/www/calendar/"
   }
 }
