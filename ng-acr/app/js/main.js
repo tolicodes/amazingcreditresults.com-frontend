@@ -3,12 +3,14 @@
 require.config({
 	paths: {
 		angular: '../bower_components/angular/angular',
+		table: '../bower_components/ng-table/ng-table',
 		angularRoute: '../bower_components/angular-route/angular-route',
 		angularMocks: '../bower_components/angular-mocks/angular-mocks',
 		text: '../bower_components/requirejs-text/text'
 	},
 	shim: {
 		'angular' : {'exports' : 'angular'},
+        'table': ['angular'],
 		'angularRoute': ['angular'],
 		'angularMocks': {
 			deps:['angular'],

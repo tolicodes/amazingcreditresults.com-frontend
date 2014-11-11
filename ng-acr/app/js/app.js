@@ -2,6 +2,7 @@
 
 define([
 	'angular',
+    'table',
 	'filters',
 	'services',
 	'directives',
@@ -19,6 +20,7 @@ define([
 			'myApp.services',
 			'myApp.directives',
 			'myApp.resources',
-			'myApp.controllers'
+			'myApp.controllers',
+            'ngTable'
 		]);
 });

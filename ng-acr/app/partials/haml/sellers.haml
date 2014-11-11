@@ -1,8 +1,77 @@
 %h2 Sellers
-%input(type="search" ng-model="view.q" placeholder="Filter Sellers")
-%ul
-  /*%li(ng-repeat="seller in view.sellers | filter:view.q as results")*/
-  %li(ng-repeat="seller in view.sellers")
-    .bold(ng-bind="seller.name.givenName")
-  %li(ng-if="results.length === 0")
-    .bg-info No Sellers found
+%form.form-inline(ng-submit="view.form.create()")
+  .alert.alert-danger(ng-bind="view.form.error" ng-show="view.form.error")
+  .form-group
+    %label.sr-only(for="title")
+    %select#title.form-control(ng-model="view.form.model.name.title" tabindex="1")
+      %option(selected="selected" value="") Title
+      %option Mr.
+      %option Ms.
+      %option Mrs.
+  .form-group
+    %label.sr-only(for="first") First Name
+    %input#first.form-control(type="text" ng-model="view.form.model.name.firstName" tabindex="2" placeholder="First Name (required)" size="20")
+  .form-group
+    %label.sr-only(for="middle") Middle Name
+    %input#middle.form-control(type="text" ng-model="view.form.model.name.middleName" tabindex="3" placeholder="Middle Name" size="20")
+  .form-group
+    %label.sr-only(for="last") Last Name
+    %input#last.form-control(type="text" ng-model="view.form.model.name.firstName" tabindex="4" placeholder="Last Name (required)" size="20")
+  .form-group
+    %label.sr-only(for="suffix")
+    %select#suffix.form-control(ng-model="view.form.model.name.suffix" tabindex="5")
+      %option(selected="selected" value="") Suffix
+      %option Jr.
+      %option Sr.
+      %option III
+      %option IV
+      %option V
+  .form-group
+    %label.sr-only(for="dob") Date of Birth
+    %input#dob.form-control(type="text" ng-model="view.form.model.birthday" tabindex="6" placeholder="DOB" size="10")
+  .form-group
+    %label.sr-only(for="ssn") SSN
+    %input#ssn.form-control(type="password" ng-model="view.form.model.ssn" tabindex="7" placeholder="SSN" size="11")
+  %br
+  .form-group
+    %label.sr-only(for="address") Street Address
+    %input#address.form-control(type="text" ng-model="view.form.model.street1" tabindex="8" placeholder="Street Address" size="30")
+  .form-group
+    %label.sr-only(for="address2") Street Address 2
+    %input#address2.form-control(type="text" ng-model="view.form.model.street2" tabindex="9" placeholder="Street Address 2" size="30")
+  .form-group
+    %label.sr-only(for="city") City
+    %input#city.form-control(type="text" ng-model="view.form.model.city" tabindex="10" placeholder="City" size="15")
+  .form-group
+    %label.sr-only(for="state") State
+    %input#state.form-control(type="text" ng-model="view.form.model.state" tabindex="11" placeholder="State" size="2")
+  .form-group
+    %label.sr-only(for="zip") Zip
+    %input#zip.form-control(type="text" ng-model="view.form.model.zip" tabindex="12" placeholder="Zip" size="5")
+  %br
+  .form-group
+    %label.sr-only(for="email") Email
+    %input#email.form-control(type="email" ng-model="view.form.model.email" tabindex="13" placeholder="Email (required)" size="30")
+  .form-group
+    %label.sr-only(for="phone") Phone
+    %input#phone.form-control(type="tell" ng-model="view.form.model.phone" tabindex="14" placeholder="Phone" size="10")
+  %br
+  .checkbox-inline
+    %label
+      %input(type="checkbox" ng-model="view.form.model.accountVerified" tabindex="15") Send welcome Email
+  .checkbox-inline
+    %label
+      %input(type="checkbox" ng-model="view.form.model.phoneVerified" tabindex="16") Phone Verified
+  %br
+  .form-group.pull-right
+    %input.btn.btn-success(type="submit" value="Create" tabindex="17")
+.table-responsive
+  %table.table(ng-table="view.tableParams")
+    %tr.row
+      %th.text-left.col-lg-4 Name
+      %th.text-left.col-lg-4 Email
+      %th.text-left.col-lg-4 Phone
+    %tr.row(ng-repeat="user in $data")
+      %td.col-lg-4(data-title="Name" sortable="name" ng-bind="user.fullName")
+      %td.col-lg-4(data-title="Name" sortable="name" ng-bind="user.email")
+      %td.col-lg-4(data-title="Name" sortable="name" ng-bind="user.phone")

@@ -50,7 +50,7 @@ define(['angular'], function (angular) {
                 logout: function() { huntKey(false); },
                 // get the user if we already have him, otherwise go get and give it up.
                 getUser: function(cb) {
-                    cb = cb || function() {return false};
+                    cb = cb || function() {return false;};
                     if(userInfo.id) {
                         // give it back to the function
                         cb(userInfo);
@@ -63,7 +63,7 @@ define(['angular'], function (angular) {
                                 cb(userInfo);
                             })
                             // fallback just in case, this should never happen
-                            .error(function(d) { console.log('error getting myself, but huntkey() worked'); });
+                            .error(function() { window.console.log('error getting myself, but huntkey() worked'); });
                     } else {
                         // if we can't get the user, redirect them to login
                         $location.path('/login');
@@ -73,7 +73,7 @@ define(['angular'], function (angular) {
                 role: function(what) {
                     return roles[what];
                 },
-                canUser: function(what) {
+                canUser: function() {
                 }
 
             };

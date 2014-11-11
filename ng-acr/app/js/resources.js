@@ -11,6 +11,8 @@ define(['angular'], function(angular) {
                     })
                     .error(function() {
                     });
+            },
+            Seller: function(obj, cb) {
             }
         };
     }]);
