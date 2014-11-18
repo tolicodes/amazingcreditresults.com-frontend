@@ -38,6 +38,7 @@ module.exports = function(grunt) {
                     'app/partials/login.html': 'app/partials/haml/login.haml',
                     'app/partials/logout.html': 'app/partials/haml/logout.haml',
                     'app/partials/sellers.html': 'app/partials/haml/sellers.haml',
+                    'app/partials/buyers.html': 'app/partials/haml/buyers.haml',
                     'app/partials/userForm.html': 'app/partials/haml/userForm.haml'
                 }
             }
@@ -53,7 +54,7 @@ module.exports = function(grunt) {
             },
             haml: {
                 files: 'app/partials/**/*.haml',
-                tasks: 'haml:dev',
+                tasks: 'haml',
                 options: {
                     atBegin: true
                 }

@@ -24,6 +24,9 @@ define(['angular'], function (angular) {
                         } else {    // otherwise just stop and let them know it failed
                             return false;
                         }
+                    } else if(key === false) { // If we're logging out
+                        userInfo = {};
+                        $rootScope.userInfo = userInfo;
                     }
                     // userInfo.id = data.id;
                     userInfo.huntKey = key;

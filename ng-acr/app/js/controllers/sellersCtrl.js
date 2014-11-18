@@ -16,6 +16,7 @@ define(['angular', 'table', 'controllers'], function(angular) {
                         Resources.Post($scope.view.form.model, function(/* newObj */) {
                             // Refresh the table data
                             $scope.view.tableParams.reload();
+                            $scope.view.form.model = {};
                         });
                     }
                 },
@@ -30,10 +31,7 @@ define(['angular', 'table', 'controllers'], function(angular) {
                     total: 1,
                     getData: function($defer) {
                         Resources.Sellers(function(data) {
-                            $defer.resolve(data.map(function(u) {
-                                u.fullName = [u.name.givenName, u.name.familyName].join(' ');
-                                return u;
-                            }));
+                            $defer.resolve(data);
                         });
                     }
                 })

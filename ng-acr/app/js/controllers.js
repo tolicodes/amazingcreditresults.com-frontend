@@ -24,8 +24,8 @@ define(['angular'], function (angular) {
             };
         }])
         .controller('Logout', ['$scope', '$window', 'AuthService', '$location', function($scope, $window, AuthService, $location) {
-            $scope.view = {secondLeftToRedirect: 5};
             AuthService.logout();
+            $scope.view = {secondLeftToRedirect: 5};
             var interval = $window.setInterval(function() {
                 if($scope.view.secondLeftToRedirect-- <= 1) {
                     $location.path('/login');
