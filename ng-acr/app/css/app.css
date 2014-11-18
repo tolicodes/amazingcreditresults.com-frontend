@@ -1,0 +1,6 @@
+/* app css stylesheet */
+
+.form-inline .form-group,
+.form-inline .checkbox-inline {
+    margin-top: 10px;
+}

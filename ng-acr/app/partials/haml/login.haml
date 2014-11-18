@@ -1,0 +1,12 @@
+.col-lg-4.col-lg-offset-4.col-xs-12
+  %h4.text-center Welcome to Amazing Credit Results
+  %form(ng-submit="do.login()")
+    .alert.alert-danger(ng-bind="res.message" ng-show="res.message")
+    .form-group
+      %label(for="username") Username
+      %input#username.form-control(type="text" ng-model="creds.username" tabindex="1")
+    .form-group
+      %label(for="pw") Password
+      %input#pw.form-control(type="password" ng-model="creds.password" tabindex="2")
+    .form-group.text-center
+      %input.btn.btn-success(type="submit" value="Login" tabindex="3")

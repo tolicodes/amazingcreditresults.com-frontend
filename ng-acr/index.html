@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" ng-app="myApp" class="no-js"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>Angular-RequireJS sample app</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="app/bower_components/html5-boilerplate/css/normalize.css">
+	<link rel="stylesheet" href="app/bower_components/html5-boilerplate/css/main.css">
+	<link rel="stylesheet" href="app/bower_components/bootstrap/dist/css/bootstrap.css">
+	<link rel="stylesheet" href="app/bower_components/bootstrap/dist/css/bootstrap-theme.css">
+	<link rel="stylesheet" href="app/css/app.css"/>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <h1 class="col-md-6 col-xs-12"><a href="/#/sellers" class="brand">Amazing Credit Results</a></h1>
+        </div>
+        <div class="navbar navbar-default" ng-if="userInfo.id">
+            <div class="navbar-header">
+                <a class="navbar-brand" ng-bind="userInfo.name.givenName"></a>
+            </div>
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav" role="navigation">
+                    <li><a href="/#/sellers">Sellers</a></li>
+                    <li><a href="/#/buyers">Buyers</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/#/logout">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!--[if lt IE 7]>
+                <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+        <div ng-view></div>
+    </div>
+
+	<script src="app/bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js"></script>
+	<script data-main="app/js/main" src="app/bower_components/requirejs/require.js"></script>		
+</body>
+</html>
