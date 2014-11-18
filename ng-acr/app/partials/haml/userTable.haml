@@ -1,9 +1,10 @@
-.table-responsive
-  %table.table(ng-table="view.tableParams")
+%table.table(ng-table="view.tableParams")
+  %thead
     %tr.row
       %th.text-left.col-lg-4.hidden-xs Name
       %th.text-left.col-lg-4.hidden-xs Email
       %th.text-left.col-lg-4.hidden-xs Phone
+  %tbody.table-hover
     %tr.row(ng-repeat="user in $data" ng-click="view.form.loadUser(user)")
       %td.col-lg-4.col-xs-12(data-title="Name" sortable="name" ng-bind="user.fullName")
       %td.col-lg-4.col-xs-12(data-title="Name" sortable="name" ng-bind="user.email")

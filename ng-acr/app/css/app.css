@@ -1,6 +1,6 @@
-/* app css stylesheet */
-
+/* line 3, /home/panda/Projects/amazingcreditresults.com-frontend/ng-acr/app/css/less/app.less */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/panda\/Projects\/amazingcreditresults\.com-frontend\/ng-acr\/app\/css\/less\/app\.less}line{font-family:\000033}}
 .form-inline .form-group,
 .form-inline .checkbox-inline {
-    margin-top: 10px;
+  margin-top: 10px;
 }

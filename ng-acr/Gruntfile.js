@@ -1,6 +1,18 @@
 module.exports = function(grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('bower.json'),
+        less: {
+            development: {
+                options: {
+                    dumpLineNumbers: 'all',
+                    // rootPath: 'css',
+                    paths: ['css/less']
+                },
+                files: {
+                    "app/css/app.css": "app/css/less/app.less"
+                }
+            }
+        },
         jshint: {
             options: {
                 curly: true,
@@ -60,6 +72,13 @@ module.exports = function(grunt) {
                 options: {
                     atBegin: true
                 }
+            },
+            less: {
+                files: 'app/css/less/app.less',
+                tasks: 'less',
+                options: {
+                    atBegin: true
+                }
             }
         }
     });
@@ -67,6 +86,7 @@ module.exports = function(grunt) {
 
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-haml2html');
 
     grunt.registerTask('default', ['haml', 'jshint']);
