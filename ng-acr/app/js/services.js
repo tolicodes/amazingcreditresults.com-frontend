@@ -110,13 +110,6 @@ define(['angular'], function (angular) {
                                 if(!model.id) {
                                     model.roles = roles;
                                 }
-                                // FIXME why can't i post to the server?
-                                // } else {
-                                    // model = {
-                                        // id: model.id,
-                                        // street1: model.street1
-                                    // };
-                                // }
                                 Resources.Post(model, function() {
                                     // Refresh the table data
                                     $scope.view.tableParams.reload();
