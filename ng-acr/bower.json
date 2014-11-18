@@ -19,6 +19,7 @@
     "requirejs": "~2.1.9",
     "requirejs-text": "~2.0.10",
     "html5-boilerplate": "~4.3.0",
-    "ng-table": "~0.3.3"
+    "ng-table": "~0.3.3",
+    "bootstrap": "~3.3.1"
   }
 }
