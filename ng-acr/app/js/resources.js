@@ -16,24 +16,26 @@ define(['angular'], function(angular) {
             // GET Sellers
             Sellers: function(cb) {
                 $http.get(baseUrl + '?seller=true')
-                    .success(function(res) {
-                        cb(res.data.map(makeNiceName));
-                    })
+                    .success(function(res) {cb(res.data.map(makeNiceName));})
                     .error(errorCb);
             },
             // GET Buyers
             Buyers: function(cb) {
                 $http.get(baseUrl + '?buyer=true')
-                    .success(function(res) {
-                        cb(res.data.map(makeNiceName));
-                    })
+                    .success(function(res) {cb(res.data.map(makeNiceName));})
+                    .error(errorCb);
+            },
+            // GET Owners
+            Owners: function(cb) {
+                $http.get(baseUrl + '?owner=true')
+                    .success(function(res) {cb(res.data.map(makeNiceName));})
                     .error(errorCb);
             },
             // creates any user Object.
             // Simply change the roles object to reflect the users capabilities
             // { buyer: true, seller: true, owner: true }
             Post: function(obj, cb) {
-                $http.post(baseUrl + (obj.id ? '/' + obj.id : '' ), obj)
+                $http[obj.id ? 'put' : 'post'](baseUrl + (obj.id ? '/' + obj.id : '' ), obj)
                     .success(cb)
                     .error(errorCb);
             }

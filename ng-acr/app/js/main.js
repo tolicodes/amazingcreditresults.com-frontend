@@ -3,7 +3,7 @@
 require.config({
 	paths: {
 		angular: '../bower_components/angular/angular',
-		table: '../bower_components/ng-table/ng-table',
+		table: '../bower_components/ng-table/ng-table', // http://ngmodules.org/modules/ng-table
 		angularRoute: '../bower_components/angular-route/angular-route',
 		angularMocks: '../bower_components/angular-mocks/angular-mocks',
 		text: '../bower_components/requirejs-text/text'

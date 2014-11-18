@@ -1,4 +1,4 @@
-%form.form-inline(ng-submit="view.form.create()")
+%form.form-inline(ng-submit="view.form.save()")
   .alert.alert-danger(ng-bind="view.form.error" ng-show="view.form.error")
   .form-group
     %label.sr-only(for="email") Email
@@ -61,5 +61,6 @@
       %input(type="checkbox" ng-model="view.form.model.phoneVerified" tabindex="16") Phone Verified
   %br
   .form-group.pull-right
-    %input.btn.btn-success(type="submit" value="Create" tabindex="17")
+    %input.btn.btn-info(type="reset" value="Clear" tabindex="17")
+    %input.btn.btn-success(type="submit" value="Save" tabindex="17")
   .clearfix

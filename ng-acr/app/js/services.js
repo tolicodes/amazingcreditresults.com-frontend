@@ -81,5 +81,66 @@ define(['angular'], function (angular) {
 
             };
             return authservice;
-		}]);
+		}])
+        .factory('usersCrud', ['AuthService', 'Resources', 'ngTableParams', function(AuthService, Resources, ngTable) {
+            return {
+                bootstrapScope: function($scope, which) {
+                    var roles = {
+                        seller: false,
+                        buyer: false,
+                        owner: false
+                    };
+                    which = which.toLowerCase();
+
+                    // turn on the role this factory is boostrapping for
+                    roles[which] = true;
+
+                    // TODO move this to on route change success
+                    AuthService.getUser();
+
+                    // set the object that the view will be using to access the variables to show the information
+                    $scope.view = {
+                        form: {
+                            // load use for the form to edit
+                            loadUser: function(who) { $scope.view.form.model = who; },
+                            // save the model
+                            save: function() {
+                                var model = $scope.view.form.model;
+                                // don't set the permissions if this user is just being updated
+                                if(!model.id) {
+                                    model.roles = roles;
+                                }
+                                // FIXME why can't i post to the server?
+                                // } else {
+                                    // model = {
+                                        // id: model.id,
+                                        // street1: model.street1
+                                    // };
+                                // }
+                                Resources.Post(model, function() {
+                                    // Refresh the table data
+                                    $scope.view.tableParams.reload();
+                                    $scope.view.form.model = {};
+                                });
+                            }
+                        },
+                        tableParams: new ngTable({
+                            page: 0,
+                            count: 10,
+                            sorting: {
+                                name: 'asc'
+                            }
+                        }, {
+                            counts: [],
+                            total: 1,
+                            getData: function($defer) {
+                                Resources[which[0].toUpperCase() + which.substr(1) + 's'](function(data) {
+                                    $defer.resolve(data);
+                                });
+                            }
+                        })
+                    };
+                }
+            };
+        }]);
 });

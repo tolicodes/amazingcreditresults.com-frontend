@@ -9,8 +9,6 @@ define([
     'resources',
 	'controllers',
 	'angularRoute',
-    'controllers/sellersCtrl',
-    'controllers/buyersCtrl'
 	], function (angular /*, filters, services, directives, controllers*/) {
 
 		// Declare app level module which depends on filters, and services

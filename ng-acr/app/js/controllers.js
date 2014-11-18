@@ -33,5 +33,15 @@ define(['angular'], function (angular) {
                 }
                 $scope.$apply();
             }, 1000);
+        }])
+        .controller('Sellers', ['$scope', 'usersCrud', function($scope, usersCrud) {
+            // services.js
+            usersCrud.bootstrapScope($scope, 'seller');
+        }])
+        .controller('Buyers', ['$scope', 'usersCrud', function($scope, usersCrud) {
+            usersCrud.bootstrapScope($scope, 'buyer');
+        }])
+        .controller('Owners', ['$scope', 'usersCrud', function($scope, usersCrud) {
+            usersCrud.bootstrapScope($scope, 'owner');
         }]);
 });
