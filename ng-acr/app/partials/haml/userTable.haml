@@ -1,10 +1,10 @@
 .table-responsive
   %table.table(ng-table="view.tableParams")
     %tr.row
-      %th.text-left.col-lg-4 Name
-      %th.text-left.col-lg-4 Email
-      %th.text-left.col-lg-4 Phone
+      %th.text-left.col-lg-4.hidden-xs Name
+      %th.text-left.col-lg-4.hidden-xs Email
+      %th.text-left.col-lg-4.hidden-xs Phone
     %tr.row(ng-repeat="user in $data" ng-click="view.form.loadUser(user)")
-      %td.col-lg-4(data-title="Name" sortable="name" ng-bind="user.fullName")
-      %td.col-lg-4(data-title="Name" sortable="name" ng-bind="user.email")
-      %td.col-lg-4(data-title="Name" sortable="name" ng-bind="user.phone")
+      %td.col-lg-4.col-xs-12(data-title="Name" sortable="name" ng-bind="user.fullName")
+      %td.col-lg-4.col-xs-12(data-title="Name" sortable="name" ng-bind="user.email")
+      %td.col-lg-4.col-xs-12(data-title="Name" sortable="name" ng-bind="user.phone")
