@@ -7,10 +7,10 @@
     </tr>
   </thead>
   <tbody class='table-hover'>
-    <tr class='row' ng-click='view.form.loadUser(user)' ng-repeat='user in $data'>
+    <tr class='row' ng-click='view.form.loadRow(user)' ng-repeat='user in $data'>
       <td class='col-lg-4 col-xs-12' data-title='Name' ng-bind='user.fullName' sortable='name'></td>
-      <td class='col-lg-4 col-xs-12' data-title='Name' ng-bind='user.email' sortable='name'></td>
-      <td class='col-lg-4 col-xs-12' data-title='Name' ng-bind='user.phone' sortable='name'></td>
+      <td class='col-lg-4 col-xs-12' data-title='Email' ng-bind='user.email' sortable='email'></td>
+      <td class='col-lg-4 col-xs-12' data-title='Phone' ng-bind='user.phone' sortable='phone'></td>
     </tr>
   </tbody>
 </table>

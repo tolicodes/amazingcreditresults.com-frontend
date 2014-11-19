@@ -1,0 +1,58 @@
+%h2 Products
+%form.form(ng-submit="view.form.save()")
+  .alert.alert-danger(ng-bind="view.form.error" ng-show="view.form.error")
+  .row
+    .form-group.col-lg-3
+      %label.sr-only(for="name") Name
+      %input#name.form-control(type="text" ng-model="view.form.model.name" tabindex="1" placeholder="Name" size="40" ng-required="true" required)
+    .form-group.col-lg-3
+      %label.sr-only(for="bank") Bank
+      %input#bank.form-control(type="text" ng-model="view.form.model.bank" tabindex="2" placeholder="Bank Name" size="40" ng-required="true" required)
+    .form-group.col-lg-3
+      %label.sr-only(for="total") Total Aus
+      %input#total.form-control(type="number" ng-model="view.form.model.totalAus" min="0" max="100" tabindex="3" placeholder="Total Aus" size="10")
+    .form-group.col-lg-3
+      %label.sr-only(for="type") Card Type
+      %select#type.form-control(ng-model="view.form.model.type" tabindex="4")
+        %option(selected="selected" value="") Type
+        %option Visa
+        %option MasterCard
+        %option American Express
+        %option Discover
+  .row
+    .col-lg-5
+      .form-group
+        %label.sr-only(for="notes") Notes
+        %textarea#notes.form-control(ng-model="view.form.model.notes" tabindex="5" placeholder="Notes" size="10")
+    .col-lg-7.row
+      %p Reports To
+      .checkbox-inline.col-lg-4
+        %label 
+          %input.checkbox(type="checkbox" ng-model="view.form.model.reportsToTransunion" tabindex="6") Transunion
+      .checkbox-inline.col-lg-4
+        %label
+          %input.checkbox(type="checkbox" ng-model="view.form.model.reportsToEquifax" tabindex="7") Equifax
+      .checkbox-inline.col-lg-3
+        %label
+          %input.checkbox(type="checkbox" ng-model="view.form.model.reportsToExperian" tabindex="8") Experian
+  .form-group.pull-right
+    %input.btn.btn-info(type="reset" value="Clear" tabindex="10")
+    %input.btn.btn-success(type="submit" value="Save" tabindex="9")
+  .clearfix
+%table.table(ng-table="view.tableParams")
+  %thead
+    %tr.row
+      %th.text-left.col-lg-2.hidden-xs Bank
+      %th.text-left.col-lg-2.hidden-xs Type
+      %th.text-left.col-lg-2.hidden-xs Name
+      %th.text-left.col-lg-2.hidden-xs Reports To
+      %th.text-left.col-lg-2.hidden-xs Total AUs
+      %th.text-left.col-lg-2.hidden-xs Notes
+  %tbody.table-hover
+    %tr.row(ng-repeat="prod in $data" ng-click="view.form.loadRow(prod)")
+      %td.col-lg-2.col-xs-12(data-title="Bank" sortable="name" ng-bind="prod.bank")
+      %td.col-lg-2.col-xs-12(data-title="Type" sortable="name" ng-bind="prod.type")
+      %td.col-lg-2.col-xs-12(data-title="Name" sortable="name" ng-bind="prod.name")
+      %td.col-lg-2.col-xs-12(data-title="reportsTo" sortable="reportsTo" ng-bind="prod.reportsTo")
+      %td.col-lg-2.col-xs-12(data-title="totalAus" sortable="totalAus" ng-bind="prod.totalAus")
+      %td.col-lg-2.col-xs-12(data-title="Notes" sortable="name" ng-bind="prod.notes")

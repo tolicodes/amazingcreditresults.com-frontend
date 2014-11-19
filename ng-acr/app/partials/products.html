@@ -1,0 +1,81 @@
+<h2>Products</h2>
+<form class='form' ng-submit='view.form.save()'>
+  <div class='alert alert-danger' ng-bind='view.form.error' ng-show='view.form.error'></div>
+  <div class='row'>
+    <div class='form-group col-lg-3'>
+      <label class='sr-only' for='name'>Name</label>
+      <input class='form-control' id='name' ng-model='view.form.model.name' ng-required='true' placeholder='Name' required size='40' tabindex='1' type='text'>
+    </div>
+    <div class='form-group col-lg-3'>
+      <label class='sr-only' for='bank'>Bank</label>
+      <input class='form-control' id='bank' ng-model='view.form.model.bank' ng-required='true' placeholder='Bank Name' required size='40' tabindex='2' type='text'>
+    </div>
+    <div class='form-group col-lg-3'>
+      <label class='sr-only' for='total'>Total Aus</label>
+      <input class='form-control' id='total' max='100' min='0' ng-model='view.form.model.totalAus' placeholder='Total Aus' size='10' tabindex='3' type='number'>
+    </div>
+    <div class='form-group col-lg-3'>
+      <label class='sr-only' for='type'>Card Type</label>
+      <select class='form-control' id='type' ng-model='view.form.model.type' tabindex='4'>
+        <option selected='selected' value=''>Type</option>
+        <option>Visa</option>
+        <option>MasterCard</option>
+        <option>American Express</option>
+        <option>Discover</option>
+      </select>
+    </div>
+  </div>
+  <div class='row'>
+    <div class='col-lg-5'>
+      <div class='form-group'>
+        <label class='sr-only' for='notes'>Notes</label>
+        <textarea class='form-control' id='notes' ng-model='view.form.model.notes' placeholder='Notes' size='10' tabindex='5'></textarea>
+      </div>
+    </div>
+    <div class='col-lg-7 row'>
+      <p>Reports To</p>
+      <div class='checkbox-inline col-lg-4'>
+        <label>
+          <input class='checkbox' ng-model='view.form.model.reportsToTransunion' tabindex='6' type='checkbox'>Transunion</input>
+        </label>
+      </div>
+      <div class='checkbox-inline col-lg-4'>
+        <label>
+          <input class='checkbox' ng-model='view.form.model.reportsToEquifax' tabindex='7' type='checkbox'>Equifax</input>
+        </label>
+      </div>
+      <div class='checkbox-inline col-lg-3'>
+        <label>
+          <input class='checkbox' ng-model='view.form.model.reportsToExperian' tabindex='8' type='checkbox'>Experian</input>
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class='form-group pull-right'>
+    <input class='btn btn-info' tabindex='10' type='reset' value='Clear'>
+    <input class='btn btn-success' tabindex='9' type='submit' value='Save'>
+  </div>
+  <div class='clearfix'></div>
+</form>
+<table class='table' ng-table='view.tableParams'>
+  <thead>
+    <tr class='row'>
+      <th class='text-left col-lg-2 hidden-xs'>Bank</th>
+      <th class='text-left col-lg-2 hidden-xs'>Type</th>
+      <th class='text-left col-lg-2 hidden-xs'>Name</th>
+      <th class='text-left col-lg-2 hidden-xs'>Reports To</th>
+      <th class='text-left col-lg-2 hidden-xs'>Total AUs</th>
+      <th class='text-left col-lg-2 hidden-xs'>Notes</th>
+    </tr>
+  </thead>
+  <tbody class='table-hover'>
+    <tr class='row' ng-click='view.form.loadRow(prod)' ng-repeat='prod in $data'>
+      <td class='col-lg-2 col-xs-12' data-title='Bank' ng-bind='prod.bank' sortable='name'></td>
+      <td class='col-lg-2 col-xs-12' data-title='Type' ng-bind='prod.type' sortable='name'></td>
+      <td class='col-lg-2 col-xs-12' data-title='Name' ng-bind='prod.name' sortable='name'></td>
+      <td class='col-lg-2 col-xs-12' data-title='reportsTo' ng-bind='prod.reportsTo' sortable='reportsTo'></td>
+      <td class='col-lg-2 col-xs-12' data-title='totalAus' ng-bind='prod.totalAus' sortable='totalAus'></td>
+      <td class='col-lg-2 col-xs-12' data-title='Notes' ng-bind='prod.notes' sortable='name'></td>
+    </tr>
+  </tbody>
+</table>

@@ -1,0 +1,48 @@
+%h2 Tradelines
+%form.form(ng-submit="view.form.save()")
+  .alert.alert-danger(ng-bind="view.form.error" ng-show="view.form.error")
+  .row
+    .form-group.col-lg-3
+      %label.sr-only(for="name") Balance
+      %input#name.form-control(type="number" ng-model="view.form.model.balance" min="0" tabindex="1" placeholder="Balance" ng-required="true" required)
+    .form-group.col-lg-3
+      %label.sr-only(for="bank") Cost
+      %input#bank.form-control(type="number" ng-model="view.form.model.cost" min="0" tabindex="2" placeholder="Cost" ng-required="true" required)
+    .form-group.col-lg-3
+      %label.sr-only(for="limit") Credit Limit
+      %input#limit.form-control(type="number" ng-model="view.form.model.creditLimit" min="0" tabindex="3" placeholder="Credit Limit")
+    .form-group.col-lg-3
+      %label.sr-only(for="price") Price
+      %input#price.form-control(type="number" ng-model="view.form.model.price" min="0" tabindex="4" placeholder="Price")
+  .row
+    .form-group.col-lg-3
+      %label.sr-only(for="tier") Tier
+      %input#tier.form-control(type="number" ng-model="view.form.model.tier" min="0" tabindex="5" placeholder="Tier")
+    .form-group.col-lg-3
+      %label.sr-only(for="total") Total Aus
+      %input#total.form-control(type="number" ng-model="view.form.model.totalAus" min="0" tabindex="6" placeholder="Total AUs")
+    .col-lg-6
+      .form-group
+        %label.sr-only(for="notes") Notes
+        %textarea#notes.form-control(ng-model="view.form.model.notes" tabindex="7" placeholder="Notes" size="10")
+  .form-group.pull-right
+    %input.btn.btn-info(type="reset" value="Clear" tabindex="10")
+    %input.btn.btn-success(type="submit" value="Save" tabindex="9")
+  .clearfix
+%table.table(ng-table="view.tableParams")
+  %thead
+    %tr.row
+      %th.text-left.col-lg-2.hidden-xs Bank
+      %th.text-left.col-lg-2.hidden-xs Type
+      %th.text-left.col-lg-2.hidden-xs Credit Limit
+      %th.text-left.col-lg-2.hidden-xs Cost
+      %th.text-left.col-lg-2.hidden-xs Price
+      %th.text-left.col-lg-2.hidden-xs Balance
+  %tbody.table-hover
+    %tr.row(ng-repeat="prod in $data" ng-click="view.form.loadRow(prod)")
+      %td.col-lg-2.col-xs-12(data-title="Bank" sortable="name" ng-bind="prod.product.bank")
+      %td.col-lg-2.col-xs-12(data-title="Type" sortable="name" ng-bind="prod.product.type")
+      %td.col-lg-2.col-xs-12(data-title="Name" sortable="name" ng-bind="prod.creditLimit")
+      %td.col-lg-2.col-xs-12(data-title="Cost" sortable="cost" ng-bind="prod.cost")
+      %td.col-lg-2.col-xs-12(data-title="Price" sortable="price" ng-bind="prod.price")
+      %td.col-lg-2.col-xs-12(data-title="Balance" sortable="balance" ng-bind="prod.balance")

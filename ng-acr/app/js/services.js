@@ -82,18 +82,23 @@ define(['angular'], function (angular) {
             };
             return authservice;
 		}])
-        .factory('usersCrud', ['AuthService', 'Resources', 'ngTableParams', function(AuthService, Resources, ngTable) {
+        .factory('utils', ['AuthService', 'Resources', 'ngTableParams', function(AuthService, Resources, ngTable) {
             return {
                 bootstrapScope: function($scope, which) {
                     var roles = {
-                        seller: false,
-                        buyer: false,
-                        owner: false
-                    };
+                            seller: false,
+                            buyer: false,
+                            owner: false
+                        },
+                        isUserPage = (which in roles);
+
+                    // just in case
                     which = which.toLowerCase();
 
-                    // turn on the role this factory is boostrapping for
-                    roles[which] = true;
+                    if(isUserPage) {
+                        // turn on the role this factory is boostrapping for
+                        roles[which] = true;
+                    }
 
                     // TODO move this to on route change success
                     AuthService.getUser();
@@ -102,15 +107,16 @@ define(['angular'], function (angular) {
                     $scope.view = {
                         form: {
                             // load use for the form to edit
-                            loadUser: function(who) { $scope.view.form.model = who; },
+                            loadRow: function(who) { $scope.view.form.model = who; },
                             // save the model
                             save: function() {
                                 var model = $scope.view.form.model;
                                 // don't set the permissions if this user is just being updated
-                                if(!model.id) {
+                                // also make sure that it is a user and not a product or anything
+                                if(!model.id && isUserPage) {
                                     model.roles = roles;
                                 }
-                                Resources.Post(model, function() {
+                                Resources[isUserPage ? 'SaveUser' : 'SaveProduct'](model, function() {
                                     // Refresh the table data
                                     $scope.view.tableParams.reload();
                                     $scope.view.form.model = {};

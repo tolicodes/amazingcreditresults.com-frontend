@@ -1,0 +1,65 @@
+<h2>Tradelines</h2>
+<form class='form' ng-submit='view.form.save()'>
+  <div class='alert alert-danger' ng-bind='view.form.error' ng-show='view.form.error'></div>
+  <div class='row'>
+    <div class='form-group col-lg-3'>
+      <label class='sr-only' for='name'>Balance</label>
+      <input class='form-control' id='name' min='0' ng-model='view.form.model.balance' ng-required='true' placeholder='Balance' required tabindex='1' type='number'>
+    </div>
+    <div class='form-group col-lg-3'>
+      <label class='sr-only' for='bank'>Cost</label>
+      <input class='form-control' id='bank' min='0' ng-model='view.form.model.cost' ng-required='true' placeholder='Cost' required tabindex='2' type='number'>
+    </div>
+    <div class='form-group col-lg-3'>
+      <label class='sr-only' for='limit'>Credit Limit</label>
+      <input class='form-control' id='limit' min='0' ng-model='view.form.model.creditLimit' placeholder='Credit Limit' tabindex='3' type='number'>
+    </div>
+    <div class='form-group col-lg-3'>
+      <label class='sr-only' for='price'>Price</label>
+      <input class='form-control' id='price' min='0' ng-model='view.form.model.price' placeholder='Price' tabindex='4' type='number'>
+    </div>
+  </div>
+  <div class='row'>
+    <div class='form-group col-lg-3'>
+      <label class='sr-only' for='tier'>Tier</label>
+      <input class='form-control' id='tier' min='0' ng-model='view.form.model.tier' placeholder='Tier' tabindex='5' type='number'>
+    </div>
+    <div class='form-group col-lg-3'>
+      <label class='sr-only' for='total'>Total Aus</label>
+      <input class='form-control' id='total' min='0' ng-model='view.form.model.totalAus' placeholder='Total AUs' tabindex='6' type='number'>
+    </div>
+    <div class='col-lg-6'>
+      <div class='form-group'>
+        <label class='sr-only' for='notes'>Notes</label>
+        <textarea class='form-control' id='notes' ng-model='view.form.model.notes' placeholder='Notes' size='10' tabindex='7'></textarea>
+      </div>
+    </div>
+  </div>
+  <div class='form-group pull-right'>
+    <input class='btn btn-info' tabindex='10' type='reset' value='Clear'>
+    <input class='btn btn-success' tabindex='9' type='submit' value='Save'>
+  </div>
+  <div class='clearfix'></div>
+</form>
+<table class='table' ng-table='view.tableParams'>
+  <thead>
+    <tr class='row'>
+      <th class='text-left col-lg-2 hidden-xs'>Bank</th>
+      <th class='text-left col-lg-2 hidden-xs'>Type</th>
+      <th class='text-left col-lg-2 hidden-xs'>Credit Limit</th>
+      <th class='text-left col-lg-2 hidden-xs'>Cost</th>
+      <th class='text-left col-lg-2 hidden-xs'>Price</th>
+      <th class='text-left col-lg-2 hidden-xs'>Balance</th>
+    </tr>
+  </thead>
+  <tbody class='table-hover'>
+    <tr class='row' ng-click='view.form.loadRow(prod)' ng-repeat='prod in $data'>
+      <td class='col-lg-2 col-xs-12' data-title='Bank' ng-bind='prod.product.bank' sortable='name'></td>
+      <td class='col-lg-2 col-xs-12' data-title='Type' ng-bind='prod.product.type' sortable='name'></td>
+      <td class='col-lg-2 col-xs-12' data-title='Name' ng-bind='prod.creditLimit' sortable='name'></td>
+      <td class='col-lg-2 col-xs-12' data-title='Cost' ng-bind='prod.cost' sortable='cost'></td>
+      <td class='col-lg-2 col-xs-12' data-title='Price' ng-bind='prod.price' sortable='price'></td>
+      <td class='col-lg-2 col-xs-12' data-title='Balance' ng-bind='prod.balance' sortable='balance'></td>
+    </tr>
+  </tbody>
+</table>

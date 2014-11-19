@@ -34,14 +34,23 @@ define(['angular'], function (angular) {
                 $scope.$apply();
             }, 1000);
         }])
-        .controller('Sellers', ['$scope', 'usersCrud', function($scope, usersCrud) {
+        .controller('Sellers', ['$scope', 'utils', function($scope, utils) {
             // services.js
-            usersCrud.bootstrapScope($scope, 'seller');
+            utils.bootstrapScope($scope, 'seller');
         }])
-        .controller('Buyers', ['$scope', 'usersCrud', function($scope, usersCrud) {
-            usersCrud.bootstrapScope($scope, 'buyer');
+        .controller('Buyers', ['$scope', 'utils', function($scope, utils) {
+            utils.bootstrapScope($scope, 'buyer');
         }])
-        .controller('Owners', ['$scope', 'usersCrud', function($scope, usersCrud) {
-            usersCrud.bootstrapScope($scope, 'owner');
+        .controller('Owners', ['$scope', 'utils', function($scope, utils) {
+            utils.bootstrapScope($scope, 'owner');
+        }])
+        .controller('Products', ['$scope', 'utils', function($scope, utils) {
+            utils.bootstrapScope($scope, 'product');
+        }])
+        .controller('Tradelines', ['$scope', 'utils', function($scope, utils) {
+            utils.bootstrapScope($scope, 'tradeline');
+        }])
+        .controller('Orders', ['$scope', 'utils', function($scope, utils) {
+            utils.bootstrapScope($scope, 'order');
         }]);
 });

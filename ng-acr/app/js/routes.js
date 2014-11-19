@@ -25,6 +25,18 @@ define(['angular', 'app'], function(angular, app) {
                 templateUrl: 'app/partials/owners.html',
                 controller: 'Owners'
             })
+            .when('/products', {
+                templateUrl: 'app/partials/products.html',
+                controller: 'Products'
+            })
+            .when('/orders', {
+                templateUrl: 'app/partials/products.html',
+                controller: 'Orders'
+            })
+            .when('/tradelines', {
+                templateUrl: 'app/partials/tradelines.html',
+                controller: 'Tradelines'
+            })
 		    .otherwise({redirectTo: '/sellers'});
 	}]);
 
