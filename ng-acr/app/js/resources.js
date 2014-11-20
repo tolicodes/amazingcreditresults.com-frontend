@@ -3,7 +3,8 @@ define(['angular'], function(angular) {
 
     return angular.module('myApp.resources', []).factory('Resources', ['$http', function($http) {
         var baseUrl = 'api/v1/',
-            adminRoute = baseUrl + 'admin/clients',
+            adminBase = baseUrl + 'admin/',
+            adminRoute = adminBase + 'clients',
             productRoute = baseUrl + 'owner/products',
             orderRoute = baseUrl + 'owner/orders',
             tradelineRoute = baseUrl + 'owner/tradelines',
@@ -67,7 +68,8 @@ define(['angular'], function(angular) {
             // Simply change the roles object to reflect the users capabilities
             // { buyer: true, seller: true, owner: true }
             SaveUser: function(obj, cb) {
-                $http[obj.id ? 'put' : 'post'](adminRoute + (obj.id ? '/' + obj.id : '' ), obj)
+                var saveRoute = adminBase + (obj.roles.owner ? 'owners' : 'client');
+                $http[obj.id ? 'put' : 'post'](saveRoute + (obj.id ? '/' + obj.id : '' ), obj)
                     .success(cb)
                     .error(errorCb);
             }

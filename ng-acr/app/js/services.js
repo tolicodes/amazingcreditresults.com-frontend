@@ -90,6 +90,7 @@ define(['angular'], function (angular) {
                             buyer: false,
                             owner: false
                         },
+                        defaultModel = function(isUser) { return (isUser ? {roles: roles} : {}); },
                         isUserPage = (which in roles);
 
                     // just in case
@@ -111,17 +112,13 @@ define(['angular'], function (angular) {
                             // save the model
                             save: function() {
                                 var model = $scope.view.form.model;
-                                // don't set the permissions if this user is just being updated
-                                // also make sure that it is a user and not a product or anything
-                                if(!model.id && isUserPage) {
-                                    model.roles = roles;
-                                }
                                 Resources[isUserPage ? 'SaveUser' : 'SaveProduct'](model, function() {
                                     // Refresh the table data
                                     $scope.view.tableParams.reload();
-                                    $scope.view.form.model = {};
+                                    $scope.view.form.model = defaultModel(isUserPage);
                                 });
-                            }
+                            },
+                            model: defaultModel(isUserPage)
                         },
                         tableParams: new ngTable({
                             page: 0,
