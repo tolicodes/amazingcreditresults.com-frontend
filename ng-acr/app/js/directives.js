@@ -6,8 +6,16 @@ define(['angular', 'services'], function(angular/*, services*/) {
 	
 	angular.module('myApp.directives', ['myApp.services'])
 		.directive('appVersion', ['version', function(version) {
-			return function(scope, elm) {
-				elm.text(version);
-		};
-	}]);
+                return function(scope, elm) {
+                    elm.text(version);
+            };
+        }])
+        .directive('kjToggleNavbarCollapse', function() {
+            return {
+                link: function($scope, $el, attrs) {
+                    var $menu = $el.parent().next();
+                    $el.on('click', function() { debugger; $menu.toggleClass('in'); });
+                }
+            }
+        });
 });
