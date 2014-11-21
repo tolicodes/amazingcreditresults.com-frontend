@@ -39,7 +39,7 @@ define(['angular'], function (angular) {
                 };
             var authservice = {
                 login: function(credentials, errorCb) {
-                    $http.post('/api/v1/owner/login', credentials)
+                    $http.post('/api/v1/' + credentials.role + '/login', credentials)
                         .success(function(data) {
                             huntKey(data.huntKey);
                             // redirect the user to the sellers page
@@ -100,9 +100,6 @@ define(['angular'], function (angular) {
                         // turn on the role this factory is boostrapping for
                         roles[which] = true;
                     }
-
-                    // TODO move this to on route change success
-                    AuthService.getUser();
 
                     // set the object that the view will be using to access the variables to show the information
                     $scope.view = {

@@ -55,7 +55,8 @@ module.exports = function(grunt) {
                     'app/partials/products.html': 'app/partials/haml/products.haml',
                     'app/partials/tradelines.html': 'app/partials/haml/tradelines.haml',
                     'app/partials/userForm.html': 'app/partials/haml/userForm.haml',
-                    'app/partials/userTable.html': 'app/partials/haml/userTable.haml'
+                    'app/partials/userTable.html': 'app/partials/haml/userTable.haml',
+                    'app/partials/account.html': 'app/partials/haml/account.haml'
                 }
             }
         },

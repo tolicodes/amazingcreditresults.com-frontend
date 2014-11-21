@@ -2,8 +2,7 @@
   <div class='alert alert-danger' ng-bind='view.form.error' ng-show='view.form.error'></div>
   <div class='form-group'>
     <label class='sr-only' for='email'>Email</label>
-    <input class='form-control' id='email' ng-model='view.form.model.email' placeholder='Email' size='30' tabindex='1' type='email' ng-if="view.form.model.roles.owner">
-    <input class='form-control' id='email' ng-model='view.form.model.email' ng-required='true' placeholder='Email (required)' required size='30' tabindex='1' type='email' ng-if="!view.form.model.roles.owner">
+    <input class='form-control' id='email' ng-model='view.form.model.email' ng-required='true' placeholder='Email (required)' required size='30' tabindex='1' type='email'>
   </div>
   <div class='form-group'>
     <label class='sr-only' for='title'></label>
@@ -36,14 +35,6 @@
       <option>IV</option>
       <option>V</option>
     </select>
-  </div>
-  <div class='form-group' ng-if="view.form.model.roles.owner">
-    <label class='sr-only' for='username'>username</label>
-    <input class='form-control' id='username' ng-model='view.form.model.username' placeholder='Username' size='20' tabindex='6' type='text'>
-  </div>
-  <div class='form-group' ng-if="view.form.model.roles.owner">
-    <label class='sr-only' for='pass'>Password</label>
-    <input class='form-control' id='pass' ng-model='view.form.model.password' placeholder='Password' size='20' tabindex='6' type='text'>
   </div>
   <div class='form-group'>
     <label class='sr-only' for='dob'>Date of Birth</label>

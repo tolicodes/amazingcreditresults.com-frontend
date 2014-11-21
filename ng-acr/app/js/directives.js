@@ -12,10 +12,10 @@ define(['angular', 'services'], function(angular/*, services*/) {
         }])
         .directive('kjToggleNavbarCollapse', function() {
             return {
-                link: function($scope, $el, attrs) {
+                link: function($scope, $el) {
                     var $menu = $el.parent().next();
-                    $el.on('click', function() { debugger; $menu.toggleClass('in'); });
+                    $el.on('click', function() { $menu.toggleClass('in'); });
                 }
-            }
+            };
         });
 });

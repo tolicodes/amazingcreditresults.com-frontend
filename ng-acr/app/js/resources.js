@@ -46,6 +46,13 @@ define(['angular'], function(angular) {
                     .success(cb)
                     .error(errorCb);
             },
+            Account: function(cb) {
+                $http.get(baseUrl + 'account')
+                    .success(function(res) {
+                        debugger;
+                    })
+                    .error(errorCb);
+            },
             // GET Sellers
             Sellers: function(cb) {
                 $http.get(adminRoute + '?seller=true')

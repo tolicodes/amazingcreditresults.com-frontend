@@ -8,5 +8,18 @@
     .form-group
       %label(for="pw") Password
       %input#pw.form-control(type="password" ng-model="creds.password" tabindex="2")
+    .form-group
+      .radio-inline
+        %label
+          %input(type="radio" ng-model="creds.role" name="role" value="buyer" tabindex="3")
+          Buyer
+      .radio-inline
+        %label
+          %input(type="radio" ng-model="creds.role" name="role" value="seller" tabindex="3")
+          Seller
+      .radio-inline
+        %label
+          %input(type="radio" ng-model="creds.role" name="role" value="owner" tabindex="3")
+          Owner
     .form-group.text-center
-      %input.btn.btn-success(type="submit" value="Login" tabindex="3")
+      %input.btn.btn-success(type="submit" value="Login" tabindex="4")

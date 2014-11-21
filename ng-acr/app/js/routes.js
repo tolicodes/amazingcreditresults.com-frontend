@@ -37,7 +37,19 @@ define(['angular', 'app'], function(angular, app) {
                 templateUrl: 'app/partials/tradelines.html',
                 controller: 'Tradelines'
             })
+            .when('/account', {
+                templateUrl: 'app/partials/account.html',
+                controller: 'Account'
+            })
 		    .otherwise({redirectTo: '/sellers'});
-	}]);
+	}])
+    .run(['$rootScope', 'AuthService', function($rootScope, AuthService) {
+        $rootScope.$on('$routeChangeStart', function(evt, next, curr) {
+            // if they're not already being redirected get the user;
+            if(!$rootScope.userInfo && next.$$route.originalPath.indexOf('login') === -1) {
+                AuthService.getUser();
+            }
+        });
+    }]);
 
 });

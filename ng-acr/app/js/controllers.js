@@ -7,7 +7,8 @@ define(['angular'], function (angular) {
             // credentials to login with
             $scope.creds = {
                 username: '',
-                password: ''
+                password: '',
+                role: 'buyer'
             };
             $scope.res = {
                 message: false
@@ -33,6 +34,11 @@ define(['angular'], function (angular) {
                 }
                 $scope.$apply();
             }, 1000);
+        }])
+        .controller('Account', ['$scope', 'Resources', function($scope, Resources) {
+            Resources.Account(function() {
+                debugger;
+            });
         }])
         .controller('Sellers', ['$scope', 'utils', function($scope, utils) {
             // services.js
