@@ -37,7 +37,7 @@ define(['angular'], function (angular) {
         }])
         .controller('Account', ['$scope', 'Resources', function($scope, Resources) {
             Resources.Account(function() {
-                debugger;
+                // debugger;
             });
         }])
         .controller('Sellers', ['$scope', 'utils', function($scope, utils) {

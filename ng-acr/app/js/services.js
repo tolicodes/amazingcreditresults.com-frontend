@@ -115,6 +115,16 @@ define(['angular'], function (angular) {
                                     $scope.view.form.model = defaultModel(isUserPage);
                                 });
                             },
+                            sendWelcomeEmail: function(id) {
+                                Resources.sendWelcomeEmail(id, function(res) {
+                                    window.console.log(res);
+                                });
+                            },
+                            resetPassword: function(id) {
+                                Resources.resetPassword(id, function(res) {
+                                    window.console.log(res);
+                                });
+                            },
                             model: defaultModel(isUserPage)
                         },
                         tableParams: new ngTable({

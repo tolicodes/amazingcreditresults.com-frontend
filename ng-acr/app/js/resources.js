@@ -49,7 +49,8 @@ define(['angular'], function(angular) {
             Account: function(cb) {
                 $http.get(baseUrl + 'account')
                     .success(function(res) {
-                        debugger;
+                        cb(res);
+                        // debugger;
                     })
                     .error(errorCb);
             },
@@ -69,6 +70,16 @@ define(['angular'], function(angular) {
             Owners: function(cb) {
                 $http.get(adminRoute + '?owner=true')
                     .success(function(res) {cb(res.data.map(makeNiceName));})
+                    .error(errorCb);
+            },
+            sendWelcomeEmail: function(id, cb) {
+                $http.get(adminRoute + '/welcome/' + id)
+                    .success(function(res) { cb(res); })
+                    .error(errorCb);
+            },
+            resetPassword: function(id, cb) {
+                $http.get(adminRoute + '/resetPassword/' + id)
+                    .success(function(res) { cb(res); })
                     .error(errorCb);
             },
             // creates any user Object.

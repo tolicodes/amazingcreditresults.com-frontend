@@ -44,7 +44,7 @@ define(['angular', 'app'], function(angular, app) {
 		    .otherwise({redirectTo: '/sellers'});
 	}])
     .run(['$rootScope', 'AuthService', function($rootScope, AuthService) {
-        $rootScope.$on('$routeChangeStart', function(evt, next, curr) {
+        $rootScope.$on('$routeChangeStart', function(evt, next) {
             // if they're not already being redirected get the user;
             if(!$rootScope.userInfo && next.$$route.originalPath.indexOf('login') === -1) {
                 AuthService.getUser();
