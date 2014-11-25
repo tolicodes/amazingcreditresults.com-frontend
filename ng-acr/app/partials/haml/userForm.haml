@@ -1,5 +1,6 @@
 %form.form-inline(ng-submit="view.form.save()")
   .alert.alert-danger(ng-bind="view.form.error" ng-show="view.form.error")
+  .alert.alert-info(ng-bind="view.form.info" ng-show="view.form.info")
   .form-group
     %label.sr-only(for="email") Email
     %input#email.form-control(type="email" ng-model="view.form.model.email" tabindex="1" placeholder="Email (required)" size="30" ng-required="true" required)

@@ -7,6 +7,10 @@ define(['angular', 'app'], function(angular, app) {
                 templateUrl: 'app/partials/login.html',
                 controller: 'Login'
             })
+            .when('/login/:apiKey', {
+                templateUrl: 'app/partials/login.html',
+                controller: 'Login'
+            })
             .when('/logout', {
                 templateUrl: 'app/partials/logout.html',
                 controller: 'Logout'

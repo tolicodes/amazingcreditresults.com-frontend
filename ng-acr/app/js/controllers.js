@@ -3,11 +3,12 @@ define(['angular'], function (angular) {
 
 	/* Controllers */
 	return angular.module('myApp.controllers', ['myApp.services', 'myApp.resources'])
-        .controller('Login', ['$scope', 'AuthService', function($scope, AuthService) {
+        .controller('Login', ['$scope', '$routeParams', 'AuthService', function($scope, $routeParams, AuthService) {
             // credentials to login with
             $scope.creds = {
                 username: '',
                 password: '',
+                apiKey: $routeParams.apiKey,
                 role: 'buyer'
             };
             $scope.res = {

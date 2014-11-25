@@ -1,5 +1,6 @@
 <form class='form-inline' ng-submit='view.form.save()'>
   <div class='alert alert-danger' ng-bind='view.form.error' ng-show='view.form.error'></div>
+  <div class='alert alert-info' ng-bind='view.form.info' ng-show='view.form.info'></div>
   <div class='form-group'>
     <label class='sr-only' for='email'>Email</label>
     <input class='form-control' id='email' ng-model='view.form.model.email' ng-required='true' placeholder='Email (required)' required size='30' tabindex='1' type='email'>

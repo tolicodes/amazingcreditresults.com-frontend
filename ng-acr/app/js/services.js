@@ -117,12 +117,16 @@ define(['angular'], function (angular) {
                             },
                             sendWelcomeEmail: function(id) {
                                 Resources.sendWelcomeEmail(id, function(res) {
-                                    window.console.log(res);
+                                    $scope.view.form.info = 'Welcome message sent!';
+                                    console.log(res.welcomeLink.replace(':3000', ''));
+                                    // TODO add a timeout here to make the message disappear
+                                    // make it piggy back off of ng-if or ng-show
                                 });
                             },
                             resetPassword: function(id) {
                                 Resources.resetPassword(id, function(res) {
-                                    window.console.log(res);
+                                    $scope.view.form.info = 'Password Reset Email Sent!';
+                                    console.log(res.welcomeLink);
                                 });
                             },
                             model: defaultModel(isUserPage)

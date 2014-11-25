@@ -73,12 +73,12 @@ define(['angular'], function(angular) {
                     .error(errorCb);
             },
             sendWelcomeEmail: function(id, cb) {
-                $http.get(adminRoute + '/welcome/' + id)
+                $http.post(adminRoute + '/welcome/' + id)
                     .success(function(res) { cb(res); })
                     .error(errorCb);
             },
             resetPassword: function(id, cb) {
-                $http.get(adminRoute + '/resetPassword/' + id)
+                $http.post(adminRoute + '/resetPassword/' + id)
                     .success(function(res) { cb(res); })
                     .error(errorCb);
             },
