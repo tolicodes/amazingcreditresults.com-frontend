@@ -106,7 +106,7 @@ define(['angular'], function (angular) {
 
                     // used to determine the resource methods we choose
                     if(isUserPage) {
-                        method = 'User'
+                        method = 'User';
                     } else {
                         method = which[0].toUpperCase() + which.substr(1);
                     }
@@ -136,7 +136,7 @@ define(['angular'], function (angular) {
                             sendWelcomeEmail: function(id) {
                                 Resources.sendWelcomeEmail(id, function(res) {
                                     $scope.view.form.info = 'Welcome message sent!';
-                                    window.console.log(res.welcomeLink.replace('\:3000', ''));
+                                    window.console.log(res.welcomeLink.replace(':3000', ''));
                                     // TODO add a timeout here to make the message disappear
                                     // make it piggy back off of ng-if or ng-show
                                 });
@@ -144,7 +144,7 @@ define(['angular'], function (angular) {
                             resetPassword: function(id) {
                                 Resources.resetPassword(id, function(res) {
                                     $scope.view.form.info = 'Password Reset Email Sent!';
-                                    window.console.log(res.welcomeLink.replace('\:3000', ''));
+                                    window.console.log(res.welcomeLink.replace(':3000', ''));
                                 });
                             },
                             model: defaultModel(isUserPage)
