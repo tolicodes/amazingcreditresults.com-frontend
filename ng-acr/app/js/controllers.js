@@ -40,8 +40,8 @@ define(['angular'], function (angular) {
             $scope.view = {
                 verifyPhone: function() {
                     Resources.verifyPhone(function(res) {
-                        console.log(res);
-                        debugger;
+                        window.console.log(res);
+                        //debugger;
                     });
                 }
             };
