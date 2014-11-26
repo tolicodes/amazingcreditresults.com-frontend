@@ -99,6 +99,11 @@ define(['angular'], function(angular) {
                     .success(function(res) { cb(res); })
                     .error(errorCb);
             },
+            verifyPhone: function(cb) {
+                $http.get(baseUrl + '/verifyPhone')
+                    .success(cb)
+                    .error(errorCb);
+            },
             // creates any user Object.
             // Simply change the roles object to reflect the users capabilities
             // { buyer: true, seller: true, owner: true }

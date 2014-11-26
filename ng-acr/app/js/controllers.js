@@ -37,9 +37,17 @@ define(['angular'], function (angular) {
             }, 1000);
         }])
         .controller('Account', ['$scope', 'Resources', function($scope, Resources) {
-            Resources.Account(function() {
+            $scope.view = {
+                verifyPhone: function() {
+                    Resources.verifyPhone(function(res) {
+                        console.log(res);
+                        debugger;
+                    });
+                }
+            };
+            // Resources.Account(function() {
                 // debugger;
-            });
+            // });
         }])
         .controller('Sellers', ['$scope', 'utils', function($scope, utils) {
             // services.js
