@@ -1,13 +1,14 @@
 %h2 Products
 %form.form(ng-submit="view.form.save()")
   .alert.alert-danger(ng-bind="view.form.error" ng-show="view.form.error")
+  .alert.alert-info(ng-bind="view.form.info" ng-show="view.form.info")
   .row
     .form-group.col-lg-3
-      %label.sr-only(for="name") Name
-      %input#name.form-control(type="text" ng-model="view.form.model.name" tabindex="1" placeholder="Name" size="40" ng-required="true" required)
+      %label.sr-only(for="name") Name (Required)
+      %input#name.form-control(type="text" ng-model="view.form.model.name" tabindex="1" placeholder="Name (Required)" size="40" ng-required="true" required)
     .form-group.col-lg-3
-      %label.sr-only(for="bank") Bank
-      %input#bank.form-control(type="text" ng-model="view.form.model.bank" tabindex="2" placeholder="Bank Name" size="40" ng-required="true" required)
+      %label.sr-only(for="bank") Bank (Required)
+      %input#bank.form-control(type="text" ng-model="view.form.model.bank" tabindex="2" placeholder="Bank Name (Required)" size="40" ng-required="true" required)
     .form-group.col-lg-3
       %label.sr-only(for="total") Total Aus
       %input#total.form-control(type="number" ng-model="view.form.model.totalAus" min="0" max="100" tabindex="3" placeholder="Total Aus" size="10")
@@ -36,6 +37,7 @@
         %label
           %input.checkbox(type="checkbox" ng-model="view.form.model.reportsToExperian" tabindex="8") Experian
   .form-group.pull-right
+    %input.btn.btn-danger(type="reset" value="Delete" tabindex="11" ng-click="view.form.delete()" ng-if="view.form.model.id")
     %input.btn.btn-info(type="reset" value="Clear" tabindex="10")
     %input.btn.btn-success(type="submit" value="Save" tabindex="9")
   .clearfix

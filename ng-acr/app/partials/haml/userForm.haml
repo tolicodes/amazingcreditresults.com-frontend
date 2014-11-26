@@ -68,6 +68,7 @@
       Reset Password
   %br
   .form-group.pull-right
+    %input.btn.btn-danger(type="reset" value="Delete" tabindex="19" ng-click="view.form.delete()" ng-if="view.form.model.id")
     %input.btn.btn-info(type="reset" value="Clear" tabindex="18")
     %input.btn.btn-success(type="submit" value="Save" tabindex="17")
   .clearfix

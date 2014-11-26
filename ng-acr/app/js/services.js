@@ -90,8 +90,11 @@ define(['angular'], function (angular) {
                             buyer: false,
                             owner: false
                         },
+                        // returns the base model used to reset the form
                         defaultModel = function(isUser) { return (isUser ? {roles: roles} : {}); },
-                        isUserPage = (which in roles);
+                        isUserPage = (which in roles),
+                        // the method for the resources service to use
+                        method = null;
 
                     // just in case
                     which = which.toLowerCase();
@@ -101,6 +104,13 @@ define(['angular'], function (angular) {
                         roles[which] = true;
                     }
 
+                    // used to determine the resource methods we choose
+                    if(isUserPage) {
+                        method = 'User'
+                    } else {
+                        method = which[0].toUpperCase() + which.substr(1);
+                    }
+
                     // set the object that the view will be using to access the variables to show the information
                     $scope.view = {
                         form: {
@@ -108,17 +118,25 @@ define(['angular'], function (angular) {
                             loadRow: function(who) { $scope.view.form.model = who; },
                             // save the model
                             save: function() {
-                                var model = $scope.view.form.model;
-                                Resources[isUserPage ? 'SaveUser' : 'SaveProduct'](model, function() {
+                                Resources['Save' + method]($scope.view.form.model, function() {
                                     // Refresh the table data
                                     $scope.view.tableParams.reload();
                                     $scope.view.form.model = defaultModel(isUserPage);
+                                    $scope.view.form.info = method + ' Saved';
+                                });
+                            },
+                            delete: function() {
+                                Resources['Delete' + method]($scope.view.form.model.id, function() {
+                                    // Refresh the table data
+                                    $scope.view.tableParams.reload();
+                                    $scope.view.form.model = defaultModel(isUserPage);
+                                    $scope.view.form.info = method + ' Deleted';
                                 });
                             },
                             sendWelcomeEmail: function(id) {
                                 Resources.sendWelcomeEmail(id, function(res) {
                                     $scope.view.form.info = 'Welcome message sent!';
-                                    console.log(res.welcomeLink.replace(':3000', ''));
+                                    window.console.log(res.welcomeLink.replace(':3000', ''));
                                     // TODO add a timeout here to make the message disappear
                                     // make it piggy back off of ng-if or ng-show
                                 });
@@ -126,7 +144,7 @@ define(['angular'], function (angular) {
                             resetPassword: function(id) {
                                 Resources.resetPassword(id, function(res) {
                                     $scope.view.form.info = 'Password Reset Email Sent!';
-                                    console.log(res.welcomeLink);
+                                    window.console.log(res.welcomeLink);
                                 });
                             },
                             model: defaultModel(isUserPage)

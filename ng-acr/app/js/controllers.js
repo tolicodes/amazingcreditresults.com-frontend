@@ -54,10 +54,17 @@ define(['angular'], function (angular) {
         .controller('Products', ['$scope', 'utils', function($scope, utils) {
             utils.bootstrapScope($scope, 'product');
         }])
-        .controller('Tradelines', ['$scope', 'utils', function($scope, utils) {
+        .controller('Tradelines', ['$scope', 'utils', 'Resources', function($scope, utils, Resources) {
             utils.bootstrapScope($scope, 'tradeline');
-        }])
-        .controller('Orders', ['$scope', 'utils', function($scope, utils) {
-            utils.bootstrapScope($scope, 'order');
+
+            Resources.Products(function(data) { $scope.view.productList = data; });
+            // TODO only get this if we're an admin
+            Resources.Sellers(function(data) { $scope.view.sellerList = data; });
+        //
+        //
+        // Not needed for now
+        //}])
+        //.controller('Orders', ['$scope', 'utils', function($scope, utils) {
+            //utils.bootstrapScope($scope, 'order');
         }]);
 });

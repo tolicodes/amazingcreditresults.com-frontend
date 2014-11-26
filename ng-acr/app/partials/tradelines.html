@@ -1,15 +1,32 @@
 <h2>Tradelines</h2>
 <form class='form' ng-submit='view.form.save()'>
   <div class='alert alert-danger' ng-bind='view.form.error' ng-show='view.form.error'></div>
+  <div class='alert alert-info' ng-bind='view.form.info' ng-show='view.form.info'></div>
   <div class='row'>
     <div class='form-group col-lg-3'>
+      <label class='sr-only' for='total'>Product (Required)</label>
+      <select class='form-control' id='title' ng-model='view.form.model.product' required tabindex='1'>
+        <option value=''>Product (Required)</option>
+        <option ng-bind='product.niceName' ng-repeat='product in view.productList' ng-value='product.id'></option>
+      </select>
+    </div>
+    <div class='form-group col-lg-3'>
+      <label class='sr-only' for='total'>Seller (Required)</label>
+      <select class='form-control' id='title' ng-model='view.form.model.seller' required tabindex='1'>
+        <option value=''>Seller (Required)</option>
+        <option ng-bind='seller.fullName' ng-repeat='seller in view.sellerList' ng-value='seller.id'></option>
+      </select>
+    </div>
+    <div class='form-group col-lg-3'>
       <label class='sr-only' for='name'>Balance</label>
-      <input class='form-control' id='name' min='0' ng-model='view.form.model.balance' ng-required='true' placeholder='Balance' required tabindex='1' type='number'>
+      <input class='form-control' id='name' min='0' ng-model='view.form.model.balance' placeholder='Balance' tabindex='1' type='number'>
     </div>
     <div class='form-group col-lg-3'>
       <label class='sr-only' for='bank'>Cost</label>
-      <input class='form-control' id='bank' min='0' ng-model='view.form.model.cost' ng-required='true' placeholder='Cost' required tabindex='2' type='number'>
+      <input class='form-control' id='bank' min='0' ng-model='view.form.model.cost' placeholder='Cost' tabindex='2' type='number'>
     </div>
+  </div>
+  <div class='row'>
     <div class='form-group col-lg-3'>
       <label class='sr-only' for='limit'>Credit Limit</label>
       <input class='form-control' id='limit' min='0' ng-model='view.form.model.creditLimit' placeholder='Credit Limit' tabindex='3' type='number'>
@@ -18,15 +35,42 @@
       <label class='sr-only' for='price'>Price</label>
       <input class='form-control' id='price' min='0' ng-model='view.form.model.price' placeholder='Price' tabindex='4' type='number'>
     </div>
-  </div>
-  <div class='row'>
-    <div class='form-group col-lg-3'>
-      <label class='sr-only' for='tier'>Tier</label>
-      <input class='form-control' id='tier' min='0' ng-model='view.form.model.tier' placeholder='Tier' tabindex='5' type='number'>
-    </div>
     <div class='form-group col-lg-3'>
       <label class='sr-only' for='total'>Total Aus</label>
-      <input class='form-control' id='total' min='0' ng-model='view.form.model.totalAus' placeholder='Total AUs' tabindex='6' type='number'>
+      <input class='form-control' id='total' min='0' ng-model='view.form.model.totalAus' placeholder='Total AUs' tabindex='5' type='number'>
+    </div>
+    <div class='form-group col-lg-3'>
+      <label class='sr-only' for='tier'>Tier</label>
+      <input class='form-control' id='tier' min='0' ng-model='view.form.model.tier' placeholder='Tier' tabindex='6' type='number'>
+    </div>
+  </div>
+  <div class='row'>
+    <div class='form-group col-lg-2'>
+      <label class='sr-only' for='mo'>moRating (Required)</label>
+      <select class='form-control' id='mo' ng-model='view.form.model.moRating' tabindex='7'>
+        <option value=''>moRating</option>
+        <option>Bronze</option>
+        <option>Silver</option>
+        <option>Gold</option>
+      </select>
+    </div>
+    <div class='form-group col-lg-2'>
+      <label class='sr-only' for='nc'>ncRating (Required)</label>
+      <select class='form-control' id='nc' ng-model='view.form.model.ncRating' tabindex='7'>
+        <option value=''>ncRating</option>
+        <option>Bronze</option>
+        <option>Silver</option>
+        <option>Gold</option>
+      </select>
+    </div>
+    <div class='form-group col-lg-2'>
+      <label class='sr-only' for='bc'>bcRating (Required)</label>
+      <select class='form-control' id='bc' ng-model='view.form.model.bcRating' tabindex='7'>
+        <option value=''>bcRating</option>
+        <option>Bronze</option>
+        <option>Silver</option>
+        <option>Gold</option>
+      </select>
     </div>
     <div class='col-lg-6'>
       <div class='form-group'>
@@ -36,6 +80,7 @@
     </div>
   </div>
   <div class='form-group pull-right'>
+    <input class='btn btn-danger' ng-click='view.form.delete()' ng-if='view.form.model.id' tabindex='11' type='reset' value='Delete'>
     <input class='btn btn-info' tabindex='10' type='reset' value='Clear'>
     <input class='btn btn-success' tabindex='9' type='submit' value='Save'>
   </div>

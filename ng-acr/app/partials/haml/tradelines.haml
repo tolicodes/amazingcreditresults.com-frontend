@@ -1,31 +1,65 @@
 %h2 Tradelines
 %form.form(ng-submit="view.form.save()")
   .alert.alert-danger(ng-bind="view.form.error" ng-show="view.form.error")
+  .alert.alert-info(ng-bind="view.form.info" ng-show="view.form.info")
   .row
     .form-group.col-lg-3
+      %label.sr-only(for="total") Product (Required)
+      %select#title.form-control(ng-model="view.form.model.product" tabindex="1" required)
+        %option(value="") Product (Required)
+        %option(ng-repeat="product in view.productList" ng-value="product.id" ng-bind="product.niceName")
+    .form-group.col-lg-3
+      %label.sr-only(for="total") Seller (Required)
+      %select#title.form-control(ng-model="view.form.model.seller" tabindex="1" required)
+        %option(value="") Seller (Required)
+        %option(ng-repeat="seller in view.sellerList" ng-value="seller.id" ng-bind="seller.fullName")
+    .form-group.col-lg-3
       %label.sr-only(for="name") Balance
-      %input#name.form-control(type="number" ng-model="view.form.model.balance" min="0" tabindex="1" placeholder="Balance" ng-required="true" required)
+      %input#name.form-control(type="number" ng-model="view.form.model.balance" min="0" tabindex="1" placeholder="Balance")
     .form-group.col-lg-3
       %label.sr-only(for="bank") Cost
-      %input#bank.form-control(type="number" ng-model="view.form.model.cost" min="0" tabindex="2" placeholder="Cost" ng-required="true" required)
+      %input#bank.form-control(type="number" ng-model="view.form.model.cost" min="0" tabindex="2" placeholder="Cost")
+  .row
     .form-group.col-lg-3
       %label.sr-only(for="limit") Credit Limit
       %input#limit.form-control(type="number" ng-model="view.form.model.creditLimit" min="0" tabindex="3" placeholder="Credit Limit")
     .form-group.col-lg-3
       %label.sr-only(for="price") Price
       %input#price.form-control(type="number" ng-model="view.form.model.price" min="0" tabindex="4" placeholder="Price")
-  .row
-    .form-group.col-lg-3
-      %label.sr-only(for="tier") Tier
-      %input#tier.form-control(type="number" ng-model="view.form.model.tier" min="0" tabindex="5" placeholder="Tier")
     .form-group.col-lg-3
       %label.sr-only(for="total") Total Aus
-      %input#total.form-control(type="number" ng-model="view.form.model.totalAus" min="0" tabindex="6" placeholder="Total AUs")
+      %input#total.form-control(type="number" ng-model="view.form.model.totalAus" min="0" tabindex="5" placeholder="Total AUs")
+    .form-group.col-lg-3
+      %label.sr-only(for="tier") Tier
+      %input#tier.form-control(type="number" ng-model="view.form.model.tier" min="0" tabindex="6" placeholder="Tier")
+  .row
+    .form-group.col-lg-2
+      %label.sr-only(for="mo") moRating (Required)
+      %select#mo.form-control(ng-model="view.form.model.moRating" tabindex="7")
+        %option(value="") moRating
+        %option Bronze
+        %option Silver
+        %option Gold
+    .form-group.col-lg-2
+      %label.sr-only(for="nc") ncRating (Required)
+      %select#nc.form-control(ng-model="view.form.model.ncRating" tabindex="7")
+        %option(value="") ncRating
+        %option Bronze
+        %option Silver
+        %option Gold
+    .form-group.col-lg-2
+      %label.sr-only(for="bc") bcRating (Required)
+      %select#bc.form-control(ng-model="view.form.model.bcRating" tabindex="7")
+        %option(value="") bcRating
+        %option Bronze
+        %option Silver
+        %option Gold
     .col-lg-6
       .form-group
         %label.sr-only(for="notes") Notes
         %textarea#notes.form-control(ng-model="view.form.model.notes" tabindex="7" placeholder="Notes" size="10")
   .form-group.pull-right
+    %input.btn.btn-danger(type="reset" value="Delete" tabindex="11" ng-click="view.form.delete()" ng-if="view.form.model.id")
     %input.btn.btn-info(type="reset" value="Clear" tabindex="10")
     %input.btn.btn-success(type="submit" value="Save" tabindex="9")
   .clearfix

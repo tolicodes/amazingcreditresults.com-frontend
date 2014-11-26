@@ -18,7 +18,8 @@ define(['angular'], function(angular) {
                 return u;
             },
             makeNiceProduct = function(p) {
-                p.reportsTo = p.reportsTo.join(' ');
+                p.reportsTo = p.reportsTo ? p.reportsTo.join(' ') : ''; 
+                p.niceName = [p.type, p.bank, p.name].join(' ');
                 return p;
             };
         return {
@@ -28,12 +29,23 @@ define(['angular'], function(angular) {
                     .success(function(res) {cb(res.data);})
                     .error(errorCb);
             },
-            // Orders
-            Orders: function(cb) {
-                $http.get(orderRoute)
-                    .success(function(res) {cb(res.data);})
+            // Save any Tradeline
+            SaveTradeline: function(obj, cb) {
+                $http[obj.id ? 'put' : 'post'](tradelineRoute + (obj.id ? '/' + obj.id : '' ), obj)
+                    .success(cb)
                     .error(errorCb);
             },
+            DeleteTradeline: function(id, cb) {
+                $http.delete([tradelineRoute, '/', id].join(''))
+                    .success(cb)
+                    .error(errorCb);
+            },
+            // Orders
+            // Orders: function(cb) {
+                // $http.get(orderRoute)
+                    // .success(function(res) {cb(res.data);})
+                    // .error(errorCb);
+            // },
             // Products
             Products: function(cb) {
                 $http.get(productRoute)
@@ -46,8 +58,13 @@ define(['angular'], function(angular) {
                     .success(cb)
                     .error(errorCb);
             },
+            DeleteProduct: function(id, cb) {
+                $http.delete([productRoute, '/', id].join(''))
+                    .success(cb)
+                    .error(errorCb);
+            },
             Account: function(cb) {
-                $http.get(baseUrl + 'account')
+                $http.post(baseUrl + 'account')
                     .success(function(res) {
                         cb(res);
                         // debugger;
@@ -88,6 +105,11 @@ define(['angular'], function(angular) {
             SaveUser: function(obj, cb) {
                 var saveRoute = adminBase + (obj.roles.owner ? 'owners' : 'client');
                 $http[obj.id ? 'put' : 'post'](saveRoute + (obj.id ? '/' + obj.id : '' ), obj)
+                    .success(cb)
+                    .error(errorCb);
+            },
+            DeleteUser: function(id, cb) {
+                $http.delete([adminRoute, id].join('/'))
                     .success(cb)
                     .error(errorCb);
             }

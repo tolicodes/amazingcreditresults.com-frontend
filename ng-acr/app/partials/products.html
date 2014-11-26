@@ -1,14 +1,15 @@
 <h2>Products</h2>
 <form class='form' ng-submit='view.form.save()'>
   <div class='alert alert-danger' ng-bind='view.form.error' ng-show='view.form.error'></div>
+  <div class='alert alert-info' ng-bind='view.form.info' ng-show='view.form.info'></div>
   <div class='row'>
     <div class='form-group col-lg-3'>
-      <label class='sr-only' for='name'>Name</label>
-      <input class='form-control' id='name' ng-model='view.form.model.name' ng-required='true' placeholder='Name' required size='40' tabindex='1' type='text'>
+      <label class='sr-only' for='name'>Name (Required)</label>
+      <input class='form-control' id='name' ng-model='view.form.model.name' ng-required='true' placeholder='Name (Required)' required size='40' tabindex='1' type='text'>
     </div>
     <div class='form-group col-lg-3'>
-      <label class='sr-only' for='bank'>Bank</label>
-      <input class='form-control' id='bank' ng-model='view.form.model.bank' ng-required='true' placeholder='Bank Name' required size='40' tabindex='2' type='text'>
+      <label class='sr-only' for='bank'>Bank (Required)</label>
+      <input class='form-control' id='bank' ng-model='view.form.model.bank' ng-required='true' placeholder='Bank Name (Required)' required size='40' tabindex='2' type='text'>
     </div>
     <div class='form-group col-lg-3'>
       <label class='sr-only' for='total'>Total Aus</label>
@@ -52,6 +53,7 @@
     </div>
   </div>
   <div class='form-group pull-right'>
+    <input class='btn btn-danger' ng-click='view.form.delete()' ng-if='view.form.model.id' tabindex='11' type='reset' value='Delete'>
     <input class='btn btn-info' tabindex='10' type='reset' value='Clear'>
     <input class='btn btn-success' tabindex='9' type='submit' value='Save'>
   </div>
