@@ -3,7 +3,7 @@
   .alert.alert-info(ng-bind="view.form.info" ng-show="view.form.info")
   .form-group
     %label.sr-only(for="email") Email
-    %input#email.form-control(type="email" ng-model="view.form.model.email" tabindex="1" placeholder="Email (required)" size="30" ng-required="true" required)
+    %input#email.form-control(type="email" ng-model="view.form.model.email" tabindex="1" placeholder="Email (required)" size="30" ng-required="true" ng-disabled="view.form.model.id" required)
   .form-group
     %label.sr-only(for="title")
     %select#title.form-control(ng-model="view.form.model.name.title" tabindex="2")
@@ -60,15 +60,15 @@
   .checkbox-inline(ng-hide="view.form.model.id")
     %label
       %input(type="checkbox" ng-model="view.form.model.phoneVerified" tabindex="16") Phone Verified
-  .form-group
+  .form-group(ng-if="userInfo.roles.owner")
     .btn.btn-primary(ng-click="view.form.sendWelcomeEmail(view.form.model.id)" ng-if="view.form.model.id")
       Send Welcome Email
-  .form-group
+  .form-group(ng-if="userInfo.roles.owner")
     .btn.btn-primary(ng-click="view.form.resetPassword(view.form.model.id)" ng-if="view.form.model.id")
       Reset Password
   %br
   .form-group.pull-right
-    %input.btn.btn-danger(type="reset" value="Delete" tabindex="19" ng-click="view.form.delete()" ng-if="view.form.model.id")
-    %input.btn.btn-info(type="reset" value="Clear" tabindex="18")
+    %input.btn.btn-danger(type="reset" value="Delete" tabindex="19" ng-click="view.form.delete()" ng-if="view.form.model.id" ng-if="userInfo.roles.owner")
+    %input.btn.btn-info(type="reset" value="Clear" tabindex="18" ng-if="userInfo.roles.owner")
     %input.btn.btn-success(type="submit" value="Save" tabindex="17")
   .clearfix

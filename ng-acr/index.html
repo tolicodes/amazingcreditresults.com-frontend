@@ -33,11 +33,11 @@
                 </div>
                 <div class="collapse navbar-collapse" id="header-nav">
                     <ul class="nav navbar-nav">
-                        <li><a href="/#/sellers">Sellers</a></li>
-                        <li><a href="/#/buyers">Buyers</a></li>
-                        <li><a href="/#/owners">Owners</a></li>
-                        <li><a href="/#/products">Products</a></li>
-                        <!-- <li><a href="/#/orders">Orders</a></li> -->
+                        <li data-ng-if="userInfo.roles.owner"><a href="/#/sellers">Sellers</a></li>
+                        <li data-ng-if="userInfo.roles.owner"><a href="/#/buyers">Buyers</a></li>
+                        <li data-ng-if="userInfo.roles.owner"><a href="/#/owners">Owners</a></li>
+                        <li data-ng-if="userInfo.roles.seller"><a href="/#/products">Products</a></li>
+                        <li data-ng-if="!userInfo.roles.seller"><a href="/#/orders">Orders</a></li>
                         <li><a href="/#/tradelines">Tradelines</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">

@@ -6,7 +6,6 @@ define(['angular'], function (angular) {
         .controller('Login', ['$scope', '$routeParams', 'AuthService', function($scope, $routeParams, AuthService) {
             // credentials to login with
             $scope.creds = {
-                username: '',
                 password: '',
                 apiKey: $routeParams.apiKey,
                 role: 'buyer'
@@ -27,7 +26,7 @@ define(['angular'], function (angular) {
         }])
         .controller('Logout', ['$scope', '$window', 'AuthService', '$location', function($scope, $window, AuthService, $location) {
             AuthService.logout();
-            $scope.view = {secondLeftToRedirect: 5};
+            $scope.view = {secondLeftToRedirect: 3};
             var interval = $window.setInterval(function() {
                 if($scope.view.secondLeftToRedirect-- <= 1) {
                     $location.path('/login');
@@ -36,18 +35,47 @@ define(['angular'], function (angular) {
                 $scope.$apply();
             }, 1000);
         }])
-        .controller('Account', ['$scope', 'Resources', function($scope, Resources) {
+        .controller('Welcome', ['$scope', '$window', '$routeParams', '$location', 'Resources',  function($scope, $window, $routeParams, $location, Resources) {
+           $scope.form = {
+                model: {
+                    apiKey: $routeParams.apiKey
+                },
+                setPassword: function() {
+                    var msg = 'Password set. Redirecting in ',
+                        secondsLeftToRedirect = 3;
+                    Resources.SetPassword($scope.form.model, function() {
+                        $scope.form.passwordSet = true;
+                        var interval = $window.setInterval(function() {
+                            if(secondsLeftToRedirect-- <= 1) {
+                                $location.path('/login');
+                                $window.clearInterval(interval);
+                            }
+                            $scope.form.message = msg + secondsLeftToRedirect;
+                            $scope.$apply();
+                        }, 1000);
+                    });
+                }
+           }
+        }])
+        .controller('Account', ['$scope', 'Resources', 'AuthService', function($scope, Resources, AuthService) {
             $scope.view = {
                 verifyPhone: function() {
                     Resources.verifyPhone(function(res) {
                         window.console.log(res);
                         //debugger;
                     });
+                },
+                form: {
+                    save: function() {
+                                Resources.SaveSelf($scope.view.form.model, function() {
+                                });
+                    }
                 }
             };
-            // Resources.Account(function() {
-                // debugger;
-            // });
+
+            AuthService.getUser(function(user) {
+                $scope.view.form.model = user;
+            });
         }])
         .controller('Sellers', ['$scope', 'utils', function($scope, utils) {
             // services.js
@@ -62,17 +90,20 @@ define(['angular'], function (angular) {
         .controller('Products', ['$scope', 'utils', function($scope, utils) {
             utils.bootstrapScope($scope, 'product');
         }])
-        .controller('Tradelines', ['$scope', 'utils', 'Resources', function($scope, utils, Resources) {
+        .controller('Tradelines', ['$scope', 'utils', 'AuthService', 'Resources', function($scope, utils, AuthService, Resources) {
             utils.bootstrapScope($scope, 'tradeline');
 
             Resources.Products(function(data) { $scope.view.productList = data; });
-            // TODO only get this if we're an admin
-            Resources.Sellers(function(data) { $scope.view.sellerList = data; });
-        //
-        //
-        // Not needed for now
-        //}])
-        //.controller('Orders', ['$scope', 'utils', function($scope, utils) {
-            //utils.bootstrapScope($scope, 'order');
+
+            AuthService.getUser(function(user) {
+                if(user.roles.owner) {
+                    Resources.Sellers(function(data) { $scope.view.sellerList = data; });
+                }
+            });
+        
+        
+        }])
+        .controller('Orders', ['$scope', 'utils', function($scope, utils) {
+            utils.bootstrapScope($scope, 'order');
         }]);
 });

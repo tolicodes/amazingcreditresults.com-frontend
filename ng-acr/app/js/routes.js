@@ -7,9 +7,9 @@ define(['angular', 'app'], function(angular, app) {
                 templateUrl: 'app/partials/login.html',
                 controller: 'Login'
             })
-            .when('/login/:apiKey', {
-                templateUrl: 'app/partials/login.html',
-                controller: 'Login'
+            .when('/welcome/:apiKey', {
+                templateUrl: 'app/partials/welcome.html',
+                controller: 'Welcome'
             })
             .when('/logout', {
                 templateUrl: 'app/partials/logout.html',
@@ -18,7 +18,6 @@ define(['angular', 'app'], function(angular, app) {
             .when('/sellers', {
                 templateUrl: 'app/partials/sellers.html',
                 controller: 'Sellers',
-                // In the AuthService; services.js
                 resolve: { permission: function() {} }
             })
             .when('/buyers', {
@@ -34,7 +33,7 @@ define(['angular', 'app'], function(angular, app) {
                 controller: 'Products'
             })
             .when('/orders', {
-                templateUrl: 'app/partials/products.html',
+                templateUrl: 'app/partials/orders.html',
                 controller: 'Orders'
             })
             .when('/tradelines', {
@@ -45,13 +44,15 @@ define(['angular', 'app'], function(angular, app) {
                 templateUrl: 'app/partials/account.html',
                 controller: 'Account'
             })
-		    .otherwise({redirectTo: '/sellers'});
+		    .otherwise({redirectTo: '/tradelines'});
 	}])
     .run(['$rootScope', 'AuthService', function($rootScope, AuthService) {
         $rootScope.$on('$routeChangeStart', function(evt, next) {
             // if they're not already being redirected get the user;
             if(!$rootScope.userInfo && next.$$route.originalPath.indexOf('login') === -1) {
-                AuthService.getUser();
+                AuthService.getUser(function(user) {
+                    window.console.log(user);
+                });
             }
         });
     }]);

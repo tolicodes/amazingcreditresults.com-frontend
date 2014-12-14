@@ -39,12 +39,12 @@ define(['angular'], function (angular) {
                 };
             var authservice = {
                 login: function(credentials, errorCb) {
-                    $http.post('/api/v1/' + credentials.role + '/login', credentials)
+                    $http.post('/api/v1/account/login', credentials)
                         .success(function(data) {
                             huntKey(data.huntKey);
                             // redirect the user to the sellers page
                             // TODO do automatic redirects back to the page users tried to visit in the first place
-                            $location.path('/sellers');
+                            $location.path('/tradelines');
                         })
                         .error(function(res) {
                             errorCb(res.errors[0].message);

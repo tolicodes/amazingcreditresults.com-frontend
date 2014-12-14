@@ -3,7 +3,7 @@
   <div class='alert alert-info' ng-bind='view.form.info' ng-show='view.form.info'></div>
   <div class='form-group'>
     <label class='sr-only' for='email'>Email</label>
-    <input class='form-control' id='email' ng-model='view.form.model.email' ng-required='true' placeholder='Email (required)' required size='30' tabindex='1' type='email'>
+    <input class='form-control' id='email' ng-disabled='view.form.model.id' ng-model='view.form.model.email' ng-required='true' placeholder='Email (required)' required size='30' tabindex='1' type='email'>
   </div>
   <div class='form-group'>
     <label class='sr-only' for='title'></label>
@@ -80,20 +80,20 @@
       <input ng-model='view.form.model.phoneVerified' tabindex='16' type='checkbox'>Phone Verified</input>
     </label>
   </div>
-  <div class='form-group'>
+  <div class='form-group' ng-if='userInfo.roles.owner'>
     <div class='btn btn-primary' ng-click='view.form.sendWelcomeEmail(view.form.model.id)' ng-if='view.form.model.id'>
       Send Welcome Email
     </div>
   </div>
-  <div class='form-group'>
+  <div class='form-group' ng-if='userInfo.roles.owner'>
     <div class='btn btn-primary' ng-click='view.form.resetPassword(view.form.model.id)' ng-if='view.form.model.id'>
       Reset Password
     </div>
   </div>
   <br>
   <div class='form-group pull-right'>
-    <input class='btn btn-danger' ng-click='view.form.delete()' ng-if='view.form.model.id' tabindex='19' type='reset' value='Delete'>
-    <input class='btn btn-info' tabindex='18' type='reset' value='Clear'>
+    <input class='btn btn-danger' ng-click='view.form.delete()' ng-if='userInfo.roles.owner' tabindex='19' type='reset' value='Delete'>
+    <input class='btn btn-info' ng-if='userInfo.roles.owner' tabindex='18' type='reset' value='Clear'>
     <input class='btn btn-success' tabindex='17' type='submit' value='Save'>
   </div>
   <div class='clearfix'></div>

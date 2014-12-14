@@ -5,9 +5,9 @@ define(['angular'], function(angular) {
         var baseUrl = 'api/v1/',
             adminBase = baseUrl + 'admin/',
             adminRoute = adminBase + 'clients',
-            productRoute = baseUrl + 'owner/products',
-            // orderRoute = baseUrl + 'owner/orders',
-            tradelineRoute = baseUrl + 'owner/tradelines',
+            productRoute = baseUrl + 'seller/products',
+            orderRoute = baseUrl + 'auPurchases',
+            tradelineRoute = baseUrl + 'seller/tradelines',
             errorCb = function(res) {
                 if(res.errors && res.errors.length > 0) {
                     window.alert(res.errors[0].message);
@@ -41,11 +41,11 @@ define(['angular'], function(angular) {
                     .error(errorCb);
             },
             // Orders
-            // Orders: function(cb) {
-                // $http.get(orderRoute)
-                    // .success(function(res) {cb(res.data);})
-                    // .error(errorCb);
-            // },
+            Orders: function(cb) {
+                $http.get(orderRoute)
+                    .success(function(res) {cb(res.data);})
+                    .error(errorCb);
+            },
             // Products
             Products: function(cb) {
                 $http.get(productRoute)
@@ -63,8 +63,18 @@ define(['angular'], function(angular) {
                     .success(cb)
                     .error(errorCb);
             },
+            SaveSelf: function(obj, cb) {
+                $http.put(baseUrl + 'myself', obj)
+                    .success(cb)
+                    .error(errorCb);
+            },
+            SetPassword: function(obj, cb) {
+                $http.post(baseUrl + 'account/setPassword', obj)
+                    .success(cb)
+                    .error(errorCb);
+            },
             Account: function(cb) {
-                $http.post(baseUrl + 'account')
+                $http.get(baseUrl + 'myself/transactions')
                     .success(function(res) {
                         cb(res);
                         // debugger;
@@ -100,7 +110,7 @@ define(['angular'], function(angular) {
                     .error(errorCb);
             },
             verifyPhone: function(cb) {
-                $http.get(baseUrl + '/verifyPhone')
+                $http.get(baseUrl + 'verifyPhone')
                     .success(cb)
                     .error(errorCb);
             },

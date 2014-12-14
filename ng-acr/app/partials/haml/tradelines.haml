@@ -8,7 +8,7 @@
       %select#title.form-control(ng-model="view.form.model.product" tabindex="1" required)
         %option(value="") Product (Required)
         %option(ng-repeat="product in view.productList" ng-value="product.id" ng-bind="product.niceName")
-    .form-group.col-lg-3
+    .form-group.col-lg-3(ng-if="userInfo.roles.owner")
       %label.sr-only(for="total") Seller (Required)
       %select#title.form-control(ng-model="view.form.model.seller" tabindex="1" required)
         %option(value="") Seller (Required)
@@ -19,7 +19,6 @@
     .form-group.col-lg-3
       %label.sr-only(for="bank") Cost
       %input#bank.form-control(type="number" ng-model="view.form.model.cost" min="0" tabindex="2" placeholder="Cost")
-  .row
     .form-group.col-lg-3
       %label.sr-only(for="limit") Credit Limit
       %input#limit.form-control(type="number" ng-model="view.form.model.creditLimit" min="0" tabindex="3" placeholder="Credit Limit")
@@ -32,7 +31,6 @@
     .form-group.col-lg-3
       %label.sr-only(for="tier") Tier
       %input#tier.form-control(type="number" ng-model="view.form.model.tier" min="0" tabindex="6" placeholder="Tier")
-  .row
     .form-group.col-lg-2
       %label.sr-only(for="mo") moRating (Required)
       %select#mo.form-control(ng-model="view.form.model.moRating" tabindex="7")

@@ -1,4 +1,3 @@
 <h2>Account</h2>
-<input class='btn btn-info' ng-click='view.verifyPhone()' tabindex='1' type='button' value='Verify Phone'>
-<br>
-To Be Continued...
+<input class='btn btn-info' ng-click='view.verifyPhone()' ng-if='userInfo.roles.owner' tabindex='1' type='button' value='Verify Phone'>
+<div ng-include="'app/partials/userForm.html'"></div>
