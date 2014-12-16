@@ -35,6 +35,19 @@ define(['angular'], function (angular) {
                 $scope.$apply();
             }, 1000);
         }])
+        .controller('PasswordReset', ['$scope', '$window', '$location', 'Resources', function($scope, $window, $location, Resources) {
+            $scope.form = {
+                show: true,
+                model: {},
+                resetPassword: function() {
+                    Resources.ResetPassword($scope.form.model, function(data, code) {
+                        $scope.form.show = false;
+                        // let the user know
+                        $scope.form.message = data.message;
+                    });
+                }
+            };
+        }])
         .controller('Welcome', ['$scope', '$window', '$routeParams', '$location', 'Resources',  function($scope, $window, $routeParams, $location, Resources) {
            $scope.form = {
                 model: {
@@ -55,7 +68,7 @@ define(['angular'], function (angular) {
                         }, 1000);
                     });
                 }
-           }
+           };
         }])
         .controller('Account', ['$scope', 'Resources', 'AuthService', function($scope, Resources, AuthService) {
             $scope.view = {

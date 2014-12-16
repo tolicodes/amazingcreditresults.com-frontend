@@ -49,6 +49,7 @@ module.exports = function(grunt) {
                 files: {
                     'app/partials/login.html':      'app/partials/haml/login.haml',
                     'app/partials/logout.html':     'app/partials/haml/logout.haml',
+                    'app/partials/password.html':   'app/partials/haml/password.haml',
                     'app/partials/welcome.html':    'app/partials/haml/welcome.haml',
                     'app/partials/orders.html':     'app/partials/haml/orders.haml',
                     'app/partials/sellers.html':    'app/partials/haml/sellers.haml',

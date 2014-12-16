@@ -68,8 +68,15 @@ define(['angular'], function(angular) {
                     .success(cb)
                     .error(errorCb);
             },
+            // expects username and password
             SetPassword: function(obj, cb) {
                 $http.post(baseUrl + 'account/setPassword', obj)
+                    .success(cb)
+                    .error(errorCb);
+            },
+            // expects username
+            ResetPassword: function(obj, cb) {
+                $http.post(baseUrl + 'account/resetPassword', obj)
                     .success(cb)
                     .error(errorCb);
             },

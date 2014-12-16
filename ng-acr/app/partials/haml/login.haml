@@ -8,5 +8,6 @@
     .form-group
       %label(for="pw") Password
       %input#pw.form-control(type="password" ng-model="creds.password" tabindex="2")
-    .form-group.text-center
-      %input.btn.btn-success(type="submit" value="Login" tabindex="4")
+    .form-group
+      %a(href="/#/passwordReset") Forgot password?
+      %input.pull-right.btn.btn-success(type="submit" value="Login" tabindex="4")

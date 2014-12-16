@@ -11,6 +11,10 @@ define(['angular', 'app'], function(angular, app) {
                 templateUrl: 'app/partials/welcome.html',
                 controller: 'Welcome'
             })
+            .when('/passwordReset', {
+                templateUrl: 'app/partials/password.html',
+                controller: 'PasswordReset'
+            })
             .when('/logout', {
                 templateUrl: 'app/partials/logout.html',
                 controller: 'Logout'
@@ -48,8 +52,11 @@ define(['angular', 'app'], function(angular, app) {
 	}])
     .run(['$rootScope', 'AuthService', function($rootScope, AuthService) {
         $rootScope.$on('$routeChangeStart', function(evt, next) {
+            var userCanContinue = ['login', 'passwordReset', 'welcome'].reduce(function(prev, curr) {
+                    return prev || next.$$route.originalPath.indexOf(curr) > -1;
+                }, false);
             // if they're not already being redirected get the user;
-            if(!$rootScope.userInfo && next.$$route.originalPath.indexOf('login') === -1) {
+            if(!$rootScope.userInfo && !userCanContinue) {
                 AuthService.getUser(function(user) {
                     window.console.log(user);
                 });
