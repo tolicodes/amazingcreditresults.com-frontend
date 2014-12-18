@@ -3,6 +3,10 @@ define(['angular'], function (angular) {
 
 	/* Controllers */
 	return angular.module('myApp.controllers', ['myApp.services', 'myApp.resources'])
+        /*
+         *  Controllers for pages regardless of user type.
+         *
+         */
         .controller('Login', ['$scope', '$routeParams', 'AuthService', function($scope, $routeParams, AuthService) {
             // credentials to login with
             $scope.creds = {
@@ -40,7 +44,7 @@ define(['angular'], function (angular) {
                 show: true,
                 model: {},
                 resetPassword: function() {
-                    Resources.ResetPassword($scope.form.model, function(data, code) {
+                    Resources.ResetPassword($scope.form.model, function(data) {
                         $scope.form.show = false;
                         // let the user know
                         $scope.form.message = data.message;
@@ -90,6 +94,9 @@ define(['angular'], function (angular) {
                 $scope.view.form.model = user;
             });
         }])
+        /*
+         *  Owners
+         */
         .controller('Sellers', ['$scope', 'utils', function($scope, utils) {
             // services.js
             utils.bootstrapScope($scope, 'seller');
@@ -100,6 +107,9 @@ define(['angular'], function (angular) {
         .controller('Owners', ['$scope', 'utils', function($scope, utils) {
             utils.bootstrapScope($scope, 'owner');
         }])
+        /*
+         *  Sellers
+         */
         .controller('Products', ['$scope', 'utils', function($scope, utils) {
             utils.bootstrapScope($scope, 'product');
         }])
@@ -118,5 +128,47 @@ define(['angular'], function (angular) {
         }])
         .controller('Orders', ['$scope', 'utils', function($scope, utils) {
             utils.bootstrapScope($scope, 'order');
+        }])
+        /*
+         *  Buyers
+         */
+        .controller('BuyerTradeline', ['$scope', 'Resources', function($scope, Resources) {
+            $scope.view = {
+                tradelines: [],
+                addToCart: function(id) {
+                    Resources.Buyer.addTradeline(id, function() {
+                        $scope.view.message = 'Tradeline added to Cart';
+                    }, function() {
+                    });
+                }
+            };
+            Resources.Buyer.getTradelines(function(data) {
+                $scope.view.tradelines = data.data;
+                window.console.log(data.data[0]);
+            });
+        }])
+        .controller('Cart', ['$scope', 'Resources', 'numberWithCommasFilter', function($scope, Resources, numberWithCommas) {
+            var getCart = function() {
+                Resources.Buyer.getCart(function(data) {
+                    $scope.view.items = data;
+                    $scope.view.itemsInCart = data.itemsInCart;
+                    $scope.view.total = numberWithCommas(data.reduce(function(prev, curr) {
+                        return prev + curr.price;
+                    }, 0));
+                });
+            };
+            $scope.view = {
+                items: [],
+                itemsInCart: 0,
+                total: 0,
+                removeFromCart: function(id) {
+                    Resources.Buyer.removeTradeline(id, function() {
+                        $scope.view.message = 'Tradeline removed';
+                        getCart();
+                    });
+                }
+            };
+
+            getCart();
         }]);
 });

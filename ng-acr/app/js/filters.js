@@ -9,5 +9,10 @@ define(['angular', 'services'], function (angular) {
 			return function(text) {
 				return String(text).replace(/\%VERSION\%/mg, version);
 			};
-	}]);
+        }])
+        .filter('numberWithCommas', function() {
+            return function(x) {
+                return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+            };
+        });
 });

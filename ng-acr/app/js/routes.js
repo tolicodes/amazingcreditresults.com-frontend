@@ -48,6 +48,14 @@ define(['angular', 'app'], function(angular, app) {
                 templateUrl: 'app/partials/account.html',
                 controller: 'Account'
             })
+            .when('/store', {
+                templateUrl: 'app/partials/buyer-tradeline.html',
+                controller: 'BuyerTradeline'
+            })
+            .when('/cart', {
+                templateUrl: 'app/partials/cart.html',
+                controller: 'Cart'
+            })
 		    .otherwise({redirectTo: '/tradelines'});
 	}])
     .run(['$rootScope', 'AuthService', function($rootScope, AuthService) {

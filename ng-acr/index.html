@@ -37,8 +37,10 @@
                         <li data-ng-if="userInfo.roles.owner"><a href="/#/buyers">Buyers</a></li>
                         <li data-ng-if="userInfo.roles.owner"><a href="/#/owners">Owners</a></li>
                         <li data-ng-if="userInfo.roles.seller"><a href="/#/products">Products</a></li>
-                        <li data-ng-if="!userInfo.roles.seller"><a href="/#/orders">Orders</a></li>
-                        <li><a href="/#/tradelines">Tradelines</a></li>
+                        <li data-ng-if="userInfo.roles.owner"><a href="/#/orders">Orders</a></li>
+                        <li data-ng-if="!userInfo.roles.buyer"><a href="/#/tradelines">Tradelines</a></li>
+                        <li data-ng-if="userInfo.roles.buyer"><a href="/#/store">Store</a></li>
+                        <li data-ng-if="userInfo.roles.buyer"><a href="/#/cart">Cart</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="/#/logout">Logout</a></li>

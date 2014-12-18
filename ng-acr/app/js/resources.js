@@ -1,7 +1,7 @@
 define(['angular'], function(angular) {
     'use strict';
 
-    return angular.module('myApp.resources', []).factory('Resources', ['$http', function($http) {
+    return angular.module('myApp.resources', []).factory('Resources', ['$http', 'numberWithCommasFilter', function($http, numberWithCommas) {
         var baseUrl = 'api/v1/',
             adminBase = baseUrl + 'admin/',
             adminRoute = adminBase + 'clients',
@@ -21,6 +21,11 @@ define(['angular'], function(angular) {
                 p.reportsTo = p.reportsTo ? p.reportsTo.join(' ') : ''; 
                 p.niceName = [p.type, p.bank, p.name].join(' ');
                 return p;
+            },
+            makeNiceTradeline = function(t) {
+                t.nicePrice = numberWithCommas(t.price);
+                t.niceLimit = numberWithCommas(t.creditLimit);
+                return t;
             };
         return {
             // Tradelines
@@ -134,6 +139,33 @@ define(['angular'], function(angular) {
                 $http.delete([adminRoute, id].join('/'))
                     .success(cb)
                     .error(errorCb);
+            },
+            Buyer: {
+                getTradelines: function(cb) {
+                    $http.get(baseUrl + 'tradelines')
+                        .success(function(data) {
+                            data.data = data.data.map(makeNiceTradeline);
+                            cb(data);
+                        })
+                        .error(errorCb);
+                },
+                getCart: function(cb) {
+                    $http.get(baseUrl + 'cart/tradelines')
+                        .success(function(data) {
+                            cb(data.data.map(makeNiceTradeline));
+                        })
+                        .error(errorCb);
+                },
+                addTradeline: function(id, success, failure) {
+                    $http.post(baseUrl + 'cart/tradelines', {id: id})
+                        .success(success)
+                        .error(failure);
+                },
+                removeTradeline: function(id, cb) {
+                    $http.delete(baseUrl + 'cart/tradelines/' + id)
+                        .success(cb)
+                        .error(errorCb);
+                }
             }
         };
     }]);

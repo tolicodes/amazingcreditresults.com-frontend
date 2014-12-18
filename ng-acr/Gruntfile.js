@@ -47,19 +47,21 @@ module.exports = function(grunt) {
                     style: 'expanded'
                 },
                 files: {
-                    'app/partials/login.html':      'app/partials/haml/login.haml',
-                    'app/partials/logout.html':     'app/partials/haml/logout.haml',
-                    'app/partials/password.html':   'app/partials/haml/password.haml',
-                    'app/partials/welcome.html':    'app/partials/haml/welcome.haml',
-                    'app/partials/orders.html':     'app/partials/haml/orders.haml',
-                    'app/partials/sellers.html':    'app/partials/haml/sellers.haml',
-                    'app/partials/buyers.html':     'app/partials/haml/buyers.haml',
-                    'app/partials/owners.html':     'app/partials/haml/owners.haml',
-                    'app/partials/products.html':   'app/partials/haml/products.haml',
-                    'app/partials/tradelines.html': 'app/partials/haml/tradelines.haml',
-                    'app/partials/userForm.html':   'app/partials/haml/userForm.haml',
-                    'app/partials/userTable.html':  'app/partials/haml/userTable.haml',
-                    'app/partials/account.html':    'app/partials/haml/account.haml'
+                    'app/partials/login.html':              'app/partials/haml/login.haml',
+                    'app/partials/logout.html':             'app/partials/haml/logout.haml',
+                    'app/partials/password.html':           'app/partials/haml/password.haml',
+                    'app/partials/welcome.html':            'app/partials/haml/welcome.haml',
+                    'app/partials/orders.html':             'app/partials/haml/orders.haml',
+                    'app/partials/sellers.html':            'app/partials/haml/sellers.haml',
+                    'app/partials/buyers.html':             'app/partials/haml/buyers.haml',
+                    'app/partials/owners.html':             'app/partials/haml/owners.haml',
+                    'app/partials/products.html':           'app/partials/haml/products.haml',
+                    'app/partials/tradelines.html':         'app/partials/haml/tradelines.haml',
+                    'app/partials/userForm.html':           'app/partials/haml/userForm.haml',
+                    'app/partials/userTable.html':          'app/partials/haml/userTable.haml',
+                    'app/partials/account.html':            'app/partials/haml/account.haml',
+                    'app/partials/cart.html':               'app/partials/haml/cart.haml',
+                    'app/partials/buyer-tradeline.html':    'app/partials/haml/buyer-tradeline.haml'
                 }
             }
         },

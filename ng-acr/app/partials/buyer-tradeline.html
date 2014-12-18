@@ -1,0 +1,30 @@
+<h2>Store</h2>
+<div class='row'>
+  <div class='col-md-4' ng-repeat='line in view.tradelines'>
+    <div class='panel panel-default'>
+      <div class='panel-body'>
+        <div class='col-md-7'>
+          <h4 ng-bind='line.product.name'>
+            <span ng-bind='line.product.bank'></span>
+          </h4>
+          <p>
+            <strong>Limit:</strong>
+            {{line.niceLimit}}
+          </p>
+          <p>
+            <strong>Statement Date:</strong>
+            {{line.statementDate}}
+          </p>
+          <p>
+            <strong>AU's Available:</strong>
+            {{line.totalAus - line.usedAus}}
+          </p>
+        </div>
+        <div class='col-md-5'>
+          <h5 class='text-right'>${{line.nicePrice}}.00</h5>
+          <div class='btn btn-success pull-right' ng-click='view.addToCart(line.id)'>Add To Cart</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
