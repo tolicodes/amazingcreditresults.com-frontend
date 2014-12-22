@@ -52,6 +52,18 @@ define(['angular'], function (angular) {
                 }
             };
         }])
+        .controller('PasswordSet', ['$scope', '$routeParams', function($scope, $routeParams) {
+            $scope.form = {
+                model: {
+                    apiKey: $routeParams.apiKey
+                },
+                setPassword: function() {
+                    Resources.SetPassword($scope.form.model, function() {
+                        $scope.form.message = 'Password set. Please login'
+                    });
+                }
+            };
+        }])
         .controller('Welcome', ['$scope', '$window', '$routeParams', '$location', 'Resources',  function($scope, $window, $routeParams, $location, Resources) {
            $scope.form = {
                 model: {

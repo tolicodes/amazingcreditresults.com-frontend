@@ -140,6 +140,13 @@ define(['angular'], function(angular) {
                     .success(cb)
                     .error(errorCb);
             },
+            User: {
+                setPasswordWithApiKey: function(obj, cb) {
+                    $http.put(baseUrl + '')
+                        .success(cb)
+                        .error(errorCb);
+                }
+            },
             Buyer: {
                 getTradelines: function(cb) {
                     $http.get(baseUrl + 'tradelines')

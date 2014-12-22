@@ -12,8 +12,12 @@ define(['angular', 'app'], function(angular, app) {
                 controller: 'Welcome'
             })
             .when('/passwordReset', {
-                templateUrl: 'app/partials/password.html',
+                templateUrl: 'app/partials/password1.html',
                 controller: 'PasswordReset'
+            })
+            .when('/password/:apiKey', {
+                templateUrl: 'app/partials/passwordSet.html',
+                controller: 'PasswordSet'
             })
             .when('/logout', {
                 templateUrl: 'app/partials/logout.html',
