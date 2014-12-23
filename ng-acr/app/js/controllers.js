@@ -52,14 +52,14 @@ define(['angular'], function (angular) {
                 }
             };
         }])
-        .controller('PasswordSet', ['$scope', '$routeParams', function($scope, $routeParams) {
+        .controller('PasswordSet', ['$scope', '$routeParams', 'Resources', function($scope, $routeParams, Resources) {
             $scope.form = {
                 model: {
                     apiKey: $routeParams.apiKey
                 },
                 setPassword: function() {
                     Resources.SetPassword($scope.form.model, function() {
-                        $scope.form.message = 'Password set. Please login'
+                        $scope.form.message = 'Password set. Please login';
                     });
                 }
             };
