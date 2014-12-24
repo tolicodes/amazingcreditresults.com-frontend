@@ -9,6 +9,7 @@ define([
     'resources',
 	'controllers',
 	'angularRoute',
+    'humane'
 	], function (angular /*, filters, services, directives, controllers*/) {
 
 		// Declare app level module which depends on filters, and services

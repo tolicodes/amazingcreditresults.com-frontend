@@ -42,9 +42,15 @@ define(['angular'], function (angular) {
                     $http.post('/api/v1/account/login', credentials)
                         .success(function(data) {
                             huntKey(data.huntKey);
-                            // redirect the user to the sellers page
-                            // TODO do automatic redirects back to the page users tried to visit in the first place
-                            $location.path('/tradelines');
+                            userInfo.roles = data.roles;
+                            $rootScope.userInfo = userInfo;
+                            // Redirect buyers to the store, everyone else to the tradeline page
+                            if(userInfo.roles.buyer) {
+                                // TODO do automatic redirects back to the page users tried to visit in the first place
+                                $location.path('/store');
+                            } else {
+                                $location.path('/tradelines');
+                            }
                         })
                         .error(function(res) {
                             errorCb(res.errors[0].message);

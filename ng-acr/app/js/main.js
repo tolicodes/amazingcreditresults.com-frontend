@@ -6,7 +6,8 @@ require.config({
 		table: '../bower_components/ng-table/ng-table', // http://ngmodules.org/modules/ng-table
 		angularRoute: '../bower_components/angular-route/angular-route',
 		angularMocks: '../bower_components/angular-mocks/angular-mocks',
-		text: '../bower_components/requirejs-text/text'
+		text: '../bower_components/requirejs-text/text',
+		humane: '../bower_components/humane-js/humane'
 	},
 	shim: {
 		'angular' : {'exports' : 'angular'},

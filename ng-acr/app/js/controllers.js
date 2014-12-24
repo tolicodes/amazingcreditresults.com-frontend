@@ -1,4 +1,4 @@
-define(['angular'], function (angular) {
+define(['angular', 'humane'], function (angular, humane) {
     'use strict';
 
 	/* Controllers */
@@ -96,8 +96,9 @@ define(['angular'], function (angular) {
                 },
                 form: {
                     save: function() {
-                                Resources.SaveSelf($scope.view.form.model, function() {
-                                });
+                        Resources.SaveSelf($scope.view.form.model, function() {
+                            humane.log('User Updated');
+                        });
                     }
                 }
             };
@@ -149,7 +150,7 @@ define(['angular'], function (angular) {
                 tradelines: [],
                 addToCart: function(id) {
                     Resources.Buyer.addTradeline(id, function() {
-                        $scope.view.message = 'Tradeline added to Cart';
+                        humane.log('Tradeline added to Cart');
                     }, function() {
                     });
                 }
@@ -175,7 +176,7 @@ define(['angular'], function (angular) {
                 total: 0,
                 removeFromCart: function(id) {
                     Resources.Buyer.removeTradeline(id, function() {
-                        $scope.view.message = 'Tradeline removed';
+                        humane.log('Tradeline removed');
                         getCart();
                     });
                 }
