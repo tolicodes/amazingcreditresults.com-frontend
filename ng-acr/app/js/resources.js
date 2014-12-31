@@ -185,6 +185,11 @@ define(['angular', 'humane'], function(angular, humane) {
                     $http.post(baseUrl + 'myself/billing/achAccount/verify', obj)
                         .success(cb)
                         .error(errorCb);
+                },
+                getBalance: function(cb) {
+                    $http.get(baseUrl + 'account/balance')
+                        .success(cb)
+                        .error(errorCb);
                 }
             }
         };

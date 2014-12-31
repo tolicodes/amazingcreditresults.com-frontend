@@ -62,6 +62,7 @@ module.exports = function(grunt) {
                     'app/partials/userTable.html':          'app/partials/haml/userTable.haml',
                     'app/partials/account.html':            'app/partials/haml/account.haml',
                     'app/partials/cart.html':               'app/partials/haml/cart.haml',
+                    'app/partials/checkout.html':           'app/partials/haml/checkout.haml',
                     'app/partials/buyer-tradeline.html':    'app/partials/haml/buyer-tradeline.haml'
                 }
             }

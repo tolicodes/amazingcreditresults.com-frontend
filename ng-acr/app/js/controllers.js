@@ -202,5 +202,16 @@ define(['angular', 'humane'], function (angular, humane) {
             getCart();
         }])
         .controller('Checkout', ['$scope', 'Resources', 'numberWithCommasFilter', function($scope, Resources, numberWithCommas) {
+            Resources.Buyer.getBalance(function(data) {
+                $scope.view.accountBalance = data.balance;
+            });
+            $scope.view = {
+                cardModel: {
+                    number: '',
+                    exp_month: 12,
+                    exp_year: 2014,
+                    cvc: ''
+                }
+            };
         }]);
 });

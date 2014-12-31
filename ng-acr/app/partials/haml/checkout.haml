@@ -1,0 +1,60 @@
+%h2 Checkout
+.row
+  .col-md-4(ng-repeat="line in view.items")
+    .panel.panel-default
+      .panel-body
+        .col-md-7
+          %h4(ng-bind="line.product.name")
+            %span(ng-bind="line.product.bank")
+          %p 
+            %strong Limit:
+            {{line.niceLimit}}
+          %p 
+            %strong Statement Date:
+            {{line.statementDate}}
+          %p
+            %strong AU's Available:
+            {{line.totalAus - line.usedAus}}
+        .col-md-5
+          %h5.text-right ${{line.nicePrice}}.00
+          .btn.btn-danger.pull-right(ng-click="view.removeFromCart(line.id)") Remove From Cart
+.row
+  %h4.col-md-12 {{view.items.length}} Items in your cart
+  %h4.col-md-12 
+    %strong Total: 
+    ${{view.total}}.00
+.row
+  %h3 Choose your method of payment
+  .col-md-4.panel.panel-default
+    %h4 Account Credit
+    %p Pay with Your Remaining Credit balance
+    %p You have ${{view.accountBalance}} Left to use
+    .radio
+      %label
+        %input(type="radio" name="payWith" value="bal" ng-model="view.payWith" ng-disabled="view.accountBalance <= 0") Use Account Credit
+  .col-md-4.panel.panel-default
+    %h4 Credit Card
+    %form
+      .row
+        .form-group.col-md-12
+          %label.sr-only(for="ccn") Credit Card Number
+          %input#ccn.form-control(type="text" ng-model="view.cardModel.number" tabindex="1" placeholder="Card Number" size="16" ng-required="true" required)
+      .row
+        .form-group.col-md-4
+          %label.sr-only(for="month") Exp Month
+          %input#month.form-control(type="month" ng-model="view.cardModel.exp_month" tabindex="1" placeholder="Exp Month" ng-required="true" required)
+        .form-group.col-md-4
+          %label.sr-only(for="year") Exp Year
+          %input#year.form-control(type="year" ng-model="view.cardModel.exp_year" tabindex="1" placeholder="Exp Year" ng-required="true" required)
+        .form-group.col-md-4
+          %label.sr-only(for="cvc") CVC
+          %input#cvc.form-control(type="number" ng-model="view.cardModel.cvc" tabindex="1" placeholder="CVC" size="5" ng-required="true" required)
+    .radio
+      %label
+        %input(type="radio" name="payWith" value="cc" ng-model="view.payWith") Use Credit Card
+  .col-md-4.panel.panel-default
+    %h4 ACH (Bank Transfer)
+    %p Pay with Your Bank Account you have with us
+    .radio
+      %label
+        %input(type="radio" name="payWith" value="ach" ng-model="view.payWith") Use ACH account
