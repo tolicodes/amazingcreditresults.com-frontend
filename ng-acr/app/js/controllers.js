@@ -94,12 +94,29 @@ define(['angular', 'humane'], function (angular, humane) {
                         //debugger;
                     });
                 },
+                verifyUser: function() {
+                    // TODO actually make it so you can verify a user
+                    Resources.Buyer.verifyUser($scope.view.form.model, function() {
+                    });
+                },
+                saveACH: function() {
+                    Resources.Buyer.saveACH($scope.view.form.achModel, function() {
+                        humane.log('ACH info saved');
+                    });
+                },
+                verifyACH: function() {
+                    Resources.Buyer.verifyACH($scope.view.form.verifyModel, function() {
+                        humane.log('ACH info verified');
+                    });
+                },
                 form: {
                     save: function() {
                         Resources.SaveSelf($scope.view.form.model, function() {
                             humane.log('User Updated');
                         });
-                    }
+                    },
+                    achModel: { meta: { test: true } },
+                    verifyModel: { meta: { test: true } }
                 }
             };
 
@@ -183,5 +200,7 @@ define(['angular', 'humane'], function (angular, humane) {
             };
 
             getCart();
+        }])
+        .controller('Checkout', ['$scope', 'Resources', 'numberWithCommasFilter', function($scope, Resources, numberWithCommas) {
         }]);
 });

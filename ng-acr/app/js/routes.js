@@ -60,6 +60,11 @@ define(['angular', 'app'], function(angular, app) {
                 templateUrl: 'app/partials/cart.html',
                 controller: 'Cart'
             })
+            .when('/checkout', {
+                templateUrl: 'app/partials/checkout.html',
+                controller: 'Checkout'
+            })
+            // FIXME make it so buyers get redirected to the store
 		    .otherwise({redirectTo: '/tradelines'});
 	}])
     .run(['$rootScope', 'AuthService', function($rootScope, AuthService) {

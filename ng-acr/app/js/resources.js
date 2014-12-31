@@ -1,4 +1,4 @@
-define(['angular'], function(angular) {
+define(['angular', 'humane'], function(angular, humane) {
     'use strict';
 
     return angular.module('myApp.resources', []).factory('Resources', ['$http', 'numberWithCommasFilter', function($http, numberWithCommas) {
@@ -10,7 +10,7 @@ define(['angular'], function(angular) {
             tradelineRoute = baseUrl + 'seller/tradelines',
             errorCb = function(res) {
                 if(res.errors && res.errors.length > 0) {
-                    window.alert(res.errors[0].message);
+                    humane.log(res.errors[0].message);
                 }
             },
             makeNiceName = function(u) {
@@ -170,6 +170,19 @@ define(['angular'], function(angular) {
                 },
                 removeTradeline: function(id, cb) {
                     $http.delete(baseUrl + 'cart/tradelines/' + id)
+                        .success(cb)
+                        .error(errorCb);
+                },
+                verifyUser: function(/*user, cb */) {
+                    //$http.post
+                },
+                saveACH: function(obj, cb) {
+                    $http.post(baseUrl + 'myself/billing/achAccount', obj)
+                        .success(cb)
+                        .error(errorCb);
+                },
+                verifyACH: function(obj, cb) {
+                    $http.post(baseUrl + 'myself/billing/achAccount/verify', obj)
                         .success(cb)
                         .error(errorCb);
                 }

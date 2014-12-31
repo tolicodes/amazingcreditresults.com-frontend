@@ -1,3 +1,38 @@
-%h2 Account
+.row
+%h2.col-md-12 Account
+%div.col-md-12(ng-include="'app/partials/userForm.html'")
 %input.btn.btn-info(ng-click="view.verifyPhone()" type="button" tabindex="1" value="Verify Phone" ng-if='userInfo.roles.owner')
-%div(ng-include="'app/partials/userForm.html'")
+%h2.col-md-12 ACH
+.col-md-6
+  %h3 ACH account Info
+  %form.form-inline(ng-submit="view.saveACH()")
+    .row
+      .form-group.col-md-4
+        %label.sr-only(for="route") Routing Number
+        %input#route.form-control(type="text" ng-model="view.form.achModel.routingNumber" tabindex="21" placeholder="Routing Number (required)" maxlength="9" ng-required="true" required)
+      .form-group.col-md-4
+        %label.sr-only(for="acct") Account Number
+        %input#acct.form-control(type="text" ng-model="view.form.achModel.accountNumber" tabindex="22" placeholder="Account Number (required)" ng-required="true" required)
+      .form-group.col-md-4
+        %label.sr-only(for="type")
+        %select#type.form-control(ng-model="view.form.achModel.accountType" tabindex="23")
+          %option(selected="selected" value="") Type
+          %option(value="checking") Checking
+          %option(value="savings") Saving
+    .row
+      .form-group.col-md-12
+        %input.btn.btn-success(type="submit" value="Save ACH info" tabindex="24")
+        %input.btn.btn-info(type="reset" value="Clear" tabindex="25")
+.col-md-6
+  %h3 ACH account verify
+  %form.form-inline(ng-submit="view.verifyACH()")
+    .row
+      .form-group.col-md-4
+        %label.sr-only(for="amount1") Amount 1
+        %input#amount1.form-control(type="number" ng-model="view.form.verifyModel.amount1" tabindex="31" placeholder="Amount 1 (required)" ng-required="true" required)
+      .form-group.col-md-6
+        %label.sr-only(for="amount2") Amount 2
+        %input#amount2.form-control(type="number" ng-model="view.form.verifyModel.amount2" tabindex="32" placeholder="Amount 2 (required)" ng-required="true" required)
+    .form-group
+      %input.btn.btn-success(type="submit" value="Save" tabindex="33")
+      %input.btn.btn-info(type="reset" value="Clear" tabindex="34")

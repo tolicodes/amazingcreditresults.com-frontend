@@ -1,3 +1,53 @@
-<h2>Account</h2>
+<div class='row'></div>
+<h2 class='col-md-12'>Account</h2>
+<div class='col-md-12' ng-include="'app/partials/userForm.html'"></div>
 <input class='btn btn-info' ng-click='view.verifyPhone()' ng-if='userInfo.roles.owner' tabindex='1' type='button' value='Verify Phone'>
-<div ng-include="'app/partials/userForm.html'"></div>
+<h2 class='col-md-12'>ACH</h2>
+<div class='col-md-6'>
+  <h3>ACH account Info</h3>
+  <form class='form-inline' ng-submit='view.saveACH()'>
+    <div class='row'>
+      <div class='form-group col-md-4'>
+        <label class='sr-only' for='route'>Routing Number</label>
+        <input class='form-control' id='route' maxlength='9' ng-model='view.form.achModel.routingNumber' ng-required='true' placeholder='Routing Number (required)' required tabindex='21' type='text'>
+      </div>
+      <div class='form-group col-md-4'>
+        <label class='sr-only' for='acct'>Account Number</label>
+        <input class='form-control' id='acct' ng-model='view.form.achModel.accountNumber' ng-required='true' placeholder='Account Number (required)' required tabindex='22' type='text'>
+      </div>
+      <div class='form-group col-md-4'>
+        <label class='sr-only' for='type'></label>
+        <select class='form-control' id='type' ng-model='view.form.achModel.accountType' tabindex='23'>
+          <option selected='selected' value=''>Type</option>
+          <option value='checking'>Checking</option>
+          <option value='savings'>Saving</option>
+        </select>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='form-group col-md-12'>
+        <input class='btn btn-success' tabindex='24' type='submit' value='Save ACH info'>
+        <input class='btn btn-info' tabindex='25' type='reset' value='Clear'>
+      </div>
+    </div>
+  </form>
+</div>
+<div class='col-md-6'>
+  <h3>ACH account verify</h3>
+  <form class='form-inline' ng-submit='view.verifyACH()'>
+    <div class='row'>
+      <div class='form-group col-md-4'>
+        <label class='sr-only' for='amount1'>Amount 1</label>
+        <input class='form-control' id='amount1' ng-model='view.form.verifyModel.amount1' ng-required='true' placeholder='Amount 1 (required)' required tabindex='31' type='number'>
+      </div>
+      <div class='form-group col-md-6'>
+        <label class='sr-only' for='amount2'>Amount 2</label>
+        <input class='form-control' id='amount2' ng-model='view.form.verifyModel.amount2' ng-required='true' placeholder='Amount 2 (required)' required tabindex='32' type='number'>
+      </div>
+    </div>
+    <div class='form-group'>
+      <input class='btn btn-success' tabindex='33' type='submit' value='Save'>
+      <input class='btn btn-info' tabindex='34' type='reset' value='Clear'>
+    </div>
+  </form>
+</div>
