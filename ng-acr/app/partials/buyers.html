@@ -1,3 +1,19 @@
 <h2>Buyers</h2>
 <div ng-include="'app/partials/userForm.html'"></div>
+<div ng-if='view.form.model.id'>
+  <h3>Add Account Credit</h3>
+  <form class='form-inline' ng-submit='view.addAccountCredit()'>
+    <div class='form-group'>
+      <label class='sr-only' for='amount'>Amount</label>
+      <input class='form-control' id='amount' ng-model='view.accountCreditModel.amount' ng-required='true' placeholder='Amount' type='number'>
+    </div>
+    <div class='form-group'>
+      <label class='sr-only' for='notes'>Notes</label>
+      <textarea class='form-control' id='notes' ng-model='view.accountCreditModel.notes' placeholder='Notes'></textarea>
+    </div>
+    <div class='form-group'>
+      <input class='btn btn-success' type='submit' value='Add Credit'>
+    </div>
+  </form>
+</div>
 <div ng-include="'app/partials/userTable.html'"></div>

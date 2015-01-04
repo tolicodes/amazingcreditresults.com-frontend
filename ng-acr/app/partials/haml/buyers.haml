@@ -1,3 +1,15 @@
 %h2 Buyers
 %div(ng-include="'app/partials/userForm.html'")
+%div(ng-if="view.form.model.id")
+  %h3 Add Account Credit
+  %form.form-inline(ng-submit="view.addAccountCredit()")
+    .form-group
+      %label.sr-only(for="amount") Amount
+      %input#amount.form-control(type="number" ng-model="view.accountCreditModel.amount" placeholder="Amount" ng-required="true")
+    .form-group
+      %label.sr-only(for="notes") Notes
+      %textarea#notes.form-control(ng-model="view.accountCreditModel.notes" placeholder="Notes")
+    .form-group
+      %input.btn.btn-success(type="submit" value="Add Credit")
+    
 %div(ng-include="'app/partials/userTable.html'")

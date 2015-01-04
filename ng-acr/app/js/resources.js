@@ -111,6 +111,13 @@ define(['angular', 'humane'], function(angular, humane) {
                     .success(function(res) {cb(res.data.map(makeNiceName));})
                     .error(errorCb);
             },
+            Owner: {
+                addAccountCredit: function(userId, obj, cb) {
+                    $http.post(adminRoute + '/balance/' + userId, obj)
+                        .success(cb)
+                        .error(errorCb);
+                }
+            },
             sendWelcomeEmail: function(id, cb) {
                 $http.post(adminRoute + '/welcome/' + id)
                     .success(function(res) { cb(res); })

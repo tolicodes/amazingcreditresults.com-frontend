@@ -131,8 +131,17 @@ define(['angular', 'humane'], function (angular, humane) {
             // services.js
             utils.bootstrapScope($scope, 'seller');
         }])
-        .controller('Buyers', ['$scope', 'utils', function($scope, utils) {
+        .controller('Buyers', ['$scope', 'utils', 'Resources', function($scope, utils, Resources) {
+            var today = new Date();
             utils.bootstrapScope($scope, 'buyer');
+            $scope.view.accountCreditModel = {
+                date: [today.getYear(), today.getMonth(), today.getDate()].join('-'),
+                paidBy: 'Credit Card'
+            };
+            $scope.view.addAccountCredit = function() {
+                Resources.Owner.addAccountCredit($scope.view.form.model.id, $scope.view.accountCreditModel, function() {
+                });
+            };
         }])
         .controller('Owners', ['$scope', 'utils', function($scope, utils) {
             utils.bootstrapScope($scope, 'owner');

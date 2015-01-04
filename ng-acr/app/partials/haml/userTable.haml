@@ -1,11 +1,13 @@
 %table.table(ng-table="view.tableParams")
   %thead
     %tr.row
-      %th.text-left.col-lg-4.hidden-xs Name
-      %th.text-left.col-lg-4.hidden-xs Email
-      %th.text-left.col-lg-4.hidden-xs Phone
+      %th.text-left.hidden-xs Name
+      %th.text-left.hidden-xs Email
+      %th.text-left.hidden-xs Phone
+      %th.text-left.hidden-xs Balance
   %tbody.table-hover
     %tr.row(ng-repeat="user in $data" ng-click="view.form.loadRow(user)")
-      %td.col-lg-4.col-xs-12(data-title="Name" sortable="name" ng-bind="user.fullName")
-      %td.col-lg-4.col-xs-12(data-title="Email" sortable="email" ng-bind="user.email")
-      %td.col-lg-4.col-xs-12(data-title="Phone" sortable="phone" ng-bind="user.phone")
+      %td(data-title="Name" sortable="name" ng-bind="user.fullName")
+      %td(data-title="Email" sortable="email" ng-bind="user.email")
+      %td(data-title="Phone" sortable="phone" ng-bind="user.phone")
+      %td(data-title="Balance" sortable="balance" ng-bind="user.balance")
