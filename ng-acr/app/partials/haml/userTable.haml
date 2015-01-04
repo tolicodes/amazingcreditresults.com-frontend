@@ -4,10 +4,10 @@
       %th.text-left.hidden-xs Name
       %th.text-left.hidden-xs Email
       %th.text-left.hidden-xs Phone
-      %th.text-left.hidden-xs Balance
+      %th.text-left.hidden-xs(ng-if="view.accountCreditModel") Balance
   %tbody.table-hover
     %tr.row(ng-repeat="user in $data" ng-click="view.form.loadRow(user)")
       %td(data-title="Name" sortable="name" ng-bind="user.fullName")
       %td(data-title="Email" sortable="email" ng-bind="user.email")
       %td(data-title="Phone" sortable="phone" ng-bind="user.phone")
-      %td(data-title="Balance" sortable="balance" ng-bind="user.balance")
+      %td(data-title="Balance" sortable="balance" ng-bind="user.balance" ng-if="view.accountCreditModel")

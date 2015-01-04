@@ -69,7 +69,7 @@ define(['angular', 'app'], function(angular, app) {
 	}])
     .run(['$rootScope', 'AuthService', function($rootScope, AuthService) {
         $rootScope.$on('$routeChangeStart', function(evt, next) {
-            var userCanContinue = ['login', 'passwordReset', 'welcome'].reduce(function(prev, curr) {
+            var userCanContinue = ['login', 'passwordReset', 'welcome', 'password'].reduce(function(prev, curr) {
                     return prev || next.$$route.originalPath.indexOf(curr) > -1;
                 }, false);
             // if they're not already being redirected get the user;

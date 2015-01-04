@@ -4,7 +4,7 @@
       <th class='text-left hidden-xs'>Name</th>
       <th class='text-left hidden-xs'>Email</th>
       <th class='text-left hidden-xs'>Phone</th>
-      <th class='text-left hidden-xs'>Balance</th>
+      <th class='text-left hidden-xs' ng-if='view.accountCreditModel'>Balance</th>
     </tr>
   </thead>
   <tbody class='table-hover'>
@@ -12,7 +12,7 @@
       <td data-title='Name' ng-bind='user.fullName' sortable='name'></td>
       <td data-title='Email' ng-bind='user.email' sortable='email'></td>
       <td data-title='Phone' ng-bind='user.phone' sortable='phone'></td>
-      <td data-title='Balance' ng-bind='user.balance' sortable='balance'></td>
+      <td data-title='Balance' ng-bind='user.balance' ng-if='view.accountCreditModel' sortable='balance'></td>
     </tr>
   </tbody>
 </table>
