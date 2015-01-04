@@ -140,6 +140,8 @@ define(['angular', 'humane'], function (angular, humane) {
             };
             $scope.view.addAccountCredit = function() {
                 Resources.Owner.addAccountCredit($scope.view.form.model.id, $scope.view.accountCreditModel, function() {
+                    $scope.view.tableParams.reload();
+                    humane.log($scope.view.accountCreditModel.amount + ' added to user.');
                 });
             };
         }])
