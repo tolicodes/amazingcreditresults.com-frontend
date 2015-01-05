@@ -153,6 +153,9 @@ define(['angular'], function (angular) {
                                     window.console.log(res.welcomeLink.replace(':3000', ''));
                                 });
                             },
+                            clear: function() {
+                                $scope.view.model = defaultModel(isUserPage);
+                            },
                             model: defaultModel(isUserPage)
                         },
                         tableParams: new ngTable({

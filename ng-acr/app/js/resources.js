@@ -197,6 +197,11 @@ define(['angular', 'humane'], function(angular, humane) {
                     $http.get(baseUrl + 'account/balance')
                         .success(cb)
                         .error(errorCb);
+                },
+                checkout: function(obj, cb) {
+                    $http.post(baseUrl + 'cart/checkout', obj)
+                        .success(cb)
+                        .error(errorCb);
                 }
             }
         };

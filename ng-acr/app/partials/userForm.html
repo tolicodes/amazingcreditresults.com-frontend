@@ -70,9 +70,9 @@
     <input class='form-control' id='phone' ng-model='view.form.model.phone' placeholder='Phone' size='10' tabindex='14' type='tell'>
   </div>
   <br>
-  <div class='checkbox-inline' ng-hide='view.form.model.id'>
+  <div class='checkbox-inline'>
     <label>
-      <input ng-model='view.form.model.accountVerified' tabindex='15' type='checkbox'>Send welcome Email</input>
+      <input ng-model='view.form.model.accountVerified' tabindex='15' type='checkbox'>Account Verified</input>
     </label>
   </div>
   <div class='checkbox-inline' ng-hide='view.form.model.id'>
@@ -93,7 +93,7 @@
   <br>
   <div class='form-group pull-right'>
     <input class='btn btn-danger' ng-click='view.form.delete()' ng-if='userInfo.roles.owner' tabindex='19' type='reset' value='Delete'>
-    <input class='btn btn-info' ng-if='userInfo.roles.owner' tabindex='18' type='reset' value='Clear'>
+    <input class='btn btn-info' ng-click='view.form.clear()' ng-if='userInfo.roles.owner' tabindex='18' type='reset' value='Clear'>
     <input class='btn btn-success' tabindex='17' type='submit' value='Save'>
   </div>
   <div class='clearfix'></div>

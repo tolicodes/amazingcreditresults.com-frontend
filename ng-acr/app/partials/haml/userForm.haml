@@ -54,9 +54,9 @@
     %label.sr-only(for="phone") Phone
     %input#phone.form-control(type="tell" ng-model="view.form.model.phone" tabindex="14" placeholder="Phone" size="10")
   %br
-  .checkbox-inline(ng-hide="view.form.model.id")
+  .checkbox-inline()
     %label
-      %input(type="checkbox" ng-model="view.form.model.accountVerified" tabindex="15") Send welcome Email
+      %input(type="checkbox" ng-model="view.form.model.accountVerified" tabindex="15") Account Verified
   .checkbox-inline(ng-hide="view.form.model.id")
     %label
       %input(type="checkbox" ng-model="view.form.model.phoneVerified" tabindex="16") Phone Verified
@@ -69,6 +69,6 @@
   %br
   .form-group.pull-right
     %input.btn.btn-danger(type="reset" value="Delete" tabindex="19" ng-click="view.form.delete()" ng-if="view.form.model.id" ng-if="userInfo.roles.owner")
-    %input.btn.btn-info(type="reset" value="Clear" tabindex="18" ng-if="userInfo.roles.owner")
+    %input.btn.btn-info(type="reset" value="Clear" tabindex="18" ng-if="userInfo.roles.owner" ng-click="view.form.clear()")
     %input.btn.btn-success(type="submit" value="Save" tabindex="17")
   .clearfix

@@ -216,12 +216,40 @@ define(['angular', 'humane'], function (angular, humane) {
             Resources.Buyer.getBalance(function(data) {
                 $scope.view.accountBalance = data.balance;
             });
+            Resources.Buyer.getCart(function(data) {
+                $scope.view.items = data;
+                $scope.view.itemsInCart = data.itemsInCart;
+                $scope.view.total = numberWithCommas(data.reduce(function(prev, curr) {
+                    return prev + curr.price;
+                }, 0));
+            });
             $scope.view = {
+                items: [],
+                itemsInCart: 0,
+                total: 0,
                 cardModel: {
                     number: '',
                     exp_month: 12,
                     exp_year: 2014,
                     cvc: ''
+                },
+                payWith: false,
+                checkout: function() {
+                    var model = {};
+                    // don't even go through if there is no payment method
+                    if(!$scope.view.payWith) {
+                        return;
+                    } else if($scope.view.payWith === 'ach') {
+                        model.useAchAccount = true;
+                    } else if($scope.view.payWith === 'cc') {
+                        // add stripe stuff here
+                    } else if($scope.view.payWith === 'bal') {
+                        model.amountAccountCredit = 1000;
+                    }
+
+                    Resources.Buyer.checkout(model, function() {
+                        // debugger;
+                    });
                 }
             };
         }]);
