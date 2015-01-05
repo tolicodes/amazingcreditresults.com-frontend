@@ -227,6 +227,12 @@ define(['angular', 'humane'], function (angular, humane) {
                 items: [],
                 itemsInCart: 0,
                 total: 0,
+                removeFromCart: function(id) {
+                    Resources.Buyer.removeTradeline(id, function() {
+                        humane.log('Tradeline removed');
+                        getCart();
+                    });
+                },
                 cardModel: {
                     number: '',
                     exp_month: 12,
