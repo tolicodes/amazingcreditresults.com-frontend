@@ -36,57 +36,71 @@
   </h4>
 </div>
 <div class='row'>
-  <h3>Choose your method of payment</h3>
-  <div class='col-md-4 panel panel-default'>
-    <h4>Account Credit</h4>
-    <p>Pay with Your Remaining Credit balance</p>
-    <p>You have ${{view.accountBalance}} Left to use</p>
-    <div class='radio'>
-      <label>
-        <input name='payWith' ng-disabled='view.accountBalance &lt;= 0' ng-model='view.payWith' type='radio' value='bal'>Use Account Credit</input>
-      </label>
-    </div>
+  <div class='col-md-12'>
+    <h3>Choose your method of payment</h3>
   </div>
-  <div class='col-md-4 panel panel-default'>
-    <h4>Credit Card</h4>
-    <form>
-      <div class='row'>
-        <div class='form-group col-md-12'>
-          <label class='sr-only' for='ccn'>Credit Card Number</label>
-          <input class='form-control' id='ccn' ng-model='view.cardModel.number' ng-required='true' placeholder='Card Number' required size='16' tabindex='1' type='text'>
+  <div class='col-md-4'>
+    <div class='panel panel-default'>
+      <div class='panel-body'>
+        <h4>Account Credit</h4>
+        <p>Pay with Your Remaining Credit balance</p>
+        <p>You have ${{view.accountBalance}} Left to use</p>
+        <div class='radio'>
+          <label>
+            <input name='payWith' ng-disabled='view.accountBalance &lt;= 0' ng-model='view.payWith' type='radio' value='bal'>Use Account Credit</input>
+          </label>
         </div>
       </div>
-      <div class='row'>
-        <div class='form-group col-md-4'>
-          <label class='sr-only' for='month'>Exp Month</label>
-          <input class='form-control' id='month' ng-model='view.cardModel.exp_month' ng-required='true' placeholder='Exp Month' required tabindex='1' type='month'>
-        </div>
-        <div class='form-group col-md-4'>
-          <label class='sr-only' for='year'>Exp Year</label>
-          <input class='form-control' id='year' ng-model='view.cardModel.exp_year' ng-required='true' placeholder='Exp Year' required tabindex='1' type='year'>
-        </div>
-        <div class='form-group col-md-4'>
-          <label class='sr-only' for='cvc'>CVC</label>
-          <input class='form-control' id='cvc' ng-model='view.cardModel.cvc' ng-required='true' placeholder='CVC' required size='5' tabindex='1' type='number'>
-        </div>
-      </div>
-    </form>
-    <div class='radio'>
-      <label>
-        <input name='payWith' ng-model='view.payWith' type='radio' value='cc'>Use Credit Card</input>
-      </label>
     </div>
   </div>
-  <div class='col-md-4 panel panel-default'>
-    <h4>ACH (Bank Transfer)</h4>
-    <p>Pay with Your Bank Account you have with us</p>
-    <div class='radio'>
-      <label>
-        <input name='payWith' ng-model='view.payWith' type='radio' value='ach'>Use ACH account</input>
-      </label>
+  <div class='col-md-4'>
+    <div class='panel panel-default'>
+      <div class='panel-body'>
+        <h4>Credit Card</h4>
+        <form id='credit-card-form'>
+          <div class='row'>
+            <div class='form-group col-md-12'>
+              <label class='sr-only' for='ccn'>Credit Card Number</label>
+              <input class='form-control' data-stripe='number' id='ccn' ng-model='view.cardModel.number' ng-required='true' placeholder='Card Number' required size='16' tabindex='1' type='text'>
+            </div>
+          </div>
+          <div class='row'>
+            <div class='form-group col-md-4'>
+              <label class='sr-only' for='month'>Exp Month</label>
+              <input class='form-control' data-stripe='exp-month' id='month' max='12' min='0' ng-model='view.cardModel.exp_month' ng-required='true' placeholder='Exp Month' required tabindex='1' type='number'>
+            </div>
+            <div class='form-group col-md-4'>
+              <label class='sr-only' for='year'>Exp Year</label>
+              <input class='form-control' data-stripe='exp-year' id='year' ng-model='view.cardModel.exp_year' ng-required='true' placeholder='Exp Year' required tabindex='1' type='year'>
+            </div>
+            <div class='form-group col-md-4'>
+              <label class='sr-only' for='cvc'>CVC</label>
+              <input class='form-control' data-stripe='cvc' id='cvc' ng-model='view.cardModel.cvc' ng-required='true' placeholder='CVC' required size='5' tabindex='1' type='number'>
+            </div>
+          </div>
+        </form>
+        <div class='radio'>
+          <label>
+            <input name='payWith' ng-model='view.payWith' type='radio' value='cc'>Use Credit Card</input>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class='col-md-4'>
+    <div class='panel panel-default'>
+      <div class='panel-body'>
+        <h4>ACH (Bank Transfer)</h4>
+        <p>Pay with Your Bank Account you have with us</p>
+        <div class='radio'>
+          <label>
+            <input name='payWith' ng-model='view.payWith' type='radio' value='ach'>Use ACH account</input>
+          </label>
+        </div>
+      </div>
     </div>
   </div>
   <div class='col-md-12'>
-    <div class='btn btn-primary' ng-click='view.checkout()' ng-disabled='!view.payWith'>Choose payment method</div>
+    <div class='btn btn-primary' ng-click='view.checkout()' ng-disabled='!view.payWith'>Checkout with chosen Payment method</div>
   </div>
 </div>

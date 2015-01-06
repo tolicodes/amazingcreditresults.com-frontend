@@ -7,7 +7,8 @@ require.config({
 		angularRoute: '../bower_components/angular-route/angular-route',
 		angularMocks: '../bower_components/angular-mocks/angular-mocks',
 		text: '../bower_components/requirejs-text/text',
-		humane: '../bower_components/humane-js/humane'
+		humane: '../bower_components/humane-js/humane',
+        stripe: 'https://js.stripe.com/v2/?1'
 	},
 	shim: {
 		'angular' : {'exports' : 'angular'},
@@ -16,7 +17,10 @@ require.config({
 		'angularMocks': {
 			deps:['angular'],
 			'exports':'angular.mock'
-		}
+		},
+        'stripe': {
+            exports: 'Stripe'
+        }
 	},
 	priority: [
 		'angular'

@@ -1,5 +1,9 @@
-define(['angular', 'humane'], function (angular, humane) {
+// FIXME remove stripe as a main dependency
+define(['angular', 'humane', 'stripe'], function (angular, humane, Stripe) {
     'use strict';
+
+    // Set stripe key
+    Stripe.setPublishableKey('pk_test_6pRNASCoBOKtIshFeQd4XMUh');
 
 	/* Controllers */
 	return angular.module('myApp.controllers', ['myApp.services', 'myApp.resources'])
@@ -188,75 +192,61 @@ define(['angular', 'humane'], function (angular, humane) {
                 window.console.log(data.data[0]);
             });
         }])
-        .controller('Cart', ['$scope', 'Resources', 'numberWithCommasFilter', function($scope, Resources, numberWithCommas) {
-            var getCart = function() {
-                Resources.Buyer.getCart(function(data) {
-                    $scope.view.items = data;
-                    $scope.view.itemsInCart = data.itemsInCart;
-                    $scope.view.total = numberWithCommas(data.reduce(function(prev, curr) {
-                        return prev + curr.price;
-                    }, 0));
-                });
-            };
-            $scope.view = {
-                items: [],
-                itemsInCart: 0,
-                total: 0,
-                removeFromCart: function(id) {
-                    Resources.Buyer.removeTradeline(id, function() {
-                        humane.log('Tradeline removed');
-                        getCart();
-                    });
-                }
-            };
-
-            getCart();
+        .controller('Cart', ['$scope', 'utils', function($scope, utils) {
+            utils.bootstrapTradelinesListScope($scope);
         }])
-        .controller('Checkout', ['$scope', 'Resources', 'numberWithCommasFilter', function($scope, Resources, numberWithCommas) {
+        .controller('Checkout', ['$scope', '$window', 'Resources', 'utils', function($scope, $window, Resources, utils) {
+            utils.bootstrapTradelinesListScope($scope);
+            // for the user credit amount
             Resources.Buyer.getBalance(function(data) {
                 $scope.view.accountBalance = data.balance;
             });
-            Resources.Buyer.getCart(function(data) {
-                $scope.view.items = data;
-                $scope.view.itemsInCart = data.itemsInCart;
-                $scope.view.total = numberWithCommas(data.reduce(function(prev, curr) {
-                    return prev + curr.price;
-                }, 0));
-            });
-            $scope.view = {
-                items: [],
-                itemsInCart: 0,
-                total: 0,
-                removeFromCart: function(id) {
-                    Resources.Buyer.removeTradeline(id, function() {
-                        humane.log('Tradeline removed');
-                        getCart();
+            // make it so they can't checkout yet
+            $scope.view.payWith = false;
+
+            // card model to be shared with stripe
+            $scope.view.cardModel = {
+                number: '',
+                exp_month: 12,
+                exp_year: 2014,
+                cvc: ''
+            };
+
+            // Check the person out and move on to the next step if all is well
+            $scope.view.checkout = function() {
+                var model = {},
+                    requestCheckout = function(m) {
+                        Resources.Buyer.checkout(m, function() {
+                            debugger;
+                        });
+                    };
+                // don't even go through if there is no payment method
+                if(!$scope.view.payWith) {
+                    humane.log('Please choose a method of payment');
+                    return;
+                } else if($scope.view.payWith === 'cc') {
+                    // add stripe stuff here
+                    Stripe.card.createToken($window.document.getElementById('credit-card-form'), function(code, res) {
+                        // if the card request isn't right
+                        if(code !== 200) {
+                            // let the user know the error with the card
+                            humane.log(res.error.message);
+                        } else {
+                            // set the credit card token
+                            model.creditCardToken = res.id;
+                            // submit the token
+                            requestCheckout(model);
+                        }
                     });
-                },
-                cardModel: {
-                    number: '',
-                    exp_month: 12,
-                    exp_year: 2014,
-                    cvc: ''
-                },
-                payWith: false,
-                checkout: function() {
-                    var model = {};
-                    // don't even go through if there is no payment method
-                    if(!$scope.view.payWith) {
-                        return;
-                    } else if($scope.view.payWith === 'ach') {
+                } else { 
+                    if($scope.view.payWith === 'ach') {
                         model.useAchAccount = true;
-                    } else if($scope.view.payWith === 'cc') {
-                        // add stripe stuff here
                     } else if($scope.view.payWith === 'bal') {
                         model.amountAccountCredit = 1000;
                     }
-
-                    Resources.Buyer.checkout(model, function() {
-                        // debugger;
-                    });
+                    requestCheckout(model);
                 }
+
             };
         }]);
 });

@@ -1,6 +1,6 @@
 'use strict';
 
-define(['angular'], function (angular) {
+define(['angular', 'humane'], function (angular, humane) {
 	
 	/* Services */
 
@@ -88,8 +88,32 @@ define(['angular'], function (angular) {
             };
             return authservice;
 		}])
-        .factory('utils', ['AuthService', 'Resources', 'ngTableParams', function(AuthService, Resources, ngTable) {
+        .factory('utils', ['AuthService', 'Resources', 'ngTableParams', 'numberWithCommasFilter', function(AuthService, Resources, ngTable, numberWithCommas) {
             return {
+                bootstrapTradelinesListScope: function($scope) {
+                    var getCart = function() {
+                        Resources.Buyer.getCart(function(data) {
+                            $scope.view.items = data;
+                            $scope.view.itemsInCart = data.itemsInCart;
+                            $scope.view.total = numberWithCommas(data.reduce(function(prev, curr) {
+                                return prev + curr.price;
+                            }, 0));
+                        });
+                    };
+                    $scope.view = {
+                        items: [],
+                        itemsInCart: 0,
+                        total: 0,
+                        removeFromCart: function(id) {
+                            Resources.Buyer.removeTradeline(id, function() {
+                                humane.log('Tradeline removed');
+                                getCart();
+                            });
+                        }
+                    };
+
+                    getCart();
+                },
                 bootstrapScope: function($scope, which) {
                     var roles = {
                             seller: false,

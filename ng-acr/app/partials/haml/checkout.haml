@@ -24,39 +24,46 @@
     %strong Total: 
     ${{view.total}}.00
 .row
-  %h3 Choose your method of payment
-  .col-md-4.panel.panel-default
-    %h4 Account Credit
-    %p Pay with Your Remaining Credit balance
-    %p You have ${{view.accountBalance}} Left to use
-    .radio
-      %label
-        %input(type="radio" name="payWith" value="bal" ng-model="view.payWith" ng-disabled="view.accountBalance <= 0") Use Account Credit
-  .col-md-4.panel.panel-default
-    %h4 Credit Card
-    %form
-      .row
-        .form-group.col-md-12
-          %label.sr-only(for="ccn") Credit Card Number
-          %input#ccn.form-control(type="text" ng-model="view.cardModel.number" tabindex="1" placeholder="Card Number" size="16" ng-required="true" required)
-      .row
-        .form-group.col-md-4
-          %label.sr-only(for="month") Exp Month
-          %input#month.form-control(type="month" ng-model="view.cardModel.exp_month" tabindex="1" placeholder="Exp Month" ng-required="true" required)
-        .form-group.col-md-4
-          %label.sr-only(for="year") Exp Year
-          %input#year.form-control(type="year" ng-model="view.cardModel.exp_year" tabindex="1" placeholder="Exp Year" ng-required="true" required)
-        .form-group.col-md-4
-          %label.sr-only(for="cvc") CVC
-          %input#cvc.form-control(type="number" ng-model="view.cardModel.cvc" tabindex="1" placeholder="CVC" size="5" ng-required="true" required)
-    .radio
-      %label
-        %input(type="radio" name="payWith" value="cc" ng-model="view.payWith") Use Credit Card
-  .col-md-4.panel.panel-default
-    %h4 ACH (Bank Transfer)
-    %p Pay with Your Bank Account you have with us
-    .radio
-      %label
-        %input(type="radio" name="payWith" value="ach" ng-model="view.payWith") Use ACH account
   .col-md-12
-    .btn.btn-primary(ng-disabled="!view.payWith" ng-click="view.checkout()") Choose payment method
+    %h3 Choose your method of payment
+  .col-md-4
+    .panel.panel-default
+      .panel-body
+        %h4 Account Credit
+        %p Pay with Your Remaining Credit balance
+        %p You have ${{view.accountBalance}} Left to use
+        .radio
+          %label
+            %input(type="radio" name="payWith" value="bal" ng-model="view.payWith" ng-disabled="view.accountBalance <= 0") Use Account Credit
+  .col-md-4
+    .panel.panel-default
+      .panel-body
+        %h4 Credit Card
+        %form#credit-card-form
+          .row
+            .form-group.col-md-12
+              %label.sr-only(for="ccn") Credit Card Number
+              %input#ccn.form-control(type="text" ng-model="view.cardModel.number" tabindex="1" placeholder="Card Number" size="16" ng-required="true" data-stripe="number" required)
+          .row
+            .form-group.col-md-4
+              %label.sr-only(for="month") Exp Month
+              %input#month.form-control(type="number" min="0" max="12" ng-model="view.cardModel.exp_month" tabindex="1" placeholder="Exp Month" ng-required="true" data-stripe="exp-month" required)
+            .form-group.col-md-4
+              %label.sr-only(for="year") Exp Year
+              %input#year.form-control(type="year" ng-model="view.cardModel.exp_year" tabindex="1" placeholder="Exp Year" ng-required="true" data-stripe="exp-year" required)
+            .form-group.col-md-4
+              %label.sr-only(for="cvc") CVC
+              %input#cvc.form-control(type="number" ng-model="view.cardModel.cvc" tabindex="1" placeholder="CVC" size="5" ng-required="true" data-stripe="cvc" required)
+        .radio
+          %label
+            %input(type="radio" name="payWith" value="cc" ng-model="view.payWith") Use Credit Card
+  .col-md-4
+    .panel.panel-default
+      .panel-body
+        %h4 ACH (Bank Transfer)
+        %p Pay with Your Bank Account you have with us
+        .radio
+          %label
+            %input(type="radio" name="payWith" value="ach" ng-model="view.payWith") Use ACH account
+  .col-md-12
+    .btn.btn-primary(ng-disabled="!view.payWith" ng-click="view.checkout()") Checkout with chosen Payment method
