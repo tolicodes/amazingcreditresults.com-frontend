@@ -216,8 +216,15 @@ define(['angular', 'humane', 'stripe'], function (angular, humane, Stripe) {
             $scope.view.checkout = function() {
                 var model = {},
                     requestCheckout = function(m) {
-                        Resources.Buyer.checkout(m, function() {
-                            // debugger;
+                        Resources.Buyer.checkout(m, function(res, code) {
+                            if(code === 201) {
+                                $scope.view.getCart();
+                                humane.log('Items paid for! Thank you for your Business');
+                            } else {
+                                // add code here for when things don't go so great
+                                // debugger;
+                                humane.log('Error');
+                            }
                         });
                     };
                 // don't even go through if there is no payment method

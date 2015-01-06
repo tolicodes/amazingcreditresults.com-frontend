@@ -104,6 +104,8 @@ define(['angular', 'humane'], function (angular, humane) {
                         items: [],
                         itemsInCart: 0,
                         total: 0,
+                        // to make it accessible from everywhere
+                        getCart: getCart,
                         removeFromCart: function(id) {
                             Resources.Buyer.removeTradeline(id, function() {
                                 humane.log('Tradeline removed');
