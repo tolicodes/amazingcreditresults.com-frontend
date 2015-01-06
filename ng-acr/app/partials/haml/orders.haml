@@ -2,17 +2,11 @@
 %table.table(ng-table="view.tableParams")
   %thead
     %tr.row
-      %th.text-left.col-lg-2.hidden-xs Bank
-      %th.text-left.col-lg-2.hidden-xs Type
-      %th.text-left.col-lg-2.hidden-xs Name
-      %th.text-left.col-lg-2.hidden-xs Reports To
-      %th.text-left.col-lg-2.hidden-xs Total AUs
-      %th.text-left.col-lg-2.hidden-xs Notes
+      %th.text-left.col-md-4.hidden-xs ID
+      %th.text-left.col-md-4.hidden-xs Cost
+      %th.text-left.col-md-4.hidden-xs Status
   %tbody.table-hover
     %tr.row(ng-repeat="prod in $data" ng-click="view.form.loadRow(prod)")
-      %td.col-lg-2.col-xs-12(data-title="Bank" sortable="name" ng-bind="prod.bank")
-      %td.col-lg-2.col-xs-12(data-title="Type" sortable="name" ng-bind="prod.type")
-      %td.col-lg-2.col-xs-12(data-title="Name" sortable="name" ng-bind="prod.name")
-      %td.col-lg-2.col-xs-12(data-title="reportsTo" sortable="reportsTo" ng-bind="prod.reportsTo")
-      %td.col-lg-2.col-xs-12(data-title="totalAus" sortable="totalAus" ng-bind="prod.totalAus")
-      %td.col-lg-2.col-xs-12(data-title="Notes" sortable="name" ng-bind="prod.notes")
+      %td.col-md-4(data-title="ID" sortable="name" ng-bind="prod.id")
+      %td.col-md-4(data-title="Cost" sortable="orderTotal" ng-bind="prod.order.orderTotal")
+      %td.col-md-4(data-title="Status" sortable="status" ng-bind="prod.status")

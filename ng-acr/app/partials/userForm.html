@@ -72,12 +72,17 @@
   <br>
   <div class='checkbox-inline'>
     <label>
-      <input ng-model='view.form.model.accountVerified' tabindex='15' type='checkbox'>Account Verified</input>
+      <input ng-model='view.form.model.evsVerified' tabindex='15' type='checkbox'>Evs Verified</input>
+    </label>
+  </div>
+  <div class='checkbox-inline'>
+    <label>
+      <input ng-model='view.form.model.accountVerified' tabindex='16' type='checkbox'>ACH Account Verified</input>
     </label>
   </div>
   <div class='checkbox-inline' ng-hide='view.form.model.id'>
     <label>
-      <input ng-model='view.form.model.phoneVerified' tabindex='16' type='checkbox'>Phone Verified</input>
+      <input ng-model='view.form.model.phoneVerified' tabindex='17' type='checkbox'>Phone Verified</input>
     </label>
   </div>
   <div class='form-group' ng-if='userInfo.roles.owner'>

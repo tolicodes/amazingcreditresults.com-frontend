@@ -66,4 +66,4 @@
           %label
             %input(type="radio" name="payWith" value="ach" ng-model="view.payWith") Use ACH account
   .col-md-12
-    .btn.btn-primary(ng-disabled="!view.payWith" ng-click="view.checkout()") Checkout with chosen Payment method
+    .btn.btn-primary(ng-disabled="!view.payWith || view.loading" ng-click="view.checkout()") Checkout with chosen Payment method

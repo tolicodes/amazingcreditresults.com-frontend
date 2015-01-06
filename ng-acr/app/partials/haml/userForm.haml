@@ -56,10 +56,13 @@
   %br
   .checkbox-inline()
     %label
-      %input(type="checkbox" ng-model="view.form.model.accountVerified" tabindex="15") Account Verified
+      %input(type="checkbox" ng-model="view.form.model.evsVerified" tabindex="15") Evs Verified
+  .checkbox-inline()
+    %label
+      %input(type="checkbox" ng-model="view.form.model.accountVerified" tabindex="16") ACH Account Verified
   .checkbox-inline(ng-hide="view.form.model.id")
     %label
-      %input(type="checkbox" ng-model="view.form.model.phoneVerified" tabindex="16") Phone Verified
+      %input(type="checkbox" ng-model="view.form.model.phoneVerified" tabindex="17") Phone Verified
   .form-group(ng-if="userInfo.roles.owner")
     .btn.btn-primary(ng-click="view.form.sendWelcomeEmail(view.form.model.id)" ng-if="view.form.model.id")
       Send Welcome Email

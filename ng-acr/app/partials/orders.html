@@ -2,22 +2,16 @@
 <table class='table' ng-table='view.tableParams'>
   <thead>
     <tr class='row'>
-      <th class='text-left col-lg-2 hidden-xs'>Bank</th>
-      <th class='text-left col-lg-2 hidden-xs'>Type</th>
-      <th class='text-left col-lg-2 hidden-xs'>Name</th>
-      <th class='text-left col-lg-2 hidden-xs'>Reports To</th>
-      <th class='text-left col-lg-2 hidden-xs'>Total AUs</th>
-      <th class='text-left col-lg-2 hidden-xs'>Notes</th>
+      <th class='text-left col-md-4 hidden-xs'>ID</th>
+      <th class='text-left col-md-4 hidden-xs'>Cost</th>
+      <th class='text-left col-md-4 hidden-xs'>Status</th>
     </tr>
   </thead>
   <tbody class='table-hover'>
     <tr class='row' ng-click='view.form.loadRow(prod)' ng-repeat='prod in $data'>
-      <td class='col-lg-2 col-xs-12' data-title='Bank' ng-bind='prod.bank' sortable='name'></td>
-      <td class='col-lg-2 col-xs-12' data-title='Type' ng-bind='prod.type' sortable='name'></td>
-      <td class='col-lg-2 col-xs-12' data-title='Name' ng-bind='prod.name' sortable='name'></td>
-      <td class='col-lg-2 col-xs-12' data-title='reportsTo' ng-bind='prod.reportsTo' sortable='reportsTo'></td>
-      <td class='col-lg-2 col-xs-12' data-title='totalAus' ng-bind='prod.totalAus' sortable='totalAus'></td>
-      <td class='col-lg-2 col-xs-12' data-title='Notes' ng-bind='prod.notes' sortable='name'></td>
+      <td class='col-md-4' data-title='ID' ng-bind='prod.id' sortable='name'></td>
+      <td class='col-md-4' data-title='Cost' ng-bind='prod.order.orderTotal' sortable='orderTotal'></td>
+      <td class='col-md-4' data-title='Status' ng-bind='prod.status' sortable='status'></td>
     </tr>
   </tbody>
 </table>

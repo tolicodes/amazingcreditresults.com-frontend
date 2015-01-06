@@ -217,7 +217,7 @@ define(['angular', 'humane', 'stripe'], function (angular, humane, Stripe) {
                 var model = {},
                     requestCheckout = function(m) {
                         Resources.Buyer.checkout(m, function() {
-                            debugger;
+                            // debugger;
                         });
                     };
                 // don't even go through if there is no payment method

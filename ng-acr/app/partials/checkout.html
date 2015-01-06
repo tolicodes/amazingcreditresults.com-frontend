@@ -101,6 +101,6 @@
     </div>
   </div>
   <div class='col-md-12'>
-    <div class='btn btn-primary' ng-click='view.checkout()' ng-disabled='!view.payWith'>Checkout with chosen Payment method</div>
+    <div class='btn btn-primary' ng-click='view.checkout()' ng-disabled='!view.payWith || view.loading'>Checkout with chosen Payment method</div>
   </div>
 </div>

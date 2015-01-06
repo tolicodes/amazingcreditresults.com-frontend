@@ -48,7 +48,7 @@ define(['angular', 'humane'], function(angular, humane) {
             // Orders
             Orders: function(cb) {
                 $http.get(orderRoute)
-                    .success(function(res) {cb(res.data);})
+                    .success(function(res) {cb(res.auPurchases);})
                     .error(errorCb);
             },
             // Products
