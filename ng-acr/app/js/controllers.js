@@ -100,7 +100,8 @@ define(['angular', 'humane', 'stripe'], function (angular, humane, Stripe) {
                 },
                 verifyUser: function() {
                     // TODO actually make it so you can verify a user
-                    Resources.Buyer.verifyUser($scope.view.form.model, function() {
+                    Resources.Buyer.verifyUser(function() {
+                        debugger;
                     });
                 },
                 saveACH: function() {

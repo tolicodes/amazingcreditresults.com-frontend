@@ -180,8 +180,10 @@ define(['angular', 'humane'], function(angular, humane) {
                         .success(cb)
                         .error(errorCb);
                 },
-                verifyUser: function(/*user, cb */) {
-                    //$http.post
+                verifyUser: function(cb) {
+                    $http.get(baseUrl + 'verify-evs')
+                        .success(cb)
+                        .error(errorCb);
                 },
                 saveACH: function(obj, cb) {
                     $http.post(baseUrl + 'myself/billing/achAccount', obj)
