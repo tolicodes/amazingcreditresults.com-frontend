@@ -1,9 +1,9 @@
 // FIXME remove stripe as a main dependency
-define(['angular', 'humane', 'stripe'], function (angular, humane, Stripe) {
+define(['angular', 'humane'/* too slow, causing timeouts, 'stripe'*/], function (angular, humane/*, Stripe*/) {
     'use strict';
 
     // Set stripe key
-    Stripe.setPublishableKey('pk_test_6pRNASCoBOKtIshFeQd4XMUh');
+    // Stripe.setPublishableKey('pk_test_6pRNASCoBOKtIshFeQd4XMUh');
 
 	/* Controllers */
 	return angular.module('myApp.controllers', ['myApp.services', 'myApp.resources'])
@@ -101,7 +101,7 @@ define(['angular', 'humane', 'stripe'], function (angular, humane, Stripe) {
                 verifyUser: function() {
                     // TODO actually make it so you can verify a user
                     Resources.Buyer.verifyUser(function() {
-                        debugger;
+                        // debugger;
                     });
                 },
                 saveACH: function() {
@@ -233,7 +233,10 @@ define(['angular', 'humane', 'stripe'], function (angular, humane, Stripe) {
                     humane.log('Please choose a method of payment');
                     return;
                 } else if($scope.view.payWith === 'cc') {
+                    humane.log('Credit Card Payment option currently unavailable');
+                    return false;
                     // add stripe stuff here
+                    /*
                     Stripe.card.createToken($window.document.getElementById('credit-card-form'), function(code, res) {
                         // if the card request isn't right
                         if(code !== 200) {
@@ -246,6 +249,7 @@ define(['angular', 'humane', 'stripe'], function (angular, humane, Stripe) {
                             requestCheckout(model);
                         }
                     });
+                    */
                 } else { 
                     if($scope.view.payWith === 'ach') {
                         model.useAchAccount = true;
