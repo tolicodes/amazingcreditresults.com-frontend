@@ -1,6 +1,6 @@
 %h2 Store
 .row
-  .col-md-4(ng-repeat="line in view.tradelines")
+  .col-md-4(ng-repeat="line in view.tradelines" ng-if="line.totalAus - line.usedAus > 0")
     .panel.panel-default
       .panel-body
         .col-md-7

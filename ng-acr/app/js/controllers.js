@@ -34,14 +34,14 @@ define(['angular', 'humane'/* too slow, causing timeouts, 'stripe'*/], function 
         }])
         .controller('Logout', ['$scope', '$window', 'AuthService', '$location', function($scope, $window, AuthService, $location) {
             AuthService.logout();
-            $scope.view = {secondLeftToRedirect: 3};
+            $scope.view = {secondLeftToRedirect: 0};
             var interval = $window.setInterval(function() {
                 if($scope.view.secondLeftToRedirect-- <= 1) {
                     $location.path('/login');
                     $window.clearInterval(interval);
                 }
                 $scope.$apply();
-            }, 1000);
+            }, $scope.view.secondLeftToRedirect * 1000);
         }])
         .controller('PasswordReset', ['$scope', '$window', '$location', 'Resources', function($scope, $window, $location, Resources) {
             $scope.form = {

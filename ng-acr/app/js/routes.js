@@ -73,7 +73,7 @@ define(['angular', 'app'], function(angular, app) {
                     return prev || next.$$route.originalPath.indexOf(curr) > -1;
                 }, false);
             // if they're not already being redirected get the user;
-            if(!$rootScope.userInfo && !userCanContinue) {
+            if(!($rootScope.userInfo && $rootScope.userInfo.id) && !userCanContinue) {
                 AuthService.getUser(function(user) {
                     window.console.log(user);
                 });
